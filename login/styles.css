@@ -1,0 +1,49 @@
+main {
+  min-height: 100vh;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: max-content;
+  margin-top: 10vh;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  width: 100%;
+}
+
+form > *:not(button) {
+  margin-bottom: 10px;
+}
+
+form .btn {
+  margin-top: 16px;
+}
+
+.forgot-password {
+  margin-top: 20px;
+  text-align: center;
+  font-weight: 500;
+  color: var(--color-zinc-500);
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.error {
+  text-align: center;
+  font-weight: 600;
+  margin-top: 10px;
+  color: var(--color-red);
+}

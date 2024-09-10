@@ -1,0 +1,101 @@
+/* headings */
+h1 {
+  font-size: 28px;
+  line-height: 32px;
+  font-weight: 600;
+  color: var(--color-zinc-50);
+}
+
+/* input */
+
+.input {
+  background-color: var(--color-zinc-950);
+  border: 2px solid var(--color-zinc-900);
+  height: 50px;
+  padding: 0 20px;
+  border-radius: 999999px;
+  color: inherit;
+  transition: border-color 0.6s;
+}
+
+.input::placeholder {
+  color: var(--color-zinc-500);
+}
+
+.input:focus {
+  border-color: var(--color-zinc-700);
+}
+
+.password-field {
+  display: flex;
+  background-color: var(--color-zinc-950);
+  border: 2px solid var(--color-zinc-900);
+  height: 50px;
+  border-radius: 999999px;
+  transition: border-color 0.6s;
+}
+.password-field.focused {
+  border-color: var(--color-zinc-700);
+}
+
+.password-field input {
+  flex: 1;
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  padding-left: 20px;
+}
+
+.password-field input::placeholder {
+  color: var(--color-zinc-500);
+}
+
+.password-field button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-zinc-600);
+}
+
+/* button */
+
+.btn {
+  background-color: var(--color-violet-600);
+  color: var(--color-violet-50);
+  border: none;
+  border-radius: 999999px;
+  padding: 0 20px;
+  height: 50px;
+  cursor: pointer;
+  transition: background-color 0.6s;
+  text-transform: uppercase;
+  font-weight: 500;
+  user-select: none;
+}
+.btn:active {
+  background-color: var(--color-violet-700);
+}
+
+.btn.secondary {
+  background-color: var(--color-zinc-600);
+  color: var(--color-zinc-50);
+}
+.btn.secondary:active {
+  background-color: var(--color-zinc-700);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* paragraph */
+.paragraph {
+  font-size: 14px;
+  color: var(--color-zinc-500);
+  line-height: 22px;
+}

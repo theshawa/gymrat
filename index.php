@@ -13,4 +13,4 @@ include_once "./includes/components/header.php";
     <p class="paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis magni distinctio odit pariatur id molestiae a, consequatur neque recusandae eligendi obcaecati dolores modi animi maxime iusto in omnis fugiat. Molestiae.</p>
 </main>
 
-<?php include_once "includes/components/footer.php" ?>
+<?php include_once "./includes/components/footer.php" ?>

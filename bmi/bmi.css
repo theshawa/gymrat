@@ -1,0 +1,238 @@
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn {
+  margin-top: 10px;
+}
+
+.gender,
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.gender label input {
+  display: none;
+}
+
+.gender label {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--color-zinc-800);
+  border-radius: 30px;
+  padding: 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+.gender label .bg {
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  background-color: var(--color-zinc-800);
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid var(--color-zinc-800);
+  transition: background-color 0.3s;
+}
+
+.gender label svg {
+  width: 40px;
+  aspect-ratio: 1;
+  color: var(--color-violet-500);
+  position: relative;
+  z-index: 10;
+}
+
+.gender label span {
+  font-size: 15px;
+  margin-top: 10px;
+  position: relative;
+  z-index: 10;
+  text-transform: uppercase;
+  letter-spacing: 0.56px;
+  font-weight: 500;
+}
+
+.gender label input:checked ~ .bg {
+  background-color: var(--color-zinc-700);
+}
+
+.height {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-zinc-800);
+  border-radius: 30px;
+  padding: 20px;
+  margin: 10px 0;
+}
+
+.height .line {
+  display: flex;
+}
+
+h4 {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.height p {
+  text-align: right;
+  flex: 1;
+  padding-left: 20px;
+  text-transform: uppercase;
+}
+
+.height .value {
+  font-size: 50px;
+  line-height: 50px;
+  letter-spacing: 4px;
+}
+
+.height input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--color-zinc-700);
+  outline: none;
+  border-radius: 3px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.height input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 30px;
+  height: 30px;
+  background: var(--color-violet-600);
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.number-input {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-zinc-800);
+  border-radius: 30px;
+  padding: 20px;
+}
+
+.number-input input {
+  background-color: transparent;
+  font-size: 50px;
+  text-align: center;
+  letter-spacing: 2px;
+  height: 50px;
+  color: var(--color-zinc-300);
+  border: none;
+  flex: 1;
+}
+
+.number-input input::-webkit-outer-spin-button,
+.number-input input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.number-input .line {
+  display: flex;
+  margin-top: 20px;
+  align-items: end;
+}
+
+.number-input .btns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.number-input button {
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-zinc-700);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  color: var(--color-zinc-300);
+  font-size: 20px;
+}
+.number-input button:active {
+  background-color: var(--color-zinc-600);
+}
+
+#result {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding-top: 10vh;
+}
+
+#result input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  outline: none;
+  border-radius: 3px;
+  background: linear-gradient(
+    to right,
+    red 0%,
+    red 15%,
+    green 30%,
+    green 40%,
+    yellow 50%,
+    yellow 65%,
+    red 85%,
+    red 100%
+  );
+  width: 60%;
+  margin: 0 auto;
+}
+
+#result input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 30px;
+  background: var(--color-zinc-300);
+  border: 4px solid var(--color-zinc-950);
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+#result h1 {
+  font-size: 60px;
+  line-height: 60px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+#result h2 {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 50px;
+  margin-top: 30px;
+  color: var(--color-zinc-400);
+}
+
+#result h2.green {
+  color: var(--color-green-light);
+}
+
+#result h2.red {
+  color: var(--color-red-light);
+}
+
+#result h2.yellow {
+  color: rgb(255, 174, 0);
+}

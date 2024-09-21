@@ -13,21 +13,7 @@ main {
 h1 {
   text-align: center;
   margin-top: 20px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  margin-top: 40px;
-  width: 100%;
-}
-
-form > *:not(button) {
-  margin-bottom: 10px;
-}
-
-form .btn {
-  margin-top: 16px;
+  margin-bottom: 40px;
 }
 
 .forgot-password {
@@ -39,11 +25,4 @@ form .btn {
 
 .forgot-password:hover {
   text-decoration: underline;
-}
-
-.error {
-  text-align: center;
-  font-weight: 600;
-  margin-top: 10px;
-  color: var(--color-red);
 }

@@ -1,7 +1,7 @@
 <?php
 $pageConfig = [
     "title" => "Login",
-    "styles" => ["./styles.css"],
+    "styles" => ["./login.css"],
     "scripts" => ["/scripts/forms.js"]
 ];
 
@@ -12,7 +12,7 @@ include_once "../includes/header.php";
     <div class="content">
         <img src="../assets/logo-gray.svg" alt="Logo">
         <h1 class="alt">Welcome Back!</h2>
-            <form action="login_process.php" method="post">
+            <form class="form" action="login_process.php" method="post">
                 <input required class="input" type="email" placeholder="Email" name="email">
                 <label for="password" class="password-field">
                     <input required type="password" name="password" placeholder="Password">

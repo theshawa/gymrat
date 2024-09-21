@@ -1,9 +1,29 @@
 /* headings */
 h1 {
-  font-size: 28px;
-  line-height: 32px;
+  font-size: 24px;
+  line-height: 28px;
   font-weight: 600;
   color: var(--color-zinc-50);
+}
+h1.alt {
+  font-size: 28px;
+  line-height: 32px;
+}
+
+h2 {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 600;
+  color: var(--color-zinc-50);
+}
+
+h3 {
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--color-zinc-50);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
 }
 
 /* input */
@@ -61,8 +81,11 @@ h1 {
   color: var(--color-zinc-600);
 }
 
-/* button */
+main {
+  min-height: calc(100vh - 70px - 50px);
+}
 
+/* button */
 .btn {
   background-color: var(--color-violet-600);
   color: var(--color-violet-50);
@@ -98,4 +121,67 @@ h1 {
   font-size: 14px;
   color: var(--color-zinc-500);
   line-height: 22px;
+}
+
+/* Titlebar */
+header.title-bar {
+  display: flex;
+  background-color: var(--color-zinc-800);
+  position: sticky;
+  top: 0;
+  height: 50px;
+  padding: 0 20px;
+  align-items: center;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.title-bar h3 {
+  color: var(--color-zinc-50);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  padding: 0 20px;
+}
+
+.title-bar div,
+.title-bar a {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  background-color: var(--color-zinc-800);
+  position: sticky;
+  bottom: 0;
+  height: 70px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 0 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar a {
+  color: var(--color-zinc-400);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px;
+}
+
+.navbar a:hover:not(.active) {
+  background-color: var(--color-zinc-700);
+}
+
+.navbar a.active {
+  background-color: var(--color-violet-600);
+  color: var(--color-zinc-50);
 }

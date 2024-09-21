@@ -37,14 +37,13 @@ form {
   position: absolute;
   top: 0;
   left: 0;
-  border: 1px solid var(--color-zinc-800);
   transition: background-color 0.3s;
 }
 
 .gender label svg {
-  width: 40px;
+  width: 60px;
   aspect-ratio: 1;
-  color: var(--color-violet-500);
+  color: var(--color-zinc-300);
   position: relative;
   z-index: 10;
 }
@@ -60,7 +59,7 @@ form {
 }
 
 .gender label input:checked ~ .bg {
-  background-color: var(--color-zinc-700);
+  background-color: var(--color-violet-950);
 }
 
 .height {

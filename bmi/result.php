@@ -32,7 +32,7 @@ $pageConfig = [
     "title" => "BMI Calculator Result",
     "styles" => ["./bmi.css"],
     "titlebar" => [
-        "back_url" => "/index.php",
+        "back_url" => "/bmi/index.php",
     ],
 ];
 

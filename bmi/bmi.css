@@ -59,7 +59,7 @@ form {
 }
 
 .gender label input:checked ~ .bg {
-  background-color: var(--color-violet-950);
+  background-color: var(--color-violet-600);
 }
 
 .height {

@@ -14,6 +14,8 @@ include_once "./includes/titlebar.php";
 <main>
     <p>Home Page</p>
     <br>
+    <a href="/workout/index.php">Visit Workout Page</a>
+    <br>
     <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor eaque iusto omnis molestias et? Impedit nostrum sint, sed debitis velit delectus nemo ut? Cum quo error, voluptatum a eius assumenda.
         Commodi laborum vero tempore? Officia fugit quae, illo, deleniti eum voluptatibus est rerum autem doloremque ab reprehenderit a asperiores ducimus itaque amet error. Accusamus, asperiores! Voluptatem est libero ducimus distinctio.

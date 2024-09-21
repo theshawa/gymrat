@@ -1,27 +1,27 @@
 /* headings */
 h1 {
   font-size: 24px;
-  line-height: 28px;
+  line-height: 32px;
   font-weight: 600;
-  color: var(--color-zinc-50);
+  color: var(--color-zinc-300);
 }
 h1.alt {
   font-size: 28px;
-  line-height: 32px;
+  line-height: 34px;
 }
 
 h2 {
   font-size: 20px;
-  line-height: 24px;
+  line-height: 28px;
   font-weight: 600;
-  color: var(--color-zinc-50);
+  color: var(--color-zinc-300);
 }
 
 h3 {
   font-size: 15px;
   line-height: 18px;
   font-weight: 600;
-  color: var(--color-zinc-50);
+  color: var(--color-zinc-300);
   text-transform: uppercase;
   letter-spacing: 0.6px;
 }
@@ -33,7 +33,7 @@ h3 {
   border: 2px solid var(--color-zinc-900);
   height: 50px;
   padding: 0 20px;
-  border-radius: 999999px;
+  border-radius: 25px;
   color: inherit;
   transition: border-color 0.6s;
 }
@@ -44,6 +44,32 @@ h3 {
 
 .input:focus {
   border-color: var(--color-zinc-700);
+}
+
+textarea.input {
+  min-height: 120px;
+  max-height: 200px;
+  resize: vertical;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+select.input {
+  color: var(--color-zinc-500);
+}
+
+select.input option {
+  color: var(--color-zinc-300);
+}
+
+select.input:has(option:checked:not([value])),
+select.input:has(option:checked:not([value=""])) {
+  color: var(--color-zinc-300);
+}
+
+select:has(option:checked:not([value])) option,
+select:has(option:checked:not([value=""])) option {
+  color: var(--color-zinc-300);
 }
 
 .password-field {
@@ -96,8 +122,12 @@ main {
   cursor: pointer;
   transition: background-color 0.6s;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 1px;
   user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .btn:active {
   background-color: var(--color-violet-700);
@@ -105,7 +135,7 @@ main {
 
 .btn.secondary {
   background-color: var(--color-zinc-600);
-  color: var(--color-zinc-50);
+  color: var(--color-zinc-300);
 }
 .btn.secondary:active {
   background-color: var(--color-zinc-700);
@@ -119,12 +149,12 @@ main {
 /* paragraph */
 .paragraph {
   font-size: 14px;
-  color: var(--color-zinc-500);
+  color: var(--color-zinc-400);
   line-height: 22px;
 }
 
 /* Titlebar */
-header.title-bar {
+.title-bar {
   display: flex;
   background-color: var(--color-zinc-800);
   position: sticky;
@@ -134,10 +164,11 @@ header.title-bar {
   align-items: center;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+  z-index: 50;
 }
 
 .title-bar h3 {
-  color: var(--color-zinc-50);
+  color: var(--color-zinc-300);
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -165,6 +196,7 @@ header.title-bar {
   padding: 0 20px;
   align-items: center;
   justify-content: space-between;
+  z-index: 50;
 }
 
 .navbar a {
@@ -184,4 +216,19 @@ header.title-bar {
 .navbar a.active {
   background-color: var(--color-violet-600);
   color: var(--color-zinc-50);
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form > *:not(button) {
+  margin-bottom: 10px;
+}
+
+.form .btn {
+  margin-top: 16px;
 }

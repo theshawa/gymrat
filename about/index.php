@@ -1,12 +1,15 @@
 <?php
 $pageConfig = [
-    "title" => "About",
+    "title" => "About Us",
 ];
 
 include_once "../includes/header.php";
+include_once "../includes/titlebar.php";
 ?>
 
-<p>This is aboutpage</p>
+<main>
+    <p>About Page</p>
+</main>
 
-
+<?php include_once "../includes/navbar.php" ?>
 <?php include_once "../includes/footer.php" ?>

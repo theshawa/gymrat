@@ -39,10 +39,14 @@ textarea {
   --color-zinc-900: #18181b;
   --color-zinc-950: #09090b;
 
-  --color-red: #d44747;
+  --color-red: #d53a3a;
+  --color-red-light: #f05050;
+
+  --color-green: #34973e;
+  --color-green-light: #42b34d;
 
   font-size: 14px;
-  background-color: white;
+  background-color: #212121;
 }
 
 body {
@@ -62,4 +66,10 @@ main {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

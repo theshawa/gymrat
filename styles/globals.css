@@ -8,8 +8,10 @@
 
 input,
 select,
-button {
+button,
+textarea {
   outline: none;
+  font-size: inherit;
 }
 
 :root {
@@ -39,13 +41,8 @@ button {
 
   --color-red: #d44747;
 
-  font-size: 15px;
-  background-color: var(--color-zinc-900);
-}
-
-input,
-button {
-  font-size: inherit;
+  font-size: 14px;
+  background-color: white;
 }
 
 body {

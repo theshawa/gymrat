@@ -37,16 +37,16 @@ form {
   position: absolute;
   top: 0;
   left: 0;
-  border: 1px solid var(--color-zinc-800);
   transition: background-color 0.3s;
 }
 
 .gender label svg {
-  width: 40px;
+  width: 60px;
   aspect-ratio: 1;
-  color: var(--color-violet-500);
+  color: var(--color-zinc-300);
   position: relative;
   z-index: 10;
+  transition: color 0.3s;
 }
 
 .gender label span {
@@ -57,10 +57,16 @@ form {
   text-transform: uppercase;
   letter-spacing: 0.56px;
   font-weight: 500;
+  transition: color 0.3s;
 }
 
 .gender label input:checked ~ .bg {
-  background-color: var(--color-zinc-700);
+  background-color: var(--color-violet-600);
+}
+
+.gender label input:checked ~ svg,
+.gender label input:checked ~ span {
+  color: var(--color-zinc-200);
 }
 
 .height {
@@ -186,14 +192,14 @@ h4 {
   border-radius: 3px;
   background: linear-gradient(
     to right,
-    red 0%,
-    red 15%,
-    green 30%,
-    green 40%,
-    yellow 50%,
-    yellow 65%,
-    red 85%,
-    red 100%
+    var(--color-red) 0%,
+    var(--color-red) 15%,
+    var(--color-green) 30%,
+    var(--color-green) 40%,
+    rgb(255, 174, 0) 50%,
+    rgb(255, 174, 0) 65%,
+    var(--color-red) 85%,
+    var(--color-red) 100%
   );
   width: 60%;
   margin: 0 auto;

@@ -19,7 +19,7 @@ include_once "../includes/header.php";
                 </label>
                 <button class="btn">Log in</button>
             </form>
-            <a href="/forgot-password" class="forgot-password">
+            <a href="/rat/forgot-password" class="forgot-password">
                 Forgot your password?
             </a>
     </div>

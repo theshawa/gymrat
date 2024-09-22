@@ -1,6 +1,10 @@
 <?php
 $pageConfig = [
-    "title" => "About Us",
+    "title" => "My Workout",
+    "titlebar" => [
+        "title" => "My Workout",
+        "back_url" => "/rat/index.php"
+    ]
 ];
 
 include_once "../includes/header.php";
@@ -8,7 +12,7 @@ include_once "../includes/titlebar.php";
 ?>
 
 <main>
-    <p>About Page</p>
+    <p>Workout Page</p>
 </main>
 
 <?php include_once "../includes/navbar.php" ?>

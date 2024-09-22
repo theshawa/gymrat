@@ -1,70 +1,34 @@
-<?php
-$pageConfig = [
-    "title" => "Home",
-    "styles" => [
-        "./home.css"
-    ],
-    "navbar_active" => 1,
-    "titlebar" => [
-        "title" => "Hi Sajith!",
-    ]
-];
+<!DOCTYPE html>
+<html lang="en">
 
-include_once "./includes/header.php";
-include_once "./includes/titlebar.php";
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYMRAT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="about.css">
+</head>
 
-$workoutIsActive = false;
-?>
+<body>
+    <main>
+        <div class="content">
+            <svg width="94" height="16" viewBox="0 0 94 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16.1887 5.34857H12.4129V4.57143L11.6667 3.81714H3.00712L3.75325 4.57143V11.4286L4.49938 12.2057H11.6667L12.4129 11.4286V9.92H8.27524V6.10286H16.1887V12.96L13.1816 16H3.00712L0 12.96V3.06286L3.00712 0H13.1816L16.1887 3.06286V5.34857Z" fill="currentColor" />
+                <path d="M28.9775 0H33.4995L26.7165 9.92V16H22.9406V9.92L16.1802 0H20.7022L24.8399 6.05714L28.9775 0Z" fill="currentColor" />
+                <path d="M48.1717 0H51.925V16H48.1717V6.05714L45.142 9.92H41.3888L38.359 6.05714V16H34.6058V0H38.359L43.2654 6.28572L48.1717 0Z" fill="currentColor" />
+                <path d="M57.6895 16H55.1345V0.0457151H61.9401C63.357 0.0457151 64.4725 0.480001 65.2864 1.34857C66.1004 2.2019 66.5074 3.36762 66.5074 4.84571C66.5074 5.98857 66.2436 6.94095 65.716 7.70286C65.2035 8.44952 64.4423 8.97524 63.4324 9.28L66.8465 16H63.9977L60.8323 9.55429H57.6895V16ZM61.7593 7.38286C62.4074 7.38286 62.9124 7.21524 63.2741 6.88C63.6359 6.52952 63.8168 6.03429 63.8168 5.39429V4.29714C63.8168 3.65714 63.6359 3.16952 63.2741 2.83429C62.9124 2.48381 62.4074 2.30857 61.7593 2.30857H57.6895V7.38286H61.7593Z" fill="currentColor" />
+                <path d="M79.8082 16L78.3838 11.68H72.4826L71.1034 16H68.5032L73.8844 0.0457151H77.095L82.4762 16H79.8082ZM75.4897 2.42286H75.3766L73.093 9.46286H77.7507L75.4897 2.42286Z" fill="currentColor" />
+                <path d="M89.2971 2.33143V16H86.7422V2.33143H82.0393V0.0457151H94V2.33143H89.2971Z" fill="currentColor" />
+            </svg>
 
-<main>
-    <div class="grid">
-        <div class="tile with-sub-link <?php echo $workoutIsActive ? 'red' : 'green' ?>">
-            <a href="/workout/index.php" class="sub-link">
-                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.0503 19.9497C9.75743 19.6568 9.75743 19.182 10.0503 18.8891L17.5725 11.3669L11.8328 11.5072C11.4187 11.5153 11.0764 11.1862 11.0682 10.7721C11.0601 10.3579 11.3893 10.0156 11.8034 10.0075L19.4048 9.83072C19.6088 9.82672 19.8056 9.90599 19.9498 10.0502C20.0941 10.1945 20.1733 10.3913 20.1693 10.5953L19.9926 18.1967C19.9845 18.6108 19.6421 18.94 19.228 18.9318C18.8139 18.9237 18.4847 18.5814 18.4929 18.1673L18.6331 12.4276L11.111 19.9497C10.8181 20.2426 10.3432 20.2426 10.0503 19.9497Z" fill="#FAFAFA" />
-                </svg>
-            </a>
-            <a href="/workout/index.php?<?php echo $workoutIsActive ? 'end=true' : 'start=true' ?>" class="content">
-                <span><?php echo $workoutIsActive ? 'End' : 'Start' ?><br />Workout</span>
-            </a>
+            <p>
+                <a href="/rat/index.php">Rat</a>&nbsp;&nbsp;
+                <a href="/staff/index.php">Staff</a>
+            </p>
         </div>
-        <a href="/gym-traffic/index.php" class="tile">
-            <span>
-                Check<br />
-                Gym Traffic
-            </span>
-        </a>
-        <a href="/meal-plan/index.php" class="tile">
-            <span>
-                My<br />
-                Meal Plan
-            </span>
-        </a>
-        <a href="/trainer/index.php" class="tile">
-            <span>
-                My<br />
-                Trainer
-            </span>
-        </a>
-        <a href="/progress/index.php" class="tile">
-            <span>
-                My<br />
-                Progress
-            </span>
-        </a>
-        <a href="/bmi/index.php" class="tile">
-            <span>
-                BMI<br />
-                Calculator
-            </span>
-        </a>
-        <a href="/complaint/index.php" class="tile gray full-width">
-            <span>
-                Make Complaint
-            </span>
-        </a>
-    </div>
-</main>
+    </main>
+</body>
 
-<?php include_once "./includes/navbar.php" ?>
-<?php include_once "./includes/footer.php" ?>
+</html>

@@ -4,7 +4,7 @@ $pageConfig = [
     "styles" => ["./bmi.css"],
     "scripts" => ["./bmi.js"],
     "titlebar" => [
-        "back_url" => "/index.php",
+        "back_url" => "/rat/index.php",
     ],
 ];
 

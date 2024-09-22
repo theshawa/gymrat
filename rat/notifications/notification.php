@@ -9,9 +9,9 @@ if (!isset($id)) {
 
 $pageConfig = [
     "title" => "Notification",
-    "styles" => ["./notification.css"],
+    "styles" => ["./notifications.css"],
     "titlebar" => [
-        "back_url" => "/notifications/index.php",
+        "back_url" => "/rat/notifications/index.php",
     ],
 ];
 
@@ -21,6 +21,7 @@ include_once "../includes/titlebar.php";
 
 <main>
     <h1>Temporary Gym Closure Due to Bad Weather</h1>
+    <p class="time">22.9.2024 09:10 AM</p>
     <p class="paragraph" style="margin-top: 20px;">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, facilis dolores dolor exercitationem animi maxime architecto, iste porro inventore doloribus soluta error fugit eius ea! Dolores itaque consectetur excepturi officia.
     </p>

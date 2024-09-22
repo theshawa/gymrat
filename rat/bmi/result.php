@@ -32,7 +32,7 @@ $pageConfig = [
     "title" => "BMI Calculator Result",
     "styles" => ["./bmi.css"],
     "titlebar" => [
-        "back_url" => "/bmi/index.php",
+        "back_url" => "/rat/bmi/index.php",
     ],
 ];
 
@@ -51,9 +51,9 @@ include_once "../includes/titlebar.php";
         <input type="hidden" name="weight" value="<?php echo $weight ?>">
         <input type="hidden" name="height" value="<?php echo $height ?>">
         <input type="hidden" name="gender" value="<?php echo $age ?>">
-        <button href="/bmi/index.php" class="btn secondary">Save Record</button>
+        <button class="btn secondary">Save Record</button>
     </form>
-    <a href="/bmi/index.php" class="btn">Calculate Again</a>
+    <a href="/rat/bmi/index.php" class="btn">Calculate Again</a>
 </main>
 <?php include_once "../includes/navbar.php" ?>
 <?php include_once "../includes/footer.php" ?>

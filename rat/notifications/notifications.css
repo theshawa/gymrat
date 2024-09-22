@@ -25,6 +25,12 @@ main {
   font-size: 12px;
 }
 
-.notification:hover span:nth-child(2) {
-  color: var(--color-zinc-400);
+.notification:hover h4 {
+  text-decoration: underline;
+}
+
+.time {
+  margin-top: 10px;
+  color: var(--color-zinc-500);
+  font-size: 12px;
 }

@@ -24,8 +24,8 @@
             </svg>
 
             <p>
-                <a href="/rat/index.php">Rat</a>&nbsp;&nbsp;
-                <a href="/staff/index.php">Staff</a>
+                <a href="/rat/login/index.php">Rat</a>&nbsp;&nbsp;
+                <a href="/staff/login/index.php">Staff</a>
             </p>
         </div>
     </main>

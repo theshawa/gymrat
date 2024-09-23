@@ -1,0 +1,209 @@
+/* headings */
+h1 {
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+  color: var(--color-zinc-950);
+}
+h1.alt {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+h2 {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  color: var(--color-zinc-950);
+}
+
+/* input */
+
+.input {
+  background-color: var(--color-zinc-50);
+  border: 1px solid var(--color-zinc-200);
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 6px;
+  color: inherit;
+  transition: border-color 0.6s;
+}
+
+.input::placeholder {
+  color: var(--color-zinc-500);
+}
+
+.input:focus {
+  border-color: var(--color-zinc-500);
+}
+
+textarea.input {
+  min-height: 120px;
+  max-height: 200px;
+  resize: vertical;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+select.input {
+  color: var(--color-zinc-500);
+}
+
+select.input option {
+  color: var(--color-zinc-800);
+}
+
+select.input:has(option:checked:not([value])),
+select.input:has(option:checked:not([value=""])) {
+  color: var(--color-zinc-800);
+}
+
+select:has(option:checked:not([value])) option,
+select:has(option:checked:not([value=""])) option {
+  color: var(--color-zinc-800);
+}
+
+/* button */
+.btn {
+  background-color: var(--color-zinc-800);
+  border: 1px solid var(--color-zinc-950);
+  color: var(--color-zinc-50);
+  border: none;
+  border-radius: 6px;
+  padding: 0 12px;
+  height: 30px;
+  cursor: pointer;
+  transition: background-color 0.6s;
+  font-weight: 500;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn:active {
+  background-color: var(--color-zinc-900);
+}
+
+.btn.secondary {
+  background-color: var(--color-zinc-500);
+  border-color: var(--color-zinc-600);
+}
+.btn.secondary:active {
+  background-color: var(--color-zinc-600);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* paragraph */
+.paragraph {
+  font-size: 13px;
+  color: var(--color-zinc-400);
+  line-height: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form.with-fields .field {
+  margin-bottom: 6px;
+}
+
+.form:not(.with-fields) .input {
+  margin-bottom: 6px;
+}
+
+.form .btn {
+  margin-top: 6px;
+}
+
+/* Sidebar */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  flex-shrink: 0;
+  padding: 20px;
+  background-color: var(--color-zinc-50);
+  border-right: 1px solid var(--color-zinc-200);
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow: auto;
+}
+
+.sidebar svg {
+  margin-bottom: 6px;
+  color: var(--color-zinc-950);
+}
+
+.sidebar h4 {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-zinc-500);
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+.sidebar .links {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.sidebar a {
+  height: 30px;
+  padding: 0 20px;
+  font-weight: 500;
+  color: var(--color-zinc-600);
+  background-color: var(--color-zinc-100);
+  border: 1px solid var(--color-zinc-200);
+  border-radius: 6px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar a.active {
+  background-color: var(--color-zinc-800);
+  color: var(--color-zinc-50);
+  border-color: var(--color-zinc-950);
+}
+
+.sidebar_toggle {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  padding: 6px 12px;
+  background-color: var(--color-zinc-800);
+  color: var(--color-zinc-50);
+  border-radius: 6px;
+  border: 1px solid var(--color-zinc-950);
+  cursor: pointer;
+  display: none;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+@media not all and (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    z-index: 40;
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+    width: 100%;
+  }
+  .sidebar.show {
+    transform: translateX(0);
+  }
+  .sidebar_toggle {
+    display: flex;
+    z-index: 50;
+  }
+}

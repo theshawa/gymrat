@@ -57,6 +57,12 @@ body {
   color: var(--color-zinc-300);
 }
 
+@media not all and (min-width: 768px) {
+  body {
+    max-width: none;
+  }
+}
+
 main {
   padding: 20px;
   display: flex;

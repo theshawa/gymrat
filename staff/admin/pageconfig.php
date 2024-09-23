@@ -4,7 +4,7 @@ $title = isset($pageTitle) ? $pageTitle : null;
 $sidebarActive = isset($sidebarActive) ? $sidebarActive : null;
 
 $pageConfig = [
-    "title" => "Admin" . ($title ? " | " . $title : ""),
+    "title" => ($title ?  $title . " | "  : "") . "Admin",
     "sidebar" => [
         "title" => "Admin",
         "links" => [

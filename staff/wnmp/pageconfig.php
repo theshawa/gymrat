@@ -4,7 +4,7 @@ $title = isset($pageTitle) ? $pageTitle : null;
 $sidebarActive = isset($sidebarActive) ? $sidebarActive : null;
 
 $pageConfig = [
-    "title" => "Workout & Meal Plan Manager" . ($title ? " | " . $title : ""),
+    "title" => ($title ? $title . " | "  : "") . "Workout & Meal Plan Manager",
     "sidebar" => [
         "title" => "Workout & Meal Plan Manager",
         "links" => [

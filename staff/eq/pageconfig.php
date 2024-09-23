@@ -4,7 +4,7 @@ $title = isset($pageTitle) ? $pageTitle : null;
 $sidebarActive = isset($sidebarActive) ? $sidebarActive : null;
 
 $pageConfig = [
-    "title" => "Equipment Manager" . ($title ? " | " . $title : ""),
+    "title" => ($title ?  $title . " | " : "") . "Equipment Manager",
     "sidebar" => [
         "title" => "Equipment Manager",
         "links" => [

@@ -17,7 +17,7 @@ if (isset($menuBarConfig)) {
         $showBack = $menuBarConfig['showBack'];
     }
     if (isset($menuBarConfig['goBackTo'])) {
-        $backTo = $menuBarConfig['goBackTo'];
+        $goBackTo = $menuBarConfig['goBackTo'];
     }
     if (isset($menuBarConfig['showOptions'])) {
         $showOptions = $menuBarConfig['showOptions'];
@@ -39,7 +39,7 @@ if (isset($menuBarConfig)) {
         <?php endif; ?>
         <h1><?= $title ?></h1>
     </div>
-    <div>
+    <div style="display: flex; align-items: center; gap: 6px;">
         <?php if ($showOptions && $options): ?>
             <?php foreach ($options as $option): ?>
                 <a href="<?= $option['href'] ?>" class="option <?= empty($option['type']) ? 'primary' : $option['type'] ?>">

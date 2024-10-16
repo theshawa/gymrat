@@ -11,7 +11,7 @@ include_once "../includes/header.php";
 <main>
     <div class="content">
         <img src="../assets/logo-gray.svg" alt="Logo">
-        <h1 class="alt">Welcome Back!</h2>
+        <h1 class="alt">Welcome Back!</h1>
             <form class="form" action="login_process.php" method="post">
                 <input required class="input" type="email" placeholder="Email" name="email">
                 <label for="password" class="password-field">

@@ -5,14 +5,33 @@ $sidebarActive = 3;
 $menuBarConfig = [
     "title" => $pageTitle,
     "showOptions" => true,
-    "showBack" => true,
-    "goBackTo" => "/staff/wnmp/index.php",
     "options" => [
-        [ "title" => "Edit Workout", "href" => "/staff/wnmp/workouts/edit/index.php", "type" => "primary" ],
-        [ "title" => "Create Workout", "href" => "/staff/wnmp/workouts/create/index.php", "type" => "secondary" ],
-        [ "title" => "Delete Workout", "href" => "/staff/wnmp/exercises/delete/index.php", "type" => "destructive" ]
+        [ "title" => "Create Workout", "href" => "/staff/wnmp/workouts/create/index.php", "type" => "secondary" ]
     ]
 ];
+$infoCardConfig = [
+    "showImage" => true,
+    "showExtend" => true,
+    "extendTo" => "/staff/wnmp/workouts/view/index.php",
+    "cards" => [
+        [
+            "title" => "Strength Training",
+            "description" => "Squats, Deadlifts, Bench Press, Pull-Ups, Overhead Press, Lunges, Quads, Dumbbell Rows",
+            "img" => null
+        ],
+        [
+            "title" => "Cardio",
+            "description" => "Running, Cycling, Swimming, Rowing, Jump Rope, Stair Climbing, Hiking, Elliptical",
+            "img" => null
+        ],
+        [
+            "title" => "Flexibility",
+            "description" => "Stretching, Yoga, Pilates, Tai Chi, Foam Rolling, Dynamic Stretching, Static Stretching",
+            "img" => null
+        ]
+    ]
+];
+
 
 include_once "../pageconfig.php";
 
@@ -25,7 +44,9 @@ include_once "../../includes/sidebar.php";
 <main>
     <div class="base-container">
         <?php include_once "../../includes/menubar.php"; ?>
-        Manage Workouts
+        <div>
+            <?php include_once "../../includes/infocard.php"; ?>
+        </div>
     </div>
 </main>
 

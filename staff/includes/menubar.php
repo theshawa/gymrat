@@ -28,16 +28,16 @@ if (isset($menuBarConfig)) {
 }
 
 ?>
-<div class="top-bar">
+<div class="menu-bar">
     <div style="display: flex; align-items: center;">
         <?php if ($showBack && $goBackTo): ?>
-            <a href="<?= $goBackTo ?>" class="top-bar-back">
+            <a href="<?= $goBackTo ?>" class="menu-bar-back">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
                 </svg>
             </a>
         <?php endif; ?>
-        <h1><?= $title ?></h1>
+        <h1 class="alt"><?= $title ?></h1>
     </div>
     <div style="display: flex; align-items: center; gap: 6px;">
         <?php if ($showOptions && $options): ?>
@@ -51,17 +51,17 @@ if (isset($menuBarConfig)) {
 </div>
 
 <style>
-    .top-bar {
+    .menu-bar {
         display: flex;
         align-items: center;
         margin: 10px 10px 30px 10px;
         justify-content: space-between;
     }
-    .top-bar-back {
+    .menu-bar-back {
         border: none;
         background-color: transparent;
     }
-    .top-bar h1 {
+    .menu-bar h1 {
         margin-left: 10px;
     }
     .option {

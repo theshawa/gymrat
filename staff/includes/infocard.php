@@ -4,9 +4,8 @@ $showImage = false;
 $showExtend = false;
 $extendTo = null;
 $cards = null;
-
-// FOR TESTING
-//$goBackTo = "/staff/wnmp/index.php";
+$gridColumns = 2;
+$defaultImage = "../assets/infoCardDefault.png"; // FIX DEFAULT IMAGE
 
 if (isset($infoCardConfig)) {
     if (isset($infoCardConfig['showImage'])) {
@@ -21,6 +20,9 @@ if (isset($infoCardConfig)) {
     if (isset($infoCardConfig['cards'])) {
         $cards = $infoCardConfig['cards'];
     }
+    if (isset($infoCardConfig['gridColumns'])) {
+        $gridColumns = $infoCardConfig['gridColumns'];
+    }
 }
 
 ?>
@@ -30,17 +32,23 @@ if (isset($infoCardConfig)) {
         <div class="info-card">
             <?php if ($showImage): ?>
                 <div class="info-card-img">
-                    <img src="<?= $card['img'] ?>" alt="<?= $card['title'] ?>">
+                    <?php if ($card['img']): ?>
+                        <img src="<?= $card['img'] ?>" alt="<?= $card['title'] ?>">
+                    <?php else: ?>
+                        <img src="<?= $defaultImage ?>" alt="Default">
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
             <div class="info-card-desc">
                 <h2><?= $card['title'] ?></h2>
                 <p><?= $card['description'] ?></p>
-                <div class="info-card-ext">
-                    <a href="<?= $extendTo ?>">
-                        View More
-                    </a>
-                </div>
+                <?php if ($showExtend): ?>
+                    <div class="info-card-ext">
+                        <a href="<?= $extendTo ?>?id=<?= $card['id'] ?>">
+                            View More
+                        </a>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     <?php endforeach; ?>
@@ -49,7 +57,7 @@ if (isset($infoCardConfig)) {
 <style>
     .info-card-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(<?= $gridColumns ?>, 1fr);
         gap: 20px;
     }
     .info-card {

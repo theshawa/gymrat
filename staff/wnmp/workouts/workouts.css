@@ -5,3 +5,28 @@
     border-radius: 10px;
     width: 100% !important;
 }
+
+.view-workout-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    padding: 20px;
+}
+
+.view-workout-exercise{
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.view-workout-exercise p {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.view-workout-exercise p.alt {
+    font-size: 22px;
+    font-weight: 400;
+}

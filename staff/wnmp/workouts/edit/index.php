@@ -54,13 +54,13 @@ $workout = [
 
 $sidebarActive = 3;
 $menuBarConfig = [
-    "title" => $workout['title'],
+    "title" => "Edit " . $workout['title'],
     "showBack" => true,
-    "goBackTo" => "/staff/wnmp/workouts/index.php",
-    "useLink" => true,
+    "goBackTo" => "/staff/wnmp/workouts/view/index.php?id=<?= $id ?>",
+    "useButton" => true,
     "options" => [
-        [ "title" => "Edit Workout", "href" => "/staff/wnmp/workouts/edit/index.php?id=<?= $id ?>", "type" => "secondary" ],
-        [ "title" => "Delete Workout", "href" => "/staff/wnmp/workouts/delete/index.php?id=<?= $id ?>", "type" => "destructive" ]
+        [ "title" => "Save Changes", "function" => "doSaveChanges", "type" => "secondary" ],
+        [ "title" => "Revert Changes", "function" => "doRevertChanges", "type" => "destructive" ]
     ]
 ];
 
@@ -76,26 +76,7 @@ include_once "../../../includes/sidebar.php";
     <main>
         <div class="base-container">
             <?php include_once "../../../includes/menubar.php"; ?>
-            <div class="view-workout-container">
-               <div>
-                    <h2 style="margin-bottom: 20px;">
-                        Exercises
-                    </h2>
-                   <?php foreach ($workout['exercise'] as $exercise): ?>
-                       <div class="view-workout-exercise">
-                           <p><?= $exercise['title'] ?></p>
-                           <p class="alt"><?= $exercise['sets'] ?> x <?= $exercise['reps'] ?></p>
-                       </div>
-                       <hr>
-                     <?php endforeach; ?>
-               </div>
-                <div>
-                    <h2 style="margin-bottom: 20px;">
-                        Description
-                    </h2>
-                    <p><?= $workout['description'] ?></p>
-                </div>
-            </div>
+
         </div>
     </main>
 

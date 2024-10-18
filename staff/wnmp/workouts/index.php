@@ -4,7 +4,7 @@ $pageTitle = "Workouts";
 $sidebarActive = 3;
 $menuBarConfig = [
     "title" => $pageTitle,
-    "showOptions" => true,
+    "useLink" => true,
     "options" => [
         [ "title" => "Create Workout", "href" => "/staff/wnmp/workouts/create/index.php", "type" => "secondary" ]
     ]

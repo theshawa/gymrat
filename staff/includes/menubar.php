@@ -3,8 +3,9 @@
 $title = "MenuBar";
 $showBack = false;
 $goBackTo = null;
-$showOptions = true;
 $options = null; // options[type]s are primary, secondary, destructive
+$useLink = false; // If you want to use link
+$useButton = false; // If you want to use button
 
 // FOR TESTING
 //$goBackTo = "/staff/wnmp/index.php";
@@ -19,11 +20,14 @@ if (isset($menuBarConfig)) {
     if (isset($menuBarConfig['goBackTo'])) {
         $goBackTo = $menuBarConfig['goBackTo'];
     }
-    if (isset($menuBarConfig['showOptions'])) {
-        $showOptions = $menuBarConfig['showOptions'];
-    }
     if (isset($menuBarConfig['options'])) {
         $options = $menuBarConfig['options'];
+    }
+    if (isset($menuBarConfig['useLink'])) {
+        $useLink = $menuBarConfig['useLink'];
+    }
+    if (isset($menuBarConfig['useButton'])) {
+        $useButton = $menuBarConfig['useButton'];
     }
 }
 
@@ -40,11 +44,19 @@ if (isset($menuBarConfig)) {
         <h1 class="alt"><?= $title ?></h1>
     </div>
     <div style="display: flex; align-items: center; gap: 6px;">
-        <?php if ($showOptions && $options): ?>
+        <?php if ($useLink && $options): ?>
             <?php foreach ($options as $option): ?>
                 <a href="<?= $option['href'] ?>" class="option <?= empty($option['type']) ? 'primary' : $option['type'] ?>">
                     <?= $option['title'] ?>
                 </a>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        <?php if ($useButton && $options): ?>
+            <?php foreach ($options as $option): ?>
+                <button class="option <?= empty($option['type']) ? 'primary' : $option['type'] ?>"
+                        onclick="<?= $option['function'] ?>()">
+                    <?= $option['title'] ?>
+                </button>
             <?php endforeach; ?>
         <?php endif; ?>
     </div>
@@ -81,11 +93,11 @@ if (isset($menuBarConfig)) {
     .option.secondary {
         background-color: var(--color-zinc-800);
         color: var(--color-zinc-50);
-        border-color: var(--color-zinc-950);
+        border: 1px solid var(--color-zinc-950);
     }
     .option.destructive {
         background-color: var(--color-red-light);
         color: var(--color-zinc-50);
-        border-color: var(--color-red);
+        border: 1px solid var(--color-red);
     }
 </style>

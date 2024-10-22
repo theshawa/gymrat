@@ -54,7 +54,8 @@ if (isset($menuBarConfig)) {
         <?php if ($useButton && $options): ?>
             <?php foreach ($options as $option): ?>
                 <button class="option <?= empty($option['type']) ? 'primary' : $option['type'] ?>"
-                        onclick="<?= $option['function'] ?>()">
+                    <?= !empty($option['buttonFunction']) ? 'onclick="' . $option['buttonFunction'] . '()"' : '' ?>
+                        type="<?= empty($option['buttonType']) ? 'button' : $option['buttonType'] ?>">
                     <?= $option['title'] ?>
                 </button>
             <?php endforeach; ?>

@@ -71,7 +71,6 @@ $pageConfig['styles'][] = "../workouts.css";
 
 include_once "../../../includes/header.php";
 include_once "../../../includes/sidebar.php";
-include './edit_workout.php';
 ?>
 
     <main>

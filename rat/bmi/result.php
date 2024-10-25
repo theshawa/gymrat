@@ -14,19 +14,7 @@ $bmi = round($bmi, 2);
 
 $category = "good";
 $message = "";
-if ($bmi < 18.5) {
-    $category = "worst";
-    $message = "You are underweight.<br/>You should consult a doctor.";
-} else if ($bmi < 24.9) {
-    $category = "good";
-    $message = "You are normal.<br/>Keep it up!";
-} else if ($bmi < 29.9) {
-    $category = "bad";
-    $message = "You are overweight.<br/>You should exercise more.";
-} else {
-    $category = "worst";
-    $message = "You are obese.<br/>You should consult a doctor.";
-}
+
 
 $pageConfig = [
     "title" => "BMI Calculator Result",

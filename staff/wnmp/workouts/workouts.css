@@ -1,0 +1,121 @@
+.base-container {
+    background-color: var(--color-zinc-50);
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100% !important;
+}
+
+.view-workout-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    padding: 20px;
+}
+
+.view-workout-exercise{
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.view-workout-exercise p {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.view-workout-exercise p.alt {
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.edit-workout-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.edit-workout-textarea {
+    width: 100%;
+    height: 150px;
+    color: var(--color-zinc-600);
+    background-color: var(--color-zinc-100);
+    border: 2px solid var(--color-zinc-400);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0px;
+    text-align: justify;
+    vertical-align: top;
+}
+
+.edit-workout-input-title {
+    width: 30%;
+    color: var(--color-zinc-600);
+    background-color: var(--color-zinc-100);
+    border: 2px solid var(--color-zinc-400);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px 15px 5px 0px;
+    text-align: justify;
+}
+
+.edit-workout-input-reps-sets {
+    width: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 15px;
+}
+
+.edit-workout-input-reps-sets input{
+    width: 60%;
+    color: var(--color-zinc-600);
+    background-color: var(--color-zinc-100);
+    border: 2px solid var(--color-zinc-400);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px 0px;
+    text-align: justify;
+}
+
+.edit-workout-input-delete {
+    background-color: transparent;
+    border: 0;
+    margin: 0px 15px;
+    color: var(--color-red);
+}
+
+.edit-workout-add-exercise {
+    width: 70%;
+    height: 45px;
+    background-color: transparent;
+    border: 2px solid var(--color-zinc-800);
+    margin: 15px 0px;
+    border-radius: 10px;
+}
+
+.delete-workout-div {
+    padding: 15px;
+    /*height: 100%;*/
+    /*width: 100%;*/
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*justify-content: center;*/
+    /*align-items: center !important;*/
+}
+
+.delete-workout-div p {
+    margin: 5px 0px;
+}
+
+.delete-workout-div button {
+    width: 30%;
+    height: 45px;
+    margin: 20px 0px;
+    background-color: var(--color-red-light);
+    border: 2px solid var(--color-red);
+    color: var(--color-zinc-100);
+    border-radius: 10px;
+}

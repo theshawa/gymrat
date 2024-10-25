@@ -55,7 +55,9 @@ if (isset($menuBarConfig)) {
             <?php foreach ($options as $option): ?>
                 <button class="option <?= empty($option['type']) ? 'primary' : $option['type'] ?>"
                     <?= !empty($option['buttonFunction']) ? 'onclick="' . $option['buttonFunction'] . '()"' : '' ?>
-                        type="<?= empty($option['buttonType']) ? 'button' : $option['buttonType'] ?>">
+                        type="<?= empty($option['buttonType']) ? 'button' : $option['buttonType'] ?>"
+                    <?= !empty($option['submitAction']) ? 'name="' . $option['submitAction'] .'"' : '' ?>
+                >
                     <?= $option['title'] ?>
                 </button>
             <?php endforeach; ?>

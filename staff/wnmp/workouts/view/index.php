@@ -59,8 +59,8 @@ $menuBarConfig = [
     "goBackTo" => "/staff/wnmp/workouts/index.php",
     "useLink" => true,
     "options" => [
-        [ "title" => "Edit Workout", "href" => "/staff/wnmp/workouts/edit/index.php?id=<?= $id ?>", "type" => "secondary" ],
-        [ "title" => "Delete Workout", "href" => "/staff/wnmp/workouts/delete/index.php?id=<?= $id ?>", "type" => "destructive" ]
+        [ "title" => "Edit Workout", "href" => "/staff/wnmp/workouts/edit/index.php?id=$id", "type" => "secondary" ],
+        [ "title" => "Delete Workout", "href" => "/staff/wnmp/workouts/delete/index.php?id=$id", "type" => "destructive" ]
     ]
 ];
 

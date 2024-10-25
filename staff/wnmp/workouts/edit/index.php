@@ -1,4 +1,9 @@
 <?php
+
+// check for session and destroy
+
+session_start();
+
 $id = $_GET['id'] ?? null;
 
 if (!isset($_SESSION['workout'])) {
@@ -60,7 +65,7 @@ $sidebarActive = 3;
 $menuBarConfig = [
     "title" => "Edit " . $workout['title'],
     "showBack" => true,
-    "goBackTo" => "/staff/wnmp/workouts/view/index.php?id=<?= $id ?>",
+    "goBackTo" => "/staff/wnmp/workouts/view/index.php?id=$id",
     "useButton" => true,
     "options" => [
         [ "title" => "Save Changes", "buttonType" => "submit", "submitAction" => "saveExercise", "type" => "secondary" ],

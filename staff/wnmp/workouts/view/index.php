@@ -59,8 +59,8 @@ $menuBarConfig = [
     "goBackTo" => "/staff/wnmp/workouts/index.php",
     "useLink" => true,
     "options" => [
-        [ "title" => "Edit Workout", "href" => "/staff/wnmp/workouts/edit/index.php?id=$id", "type" => "secondary" ],
-        [ "title" => "Delete Workout", "href" => "/staff/wnmp/workouts/delete/index.php?id=$id", "type" => "destructive" ]
+        ["title" => "Edit Workout", "href" => "/staff/wnmp/workouts/edit/index.php?id=$id", "type" => "secondary"],
+        ["title" => "Delete Workout", "href" => "/staff/wnmp/workouts/delete/index.php?id=$id", "type" => "destructive"]
     ]
 ];
 
@@ -73,30 +73,30 @@ include_once "../../../includes/header.php";
 include_once "../../../includes/sidebar.php";
 ?>
 
-    <main>
-        <div class="base-container">
-            <?php include_once "../../../includes/menubar.php"; ?>
-            <div class="view-workout-container">
-               <div>
-                    <h2 style="margin-bottom: 20px;">
-                        Exercises
-                    </h2>
-                   <?php foreach ($workout['exercise'] as $exercise): ?>
-                       <div class="view-workout-exercise">
-                           <p><?= $exercise['title'] ?></p>
-                           <p class="alt"><?= $exercise['sets'] ?> x <?= $exercise['reps'] ?></p>
-                       </div>
-                       <hr>
-                     <?php endforeach; ?>
-               </div>
-                <div>
-                    <h2 style="margin-bottom: 20px;">
-                        Description
-                    </h2>
-                    <p><?= $workout['description'] ?></p>
-                </div>
+<main>
+    <div class="base-container">
+        <?php include_once "../../../includes/menubar.php"; ?>
+        <div class="view-workout-container">
+            <div>
+                <h2 style="margin-bottom: 20px;">
+                    Exercises
+                </h2>
+                <?php foreach ($workout['exercise'] as $exercise): ?>
+                    <div class="view-workout-exercise">
+                        <p><?= $exercise['title'] ?></p>
+                        <p class="alt"><?= $exercise['sets'] ?> x <?= $exercise['reps'] ?></p>
+                    </div>
+                    <hr>
+                <?php endforeach; ?>
+            </div>
+            <div>
+                <h2 style="margin-bottom: 20px;">
+                    Description
+                </h2>
+                <p><?= $workout['description'] ?></p>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 
 <?php include_once "../../../includes/footer.php"; ?>

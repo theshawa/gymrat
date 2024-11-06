@@ -87,6 +87,13 @@
     color: var(--color-red);
 }
 
+.edit-workout-input-update {
+    background-color: transparent;
+    border: 0;
+    margin: 0px 15px;
+    color: var(--color-zinc-800);
+}
+
 .edit-workout-add-exercise {
     width: 70%;
     height: 45px;

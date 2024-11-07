@@ -1,7 +1,6 @@
 <?php
 
 // check for session and destroy
-
 session_start();
 
 $id = $_GET['id'] ?? null;
@@ -58,6 +57,7 @@ if (!isset($_SESSION['workout'])) {
         ],
         "img" => null
     ];
+    $_SESSION['workout_id'] = $_SESSION['workout']['id'];
 }
 $workout = &$_SESSION['workout'];
 

@@ -56,7 +56,7 @@ if (isset($menuBarConfig)) {
                 <button class="option <?= empty($option['type']) ? 'primary' : $option['type'] ?>"
                     <?= !empty($option['buttonFunction']) ? 'onclick="' . $option['buttonFunction'] . '()"' : '' ?>
                         type="<?= empty($option['buttonType']) ? 'button' : $option['buttonType'] ?>"
-                    <?= !empty($option['submitAction']) ? 'name="' . $option['submitAction'] .'"' : '' ?>
+                    <?= !empty($option['formAction']) ? 'formaction="' . $option['formAction'] .'"' : '' ?>
                 >
                     <?= $option['title'] ?>
                 </button>

@@ -68,8 +68,8 @@ $menuBarConfig = [
     "goBackTo" => "/staff/wnmp/workouts/view/index.php?id=$id",
     "useButton" => true,
     "options" => [
-        [ "title" => "Save Changes", "buttonType" => "submit", "submitAction" => "saveExercise", "type" => "secondary" ],
-        [ "title" => "Revert Changes", "buttonFunction" => "doRevertChanges", "type" => "destructive" ]
+        [ "title" => "Save Changes", "buttonType" => "submit", "formAction" => "save_exercise.php", "type" => "secondary" ],
+        [ "title" => "Revert Changes", "buttonType" => "submit", "formAction" => "revert_exercise.php", "type" => "destructive" ]
     ]
 ];
 
@@ -90,8 +90,10 @@ include_once "../../../includes/sidebar.php";
                     <div style="padding: 0px 10px;">
                         <div>
                             <h2><label for="editDescription">Description</label></h2>
-                            <textarea id="editDescription" name="description" class="edit-workout-textarea"
-                                      placeholder="Enter a workout description"><?= $workout['description'] ?></textarea>
+                            <textarea id="editDescription" name="description"
+                                      class="staff-textarea-primary edit-workout-textarea"
+                                      placeholder="Enter a workout description"><?= $workout['description'] ?>
+                            </textarea>
                         </div>
                     </div>
                 </form>
@@ -100,22 +102,31 @@ include_once "../../../includes/sidebar.php";
                     <?php foreach ($workout["exercise"] as $exercise): ?>
                         <form action="edit_current_exercise.php" method="POST" class="edit-workout-row">
                             <input type="hidden" name="exercise_id" value="<?= $exercise['id'] ?>">
-                            <input type="text" name="exercise_title" class="edit-workout-input-title"
+                            <input type="text" name="exercise_title" class="staff-input-primary staff-input-long"
                                    value="<?= $exercise['title'] ?>">
                             <div class="edit-workout-input-reps-sets">
                                 <label for="exercise_reps">Reps</label>
-                                <input type="text" name="exercise_reps" value="<?= $exercise['reps'] ?>">
+                                <input type="text" name="exercise_reps"
+                                       value="<?= $exercise['reps'] ?>" class="staff-input-primary staff-input-short">
                             </div>
                             <div class="edit-workout-input-reps-sets">
                                 <label for="exercise_sets">Sets</label>
-                                <input type="text" name="exercise_sets" value="<?= $exercise['sets'] ?>">
+                                <input type="text" name="exercise_sets"
+                                       value="<?= $exercise['sets'] ?>" class="staff-input-primary staff-input-short">
                             </div>
-                            <button type="submit" class="edit-workout-input-update">Update</button>
-                            <button type="submit" class="edit-workout-input-delete" formaction="delete_current_exercise.php">Delete</button>
+                            <button type="submit" class="staff-btn-outline edit-workout-input-update">
+                                Update
+                            </button>
+                            <button type="submit" class="staff-btn-outline edit-workout-input-delete"
+                                    formaction="delete_current_exercise.php">
+                                Delete
+                            </button>
                         </form>
                     <?php endforeach; ?>
                     <form action="add_exercise.php" method="POST">
-                        <button type="submit" class="edit-workout-add-exercise">+ Add Exercise</button>
+                        <button type="submit" class="staff-btn-secondary-black edit-workout-add-exercise">
+                            + Add Exercise
+                        </button>
                     </form>
                 </div>
             </div>

@@ -39,25 +39,7 @@
 .edit-workout-textarea {
     width: 100%;
     height: 150px;
-    color: var(--color-zinc-600);
-    background-color: var(--color-zinc-100);
-    border: 2px solid var(--color-zinc-400);
-    border-radius: 10px;
-    padding: 10px;
     margin: 10px 0px;
-    text-align: justify;
-    vertical-align: top;
-}
-
-.edit-workout-input-title {
-    width: 30%;
-    color: var(--color-zinc-600);
-    background-color: var(--color-zinc-100);
-    border: 2px solid var(--color-zinc-400);
-    border-radius: 10px;
-    padding: 10px;
-    margin: 5px 15px 5px 0px;
-    text-align: justify;
 }
 
 .edit-workout-input-reps-sets {
@@ -69,27 +51,17 @@
     margin: 0px 15px;
 }
 
-.edit-workout-input-reps-sets input{
-    width: 60%;
-    color: var(--color-zinc-600);
-    background-color: var(--color-zinc-100);
-    border: 2px solid var(--color-zinc-400);
-    border-radius: 10px;
-    padding: 10px;
-    margin: 5px 0px;
-    text-align: justify;
+.edit-workout-input-update {
+    margin: 0px 15px;
+    color: var(--color-zinc-800);
 }
 
 .edit-workout-input-delete {
-    background-color: transparent;
-    border: 0;
     margin: 0px 15px;
     color: var(--color-red);
 }
 
 .edit-workout-input-update {
-    background-color: transparent;
-    border: 0;
     margin: 0px 15px;
     color: var(--color-zinc-800);
 }
@@ -97,20 +69,11 @@
 .edit-workout-add-exercise {
     width: 70%;
     height: 45px;
-    background-color: transparent;
-    border: 2px solid var(--color-zinc-800);
     margin: 15px 0px;
-    border-radius: 10px;
 }
 
 .delete-workout-div {
     padding: 15px;
-    /*height: 100%;*/
-    /*width: 100%;*/
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*justify-content: center;*/
-    /*align-items: center !important;*/
 }
 
 .delete-workout-div p {

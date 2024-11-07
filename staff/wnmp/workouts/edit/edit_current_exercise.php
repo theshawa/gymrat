@@ -1,0 +1,38 @@
+<?php
+
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    die("Method not allowed");
+}
+
+if (!isset($_SESSION['workout'], $_SESSION['workout_id'])) {
+    die("Session data not set.");
+}
+
+var_dump($_POST);
+
+$workout = &$_SESSION['workout'];
+$workout_id =  &$_SESSION['workout_id'];
+$current_workout_id = $_SESSION['workout']['id'];
+$current_exercise_id = $_POST['exercise_id'];
+$status = "failed";
+
+foreach ($workout['exercise'] as $key => $exercise) {
+    if ($exercise['id'] == $current_exercise_id) {
+        $workout['exercise'][$key]['title'] = $_POST['exercise_title'];
+        $workout['exercise'][$key]['reps'] = $_POST['exercise_reps'];
+        $workout['exercise'][$key]['sets'] = $_POST['exercise_sets'];
+        $status = "success";
+    }
+}
+
+$_SESSION['workout'] = $workout;
+
+if ($workout_id == $current_workout_id) {
+    header("Location: /staff/wnmp/workouts/edit/index.php?id=$current_workout_id?updateStatus=$status");
+    exit();
+}
+
+header("Location: /staff/wnmp/workouts/index.php?");
+exit();

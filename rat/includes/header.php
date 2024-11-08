@@ -9,7 +9,14 @@ if (isset($pageConfig)) {
     $pageStyles = $pageConfig['styles'] ?? [];
 }
 
+$alert = $_GET['alert'] ?? null;
 ?>
+<?php if ($alert): ?>
+    <script>
+        alert("<?= $alert ?>");
+    </script>
+<?php endif; ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

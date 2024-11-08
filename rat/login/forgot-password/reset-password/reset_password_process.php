@@ -13,5 +13,6 @@ if ($password !== $repeat_password) {
     die("Passwords do not match");
 }
 
-echo "Password reset successfully!";
-echo "<br/>This is a dummy message, reset logic is yet to be implemented.";
+// TODO: Reset password logic here
+
+header("Location: /rat/login?alert=Password reset successfully!");

@@ -6,6 +6,7 @@ $pageConfig = [
 ];
 
 include_once "../includes/header.php";
+
 ?>
 
 <main>

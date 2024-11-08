@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $pageTitle = null;
 $pageStyles = [];
 if (isset($pageConfig)) {

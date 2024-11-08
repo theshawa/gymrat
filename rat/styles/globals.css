@@ -79,3 +79,8 @@ a {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+button {
+  border: none;
+  cursor: pointer;
+}

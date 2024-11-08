@@ -16,13 +16,21 @@ h1 {
   margin-bottom: 40px;
 }
 
-.forgot-password {
+.dimmed-link {
   margin-top: 20px;
   text-align: center;
   font-weight: 500;
   color: var(--color-zinc-500);
+  background-color: transparent;
 }
 
-.forgot-password:hover {
+.dimmed-link:hover {
   text-decoration: underline;
+}
+
+.error-message {
+  color: var(--color-red);
+  font-size: 14px;
+  margin-top: 20px;
+  font-weight: 500;
 }

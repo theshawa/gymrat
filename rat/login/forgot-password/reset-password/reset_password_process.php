@@ -15,4 +15,5 @@ if ($password !== $repeat_password) {
 
 // TODO: Reset password logic here
 
-header("Location: /rat/login?alert=Password reset successfully!");
+$_SESSION['alert'] = "Password reset successfully";
+header("Location: /rat/login");

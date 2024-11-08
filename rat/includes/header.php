@@ -8,10 +8,13 @@ if (isset($pageConfig)) {
     $pageTitle = $pageConfig['title'] ?? null;
     $pageStyles = $pageConfig['styles'] ?? [];
 }
-
-$alert = $_GET['alert'] ?? null;
 ?>
-<?php if ($alert): ?>
+<?php
+$alert = $_SESSION['alert'] ?? null;
+if ($alert) {
+    unset($_SESSION['alert']);
+};
+if ($alert): ?>
     <script>
         alert("<?= $alert ?>");
     </script>

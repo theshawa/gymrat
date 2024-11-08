@@ -35,7 +35,7 @@ if (isset($menuBarConfig)) {
 <div class="menu-bar">
     <div style="display: flex; align-items: center;">
         <?php if ($showBack && $goBackTo): ?>
-            <a href="<?= $goBackTo ?>" class="menu-bar-back">
+            <a href="/staff/includes/menubar_goback.php?goBackTo=<?= $goBackTo ?>" class="menu-bar-back">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
                 </svg>
@@ -56,7 +56,7 @@ if (isset($menuBarConfig)) {
                 <button class="option <?= empty($option['type']) ? 'primary' : $option['type'] ?>"
                     <?= !empty($option['buttonFunction']) ? 'onclick="' . $option['buttonFunction'] . '()"' : '' ?>
                         type="<?= empty($option['buttonType']) ? 'button' : $option['buttonType'] ?>"
-                    <?= !empty($option['submitAction']) ? 'name="' . $option['submitAction'] .'"' : '' ?>
+                    <?= !empty($option['formAction']) ? 'formaction="' . $option['formAction'] .'"' : '' ?>
                 >
                     <?= $option['title'] ?>
                 </button>

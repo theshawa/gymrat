@@ -1,13 +1,25 @@
 <?php
 
+session_start();
+
 $pageTitle = null;
 $pageStyles = [];
 if (isset($pageConfig)) {
     $pageTitle = $pageConfig['title'] ?? null;
     $pageStyles = $pageConfig['styles'] ?? [];
 }
-
 ?>
+<?php
+$alert = $_SESSION['alert'] ?? null;
+if ($alert) {
+    unset($_SESSION['alert']);
+};
+if ($alert): ?>
+    <script>
+        alert("<?= $alert ?>");
+    </script>
+<?php endif; ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

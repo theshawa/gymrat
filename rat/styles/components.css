@@ -3,7 +3,7 @@ h1 {
   font-size: 24px;
   line-height: 32px;
   font-weight: 600;
-  color: var(--color-zinc-300);
+  color: var(--color-zinc-200);
 }
 h1.alt {
   font-size: 28px;
@@ -14,14 +14,14 @@ h2 {
   font-size: 20px;
   line-height: 28px;
   font-weight: 600;
-  color: var(--color-zinc-300);
+  color: var(--color-zinc-200);
 }
 
 h3 {
   font-size: 15px;
   line-height: 18px;
   font-weight: 600;
-  color: var(--color-zinc-300);
+  color: var(--color-zinc-200);
   text-transform: uppercase;
   letter-spacing: 0.6px;
 }

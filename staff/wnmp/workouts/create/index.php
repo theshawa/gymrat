@@ -6,55 +6,11 @@ session_start();
 $id = $_GET['id'] ?? null;
 
 if (!isset($_SESSION['workout'])) {
-    // REPLACE THIS WITH DATABASE QUERY
     $_SESSION['workout'] = [
-        "id" => 001,
-        "title" => "Strength Training",
+        "id" => 000,
+        "title" => "New Workout",
         "description" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "exercise" => [
-            [
-                "id" => 001,
-                "title" => "Squats",
-                "sets" => 3,
-                "reps" => 10
-            ],
-            [
-                "id" => 002,
-                "title" => "Deadlifts",
-                "sets" => 3,
-                "reps" => 10
-            ],
-            [
-                "id" => 003,
-                "title" => "Bench Press",
-                "sets" => 3,
-                "reps" => 10
-            ],
-            [
-                "id" => 004,
-                "title" => "Pull-Ups",
-                "sets" => 3,
-                "reps" => 10
-            ],
-            [
-                "id" => 005,
-                "title" => "Overhead Press",
-                "sets" => 3,
-                "reps" => 10
-            ],
-            [
-                "id" => 006,
-                "title" => "Quads",
-                "sets" => 3,
-                "reps" => 10
-            ],
-            [
-                "id" => 007,
-                "title" => "Dumbbell Rows",
-                "sets" => 3,
-                "reps" => 10
-            ]
-        ],
+        "exercise" => [],
         "img" => null
     ];
     $_SESSION['workout_id'] = $_SESSION['workout']['id'];
@@ -63,9 +19,9 @@ $workout = &$_SESSION['workout'];
 
 $sidebarActive = 3;
 $menuBarConfig = [
-    "title" => "Edit " . $workout['title'],
+    "title" => "Create Workout",
     "showBack" => true,
-    "goBackTo" => "/staff/wnmp/workouts/view/index.php?id=$id",
+    "goBackTo" => "/staff/wnmp/workouts/index.php",
     "useButton" => true,
     "options" => [
         [ "title" => "Save Changes", "buttonType" => "submit", "type" => "secondary" ],
@@ -85,7 +41,7 @@ include_once "../../../includes/sidebar.php";
     <main>
         <div class="base-container">
             <div class="form">
-                <form action="edit_workout.php" method="POST">
+                <form action="create_workout.php" method="POST">
                     <?php include_once "../../../includes/menubar.php"; ?>
                     <div style="padding: 5px 10px;">
                         <h2><label for="edit-title">Title</label></h2>
@@ -100,7 +56,7 @@ include_once "../../../includes/sidebar.php";
                         </textarea>
                     </div>
                 </form>
-                <div style="padding: 5px 10px;">
+                <div style="padding: 0px 10px;">
                     <h2>Exercise</h2>
                     <?php foreach ($workout["exercise"] as $exercise): ?>
                         <form action="edit_current_exercise.php" method="POST" class="edit-workout-row">

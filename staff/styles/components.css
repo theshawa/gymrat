@@ -207,3 +207,46 @@ select:has(option:checked:not([value=""])) option {
     z-index: 50;
   }
 }
+
+/* Staff Components */
+.staff-textarea-primary {
+  color: var(--color-zinc-600);
+  background-color: var(--color-zinc-100);
+  border: 2px solid var(--color-zinc-400);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: justify;
+  vertical-align: top;
+}
+
+.staff-input-primary {
+  color: var(--color-zinc-600);
+  background-color: var(--color-zinc-100);
+  border: 2px solid var(--color-zinc-400);
+  border-radius: 10px;
+  text-align: justify;
+}
+
+.staff-input-long {
+  width: 30%;
+  padding: 10px;
+  margin: 5px 15px 5px 0px;
+}
+
+.staff-input-short {
+  width: 60%;
+  padding: 10px;
+  margin: 5px 0px;
+}
+
+.staff-btn-secondary-black {
+  background-color: transparent;
+  border: 2px solid var(--color-zinc-800);
+  border-radius: 10px;
+}
+
+.staff-btn-outline {
+  background-color: transparent;
+  border: 0;
+}
+

@@ -29,7 +29,7 @@ $workout["exercise"][] = $newExercise;
 $_SESSION['workout'] = $workout;
 
 if ($workout_id == $current_workout_id) {
-    header("Location: /staff/wnmp/workouts/edit/index.php?id=$current_workout_id");
+    header("Location: /staff/wnmp/workouts/create/index.php?id=$current_workout_id");
     exit();
 }
 

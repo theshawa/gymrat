@@ -15,24 +15,22 @@ var_dump($_POST);
 $workout = &$_SESSION['workout'];
 $workout_id =  &$_SESSION['workout_id'];
 $current_workout_id = $_SESSION['workout']['id'];
-$lastExercise = end($workout["exercise"]);
+$current_exercise_id = $_POST['exercise_id'];
+$status = "failed";
 
-$newExercise = [
-    "id" => $lastExercise['id'] + 1,
-    "title" => "Exercise",
-    "sets" => 0,
-    "reps" => 0
-];
-
-$workout["exercise"][] = $newExercise;
+foreach ($workout['exercise'] as $key => $exercise) {
+    if ($exercise['id'] == $current_exercise_id) {
+        unset($workout['exercise'][$key]);
+        $status = "success";
+    }
+}
 
 $_SESSION['workout'] = $workout;
 
 if ($workout_id == $current_workout_id) {
-    header("Location: /staff/wnmp/workouts/edit/index.php?id=$current_workout_id");
+    header("Location: /staff/wnmp/workouts/edit/index.php?id=$current_workout_id?deleteStatus=$status");
     exit();
 }
 
 header("Location: /staff/wnmp/workouts/index.php?");
 exit();
-

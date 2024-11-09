@@ -45,7 +45,7 @@ include_once "../../includes/sidebar.php";
 ?>
 
 <main>
-    <div class="base-container">
+    <div class="staff-base-container">
         <?php include_once "../../includes/menubar.php"; ?>
         <div>
             <?php include_once "../../includes/infocard.php"; ?>

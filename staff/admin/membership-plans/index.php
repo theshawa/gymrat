@@ -31,6 +31,7 @@ $membershipPlans = $membershipPlanModel->get_all();
                 <p>Duration: <?= $membershipPlan->duration ?> days</p>
                 <div class="btns">
                     <a href="edit/index.php?id=<?= $membershipPlan->id ?>" class="btn">Edit</a>
+                    <!-- TODO: Hide below buttons based on currently active customers -->
                     <button onclick="deletePlan(<?= $membershipPlan->id ?>)" class="btn">Delete</button>
                     <button onclick="lockUnlockPlan(<?= $membershipPlan->id ?>,<?= $membershipPlan->is_locked ? 0 : 1 ?>)" class="btn"><?= $membershipPlan->is_locked ? "Unlock" : "Lock" ?></button>
                 </div>

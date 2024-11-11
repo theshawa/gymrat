@@ -28,7 +28,7 @@ foreach ($workout['exercise'] as $key => $exercise) {
 $_SESSION['workout'] = $workout;
 
 if ($workout_id == $current_workout_id) {
-    header("Location: /staff/wnmp/workouts/edit/index.php?id=$current_workout_id?deleteStatus=$status");
+    header("Location: /staff/wnmp/workouts/edit/index.php?id=$current_workout_id");
     exit();
 }
 

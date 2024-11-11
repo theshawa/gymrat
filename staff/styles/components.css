@@ -209,6 +209,14 @@ select:has(option:checked:not([value=""])) option {
 }
 
 /* Staff Components */
+.staff-base-container {
+  background-color: var(--color-zinc-50);
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100% !important;
+}
+
 .staff-textarea-primary {
   color: var(--color-zinc-600);
   background-color: var(--color-zinc-100);

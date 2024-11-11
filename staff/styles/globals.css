@@ -29,9 +29,11 @@ textarea {
 
   --color-red: #d53a3a;
   --color-red-light: #f05050;
+  --color-red-light-faded: #F0505040;
 
   --color-green: #34973e;
   --color-green-light: #42b34d;
+  --color-green-light-faded: #42b34d40;
 
   font-size: 13px;
 }

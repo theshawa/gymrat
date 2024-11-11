@@ -6,7 +6,7 @@ $menuBarConfig = [
     "title" => $pageTitle,
     "useLink" => true,
     "options" => [
-        [ "title" => "Create Workout", "href" => "/staff/wnmp/workouts/create/index.php", "type" => "secondary" ]
+        ["title" => "Create Workout", "href" => "/staff/wnmp/workouts/create/index.php", "type" => "secondary"]
     ]
 ];
 $infoCardConfig = [
@@ -36,21 +36,21 @@ $infoCardConfig = [
 ];
 
 
-include_once "../pageconfig.php";
+require_once "../pageconfig.php";
 
 $pageConfig['styles'][] = "./workouts.css";
 
-include_once "../../includes/header.php";
-include_once "../../includes/sidebar.php";
+require_once "../../includes/header.php";
+require_once "../../includes/sidebar.php";
 ?>
 
 <main>
     <div class="staff-base-container">
-        <?php include_once "../../includes/menubar.php"; ?>
+        <?php require_once "../../includes/menubar.php"; ?>
         <div>
-            <?php include_once "../../includes/infocard.php"; ?>
+            <?php require_once "../../includes/infocard.php"; ?>
         </div>
     </div>
 </main>
 
-<?php include_once "../../includes/footer.php"; ?>
+<?php require_once "../../includes/footer.php"; ?>

@@ -5,7 +5,7 @@ $pageConfig = [
     "styles" => ["./login.css"],
 ];
 
-include_once "../includes/header.php";
+require_once "../includes/header.php";
 ?>
 
 <main>
@@ -17,4 +17,4 @@ include_once "../includes/header.php";
     </form>
 </main>
 
-<?php include_once "../includes/footer.php"; ?>
+<?php require_once "../includes/footer.php"; ?>

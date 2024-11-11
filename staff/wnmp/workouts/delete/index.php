@@ -60,25 +60,25 @@ $menuBarConfig = [
 ];
 
 
-include_once "../../pageconfig.php";
+require_once "../../pageconfig.php";
 
 $pageConfig['styles'][] = "../workouts.css";
 
-include_once "../../../includes/header.php";
-include_once "../../../includes/sidebar.php";
+require_once "../../../includes/header.php";
+require_once "../../../includes/sidebar.php";
 ?>
 
-    <main>
-        <div class="base-container">
-            <?php include_once "../../../includes/menubar.php"; ?>
-            <form action="delete_workout.php" method="post" class="form">
-                <div class="delete-workout-div">
-                    <h2>Are you sure you want to delete "<?= $workout["title"] ?>"?</h2>
-                    <p>This action cannot be undone.</p>
-                    <button type="submit">Delete</button>
-                </div>
-            </form>
-        </div>
-    </main>
+<main>
+    <div class="base-container">
+        <?php require_once "../../../includes/menubar.php"; ?>
+        <form action="delete_workout.php" method="post" class="form">
+            <div class="delete-workout-div">
+                <h2>Are you sure you want to delete "<?= $workout["title"] ?>"?</h2>
+                <p>This action cannot be undone.</p>
+                <button type="submit">Delete</button>
+            </div>
+        </form>
+    </div>
+</main>
 
-<?php include_once "../../../includes/footer.php"; ?>
+<?php require_once "../../../includes/footer.php"; ?>

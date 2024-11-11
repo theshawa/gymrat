@@ -5,7 +5,7 @@ $pageConfig = [
     "scripts" => ["/rat/scripts/forms.js"]
 ];
 
-include_once "../includes/header.php";
+require_once "../includes/header.php";
 
 ?>
 
@@ -26,4 +26,4 @@ include_once "../includes/header.php";
     </div>
 </main>
 
-<?php include_once "../includes/footer.php" ?>
+<?php require_once "../includes/footer.php" ?>

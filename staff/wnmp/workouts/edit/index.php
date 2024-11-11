@@ -59,8 +59,8 @@ if (!isset($_SESSION['workout'])) {
     ];
     $_SESSION['workout_id'] = $_SESSION['workout']['id'];
 }
-$workout = &$_SESSION['workout'];
 
+$workout = &$_SESSION['workout'];
 $sidebarActive = 3;
 $menuBarConfig = [
     "title" => "Edit " . $workout['title'],
@@ -71,6 +71,11 @@ $menuBarConfig = [
         [ "title" => "Save Changes", "buttonType" => "submit", "type" => "secondary" ],
         [ "title" => "Revert Changes", "buttonType" => "submit", "formAction" => "revert_exercise.php", "type" => "destructive" ]
     ]
+];
+$alertConfig = [
+    "status" => $_GET['status'] ?? null,
+    "error" => $_GET['err'] ?? null,
+    "message" => $_GET['msg'] ?? null
 ];
 
 
@@ -88,11 +93,10 @@ include_once "../../../includes/sidebar.php";
                 <form action="edit_workout.php" method="POST">
                     <?php include_once "../../../includes/menubar.php"; ?>
                     <div style="padding: 5px 10px;">
+                        <?php include_once "../../../includes/alert.php"; ?>
                         <h2><label for="edit-title">Title</label></h2>
                         <input type="text" id="edit-title" name="exercise_title"
                                class="staff-input-primary staff-input-long" value="<?= $workout['title'] ?>">
-                    </div>
-                    <div style="padding: 5px 10px;">
                         <h2><label for="edit-description">Description</label></h2>
                         <textarea id="edit-description" name="workout_desc"
                                   class="staff-textarea-primary edit-workout-textarea"

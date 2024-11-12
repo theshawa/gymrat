@@ -11,7 +11,9 @@ $id = $_POST['id'];
 require_once "../../../db/models/MembershipPlan.php";
 
 $membershipPlan = new MembershipPlan();
-$membershipPlan->fill($id);
+$membershipPlan->fill([
+    'id' => $id,
+]);
 $membershipPlan->delete();
 
 $_SESSION['alert'] = "Membership plan deleted successfully";

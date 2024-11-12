@@ -12,20 +12,24 @@ class MembershipPlan extends Model
     public float $price;
     public int $duration;
     public int $is_locked;
+    public DateTime $created_at;
+    public DateTime $updated_at;
 
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function fill(?int $id, string $name = "", string $description = "", float $price = 1, int $duration = 1, int $is_locked = 0)
+    public function fill(array $data)
     {
-        $this->id = is_null($id) ? 0 : $id;
-        $this->name = $name;
-        $this->description = $description;
-        $this->price = $price;
-        $this->duration = $duration;
-        $this->is_locked = $is_locked;
+        $this->id = $data['id'] ?? 0;
+        $this->name = $data['name'] ?? "";
+        $this->description = $data['description'] ?? "";
+        $this->price = $data['price'] ?? 1;
+        $this->duration = $data['duration'] ?? 1;
+        $this->is_locked = $data['is_locked'] ?? 0;
+        $this->created_at = $data['created_at'] ? new DateTime($data['created_at']) : new DateTime();
+        $this->updated_at = $data['updated_at'] ? new DateTime($data['updated_at']) : $this->created_at;
     }
 
 
@@ -38,11 +42,22 @@ class MembershipPlan extends Model
             $items = $stmt->fetchAll();
             return array_map(function ($item) {
                 $membershipPlan = new MembershipPlan();
-                $membershipPlan->fill($item['id'], $item['name'], $item['description'], $item['price'], $item['duration'], $item['is_locked']);
+                $membershipPlan->fill(
+                    [
+                        'id' => $item['id'],
+                        'name' => $item['name'],
+                        'description' => $item['description'],
+                        'price' => $item['price'],
+                        'duration' => $item['duration'],
+                        'is_locked' => $item['is_locked'],
+                        'created_at' => $item['created_at'],
+                        'updated_at' => $item['updated_at']
+                    ]
+                );
                 return $membershipPlan;
             }, $items);
         } catch (PDOException $e) {
-            die("error fetching membership plans: " . $e->getMessage());
+            die("[database] error fetching membership plans: " . $e->getMessage());
         }
     }
 
@@ -56,9 +71,20 @@ class MembershipPlan extends Model
             if (!$item) {
                 die("membership plan not found");
             }
-            $this->fill($item['id'], $item['name'], $item['description'], $item['price'], $item['duration'], $item['is_locked']);
+            $this->fill(
+                [
+                    'id' => $item['id'],
+                    'name' => $item['name'],
+                    'description' => $item['description'],
+                    'price' => $item['price'],
+                    'duration' => $item['duration'],
+                    'is_locked' => $item['is_locked'],
+                    'created_at' => $item['created_at'],
+                    'updated_at' => $item['updated_at']
+                ]
+            );
         } catch (PDOException $e) {
-            die("error fetching membership plan: " . $e->getMessage());
+            die("[database] error fetching membership plan: " . $e->getMessage());
         }
     }
 
@@ -76,7 +102,7 @@ class MembershipPlan extends Model
             ]);
             $this->id = $this->conn->lastInsertId();
         } catch (PDOException $e) {
-            die("error creating membership plan: " . $e->getMessage());
+            die("[database] error creating membership plan: " . $e->getMessage());
         }
     }
 
@@ -84,7 +110,7 @@ class MembershipPlan extends Model
     public function update()
     {
         try {
-            $sql = "UPDATE $this->table SET name = :name, description = :description, price = :price, duration = :duration, is_locked = :is_locked WHERE id = :id";
+            $sql = "UPDATE $this->table SET name = :name, description = :description, price = :price, duration = :duration, is_locked = :is_locked, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([
                 'name' => $this->name,
@@ -95,7 +121,7 @@ class MembershipPlan extends Model
                 'is_locked' => $this->is_locked
             ]);
         } catch (PDOException $e) {
-            die("error updating membership plan: " . $e->getMessage());
+            die("[database] error updating membership plan: " . $e->getMessage());
         }
     }
 
@@ -115,7 +141,7 @@ class MembershipPlan extends Model
             $stmt = $this->conn->prepare($sql);
             $stmt->execute(['id' => $this->id]);
         } catch (PDOException $e) {
-            die("error deleting membership plan: " . $e->getMessage());
+            die("[database] error deleting membership plan: " . $e->getMessage());
         }
     }
 }

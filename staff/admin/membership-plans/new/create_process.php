@@ -17,7 +17,12 @@ $duration = (int) $duration;
 require_once "../../../../db/models/MembershipPlan.php";
 
 $membershipPlan = new MembershipPlan();
-$membershipPlan->fill(null, $name, $description, $price, $duration);
+$membershipPlan->fill([
+    'name' => $name,
+    'description' => $description,
+    'price' => $price,
+    'duration' => $duration,
+]);
 $membershipPlan->save();
 $_SESSION['alert'] = "Membership plan created successfully";
 

@@ -26,9 +26,11 @@ $membershipPlans = $membershipPlanModel->get_all();
         <?php foreach ($membershipPlans as $membershipPlan) : ?>
             <div class="card">
                 <h2><?= $membershipPlan->name . ($membershipPlan->is_locked ? "&nbsp;<strong>[LOCKED]</strong>" : "") ?></h2>
-                <p><?= $membershipPlan->description ?></p>
+                <p style="font-weight: 500;"><?= $membershipPlan->description ?></p>
                 <p>Price: <?= $membershipPlan->price ?> LKR</p>
                 <p>Duration: <?= $membershipPlan->duration ?> days</p>
+                <p>Created at: <?= $membershipPlan->created_at->format('Y-m-d H:i:s') ?></p>
+                <p>Updated at: <?= $membershipPlan->updated_at->format('Y-m-d H:i:s') ?></p>
                 <div class="btns">
                     <a href="edit/index.php?id=<?= $membershipPlan->id ?>" class="btn">Edit</a>
                     <!-- TODO: Hide below buttons based on currently active customers -->

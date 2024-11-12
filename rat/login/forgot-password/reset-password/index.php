@@ -1,8 +1,8 @@
 <?php
 
 $pageConfig = [
-    "title" => "Login",
-    "styles" => ["../../login.css"],
+    "title" => "Reset Password",
+    "styles" => ["/rat/styles/auth.css"],
     "scripts" => ["/rat/scripts/forms.js"]
 ];
 
@@ -12,8 +12,6 @@ if (!isset($_SESSION['forgot_password_otp'])) {
     die("Your attempt to reset password is invalid! Please try again.");
 }
 unset($_SESSION['forgot_password_otp']);
-
-
 ?>
 
 <main>

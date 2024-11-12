@@ -14,11 +14,7 @@ $alert = $_SESSION['alert'] ?? null;
 if ($alert) {
     unset($_SESSION['alert']);
 };
-if ($alert): ?>
-    <script>
-        alert("<?= $alert ?>");
-    </script>
-<?php endif; ?>
+?>
 
 
 <!DOCTYPE html>
@@ -38,6 +34,11 @@ if ($alert): ?>
         echo "<link rel='stylesheet' href='$style'/>";
     }
     ?>
+    <?php if ($alert): ?>
+        <script>
+            alert("<?= $alert ?>");
+        </script>
+    <?php endif; ?>
 </head>
 
 <body>

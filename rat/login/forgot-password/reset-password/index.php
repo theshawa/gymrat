@@ -6,7 +6,7 @@ $pageConfig = [
     "scripts" => ["/rat/scripts/forms.js"]
 ];
 
-include_once "../../../includes/header.php";
+require_once "../../../includes/header.php";
 
 if (!isset($_SESSION['forgot_password_otp'])) {
     die("Your attempt to reset password is invalid! Please try again.");
@@ -37,4 +37,4 @@ unset($_SESSION['forgot_password_otp']);
     </div>
 </main>
 
-<?php include_once "../../../includes/footer.php" ?>
+<?php require_once "../../../includes/footer.php" ?>

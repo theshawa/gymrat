@@ -5,7 +5,7 @@ $pageConfig = [
     "scripts" => ["/rat/scripts/forms.js"]
 ];
 
-include_once "../../includes/header.php";
+require_once "../../includes/header.php";
 
 $isOTPVerification = $_SESSION['forgot_password_otp'] ?? null;
 $error = $_SESSION['error'] ?? null;
@@ -44,4 +44,4 @@ if ($error) {
     </div>
 </main>
 
-<?php include_once "../../includes/footer.php" ?>
+<?php require_once "../../includes/footer.php" ?>

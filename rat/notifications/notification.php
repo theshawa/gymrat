@@ -15,8 +15,8 @@ $pageConfig = [
     ],
 ];
 
-include_once "../includes/header.php";
-include_once "../includes/titlebar.php";
+require_once "../includes/header.php";
+require_once "../includes/titlebar.php";
 ?>
 
 <main>
@@ -27,5 +27,5 @@ include_once "../includes/titlebar.php";
     </p>
 </main>
 
-<?php include_once "../includes/navbar.php" ?>
-<?php include_once "../includes/footer.php" ?>
+<?php require_once "../includes/navbar.php" ?>
+<?php require_once "../includes/footer.php" ?>

@@ -100,7 +100,7 @@ select:has(option:checked:not([value=""])) option {
 /* paragraph */
 .paragraph {
   font-size: 13px;
-  color: var(--color-zinc-400);
+  color: var(--color-zinc-700);
   line-height: 20px;
 }
 
@@ -257,4 +257,3 @@ select:has(option:checked:not([value=""])) option {
   background-color: transparent;
   border: 0;
 }
-

@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $pageTitle = null;
 $pageStyles = [];
 if (isset($pageConfig)) {
@@ -7,7 +9,12 @@ if (isset($pageConfig)) {
     $pageStyles = $pageConfig['styles'] ?? [];
 }
 
+$alert = $_SESSION['alert'] ?? null;
+unset($_SESSION['alert']);
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +33,11 @@ if (isset($pageConfig)) {
         echo "<link rel='stylesheet' href='$style'/>";
     }
     ?>
+    <?php if ($alert) : ?>
+        <script>
+            alert("<?php echo $alert; ?>");
+        </script>
+    <?php endif; ?>
 </head>
 
 <body>

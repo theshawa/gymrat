@@ -65,17 +65,17 @@ $menuBarConfig = [
 ];
 
 
-include_once "../../pageconfig.php";
+require_once "../../pageconfig.php";
 
 $pageConfig['styles'][] = "../workouts.css";
 
-include_once "../../../includes/header.php";
-include_once "../../../includes/sidebar.php";
+require_once "../../../includes/header.php";
+require_once "../../../includes/sidebar.php";
 ?>
 
 <main>
     <div class="base-container">
-        <?php include_once "../../../includes/menubar.php"; ?>
+        <?php require_once "../../../includes/menubar.php"; ?>
         <div class="view-workout-container">
             <div>
                 <h2 style="margin-bottom: 20px;">
@@ -99,4 +99,4 @@ include_once "../../../includes/sidebar.php";
     </div>
 </main>
 
-<?php include_once "../../../includes/footer.php"; ?>
+<?php require_once "../../../includes/footer.php"; ?>

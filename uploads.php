@@ -17,6 +17,16 @@ function upload_file(string $folder, array $file): false|string
     }
 }
 
+function move_from_temp(string $file): bool
+{
+    $temp_file = __DIR__ . "/uploads/tmp/$file";
+    $target_file = __DIR__ . "/uploads/$file";
+    if (!file_exists(dirname($target_file))) {
+        mkdir(dirname($target_file), 0777, true);
+    }
+    return rename($temp_file, $target_file);
+}
+
 function delete_file(string $folder, string $file): bool
 {
     $file = __DIR__ . "/uploads/$folder/" . basename($file);

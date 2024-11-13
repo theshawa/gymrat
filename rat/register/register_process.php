@@ -29,7 +29,12 @@ if (isset($already_customer->id)) {
     exit();
 }
 
+require_once "../../uploads.php";
 $avatar = $_FILES['avatar']['name'] ? $_FILES['avatar'] : null;
+if ($avatar) {
+    // upload to temp folder
+    $avatar = upload_file("tmp/customer-avatars", $avatar);
+}
 
 $_SESSION['customer_registration'] = [
     'fname' => $fname,

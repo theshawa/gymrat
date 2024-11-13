@@ -34,6 +34,9 @@ $avatar = $_FILES['avatar']['name'] ? $_FILES['avatar'] : null;
 if ($avatar) {
     // upload to temp folder
     $avatar = upload_file("tmp/customer-avatars", $avatar);
+    if (!$avatar) {
+        die("failed upload avatar to temp.");
+    }
 }
 
 $_SESSION['customer_registration'] = [

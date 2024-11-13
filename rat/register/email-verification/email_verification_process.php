@@ -41,6 +41,6 @@ $customer->fill([
 ]);
 $customer->save();
 
-$_SESSION['alert'] = "Registration successful! Please login.";
+$_SESSION['alert'] = "Registration successful!";
 unset($_SESSION['customer_registration']);
-header("Location: ../../login");
+header("Location: ../onboarding/facts");

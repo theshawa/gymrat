@@ -82,8 +82,8 @@ require_once "../../includes/header.php";
             </select>
         </div>
         <div class="question">
-            <span class="title">Your allergies?</span>
-            <textarea name="allergies" class="input" placeholder="Describe your allergies briefly"></textarea>
+            <span class="title">Do you have any allergies?</span>
+            <textarea name="allergies" class="input" placeholder="Describe your allergies briefly(if there's any)"></textarea>
         </div>
         <button class="btn">Let's get started</button>
     </form>

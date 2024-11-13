@@ -1,7 +1,7 @@
 <?php
 $pageConfig = [
     "title" => "Login",
-    "styles" => ["./login.css"],
+    "styles" => ["/rat/styles/auth.css"],
     "scripts" => ["/rat/scripts/forms.js"]
 ];
 
@@ -20,8 +20,10 @@ require_once "../includes/header.php";
             </label>
             <button class="btn">Log in</button>
         </form>
-        <a href="/rat/login/forgot-password" class="dimmed-link">
+        <a href="forgot-password" class="dimmed-link">
             Forgot your password?
+        </a><a href="../register" class="dimmed-link">
+            Not registered yet?
         </a>
     </div>
 </main>

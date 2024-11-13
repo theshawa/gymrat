@@ -1,17 +1,13 @@
 <?php
 $pageConfig = [
     "title" => "Forgot Password",
-    "styles" => ["../login.css"],
+    "styles" => ["/rat/styles/auth.css"],
     "scripts" => ["/rat/scripts/forms.js"]
 ];
 
 require_once "../../includes/header.php";
 
 $isOTPVerification = $_SESSION['forgot_password_otp'] ?? null;
-$error = $_SESSION['error'] ?? null;
-if ($error) {
-    unset($_SESSION['error']);
-}
 ?>
 
 <main>
@@ -34,9 +30,6 @@ if ($error) {
                 <input required class="input" type="email" placeholder="Enter your email" name="email">
                 <button class="btn" name="action" value="send">Next</button>
             </form>
-        <?php endif; ?>
-        <?php if ($error): ?>
-            <p class="error-message"><?= $error ?>!</p>
         <?php endif; ?>
         <a href="/rat/login" class="dimmed-link">
             Go to login

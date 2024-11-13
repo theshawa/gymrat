@@ -35,13 +35,13 @@ function verifyOTP()
         // check if OTP is expired(with OTP life span of 5 minutes)
         if (time() - $_SESSION['forgot_password_otp']['created_at'] > 60 * 5) {
             unset($_SESSION['forgot_password_otp']);
-            $_SESSION['error'] = "OTP Code Expired";
+            $_SESSION['alert'] = "OTP Code Expired";
             header("Location: /rat/login/forgot-password");
             return;
         }
         header("Location: /rat/login/forgot-password/reset-password");
     } else {
-        $_SESSION['error'] = "Invalid OTP Code";
+        $_SESSION['alert'] = "Invalid OTP Code";
         header("Location: /rat/login/forgot-password");
     }
 }
@@ -50,7 +50,7 @@ function resendOTP()
 {
     if (time() - $_SESSION['forgot_password_otp']['created_at'] < 60 * $_SESSION['forgot_password_otp']['creation_attempt']) {
         $waitTime = 60 * $_SESSION['forgot_password_otp']['creation_attempt'] - (time() - $_SESSION['forgot_password_otp']['created_at']);
-        $_SESSION['error'] = "Please wait $waitTime seconds before resending OTP";
+        $_SESSION['alert'] = "Please wait $waitTime seconds before resending OTP";
         header("Location: /rat/login/forgot-password");
         return;
     }

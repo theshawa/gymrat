@@ -14,7 +14,7 @@ if (!isset($_SESSION['forgot_password_otp'])) {
 unset($_SESSION['forgot_password_otp']);
 ?>
 
-<main>
+<main class="auth">
     <div class="content">
         <img src="../../../assets/logo-gray.svg" alt="Logo">
         <h1 class="alt">Reset Password</h1>

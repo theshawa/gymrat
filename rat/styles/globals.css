@@ -64,9 +64,12 @@ body {
 }
 
 main {
-  padding: 20px;
   display: flex;
   flex-direction: column;
+}
+
+main:not(.no-padding) {
+  padding: 20px;
 }
 
 a {

@@ -10,7 +10,7 @@ require_once "../../includes/header.php";
 $isOTPVerification = $_SESSION['forgot_password_otp'] ?? null;
 ?>
 
-<main>
+<main class="auth">
     <div class="content">
         <img src="../../assets/logo-gray.svg" alt="Logo">
         <h1 class="alt">Forgot Password?</h1>

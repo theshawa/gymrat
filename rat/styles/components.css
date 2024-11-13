@@ -1,25 +1,25 @@
 /* headings */
 h1 {
   font-size: 24px;
-  line-height: 32px;
+  line-height: 1.1;
   font-weight: 600;
   color: var(--color-zinc-200);
 }
 h1.alt {
   font-size: 28px;
-  line-height: 34px;
+  line-height: 1.1;
 }
 
 h2 {
   font-size: 20px;
-  line-height: 28px;
+  line-height: 1.2;
   font-weight: 600;
   color: var(--color-zinc-200);
 }
 
 h3 {
   font-size: 15px;
-  line-height: 18px;
+  line-height: 1.2;
   font-weight: 600;
   color: var(--color-zinc-200);
   text-transform: uppercase;
@@ -150,7 +150,7 @@ main {
 .paragraph {
   font-size: 14px;
   color: var(--color-zinc-400);
-  line-height: 22px;
+  line-height: 1.4;
 }
 
 /* Titlebar */

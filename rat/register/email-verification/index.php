@@ -14,7 +14,7 @@ if (!isset($_SESSION['customer_registration'])) {
 
 ?>
 
-<main>
+<main class="auth">
     <div class="content">
         <img src="../../assets/logo-gray.svg" alt="Logo">
         <h1 class="alt">Verify your email!</h1>

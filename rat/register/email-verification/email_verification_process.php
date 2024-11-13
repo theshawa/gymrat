@@ -42,7 +42,9 @@ $customer->fill([
 // upload from temp folder to customer-avatars
 require_once "../../../uploads.php";
 $customer->avatar = $customer->avatar ? ltrim($customer->avatar, "tmp/") : null;
-move_from_temp($customer->avatar);
+if (!move_from_temp($customer->avatar)) {
+    die("failed to move avatar from temp.");
+}
 $customer->save();
 
 $_SESSION['alert'] = "Registration successful!";

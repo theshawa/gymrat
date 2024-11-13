@@ -32,13 +32,6 @@ class Customer extends Model
     public function create()
     {
         try {
-            if ($this->avatar) {
-                require_once __DIR__ . "/../../uploads.php";
-                $this->avatar = upload_file("customer-avatars", $this->avatar);
-                if (!$this->avatar) {
-                    die("[file-upload] failed to upload avatar");
-                }
-            }
             $this->password = password_hash($this->password, PASSWORD_DEFAULT);
             $sql = "INSERT INTO $this->table (fname,lname, email, phone, avatar,password) VALUES (:fname, :lname, :email, :phone, :avatar, :password)";
             $stmt = $this->conn->prepare($sql);
@@ -60,17 +53,6 @@ class Customer extends Model
     public function update()
     {
         try {
-            $old_avatar = $this->conn->query("SELECT avatar FROM $this->table WHERE id=$this->id")->fetchColumn();
-            if ($old_avatar !== $this->avatar) {
-                require_once __DIR__ . "/../../uploads.php";
-                delete_file("customer-avatars", $old_avatar);
-                if ($this->avatar) {
-                    $this->avatar = upload_file("customer-avatars", $this->avatar);
-                    if (!$this->avatar) {
-                        die("[file-upload] failed to upload avatar");
-                    }
-                }
-            }
             $this->password = password_hash($this->password, PASSWORD_DEFAULT);
             $sql = "UPDATE $this->table SET fname=:fname, lname=:lname, email=:email, phone=:phone, avatar=:avatar, password=:password WHERE id=:id";
             $stmt = $this->conn->prepare($sql);

@@ -9,7 +9,7 @@ require_once "../includes/header.php";
 
 ?>
 
-<main>
+<main class="auth">
     <div class="content">
         <img src="../assets/logo-gray.svg" alt="Logo">
         <h1 class="alt">Welcome Back!</h1>

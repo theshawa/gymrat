@@ -39,8 +39,12 @@ $customer->fill([
     'password' => $_SESSION['customer_registration']['password'],
     'avatar' => $_SESSION['customer_registration']['avatar'],
 ]);
+// upload from temp folder to customer-avatars
+require_once "../../../uploads.php";
+$customer->avatar = $customer->avatar ? ltrim($customer->avatar, "tmp/") : null;
+move_from_temp($customer->avatar);
 $customer->save();
 
-$_SESSION['alert'] = "Registration successful! Please login.";
+$_SESSION['alert'] = "Registration successful!";
 unset($_SESSION['customer_registration']);
-header("Location: ../../login");
+header("Location: ../onboarding/facts");

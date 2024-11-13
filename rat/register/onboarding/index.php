@@ -30,21 +30,21 @@ require_once "../../includes/header.php";
         <div class="question">
             <span class="title">How old are you?</span>
             <div class="line">
-                <input class="input" type="number" name="age" placeholder="16" required>
+                <input class="input" min="10" max="150" type="number" name="age" placeholder="16" required>
                 <span class="">YRS</span>
             </div>
         </div>
         <div class="question">
             <span class="title">What is your weight?</span>
             <div class="line">
-                <input class="input" type="number" name="weight" placeholder="20" required>
+                <input class="input" min="10" type="number" name="weight" placeholder="20" required>
                 <span class="">KG</span>
             </div>
         </div>
         <div class="question">
             <span class="title">What is your height?</span>
             <div class="line">
-                <input class="input" type="number" name="height" placeholder="160" required>
+                <input class="input" min="10" type="number" name="height" placeholder="160" required>
                 <span class="">CM</span>
             </div>
         </div>
@@ -58,10 +58,10 @@ require_once "../../includes/header.php";
                 <option value="shape_body">Shape Body</option>
                 <option value="other">Other</option>
             </select>
-            <textarea name="other-goal" class="input" placeholder="Describe your goal"></textarea>
+            <textarea name="other_goal" class="input" placeholder="Describe your goal briefly"></textarea>
         </div>
         <div class="question">
-            <span class="title">Physical activity level</span>
+            <span class="title">Your physical activity level?</span>
             <select name="physical_activity_level" class="input">
                 <option disabled value="">Select option</option>
                 <option value="beginner">Beginner</option>
@@ -69,12 +69,28 @@ require_once "../../includes/header.php";
                 <option value="advanced">Advanced</option>
             </select>
         </div>
+        <div class="question">
+            <span class="title">Your dietary preferences?</span>
+            <select name="dietary_preferences" class="input">
+                <option disabled value="">Select option</option>
+                <option value="vegitarian">Vegitarian</option>
+                <option value="non_vegitarian">Non-vegitarian</option>
+                <option value="gluten_free">Gluten - Free</option>
+                <option value="keto">Keto</option>
+                <option value="paleo">Paleo</option>
+                <option value="no_preferences">No Preferences</option>
+            </select>
+        </div>
+        <div class="question">
+            <span class="title">Your allergies?</span>
+            <textarea name="allergies" class="input" placeholder="Describe your allergies briefly"></textarea>
+        </div>
         <button class="btn">Let's get started</button>
     </form>
 </main>
 <script>
     const goal = document.querySelector('select[name="goal"]');
-    const otherGoal = document.querySelector('textarea[name="other-goal"]');
+    const otherGoal = document.querySelector('textarea[name="other_goal"]');
 
     otherGoal.style.display = 'none';
     otherGoal.removeAttribute('required');

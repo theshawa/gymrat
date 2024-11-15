@@ -28,50 +28,20 @@ class MembershipPlan extends Model
         $this->price = $data['price'] ?? 1;
         $this->duration = $data['duration'] ?? 1;
         $this->is_locked = $data['is_locked'] ?? 0;
-        $this->created_at = $data['created_at'] ? new DateTime($data['created_at']) : new DateTime();
-        $this->updated_at = $data['updated_at'] ? new DateTime($data['updated_at']) : $this->created_at;
+        $this->created_at = new DateTime($data['created_at'] ?? null);
+        $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? null);
     }
 
 
     public function get_all(): array
     {
-        try {
-            $sql = "SELECT * FROM $this->table";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute();
-            $items = $stmt->fetchAll();
-            return array_map(function ($item) {
-                $membershipPlan = new MembershipPlan();
-                $membershipPlan->fill(
-                    [
-                        'id' => $item['id'],
-                        'name' => $item['name'],
-                        'description' => $item['description'],
-                        'price' => $item['price'],
-                        'duration' => $item['duration'],
-                        'is_locked' => $item['is_locked'],
-                        'created_at' => $item['created_at'],
-                        'updated_at' => $item['updated_at']
-                    ]
-                );
-                return $membershipPlan;
-            }, $items);
-        } catch (PDOException $e) {
-            die("[database] error fetching membership plans: " . $e->getMessage());
-        }
-    }
-
-    public function get_by_id(int $id)
-    {
-        try {
-            $sql = "SELECT * FROM $this->table WHERE id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['id' => $id]);
-            $item = $stmt->fetch();
-            if (!$item) {
-                die("membership plan not found");
-            }
-            $this->fill(
+        $sql = "SELECT * FROM $this->table";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        return array_map(function ($item) {
+            $membershipPlan = new MembershipPlan();
+            $membershipPlan->fill(
                 [
                     'id' => $item['id'],
                     'name' => $item['name'],
@@ -83,46 +53,59 @@ class MembershipPlan extends Model
                     'updated_at' => $item['updated_at']
                 ]
             );
-        } catch (PDOException $e) {
-            die("[database] error fetching membership plan: " . $e->getMessage());
+            return $membershipPlan;
+        }, $items);
+    }
+
+    public function get_by_id(int $id)
+    {
+        $sql = "SELECT * FROM $this->table WHERE id = :id LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $item = $stmt->fetch();
+        if (!$item) {
+            die("membership plan not found");
         }
+        $this->fill(
+            [
+                'id' => $item['id'],
+                'name' => $item['name'],
+                'description' => $item['description'],
+                'price' => $item['price'],
+                'duration' => $item['duration'],
+                'is_locked' => $item['is_locked'],
+                'created_at' => $item['created_at'],
+                'updated_at' => $item['updated_at']
+            ]
+        );
     }
 
     public function create()
     {
-        try {
-            $sql = "INSERT INTO $this->table (name, description, price, duration, is_locked) VALUES (:name, :description, :price, :duration, :is_locked)";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([
-                'name' => $this->name,
-                'description' => $this->description,
-                'price' => $this->price,
-                'duration' => $this->duration,
-                'is_locked' => $this->is_locked
-            ]);
-            $this->id = $this->conn->lastInsertId();
-        } catch (PDOException $e) {
-            die("[database] error creating membership plan: " . $e->getMessage());
-        }
+        $sql = "INSERT INTO $this->table (name, description, price, duration, is_locked) VALUES (:name, :description, :price, :duration, :is_locked)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'name' => $this->name,
+            'description' => $this->description,
+            'price' => $this->price,
+            'duration' => $this->duration,
+            'is_locked' => $this->is_locked
+        ]);
     }
 
 
     public function update()
     {
-        try {
-            $sql = "UPDATE $this->table SET name = :name, description = :description, price = :price, duration = :duration, is_locked = :is_locked, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([
-                'name' => $this->name,
-                'description' => $this->description,
-                'price' => $this->price,
-                'duration' => $this->duration,
-                'id' => $this->id,
-                'is_locked' => $this->is_locked
-            ]);
-        } catch (PDOException $e) {
-            die("[database] error updating membership plan: " . $e->getMessage());
-        }
+        $sql = "UPDATE $this->table SET name = :name, description = :description, price = :price, duration = :duration, is_locked = :is_locked, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'name' => $this->name,
+            'description' => $this->description,
+            'price' => $this->price,
+            'duration' => $this->duration,
+            'id' => $this->id,
+            'is_locked' => $this->is_locked
+        ]);
     }
 
     public function save()
@@ -136,12 +119,8 @@ class MembershipPlan extends Model
 
     public function delete()
     {
-        try {
-            $sql = "DELETE FROM $this->table WHERE id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['id' => $this->id]);
-        } catch (PDOException $e) {
-            die("[database] error deleting membership plan: " . $e->getMessage());
-        }
+        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
     }
 }

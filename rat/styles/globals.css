@@ -47,10 +47,12 @@ textarea {
 
   font-size: 14px;
   background-color: #212121;
+
+  --body-width: 430px;
 }
 
 body {
-  max-width: 430px;
+  max-width: var(--body-width);
   margin: 0 auto;
   min-height: 100vh;
   background-color: var(--color-zinc-950);

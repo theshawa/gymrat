@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2024 at 04:19 PM
+-- Generation Time: Nov 15, 2024 at 06:33 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -74,8 +74,8 @@ CREATE TABLE `membership_plans` (
 --
 
 INSERT INTO `membership_plans` (`id`, `name`, `description`, `price`, `duration`, `is_locked`, `created_at`, `updated_at`) VALUES
-(14, 'Test', 'sdf', 234, 238, 1, '2024-11-12 08:26:41', '2024-11-12 08:31:47'),
-(15, 'Test 2', 'adsa', 123, 123, 0, '2024-11-12 08:27:12', '2024-11-12 08:32:29');
+(21, 'test', 'asd', 132, 1234, 0, '2024-11-15 12:48:13', '2024-11-15 12:48:13'),
+(29, 'Theshawa', '132', 123, 123, 0, '2024-11-15 12:53:13', '2024-11-15 12:54:49');
 
 --
 -- Indexes for dumped tables
@@ -109,13 +109,13 @@ ALTER TABLE `membership_plans`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `membership_plans`
 --
 ALTER TABLE `membership_plans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

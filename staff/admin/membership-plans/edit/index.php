@@ -10,10 +10,16 @@ require_once "../../../includes/sidebar.php";
 
 require_once "../../../../db/models/MembershipPlan.php";
 
+require_once "../../../../alerts/functions.php";
+
+
 $id = $_GET["id"];
 $membershipPlan = new MembershipPlan();
-$membershipPlan->get_by_id($id);
-
+try {
+    $membershipPlan->get_by_id($id);
+} catch (PDOException $e) {
+    redirect_with_error_alert("Failed to fetch membership plan: " . $e->getMessage(), "/staff/admin/membership-plans");
+}
 
 ?>
 

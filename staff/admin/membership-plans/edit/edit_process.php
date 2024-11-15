@@ -2,8 +2,11 @@
 
 session_start();
 
+require_once "../../../../alerts/functions.php";
+
+
 if (!$_SERVER["REQUEST_METHOD"] === "POST") {
-    die("method not allowed");
+    redirect_with_error_alert("Method not allowed", "/staff/admin/membership-plans");
 }
 
 $id = $_POST['id'];
@@ -25,7 +28,14 @@ $membershipPlan->fill([
     'price' => $price,
     'duration' => $duration,
 ]);
-$membershipPlan->save();
-$_SESSION['alert'] = "Membership plan updated successfully";
 
-header("Location: ../index.php");
+try {
+    $membershipPlan->save();
+} catch (PDOException $e) {
+    if ($e->errorInfo[1] == 1062) {
+        redirect_with_error_alert("Failed to edit membership plan due to an error: Membership plan with the same name already exists", "/staff/admin/membership-plans/edit?id=" . $id);
+    }
+    redirect_with_error_alert("Failed to update membership plan due to an error: " . $e->getMessage(), "/staff/admin/membership-plans/edit?id=" . $id);
+}
+
+redirect_with_success_alert("Membership plan updated successfully", "/staff/admin/membership-plans");

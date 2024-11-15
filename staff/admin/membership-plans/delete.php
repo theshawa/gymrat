@@ -10,12 +10,17 @@ $id = $_POST['id'];
 
 require_once "../../../db/models/MembershipPlan.php";
 
+require_once "../../../alerts/functions.php";
+
+
 $membershipPlan = new MembershipPlan();
 $membershipPlan->fill([
     'id' => $id,
 ]);
-$membershipPlan->delete();
+try {
+    $membershipPlan->delete();
+} catch (PDOException $e) {
+    redirect_with_error_alert("Failed to delete membership plan due to an error: " . $e->getMessage(), "/staff/admin/membership-plans");
+}
 
-$_SESSION['alert'] = "Membership plan deleted successfully";
-
-header("Location: index.php");
+redirect_with_success_alert("Membership plan deleted successfully", "/staff/admin/membership-plans");

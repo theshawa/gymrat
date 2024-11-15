@@ -1,7 +1,9 @@
 <?php
 
+require_once "../../../alerts/functions.php";
+
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    die("method not allowed");
+    redirect_with_error_alert("Method not allowed", "/rat/login/forgot-password");
 }
 
 session_start();
@@ -35,14 +37,11 @@ function verifyOTP()
         // check if OTP is expired(with OTP life span of 5 minutes)
         if (time() - $_SESSION['forgot_password_otp']['created_at'] > 60 * 5) {
             unset($_SESSION['forgot_password_otp']);
-            $_SESSION['alert'] = "OTP Code Expired";
-            header("Location: /rat/login/forgot-password");
-            return;
+            redirect_with_error_alert("OTP Code Expired", "/rat/login/forgot-password");
         }
         header("Location: /rat/login/forgot-password/reset-password");
     } else {
-        $_SESSION['alert'] = "Invalid OTP Code";
-        header("Location: /rat/login/forgot-password");
+        redirect_with_error_alert("Invalid OTP Code", "/rat/login/forgot-password");
     }
 }
 
@@ -50,16 +49,14 @@ function resendOTP()
 {
     if (time() - $_SESSION['forgot_password_otp']['created_at'] < 60 * $_SESSION['forgot_password_otp']['creation_attempt']) {
         $waitTime = 60 * $_SESSION['forgot_password_otp']['creation_attempt'] - (time() - $_SESSION['forgot_password_otp']['created_at']);
-        $_SESSION['alert'] = "Please wait $waitTime seconds before resending OTP";
-        header("Location: /rat/login/forgot-password");
-        return;
+        redirect_with_error_alert("Please wait $waitTime seconds before resending OTP", "/rat/login/forgot-password");
     }
     sendOTP($_SESSION['forgot_password_otp']['email'], $_SESSION['forgot_password_otp']['creation_attempt'] + 1);
 }
 
 
 if (!isset($_POST['action'])) {
-    die("no action provided!");
+    redirect_with_error_alert("No action provided", "/rat/login/forgot-password");
 }
 
 switch ($_POST['action']) {
@@ -73,5 +70,5 @@ switch ($_POST['action']) {
         resendOTP();
         break;
     default:
-        die("Invalid action");
+        redirect_with_error_alert("Invalid action", "/rat/login/forgot-password");
 }

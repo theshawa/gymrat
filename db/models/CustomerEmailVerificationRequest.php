@@ -26,42 +26,30 @@ class CustomerEmailVerificationRequest extends Model
 
     public function create()
     {
-        try {
-            $sql = "INSERT INTO $this->table (email, code, creation_attempt) VALUES (:email, :code, :creation_attempt)";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([
-                'email' => $this->email,
-                'code' => $this->code,
-                'creation_attempt' => $this->creation_attempt
-            ]);
-        } catch (PDOException $e) {
-            die("[database] error creating customer email verification request: " . $e->getMessage());
-        }
+        $sql = "INSERT INTO $this->table (email, code, creation_attempt) VALUES (:email, :code, :creation_attempt)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'email' => $this->email,
+            'code' => $this->code,
+            'creation_attempt' => $this->creation_attempt
+        ]);
     }
 
     public function get_by_email(string $email)
     {
-        try {
-            $sql = "SELECT * FROM $this->table WHERE email = :email";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['email' => $email]);
-            $item = $stmt->fetch();
-            if ($item) {
-                $this->fill($item);
-            }
-        } catch (PDOException $e) {
-            die("[database] error fetching customer email verification request: " . $e->getMessage());
+        $sql = "SELECT * FROM $this->table WHERE email = :email";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['email' => $email]);
+        $item = $stmt->fetch();
+        if ($item) {
+            $this->fill($item);
         }
     }
 
     public function delete()
     {
-        try {
-            $sql = "DELETE FROM $this->table WHERE email = :email";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['email' => $this->email]);
-        } catch (PDOException $e) {
-            die("[database] error deleting customer email verification request: " . $e->getMessage());
-        }
+        $sql = "DELETE FROM $this->table WHERE email = :email";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['email' => $this->email]);
     }
 }

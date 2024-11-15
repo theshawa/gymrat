@@ -31,43 +31,35 @@ class Customer extends Model
 
     public function create()
     {
-        try {
-            $this->password = password_hash($this->password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO $this->table (fname,lname, email, phone, avatar,password) VALUES (:fname, :lname, :email, :phone, :avatar, :password)";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([
-                'fname' => $this->fname,
-                'lname' => $this->lname,
-                'email' => $this->email,
-                'phone' => $this->phone,
-                'avatar' => $this->avatar,
-                'password' => $this->password
-            ]);
-            $this->id = $this->conn->lastInsertId();
-        } catch (PDOException $e) {
-            die("[database] error creating customer: " . $e->getMessage());
-        }
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        $sql = "INSERT INTO $this->table (fname,lname, email, phone, avatar,password) VALUES (:fname, :lname, :email, :phone, :avatar, :password)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'fname' => $this->fname,
+            'lname' => $this->lname,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'avatar' => $this->avatar,
+            'password' => $this->password
+        ]);
+        $this->id = $this->conn->lastInsertId();
     }
 
 
     public function update()
     {
-        try {
-            $this->password = password_hash($this->password, PASSWORD_DEFAULT);
-            $sql = "UPDATE $this->table SET fname=:fname, lname=:lname, email=:email, phone=:phone, avatar=:avatar, password=:password WHERE id=:id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([
-                'id' => $this->id,
-                'fname' => $this->fname,
-                'lname' => $this->lname,
-                'email' => $this->email,
-                'phone' => $this->phone,
-                'avatar' => $this->avatar,
-                'password' => $this->password
-            ]);
-        } catch (PDOException $e) {
-            die("[database] error updating customer: " . $e->getMessage());
-        }
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        $sql = "UPDATE $this->table SET fname=:fname, lname=:lname, email=:email, phone=:phone, avatar=:avatar, password=:password WHERE id=:id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'id' => $this->id,
+            'fname' => $this->fname,
+            'lname' => $this->lname,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'avatar' => $this->avatar,
+            'password' => $this->password
+        ]);
     }
 
     public function save()
@@ -79,19 +71,14 @@ class Customer extends Model
         }
     }
 
-    public function get_by_email(string $email): Customer
+    public function get_by_email(string $email)
     {
-        try {
-            $sql = "SELECT * FROM $this->table WHERE email=:email";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['email' => $email]);
-            $data = $stmt->fetch();
-            if ($data) {
-                $this->fill($data);
-            }
-        } catch (PDOException $e) {
-            die("[database] error fetching customer: " . $e->getMessage());
+        $sql = "SELECT * FROM $this->table WHERE email=:email";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['email' => $email]);
+        $data = $stmt->fetch();
+        if ($data) {
+            $this->fill($data);
         }
-        return $this;
     }
 }

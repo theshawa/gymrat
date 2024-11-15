@@ -11,8 +11,16 @@ require_once "../../includes/sidebar.php";
 
 require_once "../../../db/models/MembershipPlan.php";
 
+require_once "../../../alerts/functions.php";
+
+$membershipPlans = [];
 $membershipPlanModel = new MembershipPlan();
-$membershipPlans = $membershipPlanModel->get_all();
+try {
+    $membershipPlans = $membershipPlanModel->get_all();
+} catch (Exception $e) {
+    redirect_with_error_alert("Failed to fetch membership plans: " . $e->getMessage(), "/staff/admin");
+}
+
 ?>
 
 <main>

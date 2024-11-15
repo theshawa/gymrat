@@ -1,7 +1,9 @@
 <?php
 
+require_once "../../../../alerts/functions.php";
+
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    die("method not allowed");
+    redirect_with_error_alert("Method not allowed", "/rat/login");
 }
 
 session_start();
@@ -10,10 +12,9 @@ $password = $_POST['password'];
 $repeat_password = $_POST['repeat_password'];
 
 if ($password !== $repeat_password) {
-    die("Passwords do not match");
+    redirect_with_alert("Passwords do not match. Please start process again.", "/rat/login/forgot-password");
 }
 
 // TODO: Reset password logic here
 
-$_SESSION['alert'] = "Password reset successfully";
-header("Location: /rat/login");
+redirect_with_success_alert("Password reset successfully", "/rat/login");

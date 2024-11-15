@@ -8,8 +8,10 @@ $pageConfig = [
 
 require_once "../../includes/header.php";
 
+require_once "../../../alerts/functions.php";
+
 if (!isset($_SESSION['customer_registration'])) {
-    die("invalid request");
+    redirect_with_error_alert("Invalid request", "/rat/register");
 }
 
 ?>

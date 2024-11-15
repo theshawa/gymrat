@@ -8,8 +8,10 @@ $pageConfig = [
 
 require_once "../../../includes/header.php";
 
+require_once "../../../../alerts/functions.php";
+
 if (!isset($_SESSION['forgot_password_otp'])) {
-    die("Your attempt to reset password is invalid! Please try again.");
+    redirect_with_error_alert("Your attempt to reset password is invalid! Please try again.", "/rat/login");
 }
 unset($_SESSION['forgot_password_otp']);
 ?>
@@ -22,10 +24,10 @@ unset($_SESSION['forgot_password_otp']);
         <br>
         <form class="form" action="reset_password_process.php" method="post">
             <label for="password" class="password-field">
-                <input required class="input" type="password" placeholder="New Password" name="password">
+                <input required class="input" minlength="6" type="password" placeholder="New Password" name="password">
             </label>
             <label for="repeat_password" class="password-field">
-                <input required type="password" name="repeat_password" placeholder="Repeat password">
+                <input required type="password" minlength="6" name="repeat_password" placeholder="Repeat password">
             </label>
             <button class="btn">Reset</button>
         </form>

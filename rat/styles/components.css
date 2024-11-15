@@ -249,3 +249,53 @@ main {
   text-transform: uppercase;
   padding-left: 15px;
 }
+
+/* Alert */
+.alert-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px;
+  z-index: 99999999;
+  width: 100%;
+  max-width: calc(min(100vw, var(--body-width)));
+}
+
+.alert {
+  display: flex;
+  margin: auto;
+  backdrop-filter: blur(16px);
+  font-weight: 500;
+  width: max-content;
+  max-width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  gap: 8px;
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.05);
+}
+
+.alert svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.alert.error {
+  background-color: rgba(213, 58, 58, 0.9);
+  color: var(--color-zinc-50);
+}
+
+.alert.success {
+  background-color: rgba(52, 151, 62, 0.9);
+  color: var(--color-zinc-50);
+}
+
+.alert.info {
+  background-color: rgba(39, 39, 42, 0.9);
+  color: var(--color-zinc-50);
+}

@@ -121,3 +121,100 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workouts`
+--
+
+CREATE TABLE `workouts` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `name` varchar(100) NOT NULL,
+    `description` varchar(500) NOT NULL,
+    `duration` int(11) NOT NULL COMMENT 'In Days',
+    `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+    `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --
+-- -- AUTO_INCREMENT for table `workouts`
+-- --
+-- ALTER TABLE workouts MODIFY id INT(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Dumping data for table `workouts`
+--
+INSERT INTO workouts (name, description, duration) VALUES
+   ('Strength Training', 'Squats, Deadlifts, Bench Press, Pull-Ups, Overhead Press, Lunges, Quads, Dumbbell Rows', 30),
+   ('Cardio', 'Running, Cycling, Swimming, Rowing, Jump Rope, Stair Climbing, Hiking, Elliptical', 30),
+   ('Flexibility', 'Stretching, Yoga, Pilates, Tai Chi, Foam Rolling, Dynamic Stretching, Static Stretching', 30);
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exercise`
+--
+
+CREATE TABLE `exercises` (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(100) NOT NULL,
+        `description` varchar(500) NOT NULL,
+        `video_link` varchar(500) NOT NULL,
+        `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+        `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+        PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --
+-- -- AUTO_INCREMENT for table `exercises`
+-- --
+-- ALTER TABLE exercises MODIFY id INT(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Dumping data for table `exercises`
+--
+
+INSERT INTO exercises (name, description, video_link) VALUES
+        ('Squats', 'A compound exercise that targets the lower body, including the quadriceps and glutes.', 'https://example.com/squats'),
+        ('Deadlifts', 'A compound exercise targeting the back, glutes, and hamstrings.', 'https://example.com/deadlifts'),
+        ('Bench Press', 'Targets the chest, shoulders, and triceps.', 'https://example.com/bench-press'),
+        ('Pull-Ups', 'An upper-body exercise that targets the back and biceps.', 'https://example.com/pull-ups'),
+        ('Overhead Press', 'Strengthens shoulders, upper chest, and triceps.', 'https://example.com/overhead-press'),
+        ('Lunges', 'Targets quadriceps, hamstrings, and glutes.', 'https://example.com/lunges'),
+        ('Quads', 'Focuses on the quadriceps muscle group.', 'https://example.com/quads'),
+        ('Dumbbell Rows', 'Strengthens the back and biceps.', 'https://example.com/dumbbell-rows');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workout_exercises`
+--
+
+CREATE TABLE workout_exercises (
+        id INT(11) NOT NULL AUTO_INCREMENT,
+        workout_id INT(11) NOT NULL,
+        exercise_id INT(11) NOT NULL,
+        day INT(11) NOT NULL,
+        sets INT(11) NOT NULL,
+        reps INT(11) NOT NULL,
+        PRIMARY KEY (id),
+        FOREIGN KEY (workout_id) REFERENCES workouts(id),
+        FOREIGN KEY (exercise_id) REFERENCES exercises(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `workout_exercises`
+--
+
+INSERT INTO workout_exercises (workout_id, exercise_id, day, sets, reps) VALUES
+        (1, 1, 1, 4, 10), -- Squats
+        (1, 2, 1, 3, 8),  -- Deadlifts
+        (1, 3, 2, 4, 12), -- Bench Press
+        (1, 4, 2, 3, 10), -- Pull-Ups
+        (1, 5, 3, 4, 8),  -- Overhead Press
+        (1, 6, 3, 3, 12), -- Lunges
+        (1, 7, 4, 4, 10), -- Quads
+        (1, 8, 4, 3, 12); -- Dumbbell Rows

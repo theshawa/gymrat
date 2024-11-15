@@ -11,11 +11,19 @@ $status = $_POST['status'];
 
 require_once "../../../db/models/MembershipPlan.php";
 
+require_once "../../../alerts/functions.php";
+
 $membershipPlan = new MembershipPlan();
-$membershipPlan->get_by_id($id);
+try {
+    $membershipPlan->get_by_id($id);
+} catch (PDOException $e) {
+    redirect_with_error_alert("Failed to lock/unlock membership plan due to an error: " . $e->getMessage(), "/staff/admin/membership-plans");
+}
 $membershipPlan->is_locked = (int) $status;
-$membershipPlan->save();
+try {
+    $membershipPlan->save();
+} catch (PDOException $e) {
+    redirect_with_error_alert("Failed to change locked status of membership plan due to an error: " . $e->getMessage(), "/staff/admin/membership-plans");
+}
 
-$_SESSION['alert'] = "Membership plan " . ($status == 1 ? "locked" : "unlocked") . " successfully";
-
-header("Location: index.php");
+redirect_with_success_alert("Membership plan " . ($status == 1 ? "locked" : "unlocked") . " successfully", "/staff/admin/membership-plans");

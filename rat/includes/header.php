@@ -9,12 +9,6 @@ if (isset($pageConfig)) {
     $pageStyles = $pageConfig['styles'] ?? [];
 }
 ?>
-<?php
-$alert = $_SESSION['alert'] ?? null;
-if ($alert) {
-    unset($_SESSION['alert']);
-};
-?>
 
 
 <!DOCTYPE html>
@@ -34,11 +28,7 @@ if ($alert) {
         echo "<link rel='stylesheet' href='$style'/>";
     }
     ?>
-    <?php if ($alert): ?>
-        <script>
-            alert("<?= $alert ?>");
-        </script>
-    <?php endif; ?>
 </head>
 
 <body>
+    <?php require_once __DIR__ . "/../../alerts/view.php" ?>

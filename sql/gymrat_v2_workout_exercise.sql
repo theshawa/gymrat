@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2024 at 02:50 PM
+-- Generation Time: Nov 16, 2024 at 11:45 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -62,10 +62,10 @@ CREATE TABLE `exercises` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` varchar(500) NOT NULL,
-  `video_link` varchar(500) NOT NULL,
-  `image` varchar(255) NOT NULL DEFAULT '',
+  `video_link` varchar(255) DEFAULT 'https://www.youtube.com/watch?v=a3ICNMQW7Ok',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `image` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -73,14 +73,14 @@ CREATE TABLE `exercises` (
 --
 
 INSERT INTO `exercises` (`id`, `name`, `description`, `video_link`, `created_at`, `updated_at`, `image`) VALUES
-(1, 'Squats', 'A compound exercise that targets the lower body, including the quadriceps and glutes.', 'https://example.com/squats', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
-(2, 'Deadlifts', 'A compound exercise targeting the back, glutes, and hamstrings.', 'https://example.com/deadlifts', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
-(3, 'Bench Press', 'Targets the chest, shoulders, and triceps.', 'https://example.com/bench-press', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
-(4, 'Pull-Ups', 'An upper-body exercise that targets the back and biceps.', 'https://example.com/pull-ups', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
-(5, 'Overhead Press', 'Strengthens shoulders, upper chest, and triceps.', 'https://example.com/overhead-press', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
-(6, 'Lunges', 'Targets quadriceps, hamstrings, and glutes.', 'https://example.com/lunges', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
-(7, 'Quads', 'Focuses on the quadriceps muscle group.', 'https://example.com/quads', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
-(8, 'Dumbbell Rows', 'Strengthens the back and biceps.', 'https://example.com/dumbbell-rows', '2024-11-15 06:32:46', '2024-11-15 06:32:46', '');
+(1, 'Squats', 'Squats are a fundamental lower-body exercise that targets multiple muscle groups, including the quadriceps, hamstrings, glutes, and core. They help improve strength, stability, and overall athletic performance.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
+(2, 'Deadlifts', 'A compound exercise targeting the back, glutes, and hamstrings.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
+(3, 'Bench Press', 'Targets the chest, shoulders, and triceps.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
+(4, 'Pull-Ups', 'An upper-body exercise that targets the back and biceps.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
+(5, 'Overhead Press', 'Strengthens shoulders, upper chest, and triceps.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
+(6, 'Lunges', 'Targets quadriceps, hamstrings, and glutes.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
+(7, 'Quads', 'Focuses on the quadriceps muscle group.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
+(8, 'Dumbbell Rows', 'Strengthens the back and biceps.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', '');
 
 -- --------------------------------------------------------
 

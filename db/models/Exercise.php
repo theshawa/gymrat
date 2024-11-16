@@ -53,4 +53,26 @@ class Exercise extends Model
             return $exercise;
         }, $items);
     }
+
+    public function get_by_id(int $id)
+    {
+        $sql = "SELECT * FROM $this->table WHERE id = :id LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $item = $stmt->fetch();
+        if (!$item) {
+            die("Exercise not found");
+        }
+        $this->fill(
+            [
+                'id' => $item['id'],
+                'name' => $item['name'],
+                'description' => $item['description'],
+                'video_link' => $item['video_link'],
+                'image' => $item['image'],
+                'created_at' => $item['created_at'],
+                'updated_at' => $item['updated_at']
+            ]
+        );
+    }
 }

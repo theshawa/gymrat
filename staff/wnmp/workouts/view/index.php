@@ -74,7 +74,7 @@ require_once "../../../includes/sidebar.php";
 ?>
 
 <main>
-    <div class="base-container">
+    <div class="staff-base-container">
         <?php require_once "../../../includes/menubar.php"; ?>
         <div class="view-workout-container">
             <div>

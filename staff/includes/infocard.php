@@ -32,6 +32,13 @@ if (isset($infoCardConfig)) {
 if (!$isCardInList) {
     $newCards = [];
     foreach ($cards as $card) {
+        $description = $card->description;
+        $wordLimit = 20;
+
+        $descriptionWordsArray = explode(' ', $description);
+        $descriptionFirstSegment = array_slice($descriptionWordsArray, 0, $wordLimit);
+        $card->description = implode(' ', $descriptionFirstSegment) . (count($descriptionWordsArray) > $wordLimit ? '...' : '');
+
         $newCards[] = [
             "id" => $card->id,
             "title" => $card->name,

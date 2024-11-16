@@ -36,12 +36,6 @@
     flex-direction: row;
 }
 
-.edit-workout-textarea {
-    width: 100%;
-    height: 150px;
-    margin: 10px 0px;
-}
-
 .edit-workout-input-reps-sets {
     width: 10%;
     display: flex;

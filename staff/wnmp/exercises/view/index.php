@@ -13,6 +13,7 @@ try {
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch exercise: " . $e->getMessage(), "/staff/wnmp");
 }
+$_SESSION['exercise'] = $exercise;
 
 $menuBarConfig = [
     "title" => $exercise->name,

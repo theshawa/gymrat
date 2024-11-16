@@ -38,11 +38,27 @@ require_once "../../../includes/sidebar.php";
     <div class="staff-base-container">
         <?php require_once "../../../includes/menubar.php"; ?>
         <div class="base-sub-container">
-<!--            <p>--><?php //= $exercise->name ?><!--</p>-->
-            <h2 style="margin-bottom: 10px;">
-                Description
-            </h2>
-            <p><?= $exercise->description?></p>
+            <div>
+                <h2 style="margin-bottom: 10px;">
+                    Description
+                </h2>
+                <p><?= $exercise->description?></p>
+            </div>
+            <div style="margin: 20px 0px;">
+                <h2 style="margin: 10px 0px;">
+                    Video Tutorial
+                </h2>
+                <?php if ($exercise->video_link): ?>
+                    <iframe src="<?= $exercise->video_link ?>"
+                            class="exercise-video-iframe"
+                            allow="autoplay"
+                            frameborder="0">
+                    </iframe>
+                <?php else: ?>
+                    <p>No video tutorial available</p>
+                <?php endif; ?>
+            </div>
+
         </div>
     </div>
 </main>

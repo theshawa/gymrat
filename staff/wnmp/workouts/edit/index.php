@@ -1,6 +1,5 @@
 <?php
 
-// check for session and destroy
 session_start();
 
 $id = $_GET['id'] ?? null;

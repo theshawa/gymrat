@@ -3,7 +3,6 @@ $id = $_GET['id'] ?? null;
 
 $sidebarActive = 2;
 
-
 require_once "../../../../db/models/Exercise.php";
 require_once "../../../../alerts/functions.php";
 

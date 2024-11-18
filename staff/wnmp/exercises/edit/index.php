@@ -3,27 +3,28 @@
 session_start();
 
 $id = $_GET['id'] ?? null;
+$_SESSION['exercise_id'] = $id;
 
 $sidebarActive = 2;
 
 require_once "../../../../db/models/Exercise.php";
 require_once "../../../../alerts/functions.php";
 
+$exercise = new Exercise();
 if (!isset($_SESSION['exercise'])) {
-    $exercise = new Exercise();
     try {
         $exercise->get_by_id($id);
-//        $_SESSION['exercise'] = $exercise;
     } catch (Exception $e) {
         redirect_with_error_alert("Failed to fetch exercise: " . $e->getMessage(), "/staff/wnmp");
     }
+} else {
+    $exercise = &$_SESSION['exercise'];
 }
-//$exercise = &$_SESSION['exercise'];
 
 $menuBarConfig = [
     "title" => "Edit " . $exercise->name,
     "showBack" => true,
-    "goBackTo" => "/staff/wnmp/workouts/view/index.php?id=$id",
+    "goBackTo" => "/staff/wnmp/exercises/view/index.php?id=$id",
     "useButton" => true,
     "options" => [
         ["title" => "Save Changes", "buttonType" => "submit", "type" => "secondary"],
@@ -52,6 +53,7 @@ require_once "../../../includes/sidebar.php";
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
                     <?php require_once "../../../includes/alert.php"; ?>
+                    <input type="hidden" name="exercise_id" value="<?= $exercise->id?>">
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-title">Title</label></h2>
                         <input type="text" id="edit-title" name="exercise_name"

@@ -10,7 +10,7 @@ $exercise = new Exercise();
 try {
     $exercise->get_by_id($id);
 } catch (Exception $e) {
-    redirect_with_error_alert("Failed to fetch exercise: " . $e->getMessage(), "/staff/wnmp");
+    redirect_with_error_alert("Failed to fetch exercise: " . $e->getMessage(), "/staff/wnmp/exercises");
 }
 $_SESSION['exercise'] = $exercise;
 

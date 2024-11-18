@@ -31,11 +31,6 @@ $menuBarConfig = [
         ["title" => "Revert Changes", "buttonType" => "submit", "formAction" => "revert_exercise.php", "type" => "destructive"]
     ]
 ];
-$alertConfig = [
-    "status" => $_GET['status'] ?? null,
-    "error" => $_GET['err'] ?? null,
-    "message" => $_GET['msg'] ?? null
-];
 
 
 require_once "../../pageconfig.php";
@@ -52,7 +47,6 @@ require_once "../../../includes/sidebar.php";
             <form action="edit_exercise.php" method="POST">
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
-                    <?php require_once "../../../includes/alert.php"; ?>
                     <input type="hidden" name="exercise_id" value="<?= $exercise->id?>">
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-title">Title</label></h2>

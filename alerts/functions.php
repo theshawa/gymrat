@@ -23,3 +23,5 @@ function redirect_with_info_alert(string $message, string $redirect_url = "/",):
 {
     redirect_with_alert($message, $redirect_url, 'info');
 }
+
+// ...

@@ -15,6 +15,6 @@ if ($password !== $repeat_password) {
     redirect_with_alert("Passwords do not match. Please start process again.", "/rat/login/forgot-password");
 }
 
-// TODO: Reset password logic here
+// TODO: Reset password logic here...
 
 redirect_with_success_alert("Password reset successfully", "/rat/login");

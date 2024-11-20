@@ -61,7 +61,7 @@ require_once "../../../includes/sidebar.php";
                         </textarea>
                     </div>
                     <div style="margin: 10px 0px">
-                        <h2><label for="edit-video_link">Video Link</label></h2>
+                        <h2><label for="edit-video_link">Video Link (Embeded link)</label></h2>
                         <textarea id="edit-video_link" name="exercise_video_link"
                                   class="staff-textarea-primary staff-textarea-large"
                                   placeholder="Enter a exercise video link"><?= $exercise->video_link ?>

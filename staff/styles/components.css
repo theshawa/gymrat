@@ -264,6 +264,24 @@ select:has(option:checked:not([value=""])) option {
   border: 0;
 }
 
+.staff-record-delete-div {
+  padding: 15px;
+}
+
+.staff-record-delete-div p {
+  margin: 5px 0px;
+}
+
+.staff-record-delete-div button {
+  width: 30%;
+  height: 45px;
+  margin: 20px 0px;
+  background-color: var(--color-red-light);
+  border: 2px solid var(--color-red);
+  color: var(--color-zinc-100);
+  border-radius: 10px;
+}
+
 /* Alert */
 .alert-wrapper {
   display: flex;

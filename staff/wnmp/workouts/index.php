@@ -18,21 +18,22 @@ $infoCardConfig = [
             "id" => 001,
             "title" => "Strength Training",
             "description" => "Squats, Deadlifts, Bench Press, Pull-Ups, Overhead Press, Lunges, Quads, Dumbbell Rows",
-            "img" => null
+            "image" => null
         ],
         [
             "id" => 002,
             "title" => "Cardio",
             "description" => "Running, Cycling, Swimming, Rowing, Jump Rope, Stair Climbing, Hiking, Elliptical",
-            "img" => null
+            "image" => null
         ],
         [
             "id" => 003,
             "title" => "Flexibility",
             "description" => "Stretching, Yoga, Pilates, Tai Chi, Foam Rolling, Dynamic Stretching, Static Stretching",
-            "img" => null
+            "image" => null
         ]
-    ]
+    ],
+    "isCardInList" => true
 ];
 
 

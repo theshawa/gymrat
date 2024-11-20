@@ -227,6 +227,12 @@ select:has(option:checked:not([value=""])) option {
   vertical-align: top;
 }
 
+.staff-textarea-large {
+  width: 100%;
+  height: 150px;
+  margin: 10px 0px;
+}
+
 .staff-input-primary {
   color: var(--color-zinc-600);
   background-color: var(--color-zinc-100);

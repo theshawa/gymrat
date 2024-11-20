@@ -1,6 +1,5 @@
 <?php
 
-// check for session and destroy
 session_start();
 
 $id = $_GET['id'] ?? null;
@@ -99,7 +98,7 @@ require_once "../../../includes/sidebar.php";
                         class="staff-input-primary staff-input-long" value="<?= $workout['title'] ?>">
                     <h2><label for="edit-description">Description</label></h2>
                     <textarea id="edit-description" name="workout_desc"
-                        class="staff-textarea-primary edit-workout-textarea"
+                        class="staff-textarea-primary staff-textarea-large"
                         placeholder="Enter a workout description"><?= $workout['description'] ?>
                         </textarea>
                 </div>

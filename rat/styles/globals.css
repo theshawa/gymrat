@@ -70,6 +70,10 @@ main {
   flex-direction: column;
 }
 
+main.centered {
+  align-items: center;
+}
+
 main:not(.no-padding) {
   padding: 20px;
 }

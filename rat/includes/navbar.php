@@ -1,5 +1,5 @@
 <?php
-$active = isset($pageConfig) && isset($pageConfig['navbar_active']) ? $pageConfig['navbar_active'] : null;
+$active = $pageConfig['navbar_active'] ?? null;
 ?>
 
 <div class="navbar">

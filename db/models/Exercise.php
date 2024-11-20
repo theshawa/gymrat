@@ -109,4 +109,11 @@ class Exercise extends Model
             $this->update();
         }
     }
+
+    public function delete()
+    {
+        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
+    }
 }

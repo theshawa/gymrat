@@ -15,7 +15,7 @@ $pageConfig = [
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";
 
-$range = $_GET['range'] ?? 30;
+$range = (int)htmlspecialchars($_GET['range'] ?? "30");
 
 $records = [
     [

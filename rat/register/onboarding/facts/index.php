@@ -27,7 +27,7 @@ $facts = [
 
 $currentFact = 1;
 if (isset($_GET['i']) && $_GET['i'] > 0 && $_GET['i'] < count($facts) + 1) {
-    $currentFact = $_GET['i'];
+    $currentFact = htmlspecialchars($_GET['i']);
 }
 
 ?>

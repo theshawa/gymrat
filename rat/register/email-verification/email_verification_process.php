@@ -25,7 +25,9 @@ if (!isset($request->code)) {
     redirect_with_error_alert("Invalid request", "../");
 }
 
-if ($_POST['code'] !== $request->code) {
+$code = htmlspecialchars($_POST['code']);
+
+if ($code !== $request->code) {
     redirect_with_error_alert("Invalid code!", "..//email-verification");
 }
 

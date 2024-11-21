@@ -8,8 +8,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 session_start();
 
-$password = $_POST['password'];
-$repeat_password = $_POST['repeat_password'];
+$password = htmlspecialchars($_POST['password']);
+$repeat_password = htmlspecialchars($_POST['repeat_password']);
 
 if ($password !== $repeat_password) {
     redirect_with_alert("Passwords do not match. Please start process again.", "/rat/login/forgot-password");

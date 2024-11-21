@@ -4,9 +4,9 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     die("Method not allowed");
 }
 
-$height = (float)$_POST['height'];
-$weight = (float)$_POST['weight'];
-$age = (float)$_POST['age'];
+$height = (float)htmlspecialchars($_POST['height']);
+$weight = (float)htmlspecialchars($_POST['weight']);
+$age = (float)htmlspecialchars($_POST['age']);
 
 $bmi = $weight / (($height / 100) ** 2);
 $bmi = round($bmi, 2);

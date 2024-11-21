@@ -9,14 +9,11 @@ if (!$_SERVER["REQUEST_METHOD"] === "POST") {
     redirect_with_error_alert("Method not allowed", "/staff/admin/membership-plans");
 }
 
-$id = $_POST['id'];
-$name = $_POST['name'];
-$description = $_POST['description'];
-$price = $_POST['price'];
-$duration = $_POST['duration'];
-
-$price = (float) $price;
-$duration = (int) $duration;
+$id = htmlspecialchars($_POST['id']);
+$name = htmlspecialchars($_POST['name']);
+$description = htmlspecialchars($_POST['description']);
+$price = (float) htmlspecialchars($_POST['price']);
+$duration = (float) htmlspecialchars($_POST['duration']);
 
 require_once "../../../../db/models/MembershipPlan.php";
 

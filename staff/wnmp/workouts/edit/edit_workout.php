@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 // ----------------
 $workout = &$_SESSION['workout'];
-//$action = $_POST['action'];
+//$action = htmlspecialchars($_POST['action']);
 // var_dump($workout['exercise']);
 echo "\n";
 var_dump($_POST);
@@ -18,7 +18,7 @@ var_dump($_POST);
 
 
 // if (isset($_POST['deleteExercise']) && isset($_POST['exercise-id'])) {
-//     $exerciseId = $_POST['exercise-id'];
+//     $exerciseId = htmlspecialchars($_POST['exercise-id']);
 //     var_dump($exerciseId);
 //     echo "\n";
 //     foreach ($workout['exercise'] as $key => $exercise) {

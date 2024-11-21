@@ -1,6 +1,6 @@
 <?php
 
-$id = $_GET["id"];
+$id = htmlspecialchars($_GET["id"]);
 
 if (!isset($id)) {
     header("Location: /notifications");

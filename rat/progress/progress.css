@@ -1,0 +1,108 @@
+#progress-chart {
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid var(--color-zinc-900);
+}
+
+.filter {
+  width: 100%;
+}
+
+.filter select {
+  font-size: 14px;
+  padding: 10px;
+  height: auto;
+  margin: 10px 0;
+  color: var(--color-zinc-200) !important;
+  width: 100%;
+}
+
+.loader {
+  width: 16px;
+  height: 16px;
+  border: 3px solid var(--color-zinc-800);
+  border-top-color: var(--color-zinc-400);
+  border-radius: 99999px;
+  animation: spin 0.4s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  visibility: hidden;
+}
+
+.info {
+  font-size: 12px;
+  color: var(--color-zinc-400);
+  margin-top: 5px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  gap: 10px;
+}
+
+.list .item {
+  padding: 10px 10px 10px 16px;
+  border: 1px solid var(--color-zinc-900);
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list .item .time {
+  font-size: 12px;
+  color: var(--color-zinc-300);
+  flex: 1;
+  margin-right: 10px;
+}
+
+.list .item .bmi {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.list .item .bmi.normal {
+  color: var(--color-green-light);
+}
+
+.list .item .bmi.danger {
+  color: var(--color-red-light);
+}
+
+.list .item button {
+  color: var(--color-zinc-600);
+  background-color: transparent;
+  border: none;
+  width: 14px;
+  height: 14px;
+  margin-left: 20px;
+}
+
+.list .item button:active {
+  transform: scale(0.9);
+}
+
+.list .item button svg {
+  width: 100%;
+  height: 100%;
+}
+
+.list .item form {
+  height: 16px;
+}

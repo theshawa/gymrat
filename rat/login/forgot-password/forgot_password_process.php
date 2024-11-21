@@ -8,6 +8,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 session_start();
 
+$action = htmlspecialchars($_POST['action'] ?? null);
+
 function genereateOTP()
 {
     return rand(100000, 999999);
@@ -32,7 +34,8 @@ function sendOTP(string $email, int $creation_attempt)
 
 function verifyOTP()
 {
-    $otp = $_POST['otp'];
+    $otp = htmlspecialchars($_POST['otp']);
+    $otp = htmlspecialchars($otp);
     if ($_SESSION['forgot_password_otp']['otp'] == $otp) {
         // check if OTP is expired(with OTP life span of 5 minutes)
         if (time() - $_SESSION['forgot_password_otp']['created_at'] > 60 * 5) {
@@ -55,13 +58,14 @@ function resendOTP()
 }
 
 
-if (!isset($_POST['action'])) {
+if (!$action) {
     redirect_with_error_alert("No action provided", "/rat/login/forgot-password");
 }
 
-switch ($_POST['action']) {
+switch ($action) {
     case 'send':
-        sendOTP($_POST['email'], 1);
+        $email = htmlspecialchars($_POST['email']);
+        sendOTP($email, 1);
         break;
     case 'verify':
         verifyOTP();

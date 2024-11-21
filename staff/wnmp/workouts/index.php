@@ -39,6 +39,8 @@ $infoCardConfig = [
 
 require_once "../pageconfig.php";
 
+require_once "../../../alerts/functions.php";
+
 $pageConfig['styles'][] = "./workouts.css";
 
 require_once "../../includes/header.php";

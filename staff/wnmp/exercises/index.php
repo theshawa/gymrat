@@ -19,7 +19,7 @@ $exerciseModel = new Exercise();
 try {
     $exercise = $exerciseModel->get_all();
 } catch (Exception $e) {
-    redirect_with_error_alert("Failed to fetch exercise: " . $e->getMessage(), "/staff/wnmp");
+    redirect_with_error_alert("Failed to fetch exercises: " . $e->getMessage(), "/staff/wnmp");
 }
 
 $infoCardConfig = [

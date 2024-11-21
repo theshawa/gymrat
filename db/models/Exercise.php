@@ -75,4 +75,45 @@ class Exercise extends Model
             ]
         );
     }
+
+    public function create()
+    {
+        $sql = "INSERT INTO $this->table (name, description, video_link, image) VALUES (:name, :description, :video_link, :image)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'name' => $this->name,
+            'description' => $this->description,
+            'video_link' => $this->video_link,
+            'image' => $this->image,
+        ]);
+    }
+
+    public function update()
+    {
+        $sql = "UPDATE $this->table SET name = :name, description = :description, video_link = :video_link, image = :image, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'video_link' => $this->video_link,
+            'image' => $this->image,
+        ]);
+    }
+
+    public function save()
+    {
+        if ($this->id === 0) {
+            $this->create();
+        } else {
+            $this->update();
+        }
+    }
+
+    public function delete()
+    {
+        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
+    }
 }

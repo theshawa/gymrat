@@ -33,7 +33,7 @@ if (!$isCardInList) {
     $newCards = [];
     foreach ($cards as $card) {
         $description = $card->description;
-        $wordLimit = 20;
+        $wordLimit = 15;
 
         $descriptionWordsArray = explode(' ', $description);
         $descriptionFirstSegment = array_slice($descriptionWordsArray, 0, $wordLimit);

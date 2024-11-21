@@ -3,7 +3,6 @@ $id = $_GET['id'] ?? null;
 
 $sidebarActive = 2;
 
-
 require_once "../../../../db/models/Exercise.php";
 require_once "../../../../alerts/functions.php";
 
@@ -11,7 +10,7 @@ $exercise = new Exercise();
 try {
     $exercise->get_by_id($id);
 } catch (Exception $e) {
-    redirect_with_error_alert("Failed to fetch exercise: " . $e->getMessage(), "/staff/wnmp");
+    redirect_with_error_alert("Failed to fetch exercise: " . $e->getMessage(), "/staff/wnmp/exercises");
 }
 $_SESSION['exercise'] = $exercise;
 

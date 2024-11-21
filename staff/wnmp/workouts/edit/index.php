@@ -6,8 +6,6 @@ session_start();
 require_once "../../../../alerts/functions.php";
 
 $id = htmlspecialchars($_GET['id'] ?? null);
-=======
-$id = htmlspecialchars($_GET['id'] ?? null);
 
 if (!isset($_SESSION['workout'])) {
     // REPLACE THIS WITH DATABASE QUERY
@@ -99,7 +97,8 @@ require_once "../../../includes/sidebar.php";
             <form action="edit_workout.php" method="POST">
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
-<!--                    --><?php //require_once "../../../includes/alert.php"; ?>
+                    <!--                    --><?php //require_once "../../../includes/alert.php"; 
+                                                ?>
                     <h2><label for="edit-title">Title</label></h2>
                     <input type="text" id="edit-title" name="exercise_title"
                         class="staff-input-primary staff-input-long" value="<?= $workout['title'] ?>">

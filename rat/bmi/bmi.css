@@ -180,7 +180,7 @@ h4 {
   display: flex;
   flex-direction: column;
   text-align: center;
-  padding-top: 10vh;
+  padding-top: 5vh;
 }
 
 #result input {
@@ -226,19 +226,29 @@ h4 {
 #result h2 {
   font-size: 20px;
   font-weight: 500;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   margin-top: 30px;
-  color: var(--color-zinc-400);
+  color: var(--color-zinc-200);
 }
 
-#result h2.green {
+#result h2.normal {
   color: var(--color-green-light);
 }
 
-#result h2.red {
+#result h2.bad {
   color: var(--color-red-light);
 }
 
-#result h2.yellow {
-  color: rgb(255, 174, 0);
+.article-link {
+  display: inline-flex;
+  align-items: center;
+  margin: 20px auto 40px auto;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  gap: 3px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background-color: rgba(13, 42, 101, 0.179);
+  color: #0278d2;
 }

@@ -15,14 +15,14 @@ if (!isset($_SESSION['workout'], $_SESSION['workout_id'])) {
 $workout = &$_SESSION['workout'];
 $workout_id =  &$_SESSION['workout_id'];
 $current_workout_id = $_SESSION['workout']['id'];
-$current_exercise_id = $_POST['exercise_id'];
-
+$current_exercise_id = htmlspecialchars($_POST['exercise_id']);
 
 foreach ($workout['exercise'] as $key => $exercise) {
     if ($exercise['id'] == $current_exercise_id) {
         $workout['exercise'][$key]['title'] = $_POST['exercise_title'];
         $workout['exercise'][$key]['reps'] = $_POST['exercise_reps'];
         $workout['exercise'][$key]['sets'] = $_POST['exercise_sets'];
+
     }
 }
 

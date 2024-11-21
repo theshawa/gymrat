@@ -10,3 +10,4 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 // make overall changes to the workout
 // grab exercise data from current session
+

@@ -4,7 +4,7 @@ session_start();
 
 require_once "../../../../alerts/functions.php";
 
-$id = $_GET['id'] ?? null;
+$id = htmlspecialchars($_GET['id'] ?? null);
 
 if (!isset($_SESSION['workout'])) {
     $_SESSION['workout'] = [
@@ -29,12 +29,12 @@ $menuBarConfig = [
         ["title" => "Revert Changes", "buttonType" => "submit", "formAction" => "revert_exercise.php", "type" => "destructive"]
     ]
 ];
+
 //$alertConfig = [
 //    "status" => $_GET['status'] ?? null,
 //    "error" => $_GET['err'] ?? null,
 //    "message" => $_GET['msg'] ?? null
 //];
-
 
 require_once "../../pageconfig.php";
 

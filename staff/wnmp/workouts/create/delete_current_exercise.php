@@ -15,7 +15,9 @@ if (!isset($_SESSION['workout'], $_SESSION['workout_id'])) {
 $workout = &$_SESSION['workout'];
 $workout_id =  &$_SESSION['workout_id'];
 $current_workout_id = $_SESSION['workout']['id'];
-$current_exercise_id = $_POST['exercise_id'];
+
+$current_exercise_id = htmlspecialchars($_POST['exercise_id']);
+
 
 foreach ($workout['exercise'] as $key => $exercise) {
     if ($exercise['id'] == $current_exercise_id) {
@@ -28,5 +30,6 @@ $_SESSION['workout'] = $workout;
 if ($workout_id == $current_workout_id) {
     redirect_with_success_alert("Action successful (Press Save Changes to complete)", "/staff/wnmp/workouts/create?id=$current_workout_id");
 }
+
 
 redirect_with_error_alert("Action cannot be performed", "/staff/wnmp/workouts");

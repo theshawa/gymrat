@@ -1,6 +1,7 @@
 <?php
 
-$id = $_GET['id'] ?? null;
+$id = htmlspecialchars($_GET['id'] ?? null);
+
 
 require_once "../../../../alerts/functions.php";
 

@@ -1,5 +1,8 @@
 <?php
 
+$CUSTOMER_EMAIL_VERIFICATION_REQUEST_MAXIMUM_ATTEMPTS = 3;
+$CUSTOMER_EMAIL_VERIFICATION_REQUEST_TIMEOUT = 30; // in seconds
+
 session_start();
 
 require_once "../../../alerts/functions.php";
@@ -22,7 +25,6 @@ if (!isset($request->code)) {
     redirect_with_error_alert("Invalid request", "../");
 }
 
-require_once "../../constants.php";
 $period_from_creation = (new DateTime())->format("U") - (int)$request->created_at->format("U");
 
 if (

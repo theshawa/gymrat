@@ -1,10 +1,21 @@
-TODO Theshawa:
+# TODO
 
-/progress [UI: DONE]
+## Theshawa:
 
-/login backend
-/login QR code scan
+/progress/bmi [UI: DONE]
+/progress/logs [UI]
 
-/workout
-/workout active
-/exercise
+/login [Backend]
+/login QR code scan [Backend]
+
+/workout [UI]
+/workout active [UI]
+/exercise [UI]
+
+/profile [UI]
+
+## Ravindu
+
+## Roneth
+
+## Jayathu

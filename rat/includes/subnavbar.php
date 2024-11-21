@@ -13,7 +13,7 @@ if (isset($subnavbarConfig)) {
 
 <nav class="subnavbar">
     <?php foreach ($subnavbarLinks as $i => $link): ?>
-        <a href="<?= $link['href'] ?>" class="subnavbar-link <?= $subnavbarActiveLink === $i ? 'active' : '' ?>">
+        <a href="<?= $link['href'] ?>" class="subnavbar-link <?= $subnavbarActiveLink - 1 === $i ? 'active' : '' ?>">
             <?= $link['title'] ?>
         </a>
     <?php endforeach; ?>

@@ -1,5 +1,5 @@
 <?php
-$id = $_GET['id'] ?? null;
+$id = htmlspecialchars($_GET['id'] ?? null);
 
 $workout = [
     "id" => 001,

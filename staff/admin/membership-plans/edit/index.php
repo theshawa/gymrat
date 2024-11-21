@@ -13,7 +13,7 @@ require_once "../../../../db/models/MembershipPlan.php";
 require_once "../../../../alerts/functions.php";
 
 
-$id = $_GET["id"];
+$id = htmlspecialchars($_GET["id"]);
 $membershipPlan = new MembershipPlan();
 try {
     $membershipPlan->get_by_id($id);

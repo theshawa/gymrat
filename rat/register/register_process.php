@@ -5,15 +5,15 @@ session_start();
 require_once "../../alerts/functions.php";
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    redirect_with_error_alert('Method not allowed', '/rat/register');
+    redirect_with_error_alert('Method not allowed', '../register');
 }
 
-$fname = $_POST['fname'];
-$lname = $_POST['lname'];
-$email = $_POST['email'];
-$password = $_POST['password'];
-$cpassword = $_POST['cpassword'];
-$phone = $_POST['phone'];
+$fname = htmlspecialchars($_POST['fname']);
+$lname = htmlspecialchars($_POST['lname']);
+$email = htmlspecialchars($_POST['email']);
+$password = htmlspecialchars($_POST['password']);
+$cpassword = htmlspecialchars($_POST['cpassword']);
+$phone = htmlspecialchars($_POST['phone']);
 
 if ($password !== $cpassword) {
     redirect_with_error_alert("Passwords do not match", "/rat/register");

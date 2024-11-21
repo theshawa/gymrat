@@ -2,7 +2,7 @@
 
 session_start();
 
-$id = $_GET['id'] ?? null;
+$id = htmlspecialchars($_GET['id'] ?? null);
 
 if (!isset($_SESSION['workout'])) {
     // REPLACE THIS WITH DATABASE QUERY
@@ -72,9 +72,15 @@ $menuBarConfig = [
     ]
 ];
 $alertConfig = [
-    "status" => $_GET['status'] ?? null,
-    "error" => $_GET['err'] ?? null,
-    "message" => $_GET['msg'] ?? null
+    "status" => htmlspecialchars(
+        $_GET['status'] ?? null
+    ),
+    "error" => htmlspecialchars(
+        $_GET['err'] ?? null
+    ),
+    "message" => htmlspecialchars(
+        $_GET['msg'] ?? null
+    )
 ];
 
 

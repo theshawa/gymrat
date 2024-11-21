@@ -2,35 +2,11 @@
 
 session_start();
 
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    die("Method not allowed");
-}
+require_once "../../../../alerts/functions.php";
 
-// ----------------
-$workout = &$_SESSION['workout'];
-//$action = $_POST['action'];
-// var_dump($workout['exercise']);
-echo "\n";
-var_dump($_POST);
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    redirect_with_error_alert("Method not allowed", "/staff/wnmp/workouts");
+}
 
 // make overall changes to the workout
 // grab exercise data from current session
-
-
-// if (isset($_POST['deleteExercise']) && isset($_POST['exercise-id'])) {
-//     $exerciseId = $_POST['exercise-id'];
-//     var_dump($exerciseId);
-//     echo "\n";
-//     foreach ($workout['exercise'] as $key => $exercise) {
-//         if ($exercise['id'] == $exerciseId) {
-//             unset($workout['exercise'][$key]);
-//             break;
-//         }
-//     }
-//     $_SESSION['workout'] = $workout;
-//     var_dump($_SESSION['workout']);
-//     echo "\n";
-// }
-
-//header("Location: /staff/wnmp/workouts/edit/index.php");
-//exit();

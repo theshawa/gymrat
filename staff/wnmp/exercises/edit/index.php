@@ -30,11 +30,11 @@ $menuBarConfig = [
         ["title" => "Revert Changes", "buttonType" => "submit", "formAction" => "revert_exercise.php", "type" => "destructive"]
     ]
 ];
-$alertConfig = [
-    "status" => $_GET['status'] ?? null,
-    "error" => $_GET['err'] ?? null,
-    "message" => $_GET['msg'] ?? null
-];
+//$alertConfig = [
+//    "status" => $_GET['status'] ?? null,
+//    "error" => $_GET['err'] ?? null,
+//    "message" => $_GET['msg'] ?? null
+//];
 
 
 require_once "../../pageconfig.php";
@@ -51,7 +51,7 @@ require_once "../../../includes/sidebar.php";
             <form action="edit_exercise.php" method="POST">
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
-                    <?php require_once "../../../includes/alert.php"; ?>
+<!--                    --><?php //require_once "../../../includes/alert.php"; ?>
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-title">Title</label></h2>
                         <input type="text" id="edit-title" name="exercise_name"
@@ -61,15 +61,13 @@ require_once "../../../includes/sidebar.php";
                         <h2><label for="edit-description">Description</label></h2>
                         <textarea id="edit-description" name="exercise_description"
                                   class="staff-textarea-primary staff-textarea-large"
-                                  placeholder="Enter a exercise description"><?= $exercise->description ?>
-                        </textarea>
+                                  placeholder="Enter a exercise description"><?= $exercise->description ?></textarea>
                     </div>
                     <div style="margin: 10px 0px">
                         <h2><label for="edit-video_link">Video Link</label></h2>
                         <textarea id="edit-video_link" name="exercise_video_link"
                                   class="staff-textarea-primary staff-textarea-large"
-                                  placeholder="Enter a exercise video link"><?= $exercise->video_link ?>
-                        </textarea>
+                                  placeholder="Enter a exercise video link"><?= $exercise->video_link ?></textarea>
                     </div>
                 </div>
             </form>

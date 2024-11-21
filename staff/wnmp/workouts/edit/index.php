@@ -2,6 +2,8 @@
 
 session_start();
 
+require_once "../../../../alerts/functions.php";
+
 $id = $_GET['id'] ?? null;
 
 if (!isset($_SESSION['workout'])) {
@@ -71,11 +73,11 @@ $menuBarConfig = [
         ["title" => "Revert Changes", "buttonType" => "submit", "formAction" => "revert_exercise.php", "type" => "destructive"]
     ]
 ];
-$alertConfig = [
-    "status" => $_GET['status'] ?? null,
-    "error" => $_GET['err'] ?? null,
-    "message" => $_GET['msg'] ?? null
-];
+//$alertConfig = [
+//    "status" => $_GET['status'] ?? null,
+//    "error" => $_GET['err'] ?? null,
+//    "message" => $_GET['msg'] ?? null
+//];
 
 
 require_once "../../pageconfig.php";
@@ -92,15 +94,14 @@ require_once "../../../includes/sidebar.php";
             <form action="edit_workout.php" method="POST">
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
-                    <?php require_once "../../../includes/alert.php"; ?>
+<!--                    --><?php //require_once "../../../includes/alert.php"; ?>
                     <h2><label for="edit-title">Title</label></h2>
                     <input type="text" id="edit-title" name="exercise_title"
                         class="staff-input-primary staff-input-long" value="<?= $workout['title'] ?>">
                     <h2><label for="edit-description">Description</label></h2>
                     <textarea id="edit-description" name="workout_desc"
                         class="staff-textarea-primary staff-textarea-large"
-                        placeholder="Enter a workout description"><?= $workout['description'] ?>
-                        </textarea>
+                        placeholder="Enter a workout description"><?= $workout['description'] ?></textarea>
                 </div>
             </form>
             <div style="padding: 5px 10px;">

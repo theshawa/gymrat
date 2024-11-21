@@ -163,7 +163,8 @@ $rangeOptions = [
                 'title' => 'Trainer Logs',
                 'href' => './logs'
             ]
-        ]
+        ],
+        "active" => 1
     ];
 
     require_once "../includes/subnavbar.php"; ?>

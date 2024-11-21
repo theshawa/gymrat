@@ -5,11 +5,11 @@ session_start();
 require_once "../../../alerts/functions.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    redirect_with_error_alert("Method not allowed", "/rat/register");
+    redirect_with_error_alert("Method not allowed", "../");
 }
 
 if (!isset($_SESSION['customer_registration'])) {
-    redirect_with_error_alert("Invalid request", "/rat/register");
+    redirect_with_error_alert("Invalid request", "../");
 }
 
 require_once "../../../db/models/CustomerEmailVerificationRequest.php";
@@ -18,21 +18,21 @@ $request = new CustomerEmailVerificationRequest();
 try {
     $request->get_by_email($_SESSION['customer_registration']['email']);
 } catch (PDOException $e) {
-    redirect_with_error_alert("Failed to register customer due to error: " . $e->getMessage(), "/rat/register");
+    redirect_with_error_alert("Failed to register customer due to error: " . $e->getMessage(), "../");
 }
 
 if (!isset($request->code)) {
-    redirect_with_error_alert("Invalid request", "/rat/register");
+    redirect_with_error_alert("Invalid request", "../");
 }
 
 if ($_POST['code'] !== $request->code) {
-    redirect_with_error_alert("Invalid code!", "/rat/register/email-verification");
+    redirect_with_error_alert("Invalid code!", "..//email-verification");
 }
 
 try {
     $request->delete();
 } catch (PDOException $e) {
-    redirect_with_error_alert("Failed to delete email verification request due to error: " . $e->getMessage(), "/rat/register");
+    redirect_with_error_alert("Failed to delete email verification request due to error: " . $e->getMessage(), "../");
 }
 
 // create customer
@@ -53,14 +53,14 @@ $customer->fill([
 require_once "../../../uploads.php";
 $customer->avatar = $customer->avatar ? ltrim($customer->avatar, "tmp/") : null;
 if (!move_from_temp($customer->avatar)) {
-    redirect_with_error_alert("Failed to upload avatar due to an error: failed to move file from temp", "/rat/register");
+    redirect_with_error_alert("Failed to upload avatar due to an error: failed to move file from temp", "../");
 }
 
 try {
     $customer->save();
 } catch (PDOException $e) {
-    redirect_with_error_alert("Failed to register customer due to error: " . $e->getMessage(), "/rat/register");
+    redirect_with_error_alert("Failed to register customer due to error: " . $e->getMessage(), "../");
 }
 
 unset($_SESSION['customer_registration']);
-redirect_with_success_alert("Registration successful!", "/rat/register/onboarding/facts");
+redirect_with_success_alert("Registration successful!", "..//onboarding/facts");

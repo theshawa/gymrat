@@ -2,13 +2,8 @@
 
 session_start();
 
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    die("Method not allowed");
-}
+require_once "../../../../alerts/functions.php";
 
-// ----------------
-$workout = &$_SESSION['workout'];
-var_dump($workout);
-echo "\n";
-var_dump($_POST);
-// ----------------
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    redirect_with_error_alert("Method not allowed", "/staff/wnmp/workouts");
+}

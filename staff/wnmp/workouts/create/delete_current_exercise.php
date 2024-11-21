@@ -2,35 +2,34 @@
 
 session_start();
 
+require_once "../../../../alerts/functions.php";
+
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    die("Method not allowed");
+    redirect_with_error_alert("Method not allowed", "/staff/wnmp/workouts");
 }
 
 if (!isset($_SESSION['workout'], $_SESSION['workout_id'])) {
-    die("Session data not set.");
+    redirect_with_error_alert("Session variables not set", "/staff/wnmp/workouts");
 }
-
-var_dump($_POST);
 
 $workout = &$_SESSION['workout'];
 $workout_id =  &$_SESSION['workout_id'];
 $current_workout_id = $_SESSION['workout']['id'];
+
 $current_exercise_id = htmlspecialchars($_POST['exercise_id']);
-$status = "failed";
+
 
 foreach ($workout['exercise'] as $key => $exercise) {
     if ($exercise['id'] == $current_exercise_id) {
         unset($workout['exercise'][$key]);
-        $status = "success";
     }
 }
 
 $_SESSION['workout'] = $workout;
 
 if ($workout_id == $current_workout_id) {
-    header("Location: /staff/wnmp/workouts/create/index.php?id=$current_workout_id");
-    exit();
+    redirect_with_success_alert("Action successful (Press Save Changes to complete)", "/staff/wnmp/workouts/create?id=$current_workout_id");
 }
 
-header("Location: /staff/wnmp/workouts/index.php?");
-exit();
+
+redirect_with_error_alert("Action cannot be performed", "/staff/wnmp/workouts");

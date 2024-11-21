@@ -6,7 +6,7 @@ $extendTo = null;
 $cards = null;
 $isCardInList = false; // REMOVE WHEN FULLY TURNED TO CRUD
 $gridColumns = 2;
-$defaultImage = "../assets/infoCardDefault.png"; // FIX DEFAULT IMAGE
+$defaultImage = "../../../uploads/default-images/infoCardDefault.png";
 
 if (isset($infoCardConfig)) {
     if (isset($infoCardConfig['showImage'])) {
@@ -55,11 +55,11 @@ if (!$isCardInList) {
     <?php foreach ($cards as $card): ?>
         <div class="info-card">
             <?php if ($showImage): ?>
-                <div class="info-card-img">
+                <div>
                     <?php if ($card['image']): ?>
-                        <img src="<?= $card['image'] ?>" alt="<?= $card['title'] ?>">
+                        <img src="<?= $card['image'] ?>" alt="<?= $card['title'] ?>" class="info-card-img">
                     <?php else: ?>
-                        <img src="<?= $defaultImage ?>" alt="Default">
+                        <img src="<?= $defaultImage ?>" alt="Default" class="info-card-img">
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
@@ -96,7 +96,7 @@ if (!$isCardInList) {
         align-items: center;
     }
     .info-card-img {
-        width: 30%;
+        width: 60%;
     }
     .info-card-desc {
         display: flex;
@@ -108,4 +108,5 @@ if (!$isCardInList) {
         display: flex;
         justify-content: flex-end;
     }
+
 </style>

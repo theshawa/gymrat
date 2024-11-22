@@ -2,17 +2,17 @@
 
 ## Theshawa:
 
-/progress/bmi [UI: DONE]
-/progress/logs [UI]
+/progress/bmi [UI: Done]
+/progress/logs [UI: Done]
 
-/login [Backend]
+/login [Backend: Done]
 /login QR code scan [Backend]
 
 /workout [UI]
 /workout active [UI]
 /exercise [UI]
 
-/profile [UI]
+/profile [UI: Done]
 
 ## Ravindu
 

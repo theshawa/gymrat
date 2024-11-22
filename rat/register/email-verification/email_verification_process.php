@@ -15,20 +15,23 @@ if (!isset($_SESSION['customer_registration'])) {
 require_once "../../../db/models/CustomerEmailVerificationRequest.php";
 
 $request = new CustomerEmailVerificationRequest();
+$request->fill([
+    'email' => $_SESSION['customer_registration']['email'],
+]);
 try {
-    $request->get_by_email($_SESSION['customer_registration']['email']);
+    $request->get_by_email();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to register customer due to error: " . $e->getMessage(), "../");
 }
 
-if (!isset($request->code)) {
+if (!$request->code) {
     redirect_with_error_alert("Invalid request", "../");
 }
 
 $code = htmlspecialchars($_POST['code']);
 
 if ($code !== $request->code) {
-    redirect_with_error_alert("Invalid code!", "..//email-verification");
+    redirect_with_error_alert("Invalid code!", "../");
 }
 
 try {

@@ -9,6 +9,7 @@
   flex-direction: column;
   margin-top: auto;
   gap: 16px;
+  padding-bottom: 10vh;
 }
 
 .fact-content h1 {
@@ -35,7 +36,7 @@
   text-transform: uppercase;
   font-weight: 500;
   transition: background-color 0.2s, color 0.2s ease-in-out;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .move-button.next {

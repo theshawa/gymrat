@@ -35,11 +35,11 @@ class CustomerEmailVerificationRequest extends Model
         ]);
     }
 
-    public function get_by_email(string $email)
+    public function get_by_email()
     {
         $sql = "SELECT * FROM $this->table WHERE email = :email";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute(['email' => $email]);
+        $stmt->execute(['email' => $this->email]);
         $item = $stmt->fetch();
         if ($item) {
             $this->fill($item);

@@ -71,14 +71,35 @@ class Customer extends Model
         }
     }
 
-    public function get_by_email(string $email)
+    public function get_by_email()
     {
         $sql = "SELECT * FROM $this->table WHERE email=:email";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute(['email' => $email]);
+        $stmt->execute(['email' => $this->email]);
         $data = $stmt->fetch();
         if ($data) {
             $this->fill($data);
         }
+    }
+
+    public function get_by_id()
+    {
+        $sql = "SELECT * FROM $this->table WHERE id=:id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
+        $data = $stmt->fetch();
+        if ($data) {
+            $this->fill($data);
+        }
+    }
+
+    public function update_password_by_email()
+    {
+        $sql = "UPDATE $this->table SET password=:password WHERE email=:email";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'email' => $this->email,
+            'password' => $this->password
+        ]);
     }
 }

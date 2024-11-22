@@ -4,7 +4,8 @@ $pageConfig = [
     "styles" => ["../progress.css"],
     "titlebar" => [
         "back_url" => "../../"
-    ]
+    ],
+    "need_auth" => true
 ];
 
 require_once "../../includes/header.php";
@@ -119,11 +120,11 @@ $records = [
     <div class="log-record-list">
         <?php foreach ($records as $record) : ?>
             <div href="view.php?id=<?= $record['id'] ?>" class="log-record">
-                <div class="top">
-                    <span class="time"><?= date_format(date_create($record['time']), 'M d, Y, h:i A') ?></span>
+                <p class="message"><?= $record['message'] ?></p>
+                <div class="bottom">
+                    <span class="time"><?= date_create($record['time'])->format('M d, Y') ?></span>
                     <span class="status <?= $record['status'] ?>"><?= ['good' => 'Well Done', 'bad' => 'Try Harder'][$record['status']] ?></span>
                 </div>
-                <p class="message"><?= $record['message'] ?></p>
             </div>
         <?php endforeach; ?>
     </div>

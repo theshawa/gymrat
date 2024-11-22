@@ -4,7 +4,8 @@ $pageConfig = [
     "styles" => ["./trainer.css"],
     "titlebar" => [
         "back_url" => "../"
-    ]
+    ],
+    "need_auth" => true
 ];
 
 require_once "../includes/header.php";

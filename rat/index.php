@@ -6,11 +6,18 @@ $pageConfig = [
     ],
     "navbar_active" => 1,
     "titlebar" => [
-        "title" => "Hi Sajith!",
-    ]
+        "title" => "Welcome!",
+    ],
+    "need_auth" => true
 ];
 
 require_once "./includes/header.php";
+
+if (isset($_SESSION['auth'])) {
+    $fname = $_SESSION['auth']['fname'];
+    $pageConfig['titlebar']['title'] = "Hi, $fname!";
+}
+
 require_once "./includes/titlebar.php";
 
 $workoutIsActive = false;

@@ -1,22 +1,25 @@
 <?php
 $pageConfig = [
-    "title" => "Onboarding",
-    "styles" => ["/rat/styles/auth.css", "./onboarding.css"],
+    "title" => "Update Initial Data",
+    "styles" => ["/rat/styles/auth.css", "../../register/onboarding/onboarding.css"],
     "scripts" => ["/rat/scripts/forms.js"],
-    "need_auth" => false
+    "titlebar" => [
+        "back_url" => "../"
+    ],
+    "need_auth" => true
 ];
 
 require_once "../../includes/header.php";
-
+require_once "../../includes/titlebar.php";
 ?>
 
 <main class="onboarding">
-    <img width="100" src="./animation1.gif" alt="Man lifting a weight">
-    <h1>Welcome to GYMRAT!</h1>
-    <p class="paragraph">Let us gather some details about you to personalize your fitness journey at GYMRAT. This will help us tailor the best experience for you at our gym.</p>
-    <form action="onboarding_process.php" method="post">
+    <form action="update_initial_data_process.php" method="post" style="margin-top: 0;">
+        <p class="paragraph small">
+            *We don't recommend you to change this information as it was collected initially at the start of your fitness journey with the app.
+        </p>
         <div class="question">
-            <span class="title">What is your gender?</span>
+            <span class="title">Gender</span>
             <div class="gender">
                 <label class="input line radio">
                     <input type="radio" name="gender" value="male" checked required>
@@ -41,28 +44,14 @@ require_once "../../includes/header.php";
             </div>
         </div>
         <div class="question">
-            <span class="title">How old are you?</span>
+            <span class="title">Age</span>
             <div class="line">
                 <input class="input" min="10" max="150" type="number" name="age" placeholder="16" required>
                 <span class="">YRS</span>
             </div>
         </div>
         <div class="question">
-            <span class="title">What is your weight?</span>
-            <div class="line">
-                <input class="input" min="10" type="number" name="weight" required>
-                <span class="">KG</span>
-            </div>
-        </div>
-        <div class="question">
-            <span class="title">What is your height?</span>
-            <div class="line">
-                <input class="input" min="10" type="number" name="height" required>
-                <span class="">CM</span>
-            </div>
-        </div>
-        <div class="question">
-            <span class="title">What is your goal?</span>
+            <span class="title">Goal</span>
             <select name="goal" class="input">
                 <option disabled value="">Select option</option>
                 <option value="weight_loss">Weight Loss</option>
@@ -74,7 +63,7 @@ require_once "../../includes/header.php";
             <textarea name="other_goal" class="input" placeholder="Describe your goal briefly"></textarea>
         </div>
         <div class="question">
-            <span class="title">Your physical activity level?</span>
+            <span class="title">Physical activity level</span>
             <select name="physical_activity_level" class="input">
                 <option disabled value="">Select option</option>
                 <option value="beginner">Beginner</option>
@@ -83,7 +72,7 @@ require_once "../../includes/header.php";
             </select>
         </div>
         <div class="question">
-            <span class="title">Your dietary preferences?</span>
+            <span class="title">Dietary preferences</span>
             <select name="dietary_preferences" class="input">
                 <option value="vegitarian">Vegitarian</option>
                 <option value="non_vegitarian">Non-vegitarian</option>
@@ -94,11 +83,10 @@ require_once "../../includes/header.php";
             </select>
         </div>
         <div class="question">
-            <span class="title">Do you have any allergies?</span>
+            <span class="title">Allergies</span>
             <textarea name="allergies" class="input" placeholder="Describe your allergies briefly(if there's any)"></textarea>
         </div>
-        <p class="paragraph small">*Please note that the weight and height fields cannot be changed later as they are collected as initial data to personalize your fitness journey.</p>
-        <button class="btn">Let's get started</button>
+        <button class="btn">Save</button>
     </form>
 </main>
 <script>
@@ -118,4 +106,6 @@ require_once "../../includes/header.php";
         }
     });
 </script>
+
+<?php require_once "../../includes/navbar.php" ?>
 <?php require_once "../../includes/footer.php" ?>

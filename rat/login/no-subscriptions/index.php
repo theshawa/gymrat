@@ -2,6 +2,7 @@
 $pageConfig = [
     "title" => "No Active Subscription",
     "styles" => ["./noSub.css"],
+    "need_auth" => false
 ];
 
 include_once "../../includes/header.php";
@@ -12,7 +13,7 @@ include_once "../../includes/header.php";
     <div class="content">
         <img src="../../assets/logo-gray.svg" alt="GYMRAT Logo" class="logo">
         <h1 class="no-subscription-message">No active subscription!</h1>
-        
+
         <button class="view-plans-btn" onclick="window.location.href='../../viewPlans'">View Plans</button>
     </div>
 </main>

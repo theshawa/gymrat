@@ -33,6 +33,7 @@
   color: var(--color-zinc-300);
   text-transform: none;
   margin: 0;
+  margin-left: 10px;
 }
 
 .gender {
@@ -63,4 +64,31 @@
 .gender input {
   width: 16px;
   height: 16px;
+}
+
+/* Radio button */
+
+.line.radio {
+  padding: 0 16px;
+}
+
+.line.radio input {
+  display: none;
+}
+
+.line.radio .tick {
+  background-color: var(--color-zinc-900);
+  color: var(--color-zinc-900);
+  transition: background-color 0.3s, color 0.3s;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.line.radio input:checked + .tick {
+  background-color: var(--color-violet-600);
+  color: var(--color-zinc-950);
 }

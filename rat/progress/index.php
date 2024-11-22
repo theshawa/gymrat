@@ -9,7 +9,8 @@ $pageConfig = [
         "https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js",
         "https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js",
         "./bmi-progress.js"
-    ]
+    ],
+    "need_auth" => true
 ];
 
 require_once "../includes/header.php";
@@ -184,7 +185,7 @@ $rangeOptions = [
     <div class="list">
         <?php foreach ($records as $record): ?>
             <div class="item">
-                <span class="time"><?= date_format(date_create($record['time']), 'M d, Y, h:i A') ?></span>
+                <span class="time"><?= date_create($record['time'])->format('M d, Y, h:i A') ?></span>
                 <span class="bmi <?= $record['bmi'] > 24.9 ? "danger" : ($record['bmi'] > 18.5 ? "normal" : "danger") ?>"><?= number_format($record['bmi'], 2) ?></span>
                 <form action="./delete_bmi_record.php" method="post">
                     <button title="Delete this record" type="submit" name="id" value="<?= $record['id'] ?>">

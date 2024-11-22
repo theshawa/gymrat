@@ -266,10 +266,10 @@ main {
   flex-direction: column;
   gap: 10px;
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  padding: 5px 20px;
+  padding: 20px 20px;
   z-index: 99999999;
   width: 100%;
   max-width: calc(min(100vw, var(--body-width)));

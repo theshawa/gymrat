@@ -34,7 +34,6 @@ function auth_required_guard(string $redirect)
 function auth_not_required_guard(string $redirect)
 {
     if (is_auth_valid()) {
-        unset($_SESSION['auth']);
         redirect_with_error_alert("You are already logged in", $redirect);
     }
 }

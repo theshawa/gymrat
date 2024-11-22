@@ -3,7 +3,8 @@ $pageConfig = [
     "title" => "Make Complaint",
     "titlebar" => [
         "back_url" => "/rat/index.php",
-    ]
+    ],
+    "need_auth" => true
 ];
 
 require_once "../includes/header.php";

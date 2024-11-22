@@ -4,7 +4,8 @@ $pageConfig = [
     "titlebar" => [
         "title" => "Gym Traffic",
         "back_url" => "../"
-    ]
+    ],
+    "need_auth" => true
 ];
 
 require_once "../includes/header.php";

@@ -4,10 +4,25 @@ session_start();
 
 $pageTitle = null;
 $pageStyles = [];
+
+$need_auth = null;
+
 if (isset($pageConfig)) {
     $pageTitle = $pageConfig['title'] ?? null;
     $pageStyles = $pageConfig['styles'] ?? [];
+    $need_auth = $pageConfig['need_auth'] ?? null;
 }
+
+require_once __DIR__ . "/../../auth-guards.php";
+
+if (!is_null($need_auth)) {
+    if ($need_auth) {
+        auth_required_guard("/rat/login");
+    } else {
+        auth_not_required_guard("/rat");
+    }
+}
+
 ?>
 
 

@@ -2,22 +2,22 @@
 
 session_start();
 
-require_once "../../../alerts/functions.php";
+require_once "../../../../alerts/functions.php";
 
-if (!isset($_SESSION['customer_registration'])) {
+if (!isset($_SESSION['customer_password_reset'])) {
     redirect_with_error_alert("Invalid request", "../");
 }
 
-require_once "../../../db/models/CustomerEmailVerificationRequest.php";
+require_once "../../../../db/models/CustomerPasswordResetRequest.php";
 
-$request = new CustomerEmailVerificationRequest();
+$request = new CustomerPasswordResetRequest();
 $request->fill([
-    'email' => $_SESSION['customer_registration']['email'],
+    'email' => $_SESSION['customer_password_reset']['email'],
 ]);
 try {
     $request->get_by_email();
 } catch (PDOException $e) {
-    redirect_with_error_alert("Failed to register customer due to error: " . $e->getMessage(), "../");
+    redirect_with_error_alert("Failed to verify email due to error: " . $e->getMessage(), "../");
 }
 
 if (!$request->code) {
@@ -27,7 +27,7 @@ if (!$request->code) {
 $period_from_creation = (new DateTime())->format("U") - (int)$request->created_at->format("U");
 
 
-require_once "../../../constants.php";
+require_once "../../../../constants.php";
 if (
     $request->creation_attempt >= $CUSTOMER_EMAIL_VERIFICATION_REQUEST_MAXIMUM_ATTEMPTS
     && $period_from_creation < $CUSTOMER_EMAIL_VERIFICATION_REQUEST_TIMEOUT
@@ -39,11 +39,11 @@ if (
 try {
     $request->delete();
 } catch (PDOException $e) {
-    redirect_with_error_alert("Failed to delete email verification request due to error: " . $e->getMessage(), "../");
+    redirect_with_error_alert("Failed to delete password reset request due to error: " . $e->getMessage(), "../");
 }
 
 $request->fill([
-    'email' => $_SESSION['customer_registration']['email'],
+    'email' => $_SESSION['customer_password_reset']['email'],
     'code' => strval(rand(100000, 999999)),
     'creation_attempt' => $request->creation_attempt + 1,
 ]);
@@ -51,9 +51,9 @@ $request->fill([
 try {
     $request->create();
 } catch (PDOException $e) {
-    redirect_with_error_alert("Failed to create email verification request due to error: " . $e->getMessage(), "../");
+    redirect_with_error_alert("Failed to create password reset request due to error: " . $e->getMessage(), "../");
 }
 
 // TODO: send email
 
-redirect_with_info_alert("Email verification request sent. Please check your email", "./");
+redirect_with_info_alert("Password reset request sent. Please check your email", "./");

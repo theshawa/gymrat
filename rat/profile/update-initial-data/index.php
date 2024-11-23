@@ -1,7 +1,7 @@
 <?php
 $pageConfig = [
     "title" => "Update Initial Data",
-    "styles" => ["/rat/styles/auth.css", "../../register/onboarding/onboarding.css"],
+    "styles" => ["/rat/styles/auth.css", "../../onboarding/onboarding.css"],
     "scripts" => ["/rat/scripts/forms.js"],
     "titlebar" => [
         "back_url" => "../"
@@ -27,7 +27,6 @@ require_once "../../includes/titlebar.php";
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                         </svg>
-
                     </div>
                     <span class="option">Male</span>
                 </label>
@@ -37,7 +36,6 @@ require_once "../../includes/titlebar.php";
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                         </svg>
-
                     </div>
                     <span class="option">Female</span>
                 </label>

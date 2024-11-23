@@ -35,7 +35,7 @@ try {
     redirect_with_error_alert("Failed to register customer due to error: " . $e->getMessage(), "/rat/register");
 }
 
-if (isset($already_customer->id)) {
+if ($already_customer->id) {
     redirect_with_error_alert("Email is already registered", "/rat/register");
 }
 

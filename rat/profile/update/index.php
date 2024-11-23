@@ -56,11 +56,14 @@ $avatar = $user->avatar ? "/uploads/" . $user->avatar : null;
             </div>
             <div class="password-update">
                 <h4>Update password</h4>
-                <label for="cpassword" class="password-field">
-                    <input type="password" name="cpassword" placeholder="Current Password">
+                <label for="current_password" class="password-field">
+                    <input type="password" name="current_password" placeholder="Current Password">
                 </label>
                 <label for="password" class="password-field">
                     <input type="password" name="password" placeholder="New Password" minlength="6">
+                </label>
+                <label for="cpassword" class="password-field">
+                    <input type="password" name="cpassword" placeholder="Confirm New Password" minlength="6">
                 </label>
             </div>
             <button class="btn">Save</button>

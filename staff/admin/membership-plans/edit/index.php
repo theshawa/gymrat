@@ -15,8 +15,11 @@ require_once "../../../../alerts/functions.php";
 
 $id = htmlspecialchars($_GET["id"]);
 $membershipPlan = new MembershipPlan();
+$membershipPlan->fill([
+    "id" => $id
+]);
 try {
-    $membershipPlan->get_by_id($id);
+    $membershipPlan->get_by_id();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to fetch membership plan: " . $e->getMessage(), "/staff/admin/membership-plans");
 }

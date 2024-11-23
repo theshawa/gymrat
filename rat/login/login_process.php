@@ -40,6 +40,19 @@ $_SESSION["auth"] = [
     'fname' => $user->fname,
     'lname' => $user->lname,
     'session_started_at' => time(),
+    'activated' => false,
 ];
+
+if (!$user->membership_plan) {
+    header("Location: ./no-subscription");
+    exit;
+}
+
+if (!$user->onboarded) {
+    header("Location: /rat/onboarding/facts");
+    exit;
+}
+
+$_SESSION["auth"]["activated"] = true;
 
 redirect_with_success_alert("Logged in successfully", "/rat");

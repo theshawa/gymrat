@@ -32,7 +32,7 @@ $user->fill([
 ]);
 
 try {
-    $user->update_password_by_email();
+    $user->update_password();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to reset password due to error: " . $e->getMessage(), "./");
 }

@@ -57,11 +57,11 @@ class MembershipPlan extends Model
         }, $items);
     }
 
-    public function get_by_id(int $id)
+    public function get_by_id()
     {
         $sql = "SELECT * FROM $this->table WHERE id = :id LIMIT 1";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute(['id' => $id]);
+        $stmt->execute(['id' => $this->id]);
         $item = $stmt->fetch();
         if (!$item) {
             die("membership plan not found");

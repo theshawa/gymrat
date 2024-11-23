@@ -1,0 +1,49 @@
+.fact {
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.fact-content {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+  gap: 16px;
+  padding-bottom: 10vh;
+}
+
+.fact-content h1 {
+  max-width: 320px;
+}
+
+.fact-content .paragraph {
+  color: var(--color-zinc-200);
+  min-height: 60px;
+}
+
+.actions {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.move-button {
+  padding: 10px 24px;
+  border: 1px solid var(--color-zinc-200);
+  border-radius: 999px;
+  color: var(--color-zinc-200);
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s ease-in-out;
+  font-size: 14px;
+}
+
+.move-button.next {
+  margin-left: auto;
+}
+
+.move-button:hover {
+  background-color: var(--color-zinc-200);
+  color: var(--color-zinc-950);
+}

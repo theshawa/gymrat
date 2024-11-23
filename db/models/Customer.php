@@ -15,6 +15,9 @@ class Customer extends Model
     public null | array| string $avatar;
     public DateTime $created_at;
     public DateTime $updated_at;
+    public int $onboarded;
+    public int $membership_plan;
+    public DateTime|null $membership_plan_activated_at;
 
     public function fill(array $data)
     {
@@ -27,12 +30,16 @@ class Customer extends Model
         $this->avatar = $data['avatar'] ?? null;
         $this->created_at = new DateTime($data['created_at'] ?? null);
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? null);
+        $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? null);
+        $this->membership_plan_activated_at = array_key_exists('membership_plan_activated_at', $data) ?  new DateTime($data['membership_plan_activated_at']) : null;
+        $this->onboarded = $data['onboarded'] ?? 0;
+        $this->membership_plan = $data['membership_plan'] ?? 0;
     }
 
     public function create()
     {
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO $this->table (fname,lname, email, phone, avatar,password) VALUES (:fname, :lname, :email, :phone, :avatar, :password)";
+        $sql = "INSERT INTO $this->table (fname,lname, email, phone, avatar,password, onboarded,membership_plan) VALUES (:fname, :lname, :email, :phone, :avatar, :password, :onboarded, :membership_plan)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'fname' => $this->fname,
@@ -40,7 +47,9 @@ class Customer extends Model
             'email' => $this->email,
             'phone' => $this->phone,
             'avatar' => $this->avatar,
-            'password' => $this->password
+            'password' => $this->password,
+            'onboarded' => $this->onboarded,
+            'membership_plan' => $this->membership_plan,
         ]);
         $this->id = $this->conn->lastInsertId();
     }
@@ -48,8 +57,7 @@ class Customer extends Model
 
     public function update()
     {
-        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
-        $sql = "UPDATE $this->table SET fname=:fname, lname=:lname, email=:email, phone=:phone, avatar=:avatar, password=:password WHERE id=:id";
+        $sql = "UPDATE $this->table SET fname=:fname, lname=:lname, email=:email, phone=:phone, avatar=:avatar, password=:password, onboarded=:onboarded, membership_plan=:membership_plan, updated_at=:updated_at,membership_plan_activated_at=:membership_plan_activated_at WHERE id=:id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'id' => $this->id,
@@ -58,7 +66,11 @@ class Customer extends Model
             'email' => $this->email,
             'phone' => $this->phone,
             'avatar' => $this->avatar,
-            'password' => $this->password
+            'password' => $this->password,
+            'onboarded' => $this->onboarded,
+            'membership_plan' => $this->membership_plan,
+            'updated_at' => $this->updated_at->format("Y-m-d H:i:s"),
+            'membership_plan_activated_at' => $this->membership_plan_activated_at ? $this->membership_plan_activated_at->format("Y-m-d H:i:s") : null
         ]);
     }
 
@@ -93,12 +105,16 @@ class Customer extends Model
         }
     }
 
-    public function update_password_by_email()
+    public function update_password()
     {
-        $sql = "UPDATE $this->table SET password=:password WHERE email=:email";
+        $field = $this->id ? 'id' : ($this->email ? "email" : null);
+        if (!$field) {
+            throw new PDOException("Id or email is required to update password");
+        }
+        $sql = "UPDATE $this->table SET password=:password WHERE $field=:$field";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
-            'email' => $this->email,
+            $field => $this->$field,
             'password' => $this->password
         ]);
     }

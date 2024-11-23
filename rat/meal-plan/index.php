@@ -14,6 +14,7 @@ require_once "../includes/titlebar.php";
 
 <main>
     <p>Meal Plan Page</p>
+    accordian
 </main>
 
 <?php require_once "../includes/navbar.php" ?>

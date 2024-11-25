@@ -11,4 +11,4 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 require_once "../../../auth-guards.php";
 auth_required_guard("/rat/login");
 
-var_dump($_POST);
+echo "Under construction";

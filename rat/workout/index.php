@@ -13,7 +13,7 @@ require_once "../includes/titlebar.php";
 ?>
 
 <main>
-    <p>Workout Page</p>
+    <p>Under construction</p>
 </main>
 
 <?php require_once "../includes/navbar.php" ?>

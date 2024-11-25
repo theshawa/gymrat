@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 require_once "../../auth-guards.php";
 auth_required_guard("/rat/login");
 
-
 require_once "../../../db/models/Complaints.php";
 
 try {

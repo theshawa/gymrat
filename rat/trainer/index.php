@@ -15,8 +15,8 @@ $ratings_percentage = 4;
 ?>
 
 <main>
-    <img src="./avatar.png" alt="Trainer Avatar" class="avatar">
-    <h1 class="name">Imax Jathun</h1>
+    <img src="./avatar.webp" alt="Trainer Avatar" class="avatar">
+    <h1 class="name">John Cena</h1>
     <p class="paragraph description">
         I am a fitness trainer with 10 years of experience.
         I specialize in strength training, weight loss and body building.

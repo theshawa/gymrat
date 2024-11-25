@@ -1,5 +1,6 @@
 <?php
 
+$defaultName = "";
 $showImage = false;
 $showExtend = false;
 $extendTo = null;
@@ -9,6 +10,9 @@ $gridColumns = 2;
 $defaultImage = "../../../uploads/default-images/infoCardDefault.png";
 
 if (isset($infoCardConfig)) {
+    if (isset($infoCardConfig['defaultName'])) {
+        $defaultName = $infoCardConfig['defaultName'];
+    }
     if (isset($infoCardConfig['showImage'])) {
         $showImage = $infoCardConfig['showImage'];
     }
@@ -39,11 +43,15 @@ if (!$isCardInList) {
         $descriptionFirstSegment = array_slice($descriptionWordsArray, 0, $wordLimit);
         $card->description = implode(' ', $descriptionFirstSegment) . (count($descriptionWordsArray) > $wordLimit ? '...' : '');
 
+        if ($defaultName) {
+            $card->name = $defaultName . " #" . $card->id;
+        }
+
         $newCards[] = [
             "id" => $card->id,
             "title" => $card->name,
             "description" => $card->description,
-            "image" => $card->image ?: null
+            "image" => $card->image ?? null
         ];
     }
     $cards = $newCards;

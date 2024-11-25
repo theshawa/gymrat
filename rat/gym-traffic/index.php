@@ -39,7 +39,7 @@ require_once "../includes/titlebar.php";
                 'href' => './'
             ],
             [
-                'title' => 'Weekly Measure',
+                'title' => 'Weekly Flow',
                 'href' => './week'
             ]
         ],

@@ -2,10 +2,13 @@
 $pageConfig = [
     "title" => "Gym Traffic",
     "styles" => ["../gym-traffic.css", "./week.css"],
-    "scripts" => ["./week.js"],
+    "scripts" => [
+        "https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js",
+        "./week.js"
+    ],
     "titlebar" => [
         "title" => "Weekly Gym Traffic",
-        "back_url" => "../",
+        "back_url" => "../../",
     ],
     "need_auth" => true
 ];
@@ -24,7 +27,7 @@ $dayData = $data[$day];
 $maximumRats = 83;
 
 $traffic_cmp = function ($a, $b) {
-    return $b['rats'] - $a['rats'];
+    return $a['rats'] - $b['rats'];
 };
 
 usort($dayData, $traffic_cmp);
@@ -53,6 +56,7 @@ $freeHrs = array_slice($freeHrs, 0, 3);
 
 <script>
     const $DATA = <?= json_encode($dayData) ?>;
+    const $MAX_RATS = <?= $maximumRats ?>;
 </script>
 
 <main>
@@ -64,7 +68,7 @@ $freeHrs = array_slice($freeHrs, 0, 3);
                 'href' => '../'
             ],
             [
-                'title' => 'Weekly Measure',
+                'title' => 'Weekly Flow',
                 'href' => './week'
             ]
         ],
@@ -78,17 +82,19 @@ $freeHrs = array_slice($freeHrs, 0, 3);
             <a href="./?day=<?= $i + 1 ?>" class="day-button <?= $day == $i + 1 ? "active" : "" ?>"><?= $title ?></a>
         <?php endforeach; ?>
     </div>
+
+    <canvas id="week-chart"></canvas>
+
     <div class="hrs">
-        <canvas id="week-chart"></canvas>
         <div class="slot free">
             <h4>Free Hours</h4>
             <div class="hrs-list">
                 <?php foreach ($freeHrs as $i => $hr): ?>
                     <div class="hr">
                         <p class="time">
-                            <?= $hr['from'] ?>
+                            <?= $hr['from'] > 12 ? ($hr['from'] - 12) . " PM" : $hr['from'] . " AM" ?>
                             <span>-</span>
-                            <?= $hr['to'] ?>
+                            <?= $hr['to'] > 12 ? ($hr['to'] - 12) . " PM" : $hr['to'] . " AM" ?>
                         </p>
                         <span class="traffic">
                             <?= number_format($hr['rats'] / $maximumRats * 10, 1) ?>
@@ -103,9 +109,9 @@ $freeHrs = array_slice($freeHrs, 0, 3);
                 <?php foreach ($idleHrs as $i => $hr): ?>
                     <div class="hr">
                         <p class="time">
-                            <?= $hr['from'] ?>
+                            <?= $hr['from'] > 12 ? ($hr['from'] - 12) . " PM" : $hr['from'] . " AM" ?>
                             <span>-</span>
-                            <?= $hr['to'] ?>
+                            <?= $hr['to'] > 12 ? ($hr['to'] - 12) . " PM" : $hr['to'] . " AM" ?>
                         </p>
                         <span class="traffic">
                             <?= number_format($hr['rats'] / $maximumRats * 10, 1) ?>
@@ -120,9 +126,9 @@ $freeHrs = array_slice($freeHrs, 0, 3);
                 <?php foreach ($peakHrs as $i => $hr): ?>
                     <div class="hr">
                         <p class="time">
-                            <?= $hr['from'] ?>
+                            <?= $hr['from'] > 12 ? ($hr['from'] - 12) . " PM" : $hr['from'] . " AM" ?>
                             <span>-</span>
-                            <?= $hr['to'] ?>
+                            <?= $hr['to'] > 12 ? ($hr['to'] - 12) . " PM" : $hr['to'] . " AM" ?>
                         </p>
                         <span class="traffic">
                             <?= number_format($hr['rats'] / $maximumRats * 10, 1) ?>

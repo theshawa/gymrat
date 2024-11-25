@@ -36,29 +36,29 @@ const animateMeter = (targetValue = 0) => {
 
 let currentIncrement = 0;
 const incrementCount = () => {
-  const intervalSpeed = 1200 / $TRAFFIC_MEASURE / 9;
+  const intervalSpeed = 1200 / $TRAFFIC / 9;
   const interval = setInterval(() => {
-    if (currentIncrement < $TRAFFIC_MEASURE) {
+    if (currentIncrement < $TRAFFIC) {
       currentIncrement += 0.1;
       textIncrementer.innerText = `${currentIncrement.toFixed(1)}/10`;
     } else {
       clearInterval(interval);
-      textIncrementer.innerText = `${$TRAFFIC_MEASURE.toFixed(1)}/10`;
+      textIncrementer.innerText = `${$TRAFFIC.toFixed(1)}/10`;
     }
   }, intervalSpeed);
 };
 
-if ($TRAFFIC_MEASURE < 3) {
+if ($TRAFFIC < 3) {
   animateMeter(10);
   setTimeout(() => {
-    animateMeter($TRAFFIC_MEASURE);
+    animateMeter($TRAFFIC);
     incrementCount();
     setTimeout(() => {
       document.querySelector(".data").style.opacity = "1";
     }, 1500);
   }, 2500);
 } else {
-  animateMeter($TRAFFIC_MEASURE);
+  animateMeter($TRAFFIC);
   setTimeout(incrementCount, 500);
   setTimeout(() => {
     document.querySelector(".data").style.opacity = "1";

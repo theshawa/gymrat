@@ -13,8 +13,7 @@ require_once "../includes/titlebar.php";
 ?>
 
 <main>
-    <p>Meal Plan Page</p>
-    accordian
+    <p>Under construction</p>
 </main>
 
 <?php require_once "../includes/navbar.php" ?>

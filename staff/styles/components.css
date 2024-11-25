@@ -358,6 +358,7 @@ select:has(option:checked:not([value=""])) option {
   border-radius: 10px;
   gap: 8px;
   cursor: pointer;
+  align-items: center;
 }
 
 .alert svg {

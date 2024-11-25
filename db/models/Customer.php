@@ -10,7 +10,7 @@ class Customer extends Model
     public string $fname;
     public string $lname;
     public string $email;
-    public ?string $password;
+    public string $password;
     public string $phone;
     public null | array| string $avatar;
     public DateTime $created_at;

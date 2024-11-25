@@ -5,6 +5,8 @@ $pageConfig = [
     "styles" => ["./login.css"],
 ];
 
+require_once "../../alerts/functions.php";
+
 require_once "../includes/header.php";
 ?>
 

@@ -17,6 +17,7 @@ textarea {
 :root {
   --color-zinc-50: #fafafa;
   --color-zinc-100: #f4f4f5;
+  --color-zinc-150: #ececee;
   --color-zinc-200: #e4e4e7;
   --color-zinc-300: #d4d4d8;
   --color-zinc-400: #a1a1aa;
@@ -39,7 +40,7 @@ textarea {
 }
 
 body {
-  background-color: var(--color-zinc-100);
+  background-color: var(--color-zinc-150);
   color: var(--color-zinc-800);
   display: flex;
 }

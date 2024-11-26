@@ -43,15 +43,14 @@ if (!$isCardInList) {
         $descriptionFirstSegment = array_slice($descriptionWordsArray, 0, $wordLimit);
         $card->description = implode(' ', $descriptionFirstSegment) . (count($descriptionWordsArray) > $wordLimit ? '...' : '');
 
-        if ($defaultName) {
-            $card->name = $defaultName . " #" . $card->id;
-        }
+
 
         $newCards[] = [
             "id" => $card->id,
-            "title" => $card->name,
+            "title" => $card->name ?? $defaultName . " #" . $card->id,
             "description" => $card->description,
-            "image" => $card->image ?? null
+            "image" => $card->image ?? null,
+            "created_at" => $card->created_at ? $card->created_at->format('Y-m-d H:i:s') : null
         ];
     }
     $cards = $newCards;
@@ -73,7 +72,7 @@ if (!$isCardInList) {
             <?php endif; ?>
             <div class="info-card-desc">
                 <h2><?= $card['title'] ?></h2>
-                <p><?= $card['description'] ?></p>
+                <p><?= ($card['created_at'] ? "[ " . $card['created_at'] . " ] " : null) ?><?= $card['description'] ?></p>
                 <?php if ($showExtend): ?>
                     <div class="info-card-ext">
                         <a href="<?= $extendTo ?>?id=<?= $card['id'] ?>">

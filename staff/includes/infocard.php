@@ -71,8 +71,8 @@ if (!$isCardInList) {
                 </div>
             <?php endif; ?>
             <div class="info-card-desc">
-                <h2><?= $card['title'] ?></h2>
-                <p><?= ($card['created_at'] ? "[ " . $card['created_at'] . " ] " : null) ?><?= $card['description'] ?></p>
+                <h2><?= ($card['title'] ?? $card['name']) ?></h2>
+                <p><?= (isset($card['created_at'])) ? "[ " . $card['created_at'] . " ] " : "" ?><?= $card['description'] ?></p>
                 <?php if ($showExtend): ?>
                     <div class="info-card-ext">
                         <a href="<?= $extendTo ?>?id=<?= $card['id'] ?>">

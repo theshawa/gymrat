@@ -35,8 +35,8 @@ try {
     redirect_with_error_alert("Failed to update exercise due to an error: " . $e->getMessage(), "/staff/wnmp/exercises/edit?id=" . $id);
 }
 
-session_unset();
-session_destroy();
+unset($_SESSION['exercise']);
+unset($_SESSION['exercise_id']);
 
 redirect_with_success_alert("Exercise updated successfully", "/staff/wnmp/exercises/view?id=" . $id);
 

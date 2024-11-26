@@ -32,7 +32,6 @@ try {
     redirect_with_error_alert("Failed to update exercise due to an error: " . $e->getMessage(), "/staff/wnmp/exercises/create");
 }
 
-session_unset();
-session_destroy();
+unset($_SESSION['exercise']);
 
 redirect_with_success_alert("Exercise created successfully", "/staff/wnmp/exercises");

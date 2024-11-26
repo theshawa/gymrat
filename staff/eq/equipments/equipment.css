@@ -8,14 +8,6 @@ body {
 }
 
 /* Base container */
-.staff-base-container {
-    background-color: var(--color-zinc-50);
-    margin: 10px;
-    padding: 20px;
-    border-radius: 10px;
-    width: 100% !important;
-}
-
 .base-container {
     background-color: var(--color-zinc-50);
     margin: 10px;

@@ -56,6 +56,14 @@ $equipmentList = [
     ]
 ];
 
+$infoCardConfig = [
+    "gridColumns" => 1,
+    "showExtend" => true,
+    "extendTo" => "/staff/eq/equipments/view/index.php",
+    "cards" => $equipmentList,
+    "isCardInList" => true
+];
+
 require_once "../pageconfig.php";
 $pageConfig['styles'][] = "./equipment.css";
 
@@ -66,19 +74,22 @@ require_once "../../includes/sidebar.php";
 <main>
     <div class="staff-base-container">
         <?php require_once "../../includes/menubar.php"; ?>
-        <h1>Manage Equipments | Equipment Manager</h1>
-        <div class="equipment-list mt-4 ">
-            <ul>
-                <?php foreach ($equipmentList as $equipment): ?>
-                    <li class="equipment-item">
-                        <a href="/staff/eq/equipments/view/index.php?id=<?php echo htmlspecialchars($equipment['id']); ?>">
-                            <strong><?php echo htmlspecialchars($equipment['name']); ?></strong>
-                        </a>
-                        <p class="description"><?php echo htmlspecialchars($equipment['description']); ?></p>
-                    </li>
-                    <hr />
-                <?php endforeach; ?>
-            </ul>
+<!--        <h1>Manage Equipments | Equipment Manager</h1>-->
+<!--        <div class="equipment-list mt-4">-->
+<!--            <ul>-->
+<!--                --><?php //foreach ($equipmentList as $equipment): ?>
+<!--                    <li class="equipment-item">-->
+<!--                        <a href="/staff/eq/equipments/view/index.php?id=--><?php //echo htmlspecialchars($equipment['id']); ?><!--">-->
+<!--                            <strong>--><?php //echo htmlspecialchars($equipment['name']); ?><!--</strong>-->
+<!--                        </a>-->
+<!--                        <p class="description">--><?php //echo htmlspecialchars($equipment['description']); ?><!--</p>-->
+<!--                    </li>-->
+<!--                    <hr />-->
+<!--                --><?php //endforeach; ?>
+<!--            </ul>-->
+<!--        </div>-->
+        <div>
+            <?php require_once "../../includes/infocard.php"; ?>
         </div>
     </div>
 </main>

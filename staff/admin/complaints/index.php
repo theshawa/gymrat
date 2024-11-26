@@ -38,6 +38,7 @@ auth_required_guard_with_role("admin", "/staff/login");
 
 <main>
     <div class="staff-base-container">
+<!--        SORT BY DATE AND IS ACKNOWLEDGED-->
         <?php require_once "../../includes/menubar.php"; ?>
         <div>
             <?php require_once "../../includes/infocard.php"; ?>

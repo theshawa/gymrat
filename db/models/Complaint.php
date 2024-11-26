@@ -48,6 +48,27 @@ public function fill(array $data)
         }, $items);
     }
 
+    public function get_by_id(int $id)
+    {
+        $sql = "SELECT * FROM $this->table WHERE id = :id LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $item = $stmt->fetch();
+        if (!$item) {
+            die("Complaint not found");
+        }
+        $this->fill(
+            [
+                'id' => $item['id'],
+                'type' => $item['type'],
+                'description' => $item['description'],
+                'user_id' => $item['user_id'],
+                'created_at' => $item['created_at'],
+                'is_created_by_trainer' => $item['is_created_by_trainer']
+            ]
+        );
+    }
+
     public function create()
     {
         $sql = "INSERT INTO $this->table (id, type, description, user_id, created_at, is_created_by_trainer) VALUES (:id, :type, :description, :user_id, :created_at, :is_created_by_trainer)";

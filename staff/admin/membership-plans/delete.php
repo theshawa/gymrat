@@ -6,7 +6,7 @@ if (!$_SERVER["REQUEST_METHOD"] === "POST") {
     die("method not allowed");
 }
 
-$id = $_POST['id'];
+$id = htmlspecialchars($_POST['id']);
 
 require_once "../../../db/models/MembershipPlan.php";
 

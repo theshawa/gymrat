@@ -3,7 +3,8 @@
 $pageConfig = [
     "title" => "Verify Email",
     "styles" => ["/rat/styles/auth.css"],
-    "scripts" => ["/rat/scripts/forms.js"]
+    "scripts" => ["/rat/scripts/forms.js"],
+    "need_auth" => false
 ];
 
 require_once "../../includes/header.php";

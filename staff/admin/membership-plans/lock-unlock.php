@@ -6,16 +6,20 @@ if (!$_SERVER["REQUEST_METHOD"] === "POST") {
     die("method not allowed");
 }
 
-$id = $_POST['id'];
-$status = $_POST['status'];
+$id = htmlspecialchars($_POST['id']);
+$status = htmlspecialchars($_POST['status']);
 
 require_once "../../../db/models/MembershipPlan.php";
 
 require_once "../../../alerts/functions.php";
 
 $membershipPlan = new MembershipPlan();
+$membershipPlan->fill([
+    "id" => $id,
+]);
+
 try {
-    $membershipPlan->get_by_id($id);
+    $membershipPlan->get_by_id();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to lock/unlock membership plan due to an error: " . $e->getMessage(), "/staff/admin/membership-plans");
 }

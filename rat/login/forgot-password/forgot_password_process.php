@@ -6,69 +6,42 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirect_with_error_alert("Method not allowed", "/rat/login/forgot-password");
 }
 
-session_start();
+require_once "../../../auth-guards.php";
+auth_not_required_guard("/rat/login");
 
-function genereateOTP()
-{
-    return rand(100000, 999999);
+$email = htmlspecialchars($_POST['email']);
+
+require_once "../../../db/models/CustomerPasswordResetRequest.php";
+
+$request = new CustomerPasswordResetRequest();
+$request->fill([
+    'email' => $email
+]);
+try {
+    $request->get_by_email();
+} catch (PDOException $e) {
+    redirect_with_error_alert("Failed to create password reset request user due to error: " . $e->getMessage(), "./");
 }
 
-function sendOTP(string $email, int $creation_attempt)
-{
-    $otp = genereateOTP();
-    echo "Your OTP is: $otp";
-    echo "<br>";
-    echo "<a href='/rat/login/forgot-password'>Go to OTP verification</a>";
-
-    // TODO: save OTP record on database for future verification(For the sake of time, we will use session)
-
-    $_SESSION['forgot_password_otp'] = [
-        'email' => $email,
-        'otp' => $otp, // Remove this line in production
-        'created_at' => time(),
-        'creation_attempt' => $creation_attempt
-    ];
+if ($request->code) {
+    redirect_with_error_alert("Password reset request already sent. Please check your email.", "./");
 }
 
-function verifyOTP()
-{
-    $otp = $_POST['otp'];
-    if ($_SESSION['forgot_password_otp']['otp'] == $otp) {
-        // check if OTP is expired(with OTP life span of 5 minutes)
-        if (time() - $_SESSION['forgot_password_otp']['created_at'] > 60 * 5) {
-            unset($_SESSION['forgot_password_otp']);
-            redirect_with_error_alert("OTP Code Expired", "/rat/login/forgot-password");
-        }
-        header("Location: /rat/login/forgot-password/reset-password");
-    } else {
-        redirect_with_error_alert("Invalid OTP Code", "/rat/login/forgot-password");
-    }
+$request->fill([
+    'email' => $email,
+    'code' => strval(rand(100000, 999999)),
+]);
+
+try {
+    $request->create();
+} catch (PDOException $e) {
+    redirect_with_error_alert("Failed to create password reset request due to error: " . $e->getMessage(), "./");
 }
 
-function resendOTP()
-{
-    if (time() - $_SESSION['forgot_password_otp']['created_at'] < 60 * $_SESSION['forgot_password_otp']['creation_attempt']) {
-        $waitTime = 60 * $_SESSION['forgot_password_otp']['creation_attempt'] - (time() - $_SESSION['forgot_password_otp']['created_at']);
-        redirect_with_error_alert("Please wait $waitTime seconds before resending OTP", "/rat/login/forgot-password");
-    }
-    sendOTP($_SESSION['forgot_password_otp']['email'], $_SESSION['forgot_password_otp']['creation_attempt'] + 1);
-}
+// TODO: send email
 
+$_SESSION['customer_password_reset'] = [
+    'email' => $email,
+];
 
-if (!isset($_POST['action'])) {
-    redirect_with_error_alert("No action provided", "/rat/login/forgot-password");
-}
-
-switch ($_POST['action']) {
-    case 'send':
-        sendOTP($_POST['email'], 1);
-        break;
-    case 'verify':
-        verifyOTP();
-        break;
-    case 'resend':
-        resendOTP();
-        break;
-    default:
-        redirect_with_error_alert("Invalid action", "/rat/login/forgot-password");
-}
+redirect_with_info_alert("Password reset request sent. Please check your email", "./email-verification");

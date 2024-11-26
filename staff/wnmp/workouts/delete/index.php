@@ -1,5 +1,8 @@
 <?php
-$id = $_GET['id'] ?? null;
+
+$id = htmlspecialchars($_GET['id'] ?? null);
+
+require_once "../../../../alerts/functions.php";
 
 $workout = [
     "id" => 001,
@@ -72,7 +75,7 @@ require_once "../../../includes/sidebar.php";
     <div class="base-container">
         <?php require_once "../../../includes/menubar.php"; ?>
         <form action="delete_workout.php" method="post" class="form">
-            <div class="delete-workout-div">
+            <div class="staff-record-delete-div">
                 <h2>Are you sure you want to delete "<?= $workout["title"] ?>"?</h2>
                 <p>This action cannot be undone.</p>
                 <button type="submit">Delete</button>

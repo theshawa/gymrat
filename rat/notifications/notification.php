@@ -1,6 +1,6 @@
 <?php
 
-$id = $_GET["id"];
+$id = htmlspecialchars($_GET["id"]);
 
 if (!isset($id)) {
     header("Location: /notifications");
@@ -13,6 +13,7 @@ $pageConfig = [
     "titlebar" => [
         "back_url" => "/rat/notifications/index.php",
     ],
+    "need_auth" => true
 ];
 
 require_once "../includes/header.php";

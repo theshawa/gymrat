@@ -40,12 +40,14 @@ unset($_SESSION['info']);
     <script>
         setTimeout(() => {
             document.querySelectorAll('.alert').forEach(alert => {
-                alert.remove();
+                alert.style.display = 'none';
             });
+            document.querySelector('.alert-wrapper').style.display = 'none';
         }, 5000);
         document.querySelectorAll('.alert').forEach(alert => {
             alert.addEventListener('click', e => {
-                alert.remove();
+                alert.style.display = 'none';
+                document.querySelector('.alert-wrapper').style.display = 'none';
             });
         });
     </script>

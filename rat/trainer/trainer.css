@@ -1,0 +1,54 @@
+.avatar {
+  width: calc(128 / 16 * 1rem);
+  height: calc(128 / 16 * 1rem);
+  object-fit: cover;
+  object-position: top;
+  margin: 0 auto;
+  border-radius: 999999px;
+}
+
+.name {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.description {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.ratings {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  border: 1px solid var(--color-zinc-800);
+  width: 100%;
+  border-radius: 20px;
+  gap: 8px;
+}
+
+.stars {
+  --percent: calc(var(--rating) / 5 * 100%);
+  display: inline-block;
+  font-size: 30px;
+  font-family: "Times", serif;
+  line-height: 1;
+}
+
+.stars::before {
+  content: "★★★★★";
+  letter-spacing: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--color-violet-500) var(--percent),
+    var(--color-violet-950) var(--percent)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn {
+  margin-top: 10px;
+}

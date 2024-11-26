@@ -5,15 +5,18 @@ session_start();
 require_once "../../alerts/functions.php";
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    redirect_with_error_alert('Method not allowed', '/rat/register');
+    redirect_with_error_alert('Method not allowed', '../register');
 }
 
-$fname = $_POST['fname'];
-$lname = $_POST['lname'];
-$email = $_POST['email'];
-$password = $_POST['password'];
-$cpassword = $_POST['cpassword'];
-$phone = $_POST['phone'];
+require_once "../../auth-guards.php";
+auth_not_required_guard("/rat");
+
+$fname = htmlspecialchars($_POST['fname']);
+$lname = htmlspecialchars($_POST['lname']);
+$email = htmlspecialchars($_POST['email']);
+$password = htmlspecialchars($_POST['password']);
+$cpassword = htmlspecialchars($_POST['cpassword']);
+$phone = htmlspecialchars($_POST['phone']);
 
 if ($password !== $cpassword) {
     redirect_with_error_alert("Passwords do not match", "/rat/register");
@@ -22,14 +25,17 @@ if ($password !== $cpassword) {
 // check if email is already registered
 require_once "../../db/models/Customer.php";
 $already_customer = new Customer();
+$already_customer->fill([
+    'email' => $email,
+]);
 
 try {
-    $already_customer->get_by_email($email);
+    $already_customer->get_by_email();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to register customer due to error: " . $e->getMessage(), "/rat/register");
 }
 
-if (isset($already_customer->id)) {
+if ($already_customer->id) {
     redirect_with_error_alert("Email is already registered", "/rat/register");
 }
 
@@ -55,15 +61,18 @@ $_SESSION['customer_registration'] = [
 require_once "../../db/models/CustomerEmailVerificationRequest.php";
 
 $request = new CustomerEmailVerificationRequest();
+$request->fill([
+    'email' => $email,
+]);
 
 // check if a request already exists
 try {
-    $request->get_by_email($email);
+    $request->get_by_email();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to register customer due to error: " . $e->getMessage(), "/rat/register");
 }
 
-if (isset($request->code)) {
+if ($request->code) {
     redirect_with_error_alert("Email verification request already sent. Please check your email", "/rat/register/email-verification");
 }
 

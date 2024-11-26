@@ -4,8 +4,9 @@ $showImage = false;
 $showExtend = false;
 $extendTo = null;
 $cards = null;
+$isCardInList = false; // REMOVE WHEN FULLY TURNED TO CRUD
 $gridColumns = 2;
-$defaultImage = "../assets/infoCardDefault.png"; // FIX DEFAULT IMAGE
+$defaultImage = "../../../uploads/default-images/infoCardDefault.png";
 
 if (isset($infoCardConfig)) {
     if (isset($infoCardConfig['showImage'])) {
@@ -23,6 +24,29 @@ if (isset($infoCardConfig)) {
     if (isset($infoCardConfig['gridColumns'])) {
         $gridColumns = $infoCardConfig['gridColumns'];
     }
+    if (isset($infoCardConfig['isCardInList'])) {
+        $isCardInList = $infoCardConfig['isCardInList'];
+    }
+}
+
+if (!$isCardInList) {
+    $newCards = [];
+    foreach ($cards as $card) {
+        $description = $card->description;
+        $wordLimit = 15;
+
+        $descriptionWordsArray = explode(' ', $description);
+        $descriptionFirstSegment = array_slice($descriptionWordsArray, 0, $wordLimit);
+        $card->description = implode(' ', $descriptionFirstSegment) . (count($descriptionWordsArray) > $wordLimit ? '...' : '');
+
+        $newCards[] = [
+            "id" => $card->id,
+            "title" => $card->name,
+            "description" => $card->description,
+            "image" => $card->image ?: null
+        ];
+    }
+    $cards = $newCards;
 }
 
 ?>
@@ -31,11 +55,11 @@ if (isset($infoCardConfig)) {
     <?php foreach ($cards as $card): ?>
         <div class="info-card">
             <?php if ($showImage): ?>
-                <div class="info-card-img">
-                    <?php if ($card['img']): ?>
-                        <img src="<?= $card['img'] ?>" alt="<?= $card['title'] ?>">
+                <div>
+                    <?php if ($card['image']): ?>
+                        <img src="<?= $card['image'] ?>" alt="<?= $card['title'] ?>" class="info-card-img">
                     <?php else: ?>
-                        <img src="<?= $defaultImage ?>" alt="Default">
+                        <img src="<?= $defaultImage ?>" alt="Default" class="info-card-img">
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
@@ -68,19 +92,21 @@ if (isset($infoCardConfig)) {
         padding: 20px;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        /*justify-content: space-between;*/
         align-items: center;
     }
     .info-card-img {
-        width: 30%;
+        width: 60%;
     }
     .info-card-desc {
         display: flex;
         flex-direction: column;
+        width: 100%;
     }
     .info-card-ext {
         margin-top: 20px;
         display: flex;
         justify-content: flex-end;
     }
+
 </style>

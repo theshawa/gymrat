@@ -1,36 +1,44 @@
 <?php
-$id = $_GET['id'];
+
+$id = $_GET['id'] ?? null;
+
+session_start();
+
+$sidebarActive = 2;
+
+require_once "../../../../alerts/functions.php";
+
+$menuBarConfig = [
+    "title" => "Delete Equipment",
+    "showBack" => true,
+    "goBackTo" => "/staff/eq/equipments/view/index.php?id=$id",
+];
 
 require_once "../../pageconfig.php";
 
-// Simulated equipment data (this should be fetched from a database)
-$equipment = [
-    "id" => 001,
-    "name" => "Leg Press Machine",
-    "type" => "Legs",
-    "last_maintenance" => "2024-10-10",
-    "purchase_date" => "2022-05-15",
-    "manufacturer" => "FitnessPro Inc.",
-    "description" => "A versatile machine designed to target quadriceps, hamstrings, and glutes effectively.A versatile machine designed to target quadriceps, hamstrings, and glutes effectively.A versatile machine designed to target quadriceps, hamstrings, and glutes effectively.A versatile machine designed to target quadriceps, hamstrings, and glutes effectively",
-    "img" => null
-];
-
-$pageConfig['styles'][] = "../equipment.css";
+$pageConfig['styles'][] = "../equipments.css";
 
 require_once "../../../includes/header.php";
-// require_once "../../../includes/sidebar.php";
+require_once "../../../includes/sidebar.php";
+
+require_once "../../../../auth-guards.php";
+auth_required_guard_with_role("eq", "/staff/login");
 ?>
 
 <main>
-    <link rel="stylesheet" href="../equipment.css">
-    <div class="base-container">
-        <form action="delete_workout.php" method="post" class="form">
-            <div class="delete-workout-div">
-                <h2>Are you sure you want to delete "<?= $equipment["name"] ?>"?</h2>
-                <p>This action cannot be undone.</p>
-                <input type="hidden" name="id" value="<?= $equipment['id'] ?>">
-                <button type="submit">Delete</button>
-            </div>
-        </form>
+    <div class="staff-base-container">
+        <div class="form">
+            <form action="delete_equipment.php" method="POST">
+                <?php require_once "../../../includes/menubar.php"; ?>
+                <input type="hidden" name="equipment_id" value="<?= $id ?>">
+                <div class="staff-record-delete-div">
+                    <h2>Are you sure you want to delete this equipment?</h2>
+                    <p>This action cannot be undone.</p>
+                    <button type="submit">Delete</button>
+                </div>
+            </form>
+        </div>
     </div>
 </main>
+
+<?php require_once "../../../includes/footer.php"; ?>

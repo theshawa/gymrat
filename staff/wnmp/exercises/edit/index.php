@@ -52,7 +52,6 @@ auth_required_guard_with_role("wnmp", "/staff/login");
                 <div style="padding: 5px 10px;">
                     <input type="hidden" name="exercise_id" value="<?= $exercise->id?>">
 
-
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-title">Title</label></h2>
                         <input type="text" id="edit-title" name="exercise_name"

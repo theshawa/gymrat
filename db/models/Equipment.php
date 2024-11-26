@@ -88,44 +88,50 @@ class Equipment extends Model
         );
     }
 
-//    public function create()
-//    {
-//        $sql = "INSERT INTO $this->table (name, description, video_link, image) VALUES (:name, :description, :video_link, :image)";
-//        $stmt = $this->conn->prepare($sql);
-//        $stmt->execute([
-//            'name' => $this->name,
-//            'description' => $this->description,
-//            'video_link' => $this->video_link,
-//            'image' => $this->image,
-//        ]);
-//    }
-//
-//    public function update()
-//    {
-//        $sql = "UPDATE $this->table SET name = :name, description = :description, video_link = :video_link, image = :image, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
-//        $stmt = $this->conn->prepare($sql);
-//        $stmt->execute([
-//            'id' => $this->id,
-//            'name' => $this->name,
-//            'description' => $this->description,
-//            'video_link' => $this->video_link,
-//            'image' => $this->image,
-//        ]);
-//    }
-//
-//    public function save()
-//    {
-//        if ($this->id === 0) {
-//            $this->create();
-//        } else {
-//            $this->update();
-//        }
-//    }
-//
-//    public function delete()
-//    {
-//        $sql = "DELETE FROM $this->table WHERE id = :id";
-//        $stmt = $this->conn->prepare($sql);
-//        $stmt->execute(['id' => $this->id]);
-//    }
+    public function create()
+{
+    $sql = "INSERT INTO $this->table (name, type, manufacturer, description, image, purchase_date, last_maintenance) VALUES (:name, :type, :manufacturer, :description, :image, :purchase_date, :last_maintenance)";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([
+        'name' => $this->name,
+        'type' => $this->type,
+        'manufacturer' => $this->manufacturer,
+        'description' => $this->description,
+        'image' => $this->image,
+        'purchase_date' => $this->purchase_date->format('Y-m-d H:i:s'),
+        'last_maintenance' => $this->last_maintenance->format('Y-m-d H:i:s'),
+    ]);
+}
+
+public function update()
+{
+    $sql = "UPDATE $this->table SET name = :name, type = :type, manufacturer = :manufacturer, description = :description, image = :image, purchase_date = :purchase_date, last_maintenance = :last_maintenance, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([
+        'id' => $this->id,
+        'name' => $this->name,
+        'type' => $this->type,
+        'manufacturer' => $this->manufacturer,
+        'description' => $this->description,
+        'image' => $this->image,
+        'purchase_date' => $this->purchase_date->format('Y-m-d H:i:s'),
+        'last_maintenance' => $this->last_maintenance->format('Y-m-d H:i:s'),
+    ]);
+}
+
+    public function save()
+    {
+        if ($this->id === 0) {
+            $this->create();
+        } else {
+            $this->update();
+        }
+    }
+
+    public function delete()
+    {
+        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
+    }
 }

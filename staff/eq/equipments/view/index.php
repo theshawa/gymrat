@@ -30,6 +30,10 @@ $pageConfig['styles'][] = "./equipmentView.css";
 
 require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
+
+
+require_once "../../../../auth-guards.php";
+auth_required_guard_with_role("eq", "/staff/login");
 ?>
 
 <main>
@@ -74,7 +78,7 @@ require_once "../../../includes/sidebar.php";
                     <h2 style="margin-bottom: 20px;">
                         Product Image
                     </h2>
-                    <?php if (isset($equipment->image)): ?>
+                    <?php if ($equipment->image): ?>
                         <img src="../../../../<?= $equipment->image ?>" alt="<?= $equipment->name ?>">
                     <?php else: ?>
                         <img src="../../../../uploads/default-images/infoCardDefault.png" alt="default">

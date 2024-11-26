@@ -1,13 +1,3 @@
-/* General styles for the body */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa; /* Light grey background */
-    color: #333; /* Dark grey text */
-    margin: 0;
-    padding: 0;
-}
-
-/* Base container for the page */
 .base-container {
     background-color: var(--color-zinc-50);
     margin: 10px;
@@ -33,30 +23,55 @@ h2 {
     /* background-color: aqua; */
 }
 
+.view-equipment-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    padding: 20px;
+}
+
+.view-equipment-details{
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.view-equipment-details p {
+    font-size: 18px;
+    color: var(--color-zinc-600);
+}
+
+.view-equipment-details p.alt {
+    font-size: 18px;
+    color: var(--color-zinc-950);
+}
+
 /* Unordered list for equipment details */
-.view-equipment-container ul {
-    list-style-type: none; /* Removes default list styling */
-    padding: 0;
-}
+/*.view-equipment-container ul {*/
+/*    list-style-type: none; !* Removes default list styling *!*/
+/*    padding: 0;*/
+/*}*/
 
-.view-equipment-container ul li {
-    font-size: 1rem;
-    padding: 8px 0;
-    border-bottom: 1px solid #ddd; /* Light grey divider */
-}
+/*.view-equipment-container ul li {*/
+/*    font-size: 1rem;*/
+/*    padding: 8px 0;*/
+/*    border-bottom: 1px solid #ddd; !* Light grey divider *!*/
+/*}*/
 
-.view-equipment-container ul li:last-child {
-    border-bottom: none; /* No divider for the last item */
-}
+/*.view-equipment-container ul li:last-child {*/
+/*    border-bottom: none; !* No divider for the last item *!*/
+/*}*/
 
 /* Equipment description */
-.view-equipment-container p {
-    line-height: 1.6; /* Improves readability */
-    font-size: 1rem;
-    color: #555; /* Medium grey for descriptions */
-}
+/*.view-equipment-container p {*/
+/*    line-height: 1.6; !* Improves readability *!*/
+/*    font-size: 1rem;*/
+/*    color: #555; !* Medium grey for descriptions *!*/
+/*}*/
 
-/* Equipment image */
+ /*Equipment image*/
 .view-equipment-container img {
     max-width: 100%; /* Ensures the image doesn't exceed the container */
     height: auto;
@@ -65,26 +80,26 @@ h2 {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for the image */
 }
 
-/* Buttons in the menu bar */
-.menubar a {
-    display: inline-block;
-    padding: 10px 15px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 1rem;
-    margin-right: 10px;
-    color: #fff;
-}
+/*!* Buttons in the menu bar *!*/
+/*.menubar a {*/
+/*    display: inline-block;*/
+/*    padding: 10px 15px;*/
+/*    border-radius: 4px;*/
+/*    text-decoration: none;*/
+/*    font-size: 1rem;*/
+/*    margin-right: 10px;*/
+/*    color: #fff;*/
+/*}*/
 
-.menubar a.secondary {
-    background-color: #6c757d; /* Secondary button color */
-}
+/*.menubar a.secondary {*/
+/*    background-color: #6c757d; !* Secondary button color *!*/
+/*}*/
 
-.menubar a.destructive {
-    background-color: #dc3545; /* Red color for delete button */
-}
+/*.menubar a.destructive {*/
+/*    background-color: #dc3545; !* Red color for delete button *!*/
+/*}*/
 
-.menubar a:hover {
-    opacity: 0.9; /* Slight hover effect */
-}
+/*.menubar a:hover {*/
+/*    opacity: 0.9; !* Slight hover effect *!*/
+/*}*/
 

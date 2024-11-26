@@ -11,6 +11,7 @@ class Equipment extends Model
     public string $type;
     public string $manufacturer;
     public string $description;
+    public string $image;
     public DateTime $purchase_date;
     public DateTime $last_maintenance;
     public DateTime $created_at;
@@ -28,6 +29,7 @@ class Equipment extends Model
         $this->type = $data['type'] ?? "";
         $this->manufacturer = $data['manufacturer'] ?? "";
         $this->description = $data['description'] ?? "";
+        $this->image = $data['image'] ?? "";
         $this->purchase_date = new DateTime($data['purchase_date'] ?? null);
         $this->last_maintenance = new DateTime($data['last_maintenance'] ?? null);
         $this->created_at = new DateTime($data['created_at'] ?? null);
@@ -50,6 +52,7 @@ class Equipment extends Model
                     'type' => $item['type'],
                     'manufacturer' => $item['manufacturer'],
                     'description' => $item['description'],
+                    'image' => $item['image'],
                     'purchase_date' => $item['purchase_date'],
                     'last_maintenance' => $item['last_maintenance'],
                     'created_at' => $item['created_at'],
@@ -60,28 +63,31 @@ class Equipment extends Model
         }, $items);
     }
 
-//    public function get_by_id(int $id)
-//    {
-//        $sql = "SELECT * FROM $this->table WHERE id = :id LIMIT 1";
-//        $stmt = $this->conn->prepare($sql);
-//        $stmt->execute(['id' => $id]);
-//        $item = $stmt->fetch();
-//        if (!$item) {
-//            die("Exercise not found");
-//        }
-//        $this->fill(
-//            [
-//                'id' => $item['id'],
-//                'name' => $item['name'],
-//                'description' => $item['description'],
-//                'video_link' => $item['video_link'],
-//                'image' => $item['image'],
-//                'created_at' => $item['created_at'],
-//                'updated_at' => $item['updated_at']
-//            ]
-//        );
-//    }
-//
+    public function get_by_id(int $id)
+    {
+        $sql = "SELECT * FROM $this->table WHERE id = :id LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $item = $stmt->fetch();
+        if (!$item) {
+            die("Equipment not found");
+        }
+        $this->fill(
+            [
+                'id' => $item['id'],
+                'name' => $item['name'],
+                'description' => $item['description'],
+                'manufacturer' => $item['manufacturer'],
+                'type' => $item['type'],
+                'image' => $item['image'],
+                'purchase_date' => $item['purchase_date'],
+                'last_maintenance' => $item['last_maintenance'],
+                'created_at' => $item['created_at'],
+                'updated_at' => $item['updated_at']
+            ]
+        );
+    }
+
 //    public function create()
 //    {
 //        $sql = "INSERT INTO $this->table (name, description, video_link, image) VALUES (:name, :description, :video_link, :image)";

@@ -12,56 +12,25 @@ $menuBarConfig = [
     ]
 ];
 
+
+require_once "../../../db/models/Equipment.php";
+
+require_once "../../../alerts/functions.php";
+
 // All equipment items in a single list
-$equipmentList = [
-    [
-        "id" => 1,
-        "name" => "Leg Press Machine",
-        "description" => "A versatile machine designed to target quadriceps, hamstrings, and glutes effectively."
-    ],
-    [
-        "id" => 2,
-        "name" => "Squat Rack",
-        "description" => "A rack for performing squats and other compound exercises."
-    ],
-    [
-        "id" => 3,
-        "name" => "Leg Curl Machine",
-        "description" => "Designed to isolate and strengthen the hamstrings."
-    ],
-    [
-        "id" => 4,
-        "name" => "Calf Raise Machine",
-        "description" => "Targets and strengthens the calf muscles."
-    ],
-    [
-        "id" => 5,
-        "name" => "Bench Press",
-        "description" => "A classic equipment for chest and triceps strength training."
-    ],
-    [
-        "id" => 6,
-        "name" => "Chest Fly Machine",
-        "description" => "Builds chest muscles and improves posture."
-    ],
-    [
-        "id" => 7,
-        "name" => "Lat Pulldown Machine",
-        "description" => "A machine for strengthening the back and biceps."
-    ],
-    [
-        "id" => 8,
-        "name" => "Dumbbells",
-        "description" => "Versatile free weights for full-body strength training."
-    ]
-];
+$equipmentModel = new Equipment();
+try {
+    $equipmentList = $equipmentModel->get_all();
+} catch (Exception $e) {
+    redirect_with_error_alert("Failed to fetch equipment: " . $e->getMessage(), "/staff/wnmp");
+}
+
 
 $infoCardConfig = [
     "gridColumns" => 1,
     "showExtend" => true,
     "extendTo" => "/staff/eq/equipments/view/index.php",
     "cards" => $equipmentList,
-    "isCardInList" => true
 ];
 
 require_once "../pageconfig.php";

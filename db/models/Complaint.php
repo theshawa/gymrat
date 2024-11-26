@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/../Model.php";
 
-class Complaints extends Model
+class Complaint extends Model
 {
     protected $table = "complaints";
 

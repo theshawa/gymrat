@@ -78,11 +78,14 @@ $avatar = $user->avatar ? "/uploads/" . $user->avatar : "/uploads/default-images
                     <span class="paragraph small">(<?= $plan_expiry ?> days remaining)</span>
                 <?php endif; ?>
             </p>
-
         </div>
+
     </div>
     <a href="./update" class="btn">Update Profile</a>
     <a href="../logout.php" class="btn secondary">Logout</a>
+    <?php if (!$user->avatar): ?>
+        <p class="paragraph" style="text-align: center;font-size: 10px;margin-top:20px;color: var(--color-zinc-500)">Default avatar image is <br />downloaded from <a href="https://www.freepik.com" target="_blank" referrerpolicy="no-reffer" style="text-decoration: underline;">www.freepik.com</a>.</p>
+    <?php endif; ?>
 </main>
 
 <?php require_once "../includes/navbar.php" ?>

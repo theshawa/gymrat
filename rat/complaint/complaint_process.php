@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 require_once "../../auth-guards.php";
 auth_required_guard("/rat/login");
 
-require_once "../../../db/models/Complaints.php";
+require_once "../../db/models/Complaints.php";
 
 try {
     $type = $_POST['type'] ?? null;
@@ -26,7 +26,7 @@ try {
         redirect_with_error_alert("You must be logged in to make a complaint.", "/rat/login");
     }
 
-    $complaint = new Complaints();
+    $complaint = new Complaint();
 
     $complaint->fill([
         'type' => $type,

@@ -16,13 +16,13 @@ require_once "../includes/titlebar.php";
         <div class="field">
             <select class="input" name="type" required>
                 <option value="">Select Complaint Type</option>
-                <option value="facility">Facility Issues</option>
-                <option value="staff">Staff Complaints</option>
-                <option value="membership">Membership Issues</option>
-                <option value="trainer">Trainer Performance</option>
-                <option value="service">Service Quality</option>
-                <option value="safety">Health and Safety Concerns</option>
-                <option value="feedback">General Feedback</option>
+                <option value="Facility Issues">Facility Issues</option>
+                <option value="Staff Complaints">Staff Complaints</option>
+                <option value="Membership Issues">Membership Issues</option>
+                <option value="Trainer Performance">Trainer Performance</option>
+                <option value="Service Quality">Service Quality</option>
+                <option value="Health and Safety Concerns">Health and Safety Concerns</option>
+                <option value="General Feedback">General Feedback</option>
             </select>
         </div>
         <div class="field">

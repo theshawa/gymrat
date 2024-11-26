@@ -1,0 +1,129 @@
+/* General body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Base container */
+.staff-base-container {
+    background-color: var(--color-zinc-50);
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100% !important;
+}
+
+.base-container {
+    background-color: var(--color-zinc-50);
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100% !important;
+}
+
+/* Page header */
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+/* Equipment list */
+.equipment-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.equipment-item {
+    padding: 10px 0;
+
+}
+
+.equipment-item a {
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: #000000; /* Primary color for links */
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.equipment-item a:hover {
+    color: #032d57; /* Darker color on hover */
+}
+
+
+.description {
+    margin: 10px 0 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Divider between items */
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+/* css for delete model */
+.delete-workout-div {
+    padding: 15px;
+}
+
+.delete-workout-div p {
+    margin: 5px 0px;
+}
+
+.delete-workout-div button {
+    width: 30%;
+    height: 45px;
+    margin: 20px 0px;
+    background-color: var(--color-red-light);
+    border: 2px solid var(--color-red);
+    color: var(--color-zinc-100);
+    border-radius: 10px;
+}
+
+/* css for delete model */
+.update-workout-div {
+    padding: 15px;
+}
+
+.update-workout-div p {
+    margin: 5px 0px;
+}
+
+.update-workout-div button {
+    width: 30%;
+    height: 45px;
+    margin: 20px 0px;
+    cursor: pointer;
+    background-color: var(--color-green-light);
+    border: 2px solid var(--color-green);
+    color: var(--color-zinc-100);
+    border-radius: 10px;
+}
+
+.update-workout-div button :hover{
+    background-color: red;
+}
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .equipment-item a {
+        font-size: 1rem;
+    }
+
+    .description {
+        font-size: 0.85rem;
+    }
+}

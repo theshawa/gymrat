@@ -57,7 +57,7 @@ $user->fill([
 // upload from temp folder to customer-avatars
 require_once "../../../uploads.php";
 $user->avatar = $user->avatar ? ltrim($user->avatar, "tmp/") : null;
-if (!move_from_temp($user->avatar)) {
+if ($user->avatar && !move_from_temp($user->avatar)) {
     redirect_with_error_alert("Failed to upload avatar due to an error: failed to move file from temp", "../");
 }
 

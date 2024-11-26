@@ -7,7 +7,7 @@ main.auth {
   flex-direction: column;
   align-items: center;
   height: max-content;
-  margin-top: 10vh;
+  margin-top: 5vh;
 }
 
 .auth h1 {
@@ -39,7 +39,7 @@ main.auth {
   width: 120px;
   height: 120px;
   border-radius: 9999px;
-  margin: 0 auto 40px auto !important;
+  margin: 0 auto 40px auto;
   background-color: var(--color-zinc-800);
   border: 2px solid var(--color-zinc-700);
   display: flex;

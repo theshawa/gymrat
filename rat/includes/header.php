@@ -4,10 +4,34 @@ session_start();
 
 $pageTitle = null;
 $pageStyles = [];
+
+$need_auth = null;
+$dont_need_active_subscription = null;
 if (isset($pageConfig)) {
     $pageTitle = $pageConfig['title'] ?? null;
     $pageStyles = $pageConfig['styles'] ?? [];
+    $need_auth = $pageConfig['need_auth'] ?? null;
+    $dont_need_active_subscription = $pageConfig['dont_need_active_subscription'] ?? null;
 }
+
+require_once __DIR__ . "/../../auth-guards.php";
+
+if (!is_null($need_auth)) {
+    if (!is_null($dont_need_active_subscription)) {
+        if ($need_auth) {
+            auth_required_guard("/rat/login", false);
+        } else {
+            auth_not_required_guard("/rat");
+        }
+    } else {
+        if ($need_auth) {
+            auth_required_guard("/rat/login");
+        } else {
+            auth_not_required_guard("/rat");
+        }
+    }
+}
+
 ?>
 
 

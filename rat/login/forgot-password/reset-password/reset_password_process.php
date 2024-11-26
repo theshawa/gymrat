@@ -1,20 +1,42 @@
 <?php
 
+session_start();
+
 require_once "../../../../alerts/functions.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    redirect_with_error_alert("Method not allowed", "/rat/login");
+    redirect_with_error_alert("Method not allowed", "../");
 }
 
-session_start();
+if (!isset($_SESSION['customer_password_reset'])) {
+    redirect_with_error_alert("Invalid request", "../");
+}
+
+if (!isset($_SESSION['customer_password_reset']['verified'])) {
+    redirect_with_error_alert("Please verify email", "../");
+}
 
 $password = htmlspecialchars($_POST['password']);
-$repeat_password = htmlspecialchars($_POST['repeat_password']);
+$cpassword = htmlspecialchars($_POST['cpassword']);
 
-if ($password !== $repeat_password) {
-    redirect_with_alert("Passwords do not match. Please start process again.", "/rat/login/forgot-password");
+if ($password !== $cpassword) {
+    redirect_with_error_alert("Passwords do not match", "./");
 }
 
-// TODO: Reset password logic here...
+require_once "../../../../db/models/Customer.php";
 
-redirect_with_success_alert("Password reset successfully", "/rat/login");
+$user = new Customer();
+$user->fill([
+    'email' => $_SESSION['customer_password_reset']['email'],
+    'password' => password_hash($password, PASSWORD_DEFAULT),
+]);
+
+try {
+    $user->update_password();
+} catch (PDOException $e) {
+    redirect_with_error_alert("Failed to reset password due to error: " . $e->getMessage(), "./");
+}
+
+unset($_SESSION['customer_password_reset']);
+
+redirect_with_success_alert("Password reset successful!", "/rat/login");

@@ -6,6 +6,7 @@ $pageConfig = [
     "titlebar" => [
         "title" => "Notifications(4)",
     ],
+    "need_auth" => true
 ];
 
 require_once "../includes/header.php";

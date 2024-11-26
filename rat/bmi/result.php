@@ -75,6 +75,7 @@ $pageConfig = [
     "titlebar" => [
         "back_url" => "/rat/bmi/index.php",
     ],
+    "need_auth" => true
 ];
 
 require_once "../includes/header.php";

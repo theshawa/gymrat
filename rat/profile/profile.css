@@ -1,0 +1,94 @@
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 9999px;
+  background-color: var(--color-zinc-900);
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0 20px 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--color-zinc-900);
+}
+
+.line {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-zinc-900);
+}
+
+.line .title {
+  font-size: 10px;
+  color: var(--color-zinc-400);
+  text-transform: uppercase;
+}
+
+.avatar-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 20px;
+}
+
+.avatar-input-wrapper .avatar {
+  margin: 0;
+}
+
+.clear-avatar-button {
+  font-size: 12px;
+  color: var(--color-zinc-400);
+  text-transform: uppercase;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-field label {
+  font-size: 12px;
+  color: var(--color-zinc-400);
+  text-transform: uppercase;
+  padding-left: 20px;
+}
+
+.password-update {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 0 10px 0;
+}
+
+.external-link {
+  padding: 10px 20px;
+  border: 1px solid var(--color-zinc-900);
+  border-radius: 9999px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 10px;
+}

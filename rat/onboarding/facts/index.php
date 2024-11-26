@@ -2,10 +2,11 @@
 $pageConfig = [
     "title" => "Onboarding Facts",
     "styles" => ["/rat/styles/auth.css", "./facts.css"],
-    "scripts" => ["/rat/scripts/forms.js"]
+    "scripts" => ["/rat/scripts/forms.js"],
+    "need_auth" => true,
 ];
 
-require_once "../../../includes/header.php";
+require_once "../../includes/header.php";
 
 $facts = [
     [
@@ -49,4 +50,4 @@ if (isset($_GET['i']) && $_GET['i'] > 0 && $_GET['i'] < count($facts) + 1) {
         </div>
     </div>
 </main>
-<?php require_once "../../../includes/footer.php" ?>
+<?php require_once "../../includes/footer.php" ?>

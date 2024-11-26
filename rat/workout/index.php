@@ -4,7 +4,8 @@ $pageConfig = [
     "titlebar" => [
         "title" => "My Workout",
         "back_url" => "/rat/index.php"
-    ]
+    ],
+    "need_auth" => true
 ];
 
 require_once "../includes/header.php";
@@ -12,7 +13,7 @@ require_once "../includes/titlebar.php";
 ?>
 
 <main>
-    <p>Workout Page</p>
+    <p>Under construction</p>
 </main>
 
 <?php require_once "../includes/navbar.php" ?>

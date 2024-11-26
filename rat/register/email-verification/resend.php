@@ -1,8 +1,5 @@
 <?php
 
-$CUSTOMER_EMAIL_VERIFICATION_REQUEST_MAXIMUM_ATTEMPTS = 3;
-$CUSTOMER_EMAIL_VERIFICATION_REQUEST_TIMEOUT = 30; // in seconds
-
 session_start();
 
 require_once "../../../alerts/functions.php";
@@ -14,19 +11,23 @@ if (!isset($_SESSION['customer_registration'])) {
 require_once "../../../db/models/CustomerEmailVerificationRequest.php";
 
 $request = new CustomerEmailVerificationRequest();
-
+$request->fill([
+    'email' => $_SESSION['customer_registration']['email'],
+]);
 try {
-    $request->get_by_email($_SESSION['customer_registration']['email']);
+    $request->get_by_email();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to register customer due to error: " . $e->getMessage(), "../");
 }
 
-if (!isset($request->code)) {
+if (!$request->code) {
     redirect_with_error_alert("Invalid request", "../");
 }
 
 $period_from_creation = (new DateTime())->format("U") - (int)$request->created_at->format("U");
 
+
+require_once "../../../constants.php";
 if (
     $request->creation_attempt >= $CUSTOMER_EMAIL_VERIFICATION_REQUEST_MAXIMUM_ATTEMPTS
     && $period_from_creation < $CUSTOMER_EMAIL_VERIFICATION_REQUEST_TIMEOUT
@@ -55,4 +56,4 @@ try {
 
 // TODO: send email
 
-redirect_with_info_alert("Email verification request sent. Please check your email", "..//email-verification");
+redirect_with_info_alert("Email verification request sent. Please check your email", "./");

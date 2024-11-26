@@ -2,10 +2,11 @@
 $pageConfig = [
     "title" => "Onboarding",
     "styles" => ["/rat/styles/auth.css", "./onboarding.css"],
-    "scripts" => ["/rat/scripts/forms.js"]
+    "scripts" => ["/rat/scripts/forms.js"],
+    "need_auth" => true,
 ];
 
-require_once "../../includes/header.php";
+require_once "../includes/header.php";
 
 ?>
 
@@ -17,12 +18,24 @@ require_once "../../includes/header.php";
         <div class="question">
             <span class="title">What is your gender?</span>
             <div class="gender">
-                <label class="input line">
+                <label class="input line radio">
                     <input type="radio" name="gender" value="male" checked required>
+                    <div class="tick">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                        </svg>
+
+                    </div>
                     <span class="option">Male</span>
                 </label>
-                <label class="input line">
+                <label class="input line radio">
                     <input type="radio" name="gender" value="female" required>
+                    <div class="tick">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                        </svg>
+
+                    </div>
                     <span class="option">Female</span>
                 </label>
             </div>
@@ -37,14 +50,14 @@ require_once "../../includes/header.php";
         <div class="question">
             <span class="title">What is your weight?</span>
             <div class="line">
-                <input class="input" min="10" type="number" name="weight" placeholder="20" required>
+                <input class="input" min="10" type="number" name="weight" required>
                 <span class="">KG</span>
             </div>
         </div>
         <div class="question">
             <span class="title">What is your height?</span>
             <div class="line">
-                <input class="input" min="10" type="number" name="height" placeholder="160" required>
+                <input class="input" min="10" type="number" name="height" required>
                 <span class="">CM</span>
             </div>
         </div>
@@ -84,6 +97,7 @@ require_once "../../includes/header.php";
             <span class="title">Do you have any allergies?</span>
             <textarea name="allergies" class="input" placeholder="Describe your allergies briefly(if there's any)"></textarea>
         </div>
+        <p class="paragraph small">*Please note that the weight and height fields cannot be changed later as they are collected as initial data to personalize your fitness journey.</p>
         <button class="btn">Let's get started</button>
     </form>
 </main>
@@ -104,4 +118,4 @@ require_once "../../includes/header.php";
         }
     });
 </script>
-<?php require_once "../../includes/footer.php" ?>
+<?php require_once "../includes/footer.php" ?>

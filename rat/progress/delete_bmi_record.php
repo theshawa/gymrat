@@ -6,4 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect_with_error_alert('Method not allowed', '../progress');
 }
 
-var_dump($_POST);
+require_once "../../auth-guards.php";
+auth_required_guard("/rat/login");
+
+echo "Under construction";

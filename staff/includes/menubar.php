@@ -46,14 +46,14 @@ if (isset($menuBarConfig)) {
     <div style="display: flex; align-items: center; gap: 6px;">
         <?php if ($useLink && $options): ?>
             <?php foreach ($options as $option): ?>
-                <a href="<?= $option['href'] ?>" class="option <?= empty($option['type']) ? 'primary' : $option['type'] ?>">
+                <a href="<?= $option['href'] ?>" class="staff-button <?= empty($option['type']) ? 'primary' : $option['type'] ?>">
                     <?= $option['title'] ?>
                 </a>
             <?php endforeach; ?>
         <?php endif; ?>
         <?php if ($useButton && $options): ?>
             <?php foreach ($options as $option): ?>
-                <button class="option <?= empty($option['type']) ? 'primary' : $option['type'] ?>"
+                <button class="staff-button <?= empty($option['type']) ? 'primary' : $option['type'] ?>"
                     <?= !empty($option['buttonFunction']) ? 'onclick="' . $option['buttonFunction'] . '()"' : '' ?>
                         type="<?= empty($option['buttonType']) ? 'button' : $option['buttonType'] ?>"
                     <?= !empty($option['formAction']) ? 'formaction="' . $option['formAction'] .'"' : '' ?>
@@ -79,28 +79,5 @@ if (isset($menuBarConfig)) {
     .menu-bar h1 {
         margin-left: 10px;
     }
-    .option {
-        height: 30px;
-        padding: 0 20px;
-        font-weight: 500;
-        border-radius: 6px;
-        margin-bottom: 6px;
-        display: flex;
-        align-items: center;
-    }
-    .option.primary {
-        color: var(--color-zinc-600);
-        background-color: var(--color-zinc-100);
-        border: 1px solid var(--color-zinc-200);
-    }
-    .option.secondary {
-        background-color: var(--color-zinc-800);
-        color: var(--color-zinc-50);
-        border: 1px solid var(--color-zinc-950);
-    }
-    .option.destructive {
-        background-color: var(--color-red-light);
-        color: var(--color-zinc-50);
-        border: 1px solid var(--color-red);
-    }
+
 </style>

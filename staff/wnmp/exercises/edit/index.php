@@ -39,6 +39,9 @@ $pageConfig['styles'][] = "../exercises.css";
 
 require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
+
+require_once "../../../../auth-guards.php";
+auth_required_guard_with_role("wnmp", "/staff/login");
 ?>
 
 <main>
@@ -48,7 +51,6 @@ require_once "../../../includes/sidebar.php";
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
                     <input type="hidden" name="exercise_id" value="<?= $exercise->id?>">
-
 
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-title">Title</label></h2>

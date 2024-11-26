@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2024 at 09:28 PM
+-- Generation Time: Nov 26, 2024 at 08:18 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -41,11 +41,11 @@ CREATE TABLE `complaints` (
 --
 
 INSERT INTO `complaints` (`id`, `type`, `description`, `user_id`, `created_at`, `is_created_by_trainer`) VALUES
-(1, 'Equipment Issue', 'The treadmill is not functioning properly.', 101, '2024-11-25 20:25:18', 0),
-(2, 'Cleanliness', 'The locker room needs cleaning.', 102, '2024-11-25 20:25:18', 0),
-(3, 'Schedule Conflict', 'Trainer not available during requested hours.', 103, '2024-11-25 20:25:18', 1),
-(4, 'Billing Error', 'Charged extra for last month\'s subscription.', 104, '2024-11-25 20:25:18', 0),
-(5, 'Feedback', 'Requesting more yoga classes.', 105, '2024-11-25 20:25:18', 1);
+(1, 'Equipment Issue', 'The treadmill is not functioning properly.', 101, '2024-11-25 14:55:18', 0),
+(2, 'Cleanliness', 'The locker room needs cleaning.', 102, '2024-11-25 14:55:18', 0),
+(3, 'Schedule Conflict', 'Trainer not available during requested hours.', 103, '2024-11-25 14:55:18', 1),
+(4, 'Billing Error', 'Charged extra for last month\'s subscription.', 104, '2024-11-25 14:55:18', 0),
+(5, 'Feedback', 'Requesting more yoga classes.', 105, '2024-11-25 14:55:18', 1);
 
 -- --------------------------------------------------------
 
@@ -61,9 +61,20 @@ CREATE TABLE `customers` (
   `phone` varchar(15) NOT NULL,
   `password` varchar(60) NOT NULL COMMENT 'https://stackoverflow.com/questions/247304/what-data-type-to-use-for-hashed-password-field-and-what-length',
   `avatar` varchar(100) DEFAULT NULL,
+  `onboarded` tinyint(1) NOT NULL DEFAULT 0,
+  `membership_plan` int(11) NOT NULL,
+  `membership_plan_activated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`id`, `fname`, `lname`, `email`, `phone`, `password`, `avatar`, `onboarded`, `membership_plan`, `membership_plan_activated_at`, `created_at`, `updated_at`) VALUES
+(21, 'Ravindu', 'Peeris', 'johndoe@gmail.com', '0123456789', '$2y$10$hiuokpspKkfC6UNV5e8AieiA6v6Aa2pqudV8rkA3/dgofS3eWbSNG', 'customer-avatars/674590fdb9828.jpg', 1, 15, '2024-11-26 04:43:11', '2024-11-26 09:12:41', '2024-11-26 09:12:41'),
+(22, 'Test', 'test', 'admin@gmail.com', '0123456789', '$2y$10$TPHXI3MJxUEKtcJP8Oa/jOIEe7OK.4eqVqsQDTmCu8rD9kIcV7HjG', NULL, 1, 14, '2024-11-26 04:44:33', '2024-11-26 09:14:18', '2024-11-26 09:14:18');
 
 -- --------------------------------------------------------
 
@@ -77,6 +88,58 @@ CREATE TABLE `customer_email_verification_requests` (
   `creation_attempt` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_password_reset_requests`
+--
+
+CREATE TABLE `customer_password_reset_requests` (
+  `email` varchar(100) NOT NULL,
+  `code` varchar(6) NOT NULL,
+  `creation_attempt` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customer_password_reset_requests`
+--
+
+INSERT INTO `customer_password_reset_requests` (`email`, `code`, `creation_attempt`, `created_at`) VALUES
+('johndoe@gmail.com', '133965', 1, '2024-11-26 18:06:35');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `equipments`
+--
+
+CREATE TABLE `equipments` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `manufacturer` varchar(255) NOT NULL,
+  `image` varchar(500) DEFAULT NULL,
+  `purchase_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `last_maintenance` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `equipments`
+--
+
+INSERT INTO `equipments` (`id`, `name`, `type`, `description`, `manufacturer`, `image`, `purchase_date`, `last_maintenance`, `created_at`, `updated_at`) VALUES
+(1, 'Leg Press Machine', 'Strength Equipment', 'A versatile machine designed to target quadriceps, hamstrings, and glutes effectively.', 'GymPro', '', '2022-03-01 02:30:00', '2023-06-15 02:30:00', '2024-11-26 14:30:21', '2024-11-26 19:00:38'),
+(2, 'Squat Rack', 'Strength Equipment', 'A rack for performing squats and other compound exercises.', 'IronMax', NULL, '2021-05-10 02:30:00', '2023-07-01 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
+(4, 'Calf Raise Machine', 'Strength Equipment', 'Targets and strengthens the calf muscles.', 'PowerFit', NULL, '2020-11-20 02:30:00', '2023-08-01 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
+(5, 'Bench Press', 'Strength Equipment', 'A classic equipment for chest and triceps strength training.', 'MuscleTech', NULL, '2023-03-05 02:30:00', '2023-09-01 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
+(6, 'Chest Fly Machine', 'Strength Equipment', 'Builds chest muscles and improves posture.', 'HealthLine', NULL, '2022-10-12 02:30:00', '2023-06-20 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
+(7, 'Lat Pulldown Machine', 'Strength Equipment', 'A machine for strengthening the back and biceps.', 'BackFit', 'uploads/default-images/latpull.png', '2021-09-30 02:30:00', '2023-04-15 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
+(8, 'Dumbbells', 'Strength Equipment', 'Versatile free weights for full-body strength training.', 'FlexPro', 'uploads/default-images/dumbbells.jpg', '2022-12-25 02:30:00', '2023-05-01 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21');
 
 -- --------------------------------------------------------
 
@@ -99,14 +162,14 @@ CREATE TABLE `exercises` (
 --
 
 INSERT INTO `exercises` (`id`, `name`, `description`, `video_link`, `created_at`, `updated_at`, `image`) VALUES
-(1, 'Squats', 'Squats are a fundamental lower-body exercise that targets multiple muscle groups, including the quadriceps, hamstrings, glutes, and core. They help improve strength, stability, and overall athletic performance.                        ', 'https://www.youtube.com/embed/a3ICNMQW7Ok?si=OEGZ3uWCFj22_Pc0                        ', '2024-11-15 06:32:46', '2024-11-19 05:55:25', ''),
-(2, 'Deadlifts', 'A compound exercise targeting the back, glutes, and hamstrings.', 'https://www.youtube.com/embed/a3ICNMQW7Ok?si=OEGZ3uWCFj22_Pc0', '2024-11-15 06:32:46', '2024-11-18 23:25:37', ''),
-(3, 'Bench Press', 'Targets the chest, shoulders, and triceps.', 'https://www.youtube.com/embed/a3ICNMQW7Ok?si=OEGZ3uWCFj22_Pc0', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
-(4, 'Pull-Ups', 'An upper-body exercise that targets the back and biceps.', 'https://www.youtube.com/embed/a3ICNMQW7Ok?si=OEGZ3uWCFj22_Pc0', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
-(5, 'Overhead Press', 'Strengthens shoulders, upper chest, and triceps.', 'https://www.youtube.com/embed/a3ICNMQW7Ok?si=OEGZ3uWCFj22_Pc0', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
-(6, 'Lunges', 'Targets quadriceps, hamstrings, and glutes.', 'https://www.youtube.com/embed/a3ICNMQW7Ok?si=OEGZ3uWCFj22_Pc0', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
-(7, 'Quads', 'Focuses on the quadriceps muscle group.', 'https://www.youtube.com/embed/a3ICNMQW7Ok?si=OEGZ3uWCFj22_Pc0', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
-(8, 'Dumbbell Rows', 'Strengthens the back and biceps.', 'https://www.youtube.com/embed/a3ICNMQW7Ok?si=OEGZ3uWCFj22_Pc0', '2024-11-15 06:32:46', '2024-11-15 06:32:46', '');
+(1, 'Squats', 'Squats are a fundamental lower-body exercise that targets multiple muscle groups, including the quadriceps, hamstrings, glutes, and core. They help improve strength, stability, and overall athletic performance.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
+(2, 'Deadlifts', 'A compound exercise targeting the back, glutes, and hamstrings.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
+(3, 'Bench Press', 'Targets the chest, shoulders, and triceps.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
+(4, 'Pull-Ups', 'An upper-body exercise that targets the back and biceps.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
+(5, 'Overhead Press', 'Strengthens shoulders, upper chest, and triceps.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
+(6, 'Lunges', 'Targets quadriceps, hamstrings, and glutes.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
+(7, 'Quads', 'Focuses on the quadriceps muscle group.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', ''),
+(8, 'Dumbbell Rows', 'Strengthens the back and biceps.', 'https://www.youtube.com/watch?v=a3ICNMQW7Ok', '2024-11-15 06:32:46', '2024-11-15 06:32:46', '');
 
 -- --------------------------------------------------------
 
@@ -154,9 +217,9 @@ CREATE TABLE `staff` (
 --
 
 INSERT INTO `staff` (`id`, `name`, `email`, `password`, `role`, `created_at`, `updated_at`) VALUES
-(1, 'root', 'admin@gmail.com', '$2y$10$zdFIy/uQ4BUhKOHzuuc6s.CD5ZTjhPzXrpH8MvS4v0PE/pSahgGwC', 'admin', '2024-11-25 18:20:16', '2024-11-25 18:20:16'),
-(3, 'eq', 'eq@gmail.com', '$2y$10$zdFIy/uQ4BUhKOHzuuc6s.CD5ZTjhPzXrpH8MvS4v0PE/pSahgGwC', 'eq', '2024-11-25 18:34:54', '2024-11-25 18:34:54'),
-(2, 'wnmp', 'wnmp@gmail.com', '$2y$10$zdFIy/uQ4BUhKOHzuuc6s.CD5ZTjhPzXrpH8MvS4v0PE/pSahgGwC', 'wnmp', '2024-11-25 18:34:54', '2024-11-25 18:34:54');
+(1, 'root', 'admin@gmail.com', '$2y$10$zdFIy/uQ4BUhKOHzuuc6s.CD5ZTjhPzXrpH8MvS4v0PE/pSahgGwC', 'admin', '2024-11-25 12:50:16', '2024-11-25 12:50:16'),
+(2, 'wnmp', 'wnmp@gmail.com', '$2y$10$zdFIy/uQ4BUhKOHzuuc6s.CD5ZTjhPzXrpH8MvS4v0PE/pSahgGwC', 'wnmp', '2024-11-25 13:04:54', '2024-11-25 13:04:54'),
+(3, 'eq', 'eq@gmail.com', '$2y$10$zdFIy/uQ4BUhKOHzuuc6s.CD5ZTjhPzXrpH8MvS4v0PE/pSahgGwC', 'eq', '2024-11-25 13:04:54', '2024-11-25 13:04:54');
 
 -- --------------------------------------------------------
 
@@ -216,12 +279,6 @@ INSERT INTO `workout_exercises` (`id`, `workout_id`, `exercise_id`, `day`, `sets
 --
 
 --
--- Indexes for table `complaints`
---
-ALTER TABLE `complaints`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `customers`
 --
 ALTER TABLE `customers`
@@ -233,6 +290,18 @@ ALTER TABLE `customers`
 --
 ALTER TABLE `customer_email_verification_requests`
   ADD PRIMARY KEY (`email`);
+
+--
+-- Indexes for table `customer_password_reset_requests`
+--
+ALTER TABLE `customer_password_reset_requests`
+  ADD PRIMARY KEY (`email`);
+
+--
+-- Indexes for table `equipments`
+--
+ALTER TABLE `equipments`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `exercises`
@@ -251,7 +320,7 @@ ALTER TABLE `membership_plans`
 -- Indexes for table `staff`
 --
 ALTER TABLE `staff`
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `workouts`
@@ -272,28 +341,34 @@ ALTER TABLE `workout_exercises`
 --
 
 --
--- AUTO_INCREMENT for table `complaints`
---
-ALTER TABLE `complaints`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `equipments`
+--
+ALTER TABLE `equipments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `exercises`
 --
 ALTER TABLE `exercises`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `membership_plans`
 --
 ALTER TABLE `membership_plans`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `staff`
+--
+ALTER TABLE `staff`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `workouts`

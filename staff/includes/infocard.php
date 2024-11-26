@@ -36,19 +36,19 @@ if (isset($infoCardConfig)) {
 if (!$isCardInList) {
     $newCards = [];
     foreach ($cards as $card) {
-        $description = $card->description;
-        $wordLimit = 15;
+       if (isset($card->description)) {
+           $description = $card->description;
+           $wordLimit = 15;
 
-        $descriptionWordsArray = explode(' ', $description);
-        $descriptionFirstSegment = array_slice($descriptionWordsArray, 0, $wordLimit);
-        $card->description = implode(' ', $descriptionFirstSegment) . (count($descriptionWordsArray) > $wordLimit ? '...' : '');
-
-
+           $descriptionWordsArray = explode(' ', $description);
+           $descriptionFirstSegment = array_slice($descriptionWordsArray, 0, $wordLimit);
+           $card->description = implode(' ', $descriptionFirstSegment) . (count($descriptionWordsArray) > $wordLimit ? '...' : '');
+       }
 
         $newCards[] = [
             "id" => $card->id,
             "title" => $card->name ?? $defaultName . " #" . $card->id,
-            "description" => $card->description,
+            "description" => $card->description ?? "",
             "image" => $card->image ?? null,
             "created_at" => $card->created_at ? $card->created_at->format('Y-m-d H:i:s') : null
         ];
@@ -71,8 +71,8 @@ if (!$isCardInList) {
                 </div>
             <?php endif; ?>
             <div class="info-card-desc">
-                <h2><?= $card['title'] ?></h2>
-                <p><?= ($card['created_at'] ? "[ " . $card['created_at'] . " ] " : null) ?><?= $card['description'] ?></p>
+                <h2><?= ($card['title'] ?? $card['name']) ?></h2>
+                <p><?= (isset($card['created_at'])) ? "[ " . $card['created_at'] . " ] " : "" ?><?= $card['description'] ?></p>
                 <?php if ($showExtend): ?>
                     <div class="info-card-ext">
                         <a href="<?= $extendTo ?>?id=<?= $card['id'] ?>">

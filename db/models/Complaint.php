@@ -1,6 +1,6 @@
 <?php
 
-require_once _DIR_ . "/../Model.php";
+require_once __DIR__ . "/../Model.php";
 
 class Complaint extends Model
 {
@@ -45,8 +45,6 @@ class Complaint extends Model
         }, $items);
     }
 
-<<<<<<< Updated upstream
-=======
     public function get_by_id(int $id)
     {
         $sql = "SELECT * FROM $this->table WHERE id = :id LIMIT 1";
@@ -68,7 +66,6 @@ class Complaint extends Model
         );
     }
 
->>>>>>> Stashed changes
     public function create()
     {
         $sql = "INSERT INTO $this->table (type, description, user_id, is_created_by_trainer) VALUES (:type, :description, :user_id, :is_created_by_trainer)";
@@ -80,9 +77,4 @@ class Complaint extends Model
             'is_created_by_trainer' => $this->is_created_by_trainer
         ]);
     }
-<<<<<<< Updated upstream
-
 }
-=======
-}
->>>>>>> Stashed changes

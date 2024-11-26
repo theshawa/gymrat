@@ -7,7 +7,7 @@ $menuBarConfig = [
     "title" => "Manage Equipments",
     "useLink" => true,
     "options" => [
-        ["title" => "New Equipment", "href" => "/staff/eq/equipments/new/index.php", "type" => "secondary"],
+        ["title" => "New Equipment", "href" => "/staff/eq/equipments/create/index.php", "type" => "secondary"],
         // ["title" => "Delete Equipment", "href" => "/staff/eq/equipments/delete/index.php?id=$id", "type" => "destructive"]
     ]
 ];

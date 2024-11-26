@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2024 at 06:01 PM
+-- Generation Time: Nov 26, 2024 at 08:18 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -102,6 +102,13 @@ CREATE TABLE `customer_password_reset_requests` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `customer_password_reset_requests`
+--
+
+INSERT INTO `customer_password_reset_requests` (`email`, `code`, `creation_attempt`, `created_at`) VALUES
+('johndoe@gmail.com', '133965', 1, '2024-11-26 18:06:35');
+
 -- --------------------------------------------------------
 
 --
@@ -114,6 +121,7 @@ CREATE TABLE `equipments` (
   `type` varchar(255) NOT NULL,
   `description` varchar(500) NOT NULL,
   `manufacturer` varchar(255) NOT NULL,
+  `image` varchar(500) DEFAULT NULL,
   `purchase_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `last_maintenance` timestamp NOT NULL DEFAULT current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -124,15 +132,14 @@ CREATE TABLE `equipments` (
 -- Dumping data for table `equipments`
 --
 
-INSERT INTO `equipments` (`id`, `name`, `type`, `description`, `manufacturer`, `purchase_date`, `last_maintenance`, `created_at`, `updated_at`) VALUES
-(1, 'Leg Press Machine', 'Strength Equipment', 'A versatile machine designed to target quadriceps, hamstrings, and glutes effectively.', 'GymPro', '2022-03-01 02:30:00', '2023-06-15 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
-(2, 'Squat Rack', 'Strength Equipment', 'A rack for performing squats and other compound exercises.', 'IronMax', '2021-05-10 02:30:00', '2023-07-01 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
-(3, 'Leg Curl Machine', 'Strength Equipment', 'Designed to isolate and strengthen the hamstrings.', 'FlexGear', '2022-07-18 02:30:00', '2023-05-10 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
-(4, 'Calf Raise Machine', 'Strength Equipment', 'Targets and strengthens the calf muscles.', 'PowerFit', '2020-11-20 02:30:00', '2023-08-01 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
-(5, 'Bench Press', 'Strength Equipment', 'A classic equipment for chest and triceps strength training.', 'MuscleTech', '2023-03-05 02:30:00', '2023-09-01 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
-(6, 'Chest Fly Machine', 'Strength Equipment', 'Builds chest muscles and improves posture.', 'HealthLine', '2022-10-12 02:30:00', '2023-06-20 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
-(7, 'Lat Pulldown Machine', 'Strength Equipment', 'A machine for strengthening the back and biceps.', 'BackFit', '2021-09-30 02:30:00', '2023-04-15 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
-(8, 'Dumbbells', 'Strength Equipment', 'Versatile free weights for full-body strength training.', 'FlexPro', '2022-12-25 02:30:00', '2023-05-01 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21');
+INSERT INTO `equipments` (`id`, `name`, `type`, `description`, `manufacturer`, `image`, `purchase_date`, `last_maintenance`, `created_at`, `updated_at`) VALUES
+(1, 'Leg Press Machine', 'Strength Equipment', 'A versatile machine designed to target quadriceps, hamstrings, and glutes effectively.', 'GymPro', '', '2022-03-01 02:30:00', '2023-06-15 02:30:00', '2024-11-26 14:30:21', '2024-11-26 19:00:38'),
+(2, 'Squat Rack', 'Strength Equipment', 'A rack for performing squats and other compound exercises.', 'IronMax', NULL, '2021-05-10 02:30:00', '2023-07-01 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
+(4, 'Calf Raise Machine', 'Strength Equipment', 'Targets and strengthens the calf muscles.', 'PowerFit', NULL, '2020-11-20 02:30:00', '2023-08-01 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
+(5, 'Bench Press', 'Strength Equipment', 'A classic equipment for chest and triceps strength training.', 'MuscleTech', NULL, '2023-03-05 02:30:00', '2023-09-01 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
+(6, 'Chest Fly Machine', 'Strength Equipment', 'Builds chest muscles and improves posture.', 'HealthLine', NULL, '2022-10-12 02:30:00', '2023-06-20 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
+(7, 'Lat Pulldown Machine', 'Strength Equipment', 'A machine for strengthening the back and biceps.', 'BackFit', 'uploads/default-images/latpull.png', '2021-09-30 02:30:00', '2023-04-15 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21'),
+(8, 'Dumbbells', 'Strength Equipment', 'Versatile free weights for full-body strength training.', 'FlexPro', 'uploads/default-images/dumbbells.jpg', '2022-12-25 02:30:00', '2023-05-01 02:30:00', '2024-11-26 14:30:21', '2024-11-26 14:30:21');
 
 -- --------------------------------------------------------
 
@@ -343,7 +350,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `equipments`
 --
 ALTER TABLE `equipments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `exercises`

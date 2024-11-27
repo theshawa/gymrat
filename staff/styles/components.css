@@ -215,6 +215,7 @@ select:has(option:checked:not([value=""])) option {
   padding: 20px;
   border-radius: 10px;
   width: 100% !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .staff-card-container {

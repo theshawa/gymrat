@@ -11,6 +11,10 @@ class Exercise extends Model
     public string $description;
     public string $video_link;
     public string $image;
+    public string $muscle_group;
+    public string $difficulty_level;
+    public string $type;
+    public string $equipment_needed;
     public DateTime $created_at;
     public DateTime $updated_at;
 
@@ -26,10 +30,13 @@ class Exercise extends Model
         $this->description = $data['description'] ?? "";
         $this->video_link = $data['video_link'] ?? "";
         $this->image = $data['image'] ?? "";
+        $this->muscle_group = $data['muscle_group'] ?? "";
+        $this->difficulty_level = $data['difficulty_level'] ?? "";
+        $this->type = $data['type'] ?? "";
+        $this->equipment_needed = $data['equipment_needed'] ?? "";
         $this->created_at = new DateTime($data['created_at'] ?? null);
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? null);
     }
-
 
     public function get_all(): array
     {
@@ -46,6 +53,10 @@ class Exercise extends Model
                     'description' => $item['description'],
                     'video_link' => $item['video_link'],
                     'image' => $item['image'],
+                    'muscle_group' => $item['muscle_group'],
+                    'difficulty_level' => $item['difficulty_level'],
+                    'type' => $item['type'],
+                    'equipment_needed' => $item['equipment_needed'],
                     'created_at' => $item['created_at'],
                     'updated_at' => $item['updated_at']
                 ]
@@ -70,6 +81,10 @@ class Exercise extends Model
                 'description' => $item['description'],
                 'video_link' => $item['video_link'],
                 'image' => $item['image'],
+                'muscle_group' => $item['muscle_group'],
+                'difficulty_level' => $item['difficulty_level'],
+                'type' => $item['type'],
+                'equipment_needed' => $item['equipment_needed'],
                 'created_at' => $item['created_at'],
                 'updated_at' => $item['updated_at']
             ]
@@ -78,19 +93,23 @@ class Exercise extends Model
 
     public function create()
     {
-        $sql = "INSERT INTO $this->table (name, description, video_link, image) VALUES (:name, :description, :video_link, :image)";
+        $sql = "INSERT INTO $this->table (name, description, video_link, image, muscle_group, difficulty_level, type, equipment_needed) VALUES (:name, :description, :video_link, :image, :muscle_group, :difficulty_level, :type, :equipment_needed)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'name' => $this->name,
             'description' => $this->description,
             'video_link' => $this->video_link,
             'image' => $this->image,
+            'muscle_group' => $this->muscle_group,
+            'difficulty_level' => $this->difficulty_level,
+            'type' => $this->type,
+            'equipment_needed' => $this->equipment_needed,
         ]);
     }
 
     public function update()
     {
-        $sql = "UPDATE $this->table SET name = :name, description = :description, video_link = :video_link, image = :image, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
+        $sql = "UPDATE $this->table SET name = :name, description = :description, video_link = :video_link, image = :image, muscle_group = :muscle_group, difficulty_level = :difficulty_level, type = :type, equipment_needed = :equipment_needed, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'id' => $this->id,
@@ -98,6 +117,10 @@ class Exercise extends Model
             'description' => $this->description,
             'video_link' => $this->video_link,
             'image' => $this->image,
+            'muscle_group' => $this->muscle_group,
+            'difficulty_level' => $this->difficulty_level,
+            'type' => $this->type,
+            'equipment_needed' => $this->equipment_needed,
         ]);
     }
 

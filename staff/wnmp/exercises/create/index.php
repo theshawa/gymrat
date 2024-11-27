@@ -23,7 +23,6 @@ if (isset($_SESSION['exercise'])){
     $exercise = $_SESSION['exercise'];
 } else {
     $exercise->fill([]);
-//    $_SESSION['exercise'] = $exercise;
 }
 
 require_once "../../pageconfig.php";
@@ -48,13 +47,33 @@ auth_required_guard_with_role("wnmp", "/staff/login");
                         <input type="text" id="edit-title" name="exercise_name"
                                class="staff-input-primary staff-input-long" value="<?= $exercise->name ?>">
                     </div>
-                    <div style="margin: 10px 0px">
+                    <div style="margin-bottom: 10px">
+                        <h2><label for="edit-muscle-group">Muscle Group</label></h2>
+                        <input type="text" id="edit-muscle-group" name="exercise_muscle_group"
+                               class="staff-input-primary staff-input-long" value="<?= $exercise->muscle_group ?>">
+                    </div>
+                    <div style="margin-bottom: 10px">
+                        <h2><label for="edit-difficulty-level">Difficulty Level</label></h2>
+                        <input type="text" id="edit-difficulty-level" name="exercise_difficulty_level"
+                               class="staff-input-primary staff-input-long" value="<?= $exercise->difficulty_level ?>">
+                    </div>
+                    <div style="margin-bottom: 10px">
+                        <h2><label for="edit-type">Type</label></h2>
+                        <input type="text" id="edit-type" name="exercise_type"
+                               class="staff-input-primary staff-input-long" value="<?= $exercise->type ?>">
+                    </div>
+                    <div style="margin-bottom: 10px">
+                        <h2><label for="edit-equipment-needed">Equipment Needed</label></h2>
+                        <input type="text" id="edit-equipment-needed" name="exercise_equipment_needed"
+                               class="staff-input-primary staff-input-long" value="<?= $exercise->equipment_needed ?>">
+                    </div>
+                    <div style="margin: 10px 0">
                         <h2><label for="edit-description">Description</label></h2>
                         <textarea id="edit-description" name="exercise_description"
                                   class="staff-textarea-primary staff-textarea-large"
                                   placeholder="Enter a exercise description"><?= $exercise->description ?></textarea>
                     </div>
-                    <div style="margin: 10px 0px">
+                    <div style="margin: 10px 0">
                         <h2><label for="edit-video_link">Video Link (Embeded link)</label></h2>
                         <textarea id="edit-video_link" name="exercise_video_link"
                                   class="staff-textarea-primary staff-textarea-large"

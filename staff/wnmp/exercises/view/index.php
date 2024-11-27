@@ -40,14 +40,40 @@ auth_required_guard_with_role("wnmp", "/staff/login");
 <main>
     <div class="staff-base-container">
         <?php require_once "../../../includes/menubar.php"; ?>
-        <div class="base-sub-container">
+        <div class="view-exercise-container">
             <div>
-                <h2 style="margin-bottom: 10px;">
-                    Description
-                </h2>
-                <p><?= $exercise->description?></p>
+                <div class="view-exercise-details">
+                    <h2>
+                        Description
+                    </h2>
+                    <p><?= $exercise->description?></p>
+                </div>
+                <div class="view-exercise-details">
+                    <h2>
+                        Type
+                    </h2>
+                    <p><?= $exercise->type?></p>
+                </div>
+                <div class="view-exercise-details">
+                    <h2>
+                        Muscle Groups
+                    </h2>
+                    <p><?= $exercise->muscle_group?></p>
+                </div>
+                <div class="view-exercise-details">
+                    <h2>
+                        Difficulty Level
+                    </h2>
+                    <p><?= $exercise->difficulty_level?></p>
+                </div>
+                <div class="view-exercise-details">
+                    <h2>
+                        Equipment Needed
+                    </h2>
+                    <p><?= $exercise->equipment_needed?></p>
+                </div>
             </div>
-            <div style="margin: 20px 0px;">
+            <div>
                 <h2 style="margin: 10px 0px;">
                     Video Tutorial
                 </h2>

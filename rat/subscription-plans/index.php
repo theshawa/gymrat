@@ -23,6 +23,7 @@ try {
     redirect_with_error_alert("Failed to fetch plans due to error: " . $e->getMessage(), "./");
 }
 
+
 ?>
 
 <main>
@@ -40,7 +41,7 @@ try {
                         </svg>
                     </div>
                     <h3 class="title"><?= $plan->name ?></h3>
-                    <span class="price"><?= $plan->price ?> LKR</span>
+                    <span class="price"><?= number_format($plan->price) ?> LKR</span>
                 </label>
             <?php endforeach; ?>
         </div>

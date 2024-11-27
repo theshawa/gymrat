@@ -19,3 +19,13 @@
 ## Roneth
 
 ## Jayathu
+
+USERS
+
+Password for All Users:
+123456
+
+Staff:
+admin@example.com
+eq@example.com
+wnmp@example.com

@@ -8,7 +8,7 @@ require_once "../../pageconfig.php";
 require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
 
-require_once "../../../auth-guards.php";
+require_once "../../../../auth-guards.php";
 auth_required_guard_with_role("admin", "/staff/login");
 
 require_once "../../../../db/models/MembershipPlan.php";

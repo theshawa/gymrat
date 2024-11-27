@@ -44,14 +44,13 @@ class Staff extends Model
 
     public function update()
     {
-        $sql = "UPDATE $this->table SET name=:name, email=:email, password=:password, role=:role, updated_at=:updated_at WHERE id=:id";
+        $sql = "UPDATE $this->table SET name=:name, email=:email, password=:password, role=:role, updated_at=CURRENT_TIMESTAMP WHERE id=:id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'role' => $this->role,
-            'updated_at' => $this->updated_at->format("Y-m-d H:i:s")
         ]);
     }
 

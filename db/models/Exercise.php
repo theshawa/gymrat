@@ -57,8 +57,8 @@ class Exercise extends Model
                     'difficulty_level' => $item['difficulty_level'],
                     'type' => $item['type'],
                     'equipment_needed' => $item['equipment_needed'],
-                    'created_at' => $item['created_at'],
-                    'updated_at' => $item['updated_at']
+                    'created_at' => new DateTime($item['created_at']),
+                    'updated_at' => new DateTime($item['updated_at'])
                 ]
             );
             return $exercise;
@@ -85,8 +85,8 @@ class Exercise extends Model
                 'difficulty_level' => $item['difficulty_level'],
                 'type' => $item['type'],
                 'equipment_needed' => $item['equipment_needed'],
-                'created_at' => $item['created_at'],
-                'updated_at' => $item['updated_at']
+                'created_at' => new DateTime($item['created_at']),
+                'updated_at' => new DateTime($item['updated_at'])
             ]
         );
     }

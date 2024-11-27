@@ -10,6 +10,7 @@ $pageConfig = [
 
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";
+
 ?>
 
 <main>

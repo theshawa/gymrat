@@ -111,7 +111,7 @@ class Customer extends Model
         if (!$field) {
             throw new PDOException("Id or email is required to update password");
         }
-        $sql = "UPDATE $this->table SET password=:password WHERE $field=:$field";
+        $sql = "UPDATE $this->table SET password=:password, updated_at=CURRENT_TIMESTAMP WHERE $field=:$field";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             $field => $this->$field,

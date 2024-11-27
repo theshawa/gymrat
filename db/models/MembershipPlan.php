@@ -41,18 +41,7 @@ class MembershipPlan extends Model
         $items = $stmt->fetchAll();
         return array_map(function ($item) {
             $membershipPlan = new MembershipPlan();
-            $membershipPlan->fill(
-                [
-                    'id' => $item['id'],
-                    'name' => $item['name'],
-                    'description' => $item['description'],
-                    'price' => $item['price'],
-                    'duration' => $item['duration'],
-                    'is_locked' => $item['is_locked'],
-                    'created_at' => new DateTime($item['created_at']),
-                    'updated_at' => new DateTime($item['updated_at'])
-                ]
-            );
+            $membershipPlan->fill($item);
             return $membershipPlan;
         }, $items);
     }
@@ -66,18 +55,7 @@ class MembershipPlan extends Model
         if (!$item) {
             die("membership plan not found");
         }
-        $this->fill(
-            [
-                'id' => $item['id'],
-                'name' => $item['name'],
-                'description' => $item['description'],
-                'price' => $item['price'],
-                'duration' => $item['duration'],
-                'is_locked' => $item['is_locked'],
-                'created_at' => new DateTime($item['created_at']),
-                'updated_at' => new DateTime($item['updated_at'])
-            ]
-        );
+        $this->fill($item);
     }
 
     public function create()

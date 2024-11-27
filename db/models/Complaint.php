@@ -31,16 +31,7 @@ class Complaint extends Model
         $items = $stmt->fetchAll();
         return array_map(function ($item) {
             $complaint = new Complaint();
-            $complaint->fill(
-                [
-                    'id' => $item['id'],
-                    'type' => $item['type'],
-                    'description' => $item['description'],
-                    'user_id' => $item['user_id'],
-                    'created_at' => new DateTime($item['created_at'] ?? null),
-                    'is_created_by_trainer' => $item['is_created_by_trainer']
-                ]
-            );
+            $complaint->fill($item);
             return $complaint;
         }, $items);
     }
@@ -54,16 +45,7 @@ class Complaint extends Model
         if (!$item) {
             die("Complaint not found");
         }
-        $this->fill(
-            [
-                'id' => $item['id'],
-                'type' => $item['type'],
-                'description' => $item['description'],
-                'user_id' => $item['user_id'],
-                'created_at' => new DateTime($item['created_at'] ?? null),
-                'is_created_by_trainer' => $item['is_created_by_trainer']
-            ]
-        );
+        $this->fill($item);
     }
 
     public function create()

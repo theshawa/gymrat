@@ -45,20 +45,7 @@ class Equipment extends Model
         $items = $stmt->fetchAll();
         return array_map(function ($item) {
             $equipment = new Equipment();
-            $equipment->fill(
-                [
-                    'id' => $item['id'],
-                    'name' => $item['name'],
-                    'type' => $item['type'],
-                    'manufacturer' => $item['manufacturer'],
-                    'description' => $item['description'],
-                    'image' => $item['image'],
-                    'purchase_date' => $item['purchase_date'],
-                    'last_maintenance' => $item['last_maintenance'],
-                    'created_at' => new DateTime($item['created_at']),
-                    'updated_at' => new DateTime($item['updated_at'])
-                ]
-            );
+            $equipment->fill($item);
             return $equipment;
         }, $items);
     }
@@ -72,20 +59,7 @@ class Equipment extends Model
         if (!$item) {
             die("Equipment not found");
         }
-        $this->fill(
-            [
-                'id' => $item['id'],
-                'name' => $item['name'],
-                'description' => $item['description'],
-                'manufacturer' => $item['manufacturer'],
-                'type' => $item['type'],
-                'image' => $item['image'],
-                'purchase_date' => $item['purchase_date'],
-                'last_maintenance' => $item['last_maintenance'],
-                'created_at' => new DateTime($item['created_at']),
-                'updated_at' => new DateTime($item['updated_at'])
-            ]
-        );
+        $this->fill($item);
     }
 
     public function create()

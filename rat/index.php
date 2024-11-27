@@ -20,7 +20,7 @@ if (isset($_SESSION['auth'])) {
 
 require_once "./includes/titlebar.php";
 
-$workoutIsActive = false;
+$workoutIsActive = $_SESSION['user']['workout'] ?? false;
 ?>
 
 <main>

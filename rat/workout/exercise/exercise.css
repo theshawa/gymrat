@@ -1,0 +1,22 @@
+main {
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 5px;
+}
+
+span {
+  font-size: 15px;
+  color: var(--color-zinc-400);
+}
+
+p {
+  margin: 15px 0 20px 0;
+}
+
+iframe {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--color-zinc-900);
+}

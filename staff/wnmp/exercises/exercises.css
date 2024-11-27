@@ -1,5 +1,17 @@
-.base-sub-container {
+.view-exercise-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    padding: 20px;
     margin: 10px;
+}
+
+.view-exercise-details {
+    margin: 10px 0px;
+}
+
+.view-exercise-details h2{
+    margin: 5px 0px;
 }
 
 .exercise-video-iframe {

@@ -21,7 +21,7 @@ try {
     redirect_with_error_alert("Failed to delete exercise due to an error: " . $e->getMessage(), "/staff/wnmp/exercises/view?id=" . $id);
 }
 
-session_unset();
-session_destroy();
+unset($_SESSION['exercise']);
+unset($_SESSION['exercise_id']);
 
 redirect_with_success_alert("Exercise deleted successfully", "/staff/wnmp/exercises");

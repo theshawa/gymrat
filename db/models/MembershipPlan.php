@@ -49,8 +49,8 @@ class MembershipPlan extends Model
                     'price' => $item['price'],
                     'duration' => $item['duration'],
                     'is_locked' => $item['is_locked'],
-                    'created_at' => $item['created_at'],
-                    'updated_at' => $item['updated_at']
+                    'created_at' => new DateTime($item['created_at']),
+                    'updated_at' => new DateTime($item['updated_at'])
                 ]
             );
             return $membershipPlan;
@@ -74,8 +74,8 @@ class MembershipPlan extends Model
                 'price' => $item['price'],
                 'duration' => $item['duration'],
                 'is_locked' => $item['is_locked'],
-                'created_at' => $item['created_at'],
-                'updated_at' => $item['updated_at']
+                'created_at' => new DateTime($item['created_at']),
+                'updated_at' => new DateTime($item['updated_at'])
             ]
         );
     }

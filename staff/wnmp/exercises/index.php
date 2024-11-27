@@ -26,7 +26,8 @@ $infoCardConfig = [
     "showImage" => true,
     "showExtend" => true,
     "extendTo" => "/staff/wnmp/exercises/view/index.php",
-    "cards" => $exercise
+    "cards" => $exercise,
+    "showCreatedAt" => false
 ];
 
 

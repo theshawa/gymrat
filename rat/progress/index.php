@@ -10,6 +10,7 @@ $pageConfig = [
         "https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js",
         "./bmi-progress.js"
     ],
+    "navbar_active" => 1,
     "need_auth" => true
 ];
 

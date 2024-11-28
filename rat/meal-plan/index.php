@@ -6,6 +6,7 @@ $pageConfig = [
         "title" => "My Meal Plan",
         "back_url" => "../"
     ],
+    "navbar_active" => 1,
     "need_auth" => true
 ];
 

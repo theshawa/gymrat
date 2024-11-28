@@ -3,6 +3,7 @@ $pageConfig = [
     "title" => "Live Gym Traffic",
     "styles" => ["./gym-traffic.css"],
     "scripts" => ["./gym-traffic.js"],
+    "navbar_active" => 1,
     "titlebar" => [
         "title" => "Gym Traffic",
         "back_url" => "../",

@@ -6,6 +6,7 @@ $pageConfig = [
     "titlebar" => [
         "back_url" => "../"
     ],
+    "navbar_active" => 3,
     "need_auth" => true
 ];
 

@@ -3,13 +3,12 @@
   height: calc(128 / 16 * 1rem);
   object-fit: cover;
   object-position: top;
-  margin: 0 auto;
+  margin: 10px auto;
   border-radius: 999999px;
 }
 
 .name {
   text-align: center;
-  margin-top: 10px;
 }
 
 .description {

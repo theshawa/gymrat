@@ -2,7 +2,7 @@
 $pageConfig = [
     "title" => "My Workout",
     "styles" => ["./workout.css"],
-    "scripts" => ["./workout.js"],
+    "scripts" => ["./workout-timer.js"],
     "titlebar" => [
         "title" => "My Workout",
         "back_url" => "/rat/index.php"
@@ -24,7 +24,7 @@ if ($start_command) {
     exit;
 }
 
-$started = $_SESSION['user']['workout'] ?? false;
+$started = $_SESSION['user']['workout'] ?? null;
 
 $day = $_GET['day'] ?? 1;
 
@@ -44,10 +44,20 @@ if (count($day) === 0) {
 } else {
     $day = array_values($day)[0]['exercises'];
 }
+
 ?>
 
+<script>
+    const $WORKOUT_STARTED_AT = <?= json_encode($started ? $started['started_at'] : null) ?>;
+</script>
+
 <main>
-    <a href="./start_end_workout_process.php" class="btn <?= $started ? "danger" : "success" ?>"><?= $started ? "End" : "Start" ?> Workout</a>
+    <a href="./start_end_workout_process.php" class="btn <?= $started ? "danger" : "success" ?>">
+        <span><?= $started ? "End" : "Start" ?> Workout</span>
+        <?php if ($started): ?>
+            <span class="sub-text workout-timer"></span>
+        <?php endif; ?>
+    </a>
 
     <?php
     $subnavbarConfig = [
@@ -72,6 +82,7 @@ if (count($day) === 0) {
                 <div class="exercises">
                     <?php foreach ($d['items'] as $exercise): ?>
                         <a href="./exercise?id=" class="exercise">
+                            <img src="" alt="Workout image" class="featured-image">
                             <div class="left">
                                 <h4><?= $exercise['name'] ?></h4>
                                 <div class="bottom">
@@ -94,6 +105,16 @@ if (count($day) === 0) {
     <?php endforeach; ?>
     </div>
 </main>
+
+<script>
+    document.querySelectorAll(".category").forEach((category) => {
+        const toggler = category.querySelector("button");
+
+        toggler.addEventListener("click", () => {
+            category.classList.toggle("hidden");
+        });
+    });
+</script>
 
 <?php require_once "../includes/navbar.php" ?>
 <?php require_once "../includes/footer.php" ?>

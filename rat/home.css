@@ -13,6 +13,7 @@
   border-radius: 30px;
   display: flex;
   flex-direction: column;
+  line-height: 1.25;
 }
 
 .tile:not(.with-sub-link) {
@@ -75,4 +76,11 @@
   grid-column: span 2 / span 2;
   aspect-ratio: auto;
   min-height: 120px;
+}
+
+.tile .sub-text {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
 }

@@ -14,10 +14,9 @@ auth_not_required_guard_with_role("trainer", "/trainer");
 $email = htmlspecialchars($_POST["email"]);
 $password = htmlspecialchars($_POST["password"]);
 
-if ($email !== "johncena@example.com" && $password !== "123456") {
+if ($email !== "johncena@example.com" || $password !== "123456") {
     redirect_with_error_alert("Invalid credentials", "./");
 }
-
 
 $_SESSION["auth"] = [
     'id' => 0,

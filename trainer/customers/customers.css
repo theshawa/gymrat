@@ -1,0 +1,28 @@
+.customers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.customer {
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: var(--color-zinc-900);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.customer .avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background-color: var(--color-zinc-800);
+  object-fit: contain;
+}
+
+.customer h4 {
+  font-size: 14px;
+  flex: 1;
+}

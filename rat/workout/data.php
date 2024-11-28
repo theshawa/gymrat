@@ -156,12 +156,14 @@ $workout = [
                     [
                         'name' => 'High Knees',
                         'time' => '5',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/High-Knees.jpg'
                     ],
                     [
                         'name' => 'Arm Circles',
                         'time' => '5',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/Arm-Circles.jpg'
                     ],
                 ]
             ],
@@ -172,12 +174,14 @@ $workout = [
                     [
                         'name' => 'Bench Press',
                         'time' => '',
-                        'reps' => '3 x 12'
+                        'reps' => '3 x 12',
+                        'image' => './images/Bench-Press.jpg'
                     ],
                     [
                         'name' => 'Deadlifts',
                         'time' => '',
-                        'reps' => '3 x 10'
+                        'reps' => '3 x 10',
+                        'image' => './images/Dead-Lift.jpg'
                     ],
                 ]
             ],

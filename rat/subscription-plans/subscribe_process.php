@@ -29,7 +29,7 @@ try {
     redirect_with_error_alert("Failed to fetch user due to error: " . $e->getMessage(), "./");
 }
 
-$user->membership_plan = $plan;
+$user->membership_plan = (int) $plan;
 $user->membership_plan_activated_at = new DateTime();
 
 try {

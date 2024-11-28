@@ -1,6 +1,6 @@
 <?php
 $pageConfig = [
-    "title" => "Exercise",
+    "title" => "Exercise Info",
     "styles" => ["./exercise.css"],
     "titlebar" => [
         "back_url" => "../"
@@ -17,7 +17,11 @@ require_once "../../includes/titlebar.php";
     <h1>Bench Press</h1>
     <span>8 x 4 reps</span>
     <p class="paragraph">Targets the chest, shoulders, and triceps.</p>
-    <iframe src="https://www.youtube.com/embed/a3ICNMQW7Ok" frameborder="0"></iframe>
+    <!-- <img src="" alt="" class="featured-image"> -->
+    <div class="tutorial">
+        <h3>TUTORIAL</h3>
+        <iframe src="https://www.youtube.com/embed/a3ICNMQW7Ok" frameborder="0"></iframe>
+    </div>
 </main>
 
 <?php require_once "../../includes/navbar.php" ?>

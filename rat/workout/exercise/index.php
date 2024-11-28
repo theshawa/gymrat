@@ -20,7 +20,7 @@ require_once "../../includes/titlebar.php";
     <!-- <img src="" alt="" class="featured-image"> -->
     <div class="tutorial">
         <h3>TUTORIAL</h3>
-        <iframe src="https://www.youtube.com/embed/a3ICNMQW7Ok" frameborder="0"></iframe>
+        <iframe src="https://www.youtube.com/embed/4Y2ZdHCOXok" frameborder="0"></iframe>
     </div>
 </main>
 

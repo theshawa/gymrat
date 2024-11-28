@@ -21,6 +21,8 @@
 ## Jayathu
 
 USERS
+emily.carter@example.com
+liam.johnson@example.co.uk
 
 Password for All Users:
 123456

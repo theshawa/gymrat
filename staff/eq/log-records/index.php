@@ -130,23 +130,25 @@ require_once "../../includes/sidebar.php";
 
 <style>
     /* General body styling */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
-    margin: 0;
-    padding: 0;
-}
+    /*ALREADY DEFINED IN GLOBAL CSS*/
+/*body {*/
+/*    font-family: 'Arial', sans-serif;*/
+/*    background-color: #f8f9fa;*/
+/*    color: #333;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
 
 /* Main container */
-.staff-base-container {
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+/*    ALREADY DEFINED IN GLOBAL CSS*/
+/*.staff-base-container {*/
+/*    max-width: 1000px;*/
+/*    margin: 20px auto;*/
+/*    padding: 20px;*/
+/*    background-color: #fff;*/
+/*    border-radius: 8px;*/
+/*    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);*/
+/*}*/
 
 /* Table container */
 .log-table-container {

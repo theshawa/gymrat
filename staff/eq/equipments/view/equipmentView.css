@@ -1,51 +1,51 @@
 .base-container {
-    background-color: var(--color-zinc-50);
-    margin: 10px;
-    padding: 20px;
-    border-radius: 10px;
-    width: 100% !important;
+  background-color: var(--color-zinc-50);
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100% !important;
 }
 
 /* Section headings */
 h2 {
-    font-size: 1.5rem;
-    color: #000000; /* Bootstrap primary color */
-    margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #000000; /* Bootstrap primary color */
+  margin-bottom: 20px;
 }
 
-.description{
-    margin-top: 20px;
-    /* background-color: #dc3545; */
+.description {
+  margin-top: 20px;
+  /* background-color: #dc3545; */
 }
 
 .equipment {
-    margin-top: 20px;
-    /* background-color: aqua; */
+  margin-top: 20px;
+  /* background-color: aqua; */
 }
 
-.view-equipment-container{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
-    padding: 20px;
+.view-equipment-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  padding: 20px;
 }
 
-.view-equipment-details{
-    margin: 10px 0px;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-between;
+.view-equipment-details {
+  margin: 10px 0px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .view-equipment-details p {
-    font-size: 18px;
-    color: var(--color-zinc-600);
+  font-size: 18px;
+  color: var(--color-zinc-600);
 }
 
 .view-equipment-details p.alt {
-    font-size: 18px;
-    color: var(--color-zinc-950);
+  font-size: 18px;
+  color: var(--color-zinc-950);
 }
 
 /* Unordered list for equipment details */
@@ -71,13 +71,13 @@ h2 {
 /*    color: #555; !* Medium grey for descriptions *!*/
 /*}*/
 
- /*Equipment image*/
+/*Equipment image*/
 .view-equipment-container img {
-    max-width: 100%; /* Ensures the image doesn't exceed the container */
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    /*box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); !* Subtle shadow for the image *!*/
+  max-width: 100%; /* Ensures the image doesn't exceed the container */
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  /*box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); !* Subtle shadow for the image *!*/
 }
 
 /*!* Buttons in the menu bar *!*/
@@ -103,3 +103,7 @@ h2 {
 /*    opacity: 0.9; !* Slight hover effect *!*/
 /*}*/
 
+.img img {
+  max-height: 300px;
+  object-fit: contain;
+}

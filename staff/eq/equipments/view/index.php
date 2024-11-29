@@ -39,7 +39,7 @@ auth_required_guard_with_role("eq", "/staff/login");
 <main>
     <div class="base-container">
 
-    <?php require_once "../../../includes/menubar.php"; ?>
+        <?php require_once "../../../includes/menubar.php"; ?>
 
         <div class="view-equipment-container">
             <div>
@@ -74,57 +74,69 @@ auth_required_guard_with_role("eq", "/staff/login");
                 </div>
             </div>
             <div>
-                <div style="margin: 10px">
+                <div style="margin: 10px" class="img">
                     <h2 style="margin-bottom: 20px;">
                         Product Image
                     </h2>
                     <?php if ($equipment->image): ?>
                         <img src="../../../../<?= $equipment->image ?>" alt="<?= $equipment->name ?>">
                     <?php else: ?>
-                        <img src="../../../../uploads/default-images/infoCardDefault.png" alt="default">
+                        <img src="./default-image.jpg" alt="default">
                     <?php endif ?>
 
                 </div>
-               <div style="margin: 10px">
-                   <h2 style="margin-bottom: 20px;">
-                       Description
-                   </h2>
-                   <p><?= $equipment->description ?></p>
-               </div>
+                <div style="margin: 10px">
+                    <h2 style="margin-bottom: 20px;">
+                        Description
+                    </h2>
+                    <p><?= $equipment->description ?></p>
+                </div>
             </div>
-        <!-- Equipment details container -->
-<!--        <div class="view-equipment-container">-->
-<!---->
-<!--            <div>-->
-<!--                 Equipment Image-->
-<!--                --><?php //if ($equipment['img']): ?>
-<!--                    <img src="--><?php //= htmlspecialchars($equipment['img']) ?><!--" alt="--><?php //= htmlspecialchars($equipment['name']) ?><!--" style="width: 100%; max-width: 400px; margin-bottom: 20px;">-->
-<!--                --><?php //else: ?>
-<!--                    <p>No image available</p>-->
-<!--                --><?php //endif; ?>
-<!---->
-<!--                Equipment Details-->
-<!--                 <div class="equipment">-->
-<!--                     <h2 style="margin-bottom: 20px;">Equipment Details</h2>-->
-<!--                     <ul>-->
-<!--                         <li><strong>ID:</strong> --><?php //= htmlspecialchars($equipment['id']) ?><!--</li>-->
-<!--                         <li><strong>Name:</strong> --><?php //= htmlspecialchars($equipment['name']) ?><!--</li>-->
-<!--                         <li><strong>Type:</strong> --><?php //= htmlspecialchars($equipment['type']) ?><!--</li>-->
-<!--                         <li><strong>Last Maintenance:</strong> --><?php //= htmlspecialchars($equipment['last_maintenance']) ?><!--</li>-->
-<!--                         <li><strong>Purchase Date:</strong> --><?php //= htmlspecialchars($equipment['purchase_date']) ?><!--</li>-->
-<!--                         <li><strong>Manufacturer:</strong> --><?php //= htmlspecialchars($equipment['manufacturer']) ?><!--</li>-->
-<!--                     </ul>-->
-<!---->
-<!--                 </div>-->
-<!--            </div>-->
-<!---->
-<!--            Equipment Description-->
-<!--            <div class="description">-->
-<!--                <h2 style="margin-bottom: 20px;">Description</h2>-->
-<!--                <p>--><?php //= htmlspecialchars($equipment['description']) ?><!--</p>-->
-<!--            </div>-->
-<!--        </div>-->
-    </div>
+            <!-- Equipment details container -->
+            <!--        <div class="view-equipment-container">-->
+            <!---->
+            <!--            <div>-->
+            <!--                 Equipment Image-->
+            <!--                --><?php //if ($equipment['img']): 
+                                    ?>
+            <!--                    <img src="--><?php //= htmlspecialchars($equipment['img']) 
+                                                    ?><!--" alt="--><?php //= htmlspecialchars($equipment['name']) 
+                                                                    ?><!--" style="width: 100%; max-width: 400px; margin-bottom: 20px;">-->
+            <!--                --><?php //else: 
+                                    ?>
+            <!--                    <p>No image available</p>-->
+            <!--                --><?php //endif; 
+                                    ?>
+            <!---->
+            <!--                Equipment Details-->
+            <!--                 <div class="equipment">-->
+            <!--                     <h2 style="margin-bottom: 20px;">Equipment Details</h2>-->
+            <!--                     <ul>-->
+            <!--                         <li><strong>ID:</strong> --><?php //= htmlspecialchars($equipment['id']) 
+                                                                        ?><!--</li>-->
+            <!--                         <li><strong>Name:</strong> --><?php //= htmlspecialchars($equipment['name']) 
+                                                                        ?><!--</li>-->
+            <!--                         <li><strong>Type:</strong> --><?php //= htmlspecialchars($equipment['type']) 
+                                                                        ?><!--</li>-->
+            <!--                         <li><strong>Last Maintenance:</strong> --><?php //= htmlspecialchars($equipment['last_maintenance']) 
+                                                                                    ?><!--</li>-->
+            <!--                         <li><strong>Purchase Date:</strong> --><?php //= htmlspecialchars($equipment['purchase_date']) 
+                                                                                ?><!--</li>-->
+            <!--                         <li><strong>Manufacturer:</strong> --><?php //= htmlspecialchars($equipment['manufacturer']) 
+                                                                                ?><!--</li>-->
+            <!--                     </ul>-->
+            <!---->
+            <!--                 </div>-->
+            <!--            </div>-->
+            <!---->
+            <!--            Equipment Description-->
+            <!--            <div class="description">-->
+            <!--                <h2 style="margin-bottom: 20px;">Description</h2>-->
+            <!--                <p>--><?php //= htmlspecialchars($equipment['description']) 
+                                        ?><!--</p>-->
+            <!--            </div>-->
+            <!--        </div>-->
+        </div>
 </main>
 
 <?php require_once "../../../includes/footer.php"; ?>

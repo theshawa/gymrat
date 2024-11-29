@@ -19,8 +19,10 @@ require_once "./data.php";
 
 <main>
     <div class="banner" style="background-image: radial-gradient(100% 100% at 50.13% 0%, rgba(9, 9, 11, 0.00) 0%, rgba(9, 9, 11, 0.90) 100%), url(<?= $mealPlan['image'] ?>)">
-        <h1><?= $mealPlan['title'] ?></h1>
-        <p class="paragraph"><?= $mealPlan['description'] ?></p>
+        <div class="left">
+            <h1><?= $mealPlan['title'] ?></h1>
+            <p class="paragraph" style="max-width: 200px;"><?= $mealPlan['description'] ?></p>
+        </div>
         <span class="calories"><?= $mealPlan['calories'] ?> Calories</span>
     </div>
     <div class="description">

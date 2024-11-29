@@ -11,7 +11,7 @@ $pageConfig = [
     "need_auth" => true
 ];
 
-$rats = 82;
+$rats = 64;
 $maximumRats = 83;
 $traffic = $rats / $maximumRats * 10;
 

@@ -6,6 +6,7 @@ $pageConfig = [
     "titlebar" => [
         "back_url" => "../"
     ],
+    "navbar_active" => 3,
     "need_auth" => true
 ];
 
@@ -52,7 +53,7 @@ $avatar = $user->avatar ? "/uploads/" . $user->avatar : null;
             </div>
             <div class="form-field">
                 <label for="fname">Contact no.</label>
-                <input required class="input" type="tel" placeholder="<?= $user->phone ?>" name="phone" value="<?= $user->phone ?>">
+                <input required class="input" type="tel" pattern="\d{10}" placeholder="<?= $user->phone ?>" name="phone" value="<?= $user->phone ?>">
             </div>
             <div class="password-update">
                 <h4>Update password</h4>

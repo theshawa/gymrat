@@ -105,6 +105,20 @@ class Customer extends Model
         }
     }
 
+    public function get_all_by_membership_plan_id(string $membership_plan_id)
+    {
+        $sql = "SELECT * FROM $this->table WHERE membership_plan=:membership_plan_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['membership_plan_id' => $membership_plan_id]);
+        $data = $stmt->fetchAll();
+        $users = array_map(function ($user) {
+            $new_user = new Customer();
+            $new_user->fill($user);
+            return $new_user;
+        }, $data);
+        return $users;
+    }
+
     public function update_password()
     {
         $field = $this->id ? 'id' : ($this->email ? "email" : null);

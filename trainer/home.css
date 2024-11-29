@@ -1,0 +1,86 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tile {
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: var(--color-violet-600);
+  border: 1px solid;
+  border-color: var(--color-violet-500);
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.tile:not(.with-sub-link) {
+  padding: 20px;
+}
+
+.tile.green {
+  background-color: var(--color-green);
+  border-color: var(--color-green-light);
+}
+
+.tile.red {
+  background-color: var(--color-red);
+  border-color: var(--color-red-light);
+}
+
+.tile.gray {
+  background-color: var(--color-zinc-700);
+  border-color: var(--color-zinc-600);
+}
+
+.tile.with-sub-link {
+  justify-content: space-between;
+  position: relative;
+}
+
+.tile.with-sub-link .content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.tile.tile.with-sub-link .sub-link {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  background-color: rgba(255, 255, 255, 0.177);
+  top: 10px;
+  right: 10px;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile.tile.with-sub-link .sub-link:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.tile span {
+  color: var(--color-zinc-50);
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: auto;
+}
+
+.tile.full-width {
+  grid-column: span 2 / span 2;
+  aspect-ratio: auto;
+  min-height: 120px;
+}
+
+.tile .sub-text {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}

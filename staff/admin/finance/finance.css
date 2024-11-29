@@ -1,0 +1,144 @@
+.overview-small-box {
+    background-color: var(--color-zinc-100);
+    border-radius: 10px;
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 10px;
+}
+
+polyline {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: dash 5s ease-in forwards;
+    /*animation-iteration-count: 10;*/
+    /*animation-direction: alternate;*/
+}
+
+@keyframes dash{
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Style the tab */
+.tab {
+    margin: 10px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #e4e4e7;
+    margin: 5px;
+    border-radius: 20px;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #d4d4d8;
+    margin: 5px;
+    border-radius: 20px;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between !important; /* Space items vertically to fill the space */
+    align-items: center !important; /* Center items horizontally */
+    flex-grow: 1 !important; /* Allow content to grow and take available space */
+    padding: 6px 12px !important;
+    border-top: none;
+    text-align: center;
+}
+
+
+.container {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+h2 {
+    font-size: 22px;
+    margin: 20px 0;
+    text-align: center;
+    small {
+        font-size: 0.5em;
+    }
+}
+
+.responsive-table {
+    li {
+        border-radius: 20px;
+        padding: 25px 30px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    .table-header {
+        background-color: #e4e4e7;
+        font-size: 14px;
+        letter-spacing: 0.03em;
+    }
+    .table-row {
+        background-color: #ffffff;
+        box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+    }
+    .col-1 {
+        flex-basis: 10%;
+    }
+    .col-2 {
+        flex-basis: 40%;
+    }
+    .col-3 {
+        flex-basis: 25%;
+    }
+    .col-4 {
+        flex-basis: 25%;
+    }
+
+    @media all and (max-width: 767px) {
+        .table-header {
+            display: none;
+        }
+        .table-row{
+
+        }
+        li {
+            display: block;
+        }
+        .col {
+
+            flex-basis: 100%;
+
+        }
+        .col {
+            display: flex;
+            padding: 10px 0;
+            &:before {
+                color: #6C7A89;
+                padding-right: 10px;
+                content: attr(data-label);
+                flex-basis: 50%;
+                text-align: right;
+            }
+        }
+    }
+}

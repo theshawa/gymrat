@@ -6,6 +6,7 @@ $pageConfig = [
         "title" => "My Meal Plan",
         "back_url" => "../"
     ],
+    "navbar_active" => 1,
     "need_auth" => true
 ];
 
@@ -23,7 +24,7 @@ require_once "./data.php";
         <span class="calories"><?= $mealPlan['calories'] ?> Calories</span>
     </div>
     <div class="description">
-        <h3>How?</h3>
+        <h3>How to Use</h3>
         <p class="paragraph"><?= $mealPlan['usage'] ?></p>
     </div>
     <div class="meals">

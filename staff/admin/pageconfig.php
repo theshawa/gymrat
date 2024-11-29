@@ -13,6 +13,7 @@ $pageConfig = [
             ["text" => "Membership Plans", "href" => "/staff/admin/membership-plans/index.php"],
             ["text" => "Staff Credentials", "href" => "/staff/admin/credentials/index.php"],
             ["text" => "Complaints", "href" => "/staff/admin/complaints/index.php"],
+            ["text" => "Finance", "href" => "/staff/admin/finance/index.php"],
         ],
         "active" => $sidebarActive
     ],

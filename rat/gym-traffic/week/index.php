@@ -10,6 +10,7 @@ $pageConfig = [
         "title" => "Weekly Gym Traffic",
         "back_url" => "../../",
     ],
+    "navbar_active" => 1,
     "need_auth" => true
 ];
 

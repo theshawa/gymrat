@@ -352,3 +352,31 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+CREATE TABLE `equipments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `manufacturer` varchar(255) NOT NULL,
+  `image` varchar(500) DEFAULT NULL,
+  `purchase_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `last_maintenance` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `equipments` (`id`, `name`, `type`, `description`, `manufacturer`, `image`, `purchase_date`, `last_maintenance`, `created_at`, `updated_at`) VALUES
+(1, 'Leg Press Machine', 'Strength Equipment', 'A versatile machine designed to target quadriceps, hamstrings, and glutes effectively.', 'GymPro', '', '2022-03-01 13:30:00', '2023-06-15 13:30:00', '2024-11-27 01:30:21', '2024-11-27 06:00:38');
+INSERT INTO `equipments` (`id`, `name`, `type`, `description`, `manufacturer`, `image`, `purchase_date`, `last_maintenance`, `created_at`, `updated_at`) VALUES
+(2, 'Squat Rack', 'Strength Equipment', 'A rack for performing squats and other compound exercises.', 'IronMax', NULL, '2021-05-10 13:30:00', '2023-07-01 13:30:00', '2024-11-27 01:30:21', '2024-11-27 01:30:21');
+INSERT INTO `equipments` (`id`, `name`, `type`, `description`, `manufacturer`, `image`, `purchase_date`, `last_maintenance`, `created_at`, `updated_at`) VALUES
+(4, 'Calf Raise Machine', 'Strength Equipment', 'Targets and strengthens the calf muscles.', 'PowerFit', NULL, '2020-11-20 13:30:00', '2023-08-01 13:30:00', '2024-11-27 01:30:21', '2024-11-27 01:30:21');
+INSERT INTO `equipments` (`id`, `name`, `type`, `description`, `manufacturer`, `image`, `purchase_date`, `last_maintenance`, `created_at`, `updated_at`) VALUES
+(5, 'Bench Press', 'Strength Equipment', 'A classic equipment for chest and triceps strength training.', 'MuscleTech', NULL, '2023-03-05 13:30:00', '2023-09-01 13:30:00', '2024-11-27 01:30:21', '2024-11-27 01:30:21'),
+(6, 'Chest Fly Machine', 'Strength Equipment', 'Builds chest muscles and improves posture.', 'HealthLine', NULL, '2022-10-12 13:30:00', '2023-06-20 13:30:00', '2024-11-27 01:30:21', '2024-11-27 01:30:21'),
+(7, 'Lat Pulldown Machine', 'Strength Equipment', 'A machine for strengthening the back and biceps.', 'BackFit', 'uploads/default-images/latpull.png', '2021-09-30 13:30:00', '2023-04-15 13:30:00', '2024-11-27 01:30:21', '2024-11-27 01:30:21'),
+(8, 'Dumbbells', 'Strength Equipment', 'Versatile free weights for full-body strength training.', 'FlexPro', 'uploads/default-images/dumbbells.jpg', '2022-12-25 13:30:00', '2023-05-01 13:30:00', '2024-11-27 01:30:21', '2024-11-27 01:30:21');
+

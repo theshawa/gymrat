@@ -1,6 +1,6 @@
 <?php
 
-header("Location: ./complaints");
+header("Location: ./membership-plans");
 exit;
 
 $pageTitle = "Home";

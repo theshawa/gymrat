@@ -25,6 +25,7 @@
 
             <p>
                 <a href="/rat/login/index.php">Rat</a>&nbsp;&nbsp;
+                <!-- <a href="/trainer/login/index.php">Trainer</a>&nbsp;&nbsp; -->
                 <a href="/staff/login/index.php">Staff</a>
             </p>
         </div>

@@ -12,12 +12,14 @@ $workout = [
                     [
                         'name' => 'Jogging',
                         'time' => '5',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/1-Jogging-.jpg'
                     ],
                     [
                         'name' => 'Stretching',
                         'time' => '5',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/2-Stretching.jpg'
                     ],
                 ]
             ],
@@ -28,12 +30,14 @@ $workout = [
                     [
                         'name' => 'Push Ups',
                         'time' => '',
-                        'reps' => '3 x 15'
+                        'reps' => '3 x 15',
+                        'image' => './images/5-Push-Ups-.jpg'
                     ],
                     [
                         'name' => 'Squats',
                         'time' => '',
-                        'reps' => '3 x 20'
+                        'reps' => '3 x 20',
+                        'image' => './images/6-Squats.jpg'
                     ],
                 ]
             ],
@@ -44,7 +48,8 @@ $workout = [
                     [
                         'name' => 'Running',
                         'time' => '20',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/9-Running.jpg'
                     ],
                 ]
             ],
@@ -55,12 +60,14 @@ $workout = [
                     [
                         'name' => 'Walking',
                         'time' => '5',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/12-Walking.jpg'
                     ],
                     [
                         'name' => 'Stretching',
                         'time' => '5',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/2-Stretching.jpg'
                     ],
                 ]
             ]
@@ -77,12 +84,14 @@ $workout = [
                     [
                         'name' => 'Jumping Jacks',
                         'time' => '5',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/3-Jumping-Jacks-.jpg'
                     ],
                     [
                         'name' => 'Dynamic Stretching',
                         'time' => '5',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/4-Dynamic-Stretching.jpg'
                     ],
                 ]
             ],
@@ -93,12 +102,14 @@ $workout = [
                     [
                         'name' => 'Pull Ups',
                         'time' => '',
-                        'reps' => '3 x 10'
+                        'reps' => '3 x 10',
+                        'image' => './images/7-Pull-Ups-.jpg'
                     ],
                     [
                         'name' => 'Lunges',
                         'time' => '',
-                        'reps' => '3 x 15'
+                        'reps' => '3 x 15',
+                        'image' => './images/8-Lunges-.jpg'
                     ],
                 ]
             ],
@@ -109,7 +120,8 @@ $workout = [
                     [
                         'name' => 'Cycling',
                         'time' => '20',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/10-Cycling.jpg'
                     ],
                 ]
             ],
@@ -120,12 +132,14 @@ $workout = [
                     [
                         'name' => 'Walking',
                         'time' => '5',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/12-Walking.jpg'
                     ],
                     [
                         'name' => 'Static Stretching',
                         'time' => '5',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/14-Static-Stretching-.jpg'
                     ],
                 ]
             ]
@@ -142,12 +156,14 @@ $workout = [
                     [
                         'name' => 'High Knees',
                         'time' => '5',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/High-Knees.jpg'
                     ],
                     [
                         'name' => 'Arm Circles',
                         'time' => '5',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/Arm-Circles.jpg'
                     ],
                 ]
             ],
@@ -158,12 +174,14 @@ $workout = [
                     [
                         'name' => 'Bench Press',
                         'time' => '',
-                        'reps' => '3 x 12'
+                        'reps' => '3 x 12',
+                        'image' => './images/Bench-Press.jpg'
                     ],
                     [
                         'name' => 'Deadlifts',
                         'time' => '',
-                        'reps' => '3 x 10'
+                        'reps' => '3 x 10',
+                        'image' => './images/Dead-Lift.jpg'
                     ],
                 ]
             ],
@@ -174,7 +192,8 @@ $workout = [
                     [
                         'name' => 'Jump Rope',
                         'time' => '20',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/11-Jump-Rope-.jpg'
                     ],
                 ]
             ],
@@ -185,12 +204,14 @@ $workout = [
                     [
                         'name' => 'Walking',
                         'time' => '5',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/12-Walking.jpg'
                     ],
                     [
                         'name' => 'Foam Rolling',
                         'time' => '5',
-                        'reps' => ''
+                        'reps' => '',
+                        'image' => './images/13-Foam-Rolling-.jpg'
                     ],
                 ]
             ]

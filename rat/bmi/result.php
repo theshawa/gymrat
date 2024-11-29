@@ -72,6 +72,7 @@ $category = $BMI_CLASSIFICATION[$category];
 $pageConfig = [
     "title" => "BMI Calculator Result",
     "styles" => ["./bmi.css"],
+    "navbar_active" => 1,
     "titlebar" => [
         "back_url" => "/rat/bmi/index.php",
     ],

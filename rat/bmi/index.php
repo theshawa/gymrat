@@ -6,6 +6,7 @@ $pageConfig = [
     "titlebar" => [
         "back_url" => "/rat/index.php",
     ],
+    "navbar_active" => 1,
     "need_auth" => true
 ];
 

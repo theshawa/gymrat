@@ -20,12 +20,17 @@
 
 ## Jayathu
 
-USERS
+RATS:
+emily.carter@example.com
+liam.johnson@example.co.uk
 
-Password for All Users:
-123456
+TRAINER:
+johncena@example.com
 
-Staff:
+STAFF:
 admin@example.com
 eq@example.com
 wnmp@example.com
+
+Password for All Users:
+123456

@@ -37,7 +37,7 @@ try {
     <div class="staff-base-container">
         <?php require_once "../../includes/menubar.php"; ?>
         <!--    <a href="new" class="btn" style="width: max-content;">Create New</button></a>-->
-<!--        <br />-->
+        <!--        <br />-->
         <p class="paragraph">
             You can lock plans to hide them from customers. Plan will be hidden from the membership plan list in the customer onboarding view. This is useful when you want to edit or delete them in the future.
         </p>
@@ -45,16 +45,27 @@ try {
         <div class="card-list">
             <?php foreach ($membershipPlans as $membershipPlan) : ?>
                 <div class="card">
+                    <?php
+                    require_once "../../../db/models/Customer.php";
+                    $customers = (new Customer())->get_all_by_membership_plan_id($membershipPlan->id);
+                    ?>
                     <h2><?= $membershipPlan->name . ($membershipPlan->is_locked ? "&nbsp;<strong>[LOCKED]</strong>" : "") ?></h2>
                     <p style="font-weight: 500;"><?= $membershipPlan->description ?></p>
                     <p>Price: <?= $membershipPlan->price ?> LKR</p>
                     <p>Duration: <?= $membershipPlan->duration ?> days</p>
                     <p>Created at: <?= $membershipPlan->created_at->format('Y-m-d H:i:s') ?></p>
                     <p>Updated at: <?= $membershipPlan->updated_at->format('Y-m-d H:i:s') ?></p>
+                    <p>No. of active users: <?= count($customers) ?></p>
                     <div class="btns">
-                        <a href="edit/index.php?id=<?= $membershipPlan->id ?>" class="btn">Edit</a>
-                        <!-- TODO: Hide below buttons based on currently active customers -->
-                        <button onclick="deletePlan(<?= $membershipPlan->id ?>)" class="btn">Delete</button>
+                        <?php if (count($customers)): ?>
+                            <button class="btn" disabled title="There are active customers">Edit</button>
+                            <button class="btn" disabled title="There are active customers">Delete</button>
+                        <?php else: ?>
+                            <a <?= count($customers) ? 'disabled title="Active customers exists"' : "" ?> href="edit/index.php?id=<?= $membershipPlan->id ?>" class="btn">Edit</a>
+                            <!-- TODO: Hide below buttons based on currently active customers -->
+
+                            <button <?= count($customers) ? 'disabled title="Active customers exists"' : "" ?> onclick="deletePlan(<?= $membershipPlan->id ?>)" class="btn">Delete</button>
+                        <?php endif; ?>
                         <button onclick="lockUnlockPlan(<?= $membershipPlan->id ?>,<?= $membershipPlan->is_locked ? 0 : 1 ?>)" class="btn"><?= $membershipPlan->is_locked ? "Unlock" : "Lock" ?></button>
                     </div>
                 </div>

@@ -7,6 +7,7 @@ $pageConfig = [
         "title" => "My Workout",
         "back_url" => "/rat/index.php"
     ],
+    "navbar_active" => 1,
     "need_auth" => true
 ];
 
@@ -82,8 +83,8 @@ if (count($day) === 0) {
                 <div class="exercises">
                     <?php foreach ($d['items'] as $exercise): ?>
                         <a href="./exercise?id=" class="exercise">
-                            <img src="" alt="Workout image" class="featured-image">
-                            <div class="left">
+                            <img src="<?= $exercise['image'] ?>" alt="Workout image" class="featured-image">
+                            <div class="right">
                                 <h4><?= $exercise['name'] ?></h4>
                                 <div class="bottom">
                                     <?php if ($exercise['reps']): ?>

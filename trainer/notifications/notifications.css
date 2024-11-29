@@ -1,0 +1,33 @@
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notification {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: var(--color-zinc-900);
+}
+
+.notification h4 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.notification .line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  color: var(--color-zinc-500);
+  font-size: 11px;
+}
+
+.time {
+  color: var(--color-zinc-500);
+  font-size: 12px;
+}

@@ -24,7 +24,7 @@ require_once "../includes/header.php";
             </label>
             <input required class="input" type="text" placeholder="First name" name="fname">
             <input required class="input" type="text" placeholder="Last name" name="lname">
-            <input required class="input" type="tel" placeholder="Contact no." name="phone">
+            <input required class="input" type="tel" pattern="\d{10}" placeholder="Contact no." name="phone">
             <input required class="input" type="email" placeholder="Email" name="email">
             <label for="password" class="password-field">
                 <input required type="password" name="password" placeholder="Password" minlength="6">

@@ -3,6 +3,7 @@
 $defaultName = "";
 $showImage = false;
 $showExtend = false;
+$showCreatedAt = true;
 $extendTo = null;
 $cards = null;
 $isCardInList = false; // REMOVE WHEN FULLY TURNED TO CRUD
@@ -30,6 +31,9 @@ if (isset($infoCardConfig)) {
     }
     if (isset($infoCardConfig['isCardInList'])) {
         $isCardInList = $infoCardConfig['isCardInList'];
+    }
+    if (isset($infoCardConfig['showCreatedAt'])) {
+        $showCreatedAt = $infoCardConfig['showCreatedAt'];
     }
 }
 
@@ -72,7 +76,7 @@ if (!$isCardInList) {
             <?php endif; ?>
             <div class="info-card-desc">
                 <h2><?= ($card['title'] ?? $card['name']) ?></h2>
-                <p><?= (isset($card['created_at'])) ? "[ " . $card['created_at'] . " ] " : "" ?><?= $card['description'] ?></p>
+                <p><?= (isset($card['created_at']) && ($showCreatedAt)) ? "[ " . $card['created_at'] . " ] " : "" ?><?= $card['description'] ?></p>
                 <?php if ($showExtend): ?>
                     <div class="info-card-ext">
                         <a href="<?= $extendTo ?>?id=<?= $card['id'] ?>">

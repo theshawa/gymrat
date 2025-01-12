@@ -3,7 +3,6 @@
 
 function redirect_with_alert(string $message, string $redirect_url = "/", string $type = 'info'): void
 {
-
     $_SESSION[$type] = $message;
     header("Location: $redirect_url");
     exit(1);

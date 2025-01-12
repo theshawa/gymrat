@@ -18,7 +18,7 @@ require_once "../../includes/titlebar.php";
     <h1>Bench Press</h1>
     <span>8 x 4 reps</span>
     <p class="paragraph">Targets the chest, shoulders, and triceps.</p>
-    <!-- <img src="" alt="" class="featured-image"> -->
+    <img src="../images/Bench-Press.jpg" alt="Image of Bench Press" class="featured-image">
     <div class="tutorial">
         <h3>TUTORIAL</h3>
         <iframe src="https://www.youtube.com/embed/4Y2ZdHCOXok" frameborder="0"></iframe>

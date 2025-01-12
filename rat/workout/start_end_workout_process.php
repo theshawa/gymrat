@@ -11,6 +11,7 @@ require_once "../../auth-guards.php";
 auth_required_guard("/rat/login");
 
 require_once "../../db/models/WorkoutSession.php";
+require_once "../../db/models/Customer.php";
 
 function start_workout()
 {
@@ -18,10 +19,23 @@ function start_workout()
 
     // end any existing workout
     $workoutSession->mark_all_live_as_ended_of_user($_SESSION['auth']['id']);
+    $customer  = new Customer();
+    $customer->fill([
+        'id' => $_SESSION['auth']['id'],
+    ]);
+    try {
+        $customer->get_by_id();
+    } catch (PDOException $e) {
+        redirect_with_error_alert("Failed to start workout due to error(failed to fetch user info): " . $e->getMessage(), "./");
+    }
+
+    if (!$customer->workout) {
+        redirect_with_error_alert("You don't have access to workout. Please contact admin.", "./");
+    }
 
     $workoutSession->fill([
         'user' => $_SESSION['auth']['id'],
-        'workout' => 1,
+        'workout' => $customer->workout,
     ]);
 
     try {

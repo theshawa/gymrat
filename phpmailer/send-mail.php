@@ -6,6 +6,9 @@ require __DIR__ . '/lib/src/Exception.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 
+/**
+ * @throws \PHPMailer\PHPMailer\Exception
+ */
 function send_mail(array $to, string $subject, string $body)
 {
     $mail = new PHPMailer(true);

@@ -1,5 +1,6 @@
 <?php
 
+
 require_once "../../../alerts/functions.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -40,14 +41,20 @@ try {
 
 require_once "../../../phpmailer/send-mail.php";
 
-send_mail(
-    [
-        'email' => $request->email,
-        'name' => $request->email
-    ],
-    'Forgot Password Verification Code',
-    'Your code is <b>' . $request->code . '</b>.'
-);
+use PHPMailer\PHPMailer\Exception;
+
+try {
+    send_mail(
+        [
+            'email' => $request->email,
+            'name' => $request->email
+        ],
+        'Forgot Password Verification Code',
+        'Your code is <b>' . $request->code . '</b>.'
+    );
+} catch (Exception $e) {
+    redirect_with_error_alert("Failed to send email due to error: " . $e->getMessage(), "./");
+}
 
 $_SESSION['customer_password_reset'] = [
     'email' => $email,

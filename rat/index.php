@@ -24,6 +24,8 @@ if (isset($_SESSION['auth'])) {
 require_once "./includes/titlebar.php";
 
 $workoutStarted = $_SESSION['user']['workout'] ?? null;
+
+require_once "../phpmailer/send-mail.php";
 ?>
 
 <script>

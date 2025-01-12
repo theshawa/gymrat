@@ -54,6 +54,15 @@ try {
     redirect_with_error_alert("Failed to create email verification request due to error: " . $e->getMessage(), "../");
 }
 
-// TODO: send email
+require_once "../../../phpmailer/send-mail.php";
+
+send_mail(
+    [
+        'email' => $request->email,
+        'name' => $request->email
+    ],
+    'Verify Your Email',
+    'Your verification code is <b>' . $request->code . '</b>.'
+);
 
 redirect_with_info_alert("Email verification request sent. Please check your email", "./");

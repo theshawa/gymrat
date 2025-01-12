@@ -38,7 +38,16 @@ try {
     redirect_with_error_alert("Failed to create password reset request due to error: " . $e->getMessage(), "./");
 }
 
-// TODO: send email
+require_once "../../../phpmailer/send-mail.php";
+
+send_mail(
+    [
+        'email' => $request->email,
+        'name' => $request->email
+    ],
+    'Forgot Password Verification Code',
+    'Your code is <b>' . $request->code . '</b>.'
+);
 
 $_SESSION['customer_password_reset'] = [
     'email' => $email,

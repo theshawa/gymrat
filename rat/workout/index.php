@@ -14,7 +14,6 @@ $pageConfig = [
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";
 
-
 require_once "./data.php";
 
 
@@ -25,7 +24,15 @@ if ($start_command) {
     exit;
 }
 
-$started = $_SESSION['user']['workout'] ?? null;
+$workoutSession = null;
+if ($_SESSION['workout_session']) {
+    require_once "../../db/models/WorkoutSession.php";
+    $workoutSession = new WorkoutSession();
+    $workoutSession->fill([
+        'id' => $_SESSION['workout_session']
+    ]);
+    $workoutSession->get_by_id();
+}
 
 $day = $_GET['day'] ?? 1;
 
@@ -49,13 +56,13 @@ if (count($day) === 0) {
 ?>
 
 <script>
-    const $WORKOUT_STARTED_AT = <?= json_encode($started ? $started['started_at'] : null) ?>;
+    const $WORKOUT_STARTED_AT = <?= json_encode($workoutSession ? $workoutSession->started_at->format("Y-m-d H:i:s") : null) ?>;
 </script>
 
 <main>
-    <a href="./start_end_workout_process.php" class="btn <?= $started ? "danger" : "success" ?>">
-        <span><?= $started ? "End" : "Start" ?> Workout</span>
-        <?php if ($started): ?>
+    <a href="./start_end_workout_process.php" class="btn <?= $workoutSession ? "danger" : "success" ?>">
+        <span><?= $workoutSession ? "End" : "Start" ?> Workout</span>
+        <?php if ($workoutSession): ?>
             <span class="sub-text workout-timer"></span>
         <?php endif; ?>
     </a>

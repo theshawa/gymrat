@@ -1,5 +1,6 @@
 <?php
 
+
 session_start();
 
 require_once "../../alerts/functions.php";
@@ -89,13 +90,19 @@ try {
 
 require_once "../../phpmailer/send-mail.php";
 
-send_mail(
-    [
-        'email' => $request->email,
-        'name' => $request->email
-    ],
-    'Verify Your Email',
-    'Your verification code is <b>' . $request->code . '</b>.'
-);
+use PHPMailer\PHPMailer\Exception;
+
+try {
+    send_mail(
+        [
+            'email' => $request->email,
+            'name' => $request->email
+        ],
+        'Verify Your Email',
+        'Your verification code is <b>' . $request->code . '</b>.'
+    );
+} catch (Exception $e) {
+    redirect_with_error_alert("Failed to send email due to error: " . $e->getMessage(), "/rat/register");
+}
 
 redirect_with_info_alert("Email verification request sent. Please check your email", "/rat/register/email-verification");

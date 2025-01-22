@@ -34,3 +34,9 @@ wnmp@example.com
 
 Password for All Users:
 123456
+
+# Theshawa To-dos
+
+- BMI Records Backend
+- Membership Activation Payment Gateway Integration
+- Customer Profile Update

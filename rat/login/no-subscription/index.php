@@ -2,7 +2,7 @@
 $pageConfig = [
     "title" => "No Active Subscription",
     "styles" => ["./no-subscription.css"],
-    "need_auth" => true,
+    "need_auth" => false,
     "dont_need_active_subscription" => true
 ];
 

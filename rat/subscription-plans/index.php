@@ -22,15 +22,13 @@ try {
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to fetch plans due to error: " . $e->getMessage(), "./");
 }
-
-
 ?>
 
 <main>
     <p class="paragraph small">
         The following plans are created by the gym owner. Customers have to pay the amount mentioned for each plan to subscribe to that plan.
     </p>
-    <form action="subscribe_process.php" method="post">
+    <form action="verify/index.php" method="post">
         <div class="plans">
             <?php foreach ($plans as $i => $plan): ?>
                 <label class="plan">

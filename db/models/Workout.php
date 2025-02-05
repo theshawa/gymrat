@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/../Model.php";
 
-class Staff extends Model
+class Workout extends Model
 {
     protected $table = "workouts";
 
@@ -14,6 +14,8 @@ class Staff extends Model
     public DateTime $created_at;
     public DateTime $updated_at;
 
+    public array $exercises = [];
+
     public function fill(array $data)
     {
         $this->id = $data['id'] ?? 0;
@@ -22,6 +24,7 @@ class Staff extends Model
         $this->duration = $data['duration'] ?? 0;
         $this->created_at = new DateTime($data['created_at'] ?? null);
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? null);
+        $this->exercises = $data['exercises'] ?? [];
     }
 
     public function create()
@@ -36,6 +39,28 @@ class Staff extends Model
         $this->id = $this->conn->lastInsertId();
     }
 
+    public function get_all(): array
+    {
+        $sql = "SELECT * FROM $this->table";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        return array_map(function ($item) {
+            $workout = new Workout();
+            $workout->fill(
+                [
+                    'id' => $item['id'],
+                    'name' => $item['name'],
+                    'description' => $item['description'],
+                    'duration' => $item['duration'],
+                    'created_at' => $item['created_at'],
+                    'updated_at' => $item['updated_at'],
+                    'exercises' => $this->get_exercises($item['id'])
+                ]
+            );
+            return $workout;
+        }, $items);
+    }
 
     public function update()
     {
@@ -58,14 +83,24 @@ class Staff extends Model
         }
     }
 
-    public function get_by_id()
+    public function get_by_id(int $id = null)
     {
-        $sql = "SELECT * FROM $this->table WHERE id=:id";
+        $id = $id ?? $this->id;
+        $sql = "SELECT * FROM $this->table WHERE id = :id LIMIT 1";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute(['id' => $this->id]);
+        $stmt->execute(['id' => $id]);
         $data = $stmt->fetch();
         if ($data) {
+            $data['exercises'] = $this->get_exercises($id);
             $this->fill($data);
         }
+    }
+
+    private function get_exercises(int $workout_id): array
+    {
+        $sql = "SELECT * FROM workout_exercises WHERE workout_id = :workout_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['workout_id' => $workout_id]);
+        return $stmt->fetchAll();
     }
 }

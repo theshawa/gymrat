@@ -42,7 +42,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 0px 15px;
+    margin: 0 15px;
 }
 
 .edit-workout-input-update {

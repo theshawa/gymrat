@@ -16,6 +16,18 @@ class Workout extends Model
 
     public array $exercises = [];
 
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->created_at = new DateTime();
+        $this->updated_at = new DateTime();
+
+        if (!empty($data)) {
+            $this->fill($data);
+        }
+    }
+
     public function fill(array $data)
     {
         $this->id = $data['id'] ?? 0;
@@ -113,6 +125,12 @@ class Workout extends Model
         $sql = "SELECT * FROM workout_exercises WHERE workout_id = :workout_id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['workout_id' => $workout_id]);
-        return $stmt->fetchAll();
+        $exercises = $stmt->fetchAll();
+
+        return array_map(function($exercise) {
+            $exercise['isUpdated'] = false;
+            $exercise['isDeleted'] = false;
+            return $exercise;
+        }, $exercises);
     }
 }

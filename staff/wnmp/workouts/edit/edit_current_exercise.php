@@ -36,3 +36,6 @@ if ($workout_id == $current_workout_id) {
 
 redirect_with_error_alert("Action cannot be performed", "/staff/wnmp/workouts");
 
+// If a exercise is updated, make "isUpdated" field true
+// if a exercise is deleted, make "isDeleted" field true
+// create a functions to update and delete workout_sessions with id and call them ina  parent function called editWorkoutSessions

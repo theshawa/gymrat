@@ -6,6 +6,7 @@ require_once "../../../../db/models/Workout.php";
 require_once "../../../../db/models/Exercise.php";
 
 $id = htmlspecialchars($_GET['id'] ?? null);
+$_SESSION['workout_id'] = $id;
 
 $workout = new Workout();
 if (!isset($_SESSION['workout'])) {
@@ -24,7 +25,7 @@ if (!isset($_SESSION['workout'])) {
 
 $sidebarActive = 3;
 $menuBarConfig = [
-    "title" => "Edit " . $workout->name,
+    "title" => "Edit " . ($workout->name ?? "Unnamed Workout"),
     "showBack" => true,
     "goBackTo" => "/staff/wnmp/workouts/view/index.php?id=$id",
     "useButton" => true,
@@ -46,19 +47,22 @@ auth_required_guard_with_role("wnmp", "/staff/login");
 ?>
 
 <main>
-<!--    --><?php //var_dump($workout->exercises) ?>
     <div class="base-container">
         <div class="form">
             <form action="edit_workout.php" method="POST">
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
+                    <input type="hidden" name="workout_id" value="<?= $workout->id ?>">
                     <h2><label for="edit-title">Title</label></h2>
-                    <input type="text" id="edit-title" name="exercise_title"
+                    <input type="text" id="edit-title" name="workout_name"
                         class="staff-input-primary staff-input-long" value="<?= $workout->name ?>">
                     <h2><label for="edit-description">Description</label></h2>
-                    <textarea id="edit-description" name="workout_desc"
+                    <textarea id="edit-description" name="workout_description"
                         class="staff-textarea-primary staff-textarea-large"
                         placeholder="Enter a workout description"><?= $workout->description ?></textarea>
+                    <h2><label for="edit-duration">Duration</label></h2>
+                    <input type="text" id="edit-duration" name="workout_duration"
+                           class="staff-input-primary staff-input-long" value="<?= $workout->duration ?>">
                 </div>
             </form>
             <div style="padding: 5px 10px;">

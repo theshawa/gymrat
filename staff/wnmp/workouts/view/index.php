@@ -60,7 +60,7 @@ auth_required_guard_with_role("wnmp", "/staff/login");
                 <h2 style="margin-bottom: 20px;">
                     Description
                 </h2>
-                <p><?= $workout['description'] ?></p>
+                <p><?= $workout->description ?></p>
             </div>
         </div>
     </div>

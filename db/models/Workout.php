@@ -39,6 +39,18 @@ class Workout extends Model
         $this->id = $this->conn->lastInsertId();
     }
 
+    public function __sleep()
+    {
+        // Specify the properties to be serialized
+        return ['id', 'name', 'description', 'duration', 'created_at', 'updated_at', 'exercises'];
+    }
+
+    public function __wakeup()
+    {
+        // Reinitialize the PDO instance upon unserialization
+        $this->conn = Database::get_conn();
+    }
+
     public function get_all(): array
     {
         $sql = "SELECT * FROM $this->table";

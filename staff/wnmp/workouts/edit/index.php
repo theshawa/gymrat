@@ -1,70 +1,30 @@
 <?php
-
 session_start();
 
 require_once "../../../../alerts/functions.php";
+require_once "../../../../db/models/Workout.php";
+require_once "../../../../db/models/Exercise.php";
 
 $id = htmlspecialchars($_GET['id'] ?? null);
 
+$workout = new Workout();
 if (!isset($_SESSION['workout'])) {
-    // REPLACE THIS WITH DATABASE QUERY
-    $_SESSION['workout'] = [
-        "id" => 001,
-        "title" => "Strength Training",
-        "description" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "exercise" => [
-            [
-                "id" => 001,
-                "title" => "Squats",
-                "sets" => 3,
-                "reps" => 10
-            ],
-            [
-                "id" => 002,
-                "title" => "Deadlifts",
-                "sets" => 3,
-                "reps" => 10
-            ],
-            [
-                "id" => 003,
-                "title" => "Bench Press",
-                "sets" => 3,
-                "reps" => 10
-            ],
-            [
-                "id" => 004,
-                "title" => "Pull-Ups",
-                "sets" => 3,
-                "reps" => 10
-            ],
-            [
-                "id" => 005,
-                "title" => "Overhead Press",
-                "sets" => 3,
-                "reps" => 10
-            ],
-            [
-                "id" => 006,
-                "title" => "Quads",
-                "sets" => 3,
-                "reps" => 10
-            ],
-            [
-                "id" => 007,
-                "title" => "Dumbbell Rows",
-                "sets" => 3,
-                "reps" => 10
-            ]
-        ],
-        "img" => null
-    ];
-    $_SESSION['workout_id'] = $_SESSION['workout']['id'];
+    $exerciseModel = new Exercise();
+    try {
+        $workout->get_by_id($id);
+        $workout->exercises = $exerciseModel->addExerciseTitles($workout->exercises);
+    } catch (Exception $e) {
+        redirect_with_error_alert("Failed to fetch workout: " . $e->getMessage(), "/staff/wnmp/workouts");
+    }
+    $_SESSION['workout'] = serialize($workout);
+} else {
+    $workout = unserialize($_SESSION['workout']);
 }
 
-$workout = &$_SESSION['workout'];
+
 $sidebarActive = 3;
 $menuBarConfig = [
-    "title" => "Edit " . $workout['title'],
+    "title" => "Edit " . $workout->name,
     "showBack" => true,
     "goBackTo" => "/staff/wnmp/workouts/view/index.php?id=$id",
     "useButton" => true,
@@ -73,14 +33,6 @@ $menuBarConfig = [
         ["title" => "Revert Changes", "buttonType" => "submit", "formAction" => "revert_exercise.php", "type" => "destructive"]
     ]
 ];
-
-//$alertConfig = [
-//    "status" => $_GET['status'] ?? null,
-//    "error" => $_GET['err'] ?? null,
-//    "message" => $_GET['msg'] ?? null
-//];
-
-
 
 require_once "../../pageconfig.php";
 
@@ -94,27 +46,26 @@ auth_required_guard_with_role("wnmp", "/staff/login");
 ?>
 
 <main>
+<!--    --><?php //var_dump($workout->exercises) ?>
     <div class="base-container">
         <div class="form">
             <form action="edit_workout.php" method="POST">
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
-                    <!--                    --><?php //require_once "../../../includes/alert.php"; 
-                                                ?>
                     <h2><label for="edit-title">Title</label></h2>
                     <input type="text" id="edit-title" name="exercise_title"
-                        class="staff-input-primary staff-input-long" value="<?= $workout['title'] ?>">
+                        class="staff-input-primary staff-input-long" value="<?= $workout->name ?>">
                     <h2><label for="edit-description">Description</label></h2>
                     <textarea id="edit-description" name="workout_desc"
                         class="staff-textarea-primary staff-textarea-large"
-                        placeholder="Enter a workout description"><?= $workout['description'] ?></textarea>
+                        placeholder="Enter a workout description"><?= $workout->description ?></textarea>
                 </div>
             </form>
             <div style="padding: 5px 10px;">
                 <h2>Exercise</h2>
-                <?php foreach ($workout["exercise"] as $exercise): ?>
+                <?php foreach ($workout->exercises as $exercise): ?>
                     <form action="edit_current_exercise.php" method="POST" class="edit-workout-row">
-                        <input type="hidden" name="exercise_id" value="<?= $exercise['id'] ?>">
+                        <input type="hidden" name="exercise_id" value="<?= $exercise['exercise_id'] ?>">
                         <input type="text" name="exercise_title" class="staff-input-primary staff-input-long"
                             value="<?= $exercise['title'] ?>">
                         <div class="edit-workout-input-reps-sets">
@@ -147,3 +98,4 @@ auth_required_guard_with_role("wnmp", "/staff/login");
 </main>
 
 <?php require_once "../../../includes/footer.php"; ?>
+

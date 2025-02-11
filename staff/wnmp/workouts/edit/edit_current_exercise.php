@@ -19,7 +19,7 @@ $current_workout_id = $_SESSION['workout']['id'];
 $current_exercise_id = htmlspecialchars($_POST['exercise_id']);
 
 
-foreach ($workout['exercise'] as $key => $exercise) {
+foreach ($workout->exercises as $key => $exercise) {
     if ($exercise['id'] == $current_exercise_id) {
         $workout['exercise'][$key]['title'] = htmlspecialchars($_POST['exercise_title']);
         $workout['exercise'][$key]['reps'] = htmlspecialchars($_POST['exercise_reps']);

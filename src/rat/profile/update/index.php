@@ -32,7 +32,7 @@ $avatar = $user->avatar ? "/uploads/" . $user->avatar : null;
 
 <main class="auth" style="padding-top: 0;">
     <div class="content">
-        <form class="form" action="update_process.php" method="post" enctype="multipart/form-data">
+        <form class="form" action="update_basic_info_process.php" method="post" enctype="multipart/form-data">
             <div class="avatar-input-wrapper">
                 <label title="Add avatar" class="avatar">
                     <input type="file" name="avatar" id="avatarInput" accept="image/*">
@@ -40,6 +40,7 @@ $avatar = $user->avatar ? "/uploads/" . $user->avatar : null;
                         <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
                     </svg>
                     <img class="preview" src="" alt="Avatar preview">
+                    <input type="hidden" name="updated_avatar" value="<?= $user->avatar ?>">
                 </label>
                 <button class="clear-avatar-button">Clear Avatar</button>
             </div>
@@ -55,22 +56,22 @@ $avatar = $user->avatar ? "/uploads/" . $user->avatar : null;
                 <label for="fname">Contact no.</label>
                 <input required class="input" type="tel" pattern="\d{10}" placeholder="<?= $user->phone ?>" name="phone" value="<?= $user->phone ?>">
             </div>
-            <div class="password-update">
-                <h4>Update password</h4>
-                <label for="current_password" class="password-field">
-                    <input type="password" name="current_password" placeholder="Current Password">
-                </label>
-                <label for="password" class="password-field">
-                    <input type="password" name="password" placeholder="New Password" minlength="6">
-                </label>
-                <label for="cpassword" class="password-field">
-                    <input type="password" name="cpassword" placeholder="Confirm New Password" minlength="6">
-                </label>
-            </div>
             <button class="btn">Save</button>
-            <a href="../update-initial-data" class="btn outlined">Update initial data</a>
         </form>
-
+        <form action="update_password_process.php" method="post" class="form" style="margin-top: 40px;">
+            <h4>Update Password</h4>
+            <label for="current_password" class="password-field">
+                <input type="password" name="current_password" placeholder="Current Password" required minlength="6">
+            </label>
+            <label for="password" class="password-field">
+                <input type="password" name="password" placeholder="New Password" required minlength="6">
+            </label>
+            <label for="cpassword" class="password-field">
+                <input type="password" name="cpassword" placeholder="Confirm New Password" required minlength="6">
+            </label>
+            <button class="btn">Update</button>
+        </form>
+        <a href="../update-initial-data" class="btn outlined" style="margin-top: 40px;width: 100%;">Update initial data</a>
     </div>
 </main>
 
@@ -82,12 +83,18 @@ $avatar = $user->avatar ? "/uploads/" . $user->avatar : null;
     const clearAvatarButton = document.querySelector(".clear-avatar-button");
     const avatarPreview = document.querySelector(".avatar .preview");
     const avatarIcon = document.querySelector(".avatar .icon");
+    const avatarInputHidden = document.querySelector("input[name=updated_avatar]");
+
 
     if (avatar) {
         avatarPreview.src = avatar;
         avatarIcon.style.display = "none";
         avatarPreview.style.display = "block";
         clearAvatarButton.style.display = "block";
+    } else {
+        avatarIcon.style.display = "block";
+        avatarPreview.style.display = "none";
+        clearAvatarButton.style.display = "none";
     }
 
     avatarInput.addEventListener("change", (e) => {
@@ -97,6 +104,7 @@ $avatar = $user->avatar ? "/uploads/" . $user->avatar : null;
             avatarIcon.style.display = "block";
             avatarPreview.style.display = "none";
             clearAvatarButton.style.display = "none";
+            avatarInputHidden.value = "";
             return;
         }
         const reader = new FileReader();
@@ -105,6 +113,7 @@ $avatar = $user->avatar ? "/uploads/" . $user->avatar : null;
             avatarIcon.style.display = "none";
             avatarPreview.style.display = "block";
             clearAvatarButton.style.display = "block";
+            avatarInputHidden.value = file.name;
         }
         reader.readAsDataURL(file);
     });
@@ -116,6 +125,7 @@ $avatar = $user->avatar ? "/uploads/" . $user->avatar : null;
         avatarIcon.style.display = "block";
         avatarPreview.style.display = "none";
         clearAvatarButton.style.display = "none";
+        avatarInputHidden.value = "";
     });
 </script>
 

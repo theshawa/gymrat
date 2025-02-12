@@ -27,9 +27,9 @@ function move_from_temp(string $file): bool
     return rename($temp_file, $target_file);
 }
 
-function delete_file(string $folder, string $file): bool
+function delete_file(string $file_name): bool
 {
-    $file = __DIR__ . "/uploads/$folder/" . basename($file);
+    $file = __DIR__ . "/uploads/$file_name";
     if (file_exists($file)) {
         return unlink($file);
     }

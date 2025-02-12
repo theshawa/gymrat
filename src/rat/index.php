@@ -24,7 +24,7 @@ if (isset($_SESSION['auth'])) {
 require_once "./includes/titlebar.php";
 
 $workoutSession =  null;
-if ($_SESSION['workout_session']) {
+if (isset($_SESSION['workout_session'])) {
     require_once "../db/models/WorkoutSession.php";
     $workoutSession = new WorkoutSession();
     $workoutSession->fill([

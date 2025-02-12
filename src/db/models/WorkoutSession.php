@@ -17,8 +17,8 @@ class WorkoutSession extends Model
         $this->id = $data['id'] ?? 0;
         $this->user = $data['user'] ?? 0;
         $this->workout = $data['workout'] ?? 0;
-        $this->started_at = new DateTime($data['started_at'] ?? null);
-        $this->ended_at = $data['ended_at'] ? new DateTime($data['ended_at']) : null;
+        $this->started_at = new DateTime($data['started_at'] ?? '');
+        $this->ended_at = isset($data['ended_at']) ? new DateTime($data['ended_at']) : null;
     }
 
     public function create()

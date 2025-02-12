@@ -34,8 +34,8 @@ class Workout extends Model
         $this->name = $data['name'] ?? "";
         $this->description = $data['description'] ?? "";
         $this->duration = $data['duration'] ?? 0;
-        $this->created_at = new DateTime($data['created_at'] ?? null);
-        $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? null);
+        $this->created_at = new DateTime($data['created_at'] ?? '');
+        $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
         $this->exercises = $data['exercises'] ?? [];
     }
 

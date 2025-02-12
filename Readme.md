@@ -1,24 +1,4 @@
-# TODO
-
-## Theshawa:
-
-/progress/bmi [UI: Done]
-/progress/logs [UI: Done]
-
-/login [Backend: Done]
-/login QR code scan [Backend]
-
-/workout [UI]
-/workout active [UI]
-/exercise [UI]
-
-/profile [UI: Done]
-
-## Ravindu
-
-## Roneth
-
-## Jayathu
+# Logins
 
 RATS:
 emily.carter@example.com
@@ -33,4 +13,18 @@ eq@example.com
 wnmp@example.com
 
 Password for All Users:
-123456
+`123456`
+
+# Database
+
+Hostname: `gymrat.cfmusmw4055v.eu-north-1.rds.amazonaws.com`
+
+Username: `admin`
+
+Database Name: `gymrat`
+
+Password: `gymratisawesome`
+
+# To start server
+
+`docker-compose up -d`

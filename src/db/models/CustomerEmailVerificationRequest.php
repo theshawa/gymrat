@@ -20,7 +20,7 @@ class CustomerEmailVerificationRequest extends Model
     {
         $this->email = $data['email'] ?? "";
         $this->code = $data['code'] ?? "";
-        $this->created_at = new DateTime($data['created_at'] ?? null);
+        $this->created_at = new DateTime($data['created_at'] ?? '');
         $this->creation_attempt = $data['creation_attempt'] ?? 1;
     }
 

@@ -19,7 +19,7 @@ class Complaint extends Model
         $this->type = $data['type'] ?? "";
         $this->description = $data['description'] ?? "";
         $this->user_id = $data['user_id'] ?? 0;
-        $this->created_at = new DateTime($data['created_at'] ?? null);
+        $this->created_at = new DateTime($data['created_at'] ?? '');
         $this->is_created_by_trainer = $data['is_created_by_trainer'] ?? 0;
     }
 

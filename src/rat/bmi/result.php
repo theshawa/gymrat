@@ -98,7 +98,7 @@ require_once "../includes/titlebar.php";
         <input type="hidden" name="bmi" value="<?php echo $bmi ?>">
         <input type="hidden" name="weight" value="<?php echo $weight ?>">
         <input type="hidden" name="height" value="<?php echo $height ?>">
-        <input type="hidden" name="gender" value="<?php echo $age ?>">
+        <input type="hidden" name="age" value="<?php echo $age ?>">
         <button class="btn">Save Record</button>
     </form>
     <a href="/rat/bmi/index.php" class="btn secondary">Calculate Again</a>

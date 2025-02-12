@@ -139,4 +139,31 @@ class Exercise extends Model
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['id' => $this->id]);
     }
+
+    public function get_all_titles(): array
+    {
+        $sql = "SELECT id, name FROM $this->table";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        $titles = [];
+        foreach ($items as $item) {
+            $titles[$item['id']] = $item['name'];
+        }
+        return $titles;
+    }
+
+    function addExerciseTitles(array $exercises): array
+    {
+        $exerciseModel = new Exercise();
+        $exerciseTitles = $exerciseModel->get_all_titles();
+
+        foreach ($exercises as &$exercise) {
+            if (isset($exercise['exercise_id'])) {
+                $exercise['title'] = $exerciseTitles[$exercise['exercise_id']] ?? 'Unknown Exercise';
+            }
+        }
+
+        return $exercises;
+    }
 }

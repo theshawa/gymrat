@@ -9,31 +9,25 @@ $menuBarConfig = [
         ["title" => "Create Workout", "href" => "/staff/wnmp/workouts/create/index.php", "type" => "secondary"]
     ]
 ];
+
+require_once "../../../db/models/Workout.php";
+
+require_once "../../../alerts/functions.php";
+
+$workout = [];
+$workoutModel = new Workout();
+try {
+    $workout = $workoutModel->get_all();
+} catch (Exception $e) {
+    redirect_with_error_alert("Failed to fetch workouts: " . $e->getMessage(), "/staff/wnmp");
+}
+
 $infoCardConfig = [
     "showImage" => true,
     "showExtend" => true,
     "extendTo" => "/staff/wnmp/workouts/view/index.php",
-    "cards" => [
-        [
-            "id" => 001,
-            "title" => "Strength Training",
-            "description" => "Squats, Deadlifts, Bench Press, Pull-Ups, Overhead Press, Lunges, Quads, Dumbbell Rows",
-            "image" => null
-        ],
-        [
-            "id" => 002,
-            "title" => "Cardio",
-            "description" => "Running, Cycling, Swimming, Rowing, Jump Rope, Stair Climbing, Hiking, Elliptical",
-            "image" => null
-        ],
-        [
-            "id" => 003,
-            "title" => "Flexibility",
-            "description" => "Stretching, Yoga, Pilates, Tai Chi, Foam Rolling, Dynamic Stretching, Static Stretching",
-            "image" => null
-        ]
-    ],
-    "isCardInList" => true
+    "cards" => $workout,
+    "showCreatedAt" => false
 ];
 
 

@@ -75,7 +75,7 @@ $avatar = $user->avatar ? "/uploads/" . $user->avatar : "/uploads/default-images
             <p class="content">
                 <?= $plan->name ?>
                 <?php if ($plan_expiry): ?>
-                    <span class="paragraph small">(<?= $plan_expiry ?> days remaining)</span>
+                    <span class="paragraph small">(<?= $plan_expiry ?> day<?= $plan_expiry == 1 ? "" : "s" ?> remaining)</span>
                 <?php endif; ?>
             </p>
         </div>

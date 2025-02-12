@@ -23,8 +23,8 @@ class Staff extends Model
         $this->email = $data['email'] ?? "";
         $this->password = $data['password'] ?? "";
         $this->role = $data['role'] ?? "";
-        $this->created_at = new DateTime($data['created_at'] ?? null);
-        $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? null);
+        $this->created_at = new DateTime($data['created_at'] ?? '');
+        $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
     }
 
     public function create()

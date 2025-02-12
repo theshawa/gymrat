@@ -52,7 +52,7 @@ function end_workout()
     redirect_with_success_alert("Workout ended successfully.", "../");
 }
 
-if ($_SESSION['workout_session']) {
+if (isset($_SESSION['workout_session'])) {
     end_workout();
 } else {
     start_workout();

@@ -28,8 +28,8 @@ class MembershipPlan extends Model
         $this->price = $data['price'] ?? 1;
         $this->duration = $data['duration'] ?? 1;
         $this->is_locked = $data['is_locked'] ?? 0;
-        $this->created_at = new DateTime($data['created_at'] ?? null);
-        $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? null);
+        $this->created_at = new DateTime($data['created_at'] ?? '');
+        $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
     }
 
 

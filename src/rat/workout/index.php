@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 $pageConfig = [
     "title" => "My Workout",
     "styles" => ["./workout.css"],
@@ -11,11 +14,7 @@ $pageConfig = [
     "need_auth" => true
 ];
 
-require_once "../includes/header.php";
-require_once "../includes/titlebar.php";
-
 require_once "./data.php";
-
 
 $start_command = $_GET['start'] ?? null;
 
@@ -25,7 +24,7 @@ if ($start_command) {
 }
 
 $workoutSession = null;
-if ($_SESSION['workout_session']) {
+if (isset($_SESSION['workout_session'])) {
     require_once "../../db/models/WorkoutSession.php";
     $workoutSession = new WorkoutSession();
     $workoutSession->fill([
@@ -53,6 +52,8 @@ if (count($day) === 0) {
     $day = array_values($day)[0]['exercises'];
 }
 
+require_once "../includes/header.php";
+require_once "../includes/titlebar.php";
 ?>
 
 <script>

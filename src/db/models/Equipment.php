@@ -30,10 +30,10 @@ class Equipment extends Model
         $this->manufacturer = $data['manufacturer'] ?? "";
         $this->description = $data['description'] ?? "";
         $this->image = $data['image'] ?? "";
-        $this->purchase_date = new DateTime($data['purchase_date'] ?? null);
-        $this->last_maintenance = new DateTime($data['last_maintenance'] ?? null);
-        $this->created_at = new DateTime($data['created_at'] ?? null);
-        $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? null);
+        $this->purchase_date = new DateTime($data['purchase_date'] ?? '');
+        $this->last_maintenance = new DateTime($data['last_maintenance'] ?? '');
+        $this->created_at = new DateTime($data['created_at'] ?? '');
+        $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
     }
 
 

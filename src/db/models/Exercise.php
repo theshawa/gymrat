@@ -34,8 +34,8 @@ class Exercise extends Model
         $this->difficulty_level = $data['difficulty_level'] ?? "";
         $this->type = $data['type'] ?? "";
         $this->equipment_needed = $data['equipment_needed'] ?? "";
-        $this->created_at = new DateTime($data['created_at'] ?? null);
-        $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? null);
+        $this->created_at = new DateTime($data['created_at'] ?? '');
+        $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
     }
 
     public function get_all(): array

@@ -10,7 +10,6 @@ require_once "../../auth-guards.php";
 auth_not_required_guard_with_role("trainer", "/trainer");
 
 
-
 $email = htmlspecialchars($_POST["email"]);
 $password = htmlspecialchars($_POST["password"]);
 

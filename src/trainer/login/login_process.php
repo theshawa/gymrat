@@ -9,22 +9,34 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 require_once "../../auth-guards.php";
 auth_not_required_guard_with_role("trainer", "/trainer");
 
-
-
-$email = htmlspecialchars($_POST["email"]);
+$username = htmlspecialchars($_POST["username"]);
 $password = htmlspecialchars($_POST["password"]);
 
-if ($email !== "johncena@example.com" || $password !== "123456") {
-    redirect_with_error_alert("Invalid credentials", "./");
+
+require_once "../../db/models/Trainer.php";
+$trainer = new Trainer();
+$trainer->fill(['username' => $username]);
+try {
+    $trainer->get_by_username();
+} catch (PDOException $e) {
+    redirect_with_error_alert("Failed to login user due to error: " . $e->getMessage(), "./");
+}
+
+if (!$trainer->id) {
+    redirect_with_error_alert("Invalid username or password", "./");
+}
+
+if (!password_verify($password, $trainer->password)) {
+    redirect_with_error_alert("Invalid username or password", "./");
 }
 
 $_SESSION["auth"] = [
-    'id' => 0,
-    'email' => $email,
-    'fname' => "John",
-    'lname' => "Cena",
+    'id' => $trainer->id,
+    'username' => $trainer->username,
+    'fname' => $trainer->fname,
+    'lname' => $trainer->lname,
+    'bio' => $trainer->bio,
     'session_started_at' => time(),
-    'activated' => false,
     'role' => "trainer"
 ];
 

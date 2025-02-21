@@ -21,15 +21,15 @@ require_once __DIR__ . "/../../auth-guards.php";
 if (!is_null($need_auth)) {
     if (!is_null($dont_need_active_subscription)) {
         if ($need_auth) {
-            auth_required_guard("/rat/login", false);
+            auth_required_guard_with_role("rat", "/rat/login", false);
         } else {
-            auth_not_required_guard("/rat");
+            auth_not_required_guard("rat", "/rat", true);
         }
     } else {
         if ($need_auth) {
-            auth_required_guard("/rat/login");
+            auth_required_guard_with_role("rat", "/rat/login");
         } else {
-            auth_not_required_guard("/rat");
+            auth_not_required_guard_with_role("rat", "/rat");
         }
     }
 }

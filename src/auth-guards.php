@@ -28,7 +28,7 @@ function is_auth_valid($check_activated = true): bool
     return true;
 }
 
-function is_auth_valid_with_role(string $role): bool
+function is_auth_valid_with_role(string $role, bool $check_activated = false): bool
 {
     if (!isset($_SESSION['auth'])) {
         return false;
@@ -44,6 +44,10 @@ function is_auth_valid_with_role(string $role): bool
     }
 
     if (!isset($_SESSION['auth']['role']) || $_SESSION['auth']['role'] !== $role) {
+        return false;
+    }
+
+    if ($check_activated && isset($_SESSION['auth']['activated']) && $_SESSION['auth']['activated'] === false) {
         return false;
     }
 
@@ -64,16 +68,16 @@ function auth_not_required_guard(string $redirect, $check_activated = true)
     }
 }
 
-function auth_required_guard_with_role(string $role, string $redirect)
+function auth_required_guard_with_role(string $role, string $redirect, $check_activated = false)
 {
-    if (!is_auth_valid_with_role($role)) {
+    if (!is_auth_valid_with_role($role, $check_activated)) {
         redirect_with_error_alert("You need to login first", $redirect);
     }
 }
 
-function auth_not_required_guard_with_role(string $role, string $redirect)
+function auth_not_required_guard_with_role(string $role, string $redirect, $check_activated = false)
 {
-    if (is_auth_valid_with_role($role)) {
+    if (is_auth_valid_with_role($role, $check_activated)) {
         redirect_with_error_alert("You are already logged in", $redirect);
     }
 }

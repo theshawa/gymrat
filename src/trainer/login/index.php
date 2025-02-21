@@ -15,7 +15,7 @@ require_once "../includes/header.php";
         <img src="/rat/assets/logo-gray.svg" alt="Logo">
         <h1 class="alt">Welcome!</h1>
         <form class="form" action="login_process.php" method="post">
-            <input required class="input" type="email" placeholder="Email" name="email">
+            <input required class="input" type="text" placeholder="Username" name="username">
             <label for="password" class="password-field">
                 <input required type="password" name="password" placeholder="Password">
             </label>

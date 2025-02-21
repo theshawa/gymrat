@@ -9,33 +9,44 @@ $pageConfig = [
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";
 
-$user = $_SESSION['auth'];
+require_once "../../db/models/Trainer.php";
 
-$avatar = "./avatar.webp";
+$trainer = new Trainer();
+$trainer->fill([
+    "id" => $_SESSION['auth']['id']
+]);
 
+try {
+    $trainer->get_by_id();
+} catch (PDOException $e) {
+    redirect_with_error_alert("Failed to get trainer data: " . $e->getMessage(), "./");
+}
+
+$avatar = $trainer->avatar ? "/uploads/" . $trainer->avatar : "/uploads/default-images/default-avatar.png";
+
+// Include the alert view
+require_once "../../alerts/view.php";
 ?>
 
 <main>
-    <img src="<?= $avatar ?>" alt="" class="avatar">
-    <h1>John Cena</h1>
-    <div class="lines">
-        <div class="line">
-            <span class="title">Email</span>
-            <a href="mailto:<?= $user['email'] ?>" class="content"><?= $user['email'] ?></a>
+    <div class="profile-content">
+        <img src="<?= $avatar ?>" alt="" class="profile-avatar">
+
+        <h1><?= $trainer->fname ?> <?= $trainer->lname ?></h1>
+
+        <p>@<?= $trainer->username ?></p>
+        <p class="profile-bio"><?= $trainer->bio ?></p>
+
+        <div class="rating-section">
+            <span class="rating-number"><?= $trainer->rating ?></span>
+            <div class="rating-stars">
+                ★★★★★
+            </div>
+            <span class="review-count">Out of <?= $trainer->review_count ?> Reviews</span>
         </div>
-        <div class="line">
-            <span class="title">Phone</span>
-            <a href="tel: +94766743755" class="content">+94766743755</a>
-        </div>
-        <div class="line">
-            <span class="title">Joined at</span>
-            <p class="content"><?= (new DateTime("2/2/2024"))->format("M d, Y") ?></p>
-        </div>
-        <div class="line">
-            <span class="title">Last updated at</span>
-            <p class="content"><?= (new DateTime("2/2/2024"))->format("M d, Y") ?></p>
-        </div>
-        <a href="../logout.php" class="btn secondary">Logout</a>
+
+        <a href="edit.php" class="btn btn-edit">EDIT PROFILE</a>
+        <a href="../logout.php" class="btn btn-logout">LOGOUT</a>
     </div>
 </main>
 

@@ -18,7 +18,6 @@ $current_exercise_id = htmlspecialchars($_POST['exercise_id']);
 $current_workout_id = $_SESSION['workout_id'];
 
 foreach ($workout->exercises as $key => $exercise) {
-    var_dump($exercise['id']);
     if ($exercise['id'] == $current_exercise_id) {
         $workout->exercises[$key]['isDeleted'] = true;
     }

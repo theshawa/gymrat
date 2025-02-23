@@ -96,6 +96,25 @@ class Workout extends Model
             'description' => $this->description,
             'duration' => $this->duration,
         ]);
+
+        if (!empty($this->exercises)) {
+            foreach ($this->exercises as $exercise) {
+                if ($exercise['isUpdated']) {
+                    $sql = "UPDATE workout_exercises SET exercise_id=:exercise_id, sets=:sets, reps=:reps WHERE id=:id";
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->execute([
+                        'id' => $exercise['id'],
+                        'exercise_id' => $exercise['exercise_id'],
+                        'sets' => $exercise['sets'],
+                        'reps' => $exercise['reps'],
+                    ]);
+                } elseif ($exercise['isDeleted']) {
+                    $sql = "DELETE FROM workout_exercises WHERE id=:id";
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->execute(['id' => $exercise['id']]);
+                }
+            }
+        }
     }
 
     public function save()

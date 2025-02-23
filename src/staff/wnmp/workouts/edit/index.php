@@ -68,28 +68,30 @@ auth_required_guard_with_role("wnmp", "/staff/login");
             <div style="padding: 5px 10px;">
                 <h2>Exercise</h2>
                 <?php foreach ($workout->exercises as $exercise): ?>
-                    <form action="edit_current_exercise.php" method="POST" class="edit-workout-row">
-                        <input type="hidden" name="exercise_id" value="<?= $exercise['exercise_id'] ?>">
-                        <input type="text" name="exercise_title" class="staff-input-primary staff-input-long"
-                            value="<?= $exercise['title'] ?>">
-                        <div class="edit-workout-input-reps-sets">
-                            <label for="exercise_reps">Reps</label>
-                            <input type="text" name="exercise_reps"
-                                value="<?= $exercise['reps'] ?>" class="staff-input-primary staff-input-short">
-                        </div>
-                        <div class="edit-workout-input-reps-sets">
-                            <label for="exercise_sets">Sets</label>
-                            <input type="text" name="exercise_sets"
-                                value="<?= $exercise['sets'] ?>" class="staff-input-primary staff-input-short">
-                        </div>
-                        <button type="submit" class="staff-btn-outline edit-workout-input-update">
-                            Update
-                        </button>
-                        <button type="submit" class="staff-btn-outline edit-workout-input-delete"
-                            formaction="delete_current_exercise.php">
-                            Delete
-                        </button>
-                    </form>
+                    <?php if (!$exercise['isDeleted']): ?>
+                        <form action="edit_current_exercise.php" method="POST" class="edit-workout-row">
+                            <input type="hidden" name="exercise_id" value="<?= $exercise['exercise_id'] ?>">
+                            <input type="text" name="exercise_title" class="staff-input-primary staff-input-long"
+                                value="<?= $exercise['title'] ?>">
+                            <div class="edit-workout-input-reps-sets">
+                                <label for="exercise_sets">Sets</label>
+                                <input type="text" name="exercise_sets"
+                                    value="<?= $exercise['sets'] ?>" class="staff-input-primary staff-input-short">
+                            </div>
+                            <div class="edit-workout-input-reps-sets">
+                                <label for="exercise_reps">Reps</label>
+                                <input type="text" name="exercise_reps"
+                                    value="<?= $exercise['reps'] ?>" class="staff-input-primary staff-input-short">
+                            </div>
+                            <button type="submit" class="staff-btn-outline edit-workout-input-update">
+                                Update
+                            </button>
+                            <button type="submit" class="staff-btn-outline edit-workout-input-delete"
+                                formaction="delete_current_exercise.php">
+                                Delete
+                            </button>
+                        </form>
+                    <?php endif; ?>
                 <?php endforeach; ?>
                 <form action="add_exercise.php" method="POST">
                     <button type="submit" class="staff-btn-secondary-black edit-workout-add-exercise">

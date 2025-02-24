@@ -11,8 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 require_once "../../auth-guards.php";
 auth_required_guard("/rat/login", false);
 
-// TODO: Save initial data to database
-
 // update user onboarded status
 require_once "../../db/models/Customer.php";
 

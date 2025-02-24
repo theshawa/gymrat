@@ -48,6 +48,40 @@ if (!$user->membership_plan) {
     exit;
 }
 
+require_once "../../db/models/MembershipPlan.php";
+
+$membership_plan = new MembershipPlan();
+try {
+    $membership_plan->fill([
+        "id" => $user->membership_plan
+    ]);
+    $membership_plan->get_by_id();
+} catch (\Throwable $th) {
+    redirect_with_error_alert("Failed to get membership plan due to error: " . $th->getMessage(), "./");
+}
+
+if (!$membership_plan->duration) {
+    header("Location: ./no-subscription");
+    exit;
+}
+
+$plan_expiry_date = $user->membership_plan_activated_at->add(new DateInterval("P" . $membership_plan->duration . "D"));
+$now = new DateTime();
+
+if ($plan_expiry_date < $now) {
+    $user->membership_plan = 0;
+    $user->membership_plan_activated_at = null;
+
+    try {
+        $user->update();
+    } catch (PDOException $th) {
+        redirect_with_error_alert("Failed to update user due to error: " . $th->getMessage(), "./");
+    }
+
+    header("Location: ./no-subscription");
+    exit;
+}
+
 if (!$user->onboarded) {
     header("Location: /rat/onboarding/facts");
     exit;

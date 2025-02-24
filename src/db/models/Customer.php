@@ -31,7 +31,7 @@ class Customer extends Model
         $this->created_at = new DateTime($data['created_at'] ?? '');
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
-        $this->membership_plan_activated_at = array_key_exists('membership_plan_activated_at', $data) ?  new DateTime($data['membership_plan_activated_at']) : null;
+        $this->membership_plan_activated_at = (array_key_exists('membership_plan_activated_at', $data)  && $data['membership_plan_activated_at']) ?  new DateTime($data['membership_plan_activated_at']) : null;
         $this->onboarded = $data['onboarded'] ?? 0;
         $this->membership_plan = $data['membership_plan'] ?? 0;
     }

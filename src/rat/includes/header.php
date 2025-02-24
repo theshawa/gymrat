@@ -12,26 +12,16 @@ $dont_need_active_subscription = null;
 if (isset($pageConfig)) {
     $pageTitle = $pageConfig['title'] ?? null;
     $pageStyles = $pageConfig['styles'] ?? [];
-    $need_auth = $pageConfig['need_auth'] ?? null;
-    $dont_need_active_subscription = $pageConfig['dont_need_active_subscription'] ?? null;
+    $need_auth = $pageConfig['need_auth'] ?? false;
+    $dont_need_active_subscription = $pageConfig['dont_need_active_subscription'] ?? false;
 }
 
 require_once __DIR__ . "/../../auth-guards.php";
 
-if (!is_null($need_auth)) {
-    if (!is_null($dont_need_active_subscription)) {
-        if ($need_auth) {
-            auth_required_guard_with_role("rat", "/rat/login", false);
-        } else {
-            auth_not_required_guard("rat", "/rat", true);
-        }
-    } else {
-        if ($need_auth) {
-            auth_required_guard_with_role("rat", "/rat/login");
-        } else {
-            auth_not_required_guard_with_role("rat", "/rat");
-        }
-    }
+if ($need_auth) {
+    auth_required_guard_with_role("rat", "/rat/login", !$dont_need_active_subscription);
+} else {
+    auth_not_required_guard_with_role("rat", "/rat", !$dont_need_active_subscription);
 }
 
 ?>

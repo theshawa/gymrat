@@ -22,6 +22,7 @@ function is_auth_valid($check_activated = true): bool
     }
 
     if ($check_activated && isset($_SESSION['auth']['activated']) && $_SESSION['auth']['activated'] === false) {
+        unset($_SESSION['auth']);
         return false;
     }
 

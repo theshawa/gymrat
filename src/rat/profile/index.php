@@ -38,7 +38,7 @@ $plan_expiry = null;
 if ($user->membership_plan_activated_at) {
     $plan_expiry_date = $user->membership_plan_activated_at->add(new DateInterval("P" . $plan->duration . "D"));
     $now = new DateTime();
-    $diff = $now->diff($plan_expiry_date);
+    $diff = $plan_expiry_date->diff($now);
     $plan_expiry = $diff->days;
 }
 

@@ -4,8 +4,6 @@ session_start();
 
 require_once "../../../../alerts/functions.php";
 
-$id = htmlspecialchars($_GET['id'] ?? null);
-
 if (!isset($_SESSION['workout'])) {
     $_SESSION['workout'] = [
         "id" => 000,

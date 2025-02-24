@@ -47,34 +47,46 @@ class WorkoutExercise extends Model
 
     public function save()
     {
-        // This function doesnt save the object if isUpdated is not true
-        // Make sure to have id as -1 if it is a new record that is to be inserted
-        // Else it will update an existing record
         if ($this->isDeleted) {
-            $sql = "DELETE FROM $this->table WHERE id=:id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['id' => $this->id]);
+            $this->delete();
         } elseif ($this->isUpdated) {
-            if ($this->id < 0) {
-                $sql = "INSERT INTO $this->table (workout_id, exercise_id, sets, reps) VALUES (:workout_id, :exercise_id, :sets, :reps)";
-                $stmt = $this->conn->prepare($sql);
-                $stmt->execute([
-                    'workout_id' => $this->workout_id,
-                    'exercise_id' => $this->exercise_id,
-                    'sets' => $this->sets,
-                    'reps' => $this->reps,
-                ]);
-                $this->id = $this->conn->lastInsertId();
+            if ($this->id == 0) {
+                $this->create();
             } else {
-                $sql = "UPDATE $this->table SET exercise_id=:exercise_id, sets=:sets, reps=:reps WHERE id=:id";
-                $stmt = $this->conn->prepare($sql);
-                $stmt->execute([
-                    'id' => $this->id,
-                    'exercise_id' => $this->exercise_id,
-                    'sets' => $this->sets,
-                    'reps' => $this->reps,
-                ]);
+                $this->update();
             }
-        } 
+        }
+    }
+
+    private function create()
+    {
+        $sql = "INSERT INTO $this->table (workout_id, exercise_id, sets, reps) VALUES (:workout_id, :exercise_id, :sets, :reps)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'workout_id' => $this->workout_id,
+            'exercise_id' => $this->exercise_id,
+            'sets' => $this->sets,
+            'reps' => $this->reps,
+        ]);
+        $this->id = $this->conn->lastInsertId();
+    }
+
+    private function update()
+    {
+        $sql = "UPDATE $this->table SET exercise_id=:exercise_id, sets=:sets, reps=:reps WHERE id=:id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'id' => $this->id,
+            'exercise_id' => $this->exercise_id,
+            'sets' => $this->sets,
+            'reps' => $this->reps,
+        ]);
+    }
+
+    private function delete()
+    {
+        $sql = "DELETE FROM $this->table WHERE id=:id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
     }
 }

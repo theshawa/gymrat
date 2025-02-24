@@ -18,7 +18,7 @@ $current_workout_id = $_SESSION['workout_id'];
 $lastExercise = end($workout->exercises);
 
 $newExercise = [
-    "id" => -1,
+    "id" => 0,
     'workout_id' => $current_workout_id,
     "exercise_id" => 2147483647,
     "title" => "Exercise",

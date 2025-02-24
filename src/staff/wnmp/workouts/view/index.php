@@ -11,10 +11,10 @@ $exerciseModel = new Exercise();
 try {
     $workout->get_by_id($id);
     $workout->exercises = $exerciseModel->addExerciseTitles($workout->exercises);
+    $_SESSION['workout'] = serialize($workout);
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch workout: " . $e->getMessage(), "/staff/wnmp/workouts");
 }
-$_SESSION['workout'] = $workout;
 
 $sidebarActive = 3;
 $menuBarConfig = [
@@ -61,6 +61,10 @@ auth_required_guard_with_role("wnmp", "/staff/login");
                     Description
                 </h2>
                 <p><?= $workout->description ?></p>
+                <h2 style="margin-bottom: 10px; margin-top: 25px">
+                    Duration
+                </h2>
+                <p style="font-size: 18px; font-weight: 400;"><?= $workout->duration ?> Days</p>
             </div>
         </div>
     </div>

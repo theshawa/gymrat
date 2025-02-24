@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 require_once "../../auth-guards.php";
 auth_not_required_guard("/rat");
 
-
 require_once "../../db/models/Customer.php";
 
 $email = htmlspecialchars($_POST["email"]);
@@ -41,6 +40,7 @@ $_SESSION["auth"] = [
     'lname' => $user->lname,
     'session_started_at' => time(),
     'activated' => false,
+    'role' => 'rat'
 ];
 
 if (!$user->membership_plan) {

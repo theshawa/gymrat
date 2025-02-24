@@ -17,8 +17,6 @@ $user->fill([
     "id" => $_SESSION['auth']['id']
 ]);
 
-echo var_dump($_SESSION);
-
 try {
     $user->get_by_id();
 } catch (PDOException $e) {

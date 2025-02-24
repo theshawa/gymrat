@@ -70,7 +70,7 @@ auth_required_guard("wnmp", "/staff/login");
                 <?php foreach ($workout->exercises as $exercise): ?>
                     <?php if (!$exercise['isDeleted']): ?>
                         <form action="edit_current_exercise.php" method="POST" class="edit-workout-row">
-                            <input type="hidden" name="exercise_id" value="<?= $exercise['exercise_id'] ?>">
+                            <input type="hidden" name="exercise_id" value="<?= $exercise['id'] ?>">
                             <input type="text" name="exercise_title" class="staff-input-primary staff-input-long"
                                 value="<?= $exercise['title'] ?>">
                             <div class="edit-workout-input-reps-sets">

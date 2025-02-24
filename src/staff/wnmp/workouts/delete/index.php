@@ -1,67 +1,34 @@
 <?php
 
-$id = htmlspecialchars($_GET['id'] ?? null);
+session_start();
 
 require_once "../../../../alerts/functions.php";
+require_once "../../../../db/models/Workout.php";
+require_once "../../../../db/models/Exercise.php";
 
-$workout = [
-    "id" => 001,
-    "title" => "Strength Training",
-    "description" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    "exercise" => [
-        [
-            "id" => 001,
-            "title" => "Squats",
-            "sets" => 3,
-            "reps" => 10
-        ],
-        [
-            "id" => 002,
-            "title" => "Deadlifts",
-            "sets" => 3,
-            "reps" => 10
-        ],
-        [
-            "id" => 003,
-            "title" => "Bench Press",
-            "sets" => 3,
-            "reps" => 10
-        ],
-        [
-            "id" => 004,
-            "title" => "Pull-Ups",
-            "sets" => 3,
-            "reps" => 10
-        ],
-        [
-            "id" => 005,
-            "title" => "Overhead Press",
-            "sets" => 3,
-            "reps" => 10
-        ],
-        [
-            "id" => 006,
-            "title" => "Quads",
-            "sets" => 3,
-            "reps" => 10
-        ],
-        [
-            "id" => 007,
-            "title" => "Dumbbell Rows",
-            "sets" => 3,
-            "reps" => 10
-        ]
-    ],
-    "img" => null
-];
+$id = htmlspecialchars($_GET['id'] ?? null);
+$_SESSION['workout_id'] = $id;
+
+$workout = new Workout();
+if (!isset($_SESSION['workout'])) {
+    $exerciseModel = new Exercise();
+    try {
+        $workout->get_by_id($id);
+        $workout->exercises = $exerciseModel->addExerciseTitles($workout->exercises);
+    } catch (Exception $e) {
+        redirect_with_error_alert("Failed to fetch workout: " . $e->getMessage(), "/staff/wnmp/workouts");
+    }
+    $_SESSION['workout'] = serialize($workout);
+} else {
+    $workout = unserialize($_SESSION['workout']);
+}
 
 $sidebarActive = 3;
 $menuBarConfig = [
-    "title" => 'Delete ' . $workout['title'],
+    "title" => 'Delete ' . $workout->name,
     "showBack" => true,
-    "goBackTo" => "/staff/wnmp/workouts/view/index.php?id=<?= $id ?>"
+    "goBackTo" => "/staff/wnmp/workouts/view/index.php?id=" . intval($id)
 ];
-
 
 require_once "../../pageconfig.php";
 
@@ -76,7 +43,7 @@ require_once "../../../includes/sidebar.php";
         <?php require_once "../../../includes/menubar.php"; ?>
         <form action="delete_workout.php" method="post" class="form">
             <div class="staff-record-delete-div">
-                <h2>Are you sure you want to delete "<?= $workout["title"] ?>"?</h2>
+                <h2>Are you sure you want to delete "<?= $workout->name ?>"?</h2>
                 <p>This action cannot be undone.</p>
                 <button type="submit">Delete</button>
             </div>

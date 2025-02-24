@@ -33,12 +33,12 @@ require_once "../../includes/header.php";
 require_once "../../includes/sidebar.php";
 
 require_once "../../../auth-guards.php";
-auth_required_guard_with_role("admin", "/staff/login");
+auth_required_guard("admin", "/staff/login");
 ?>
 
 <main>
     <div class="staff-base-container">
-<!--        SORT BY DATE AND IS ACKNOWLEDGED-->
+        <!--        SORT BY DATE AND IS ACKNOWLEDGED-->
         <?php require_once "../../includes/menubar.php"; ?>
         <div>
             <?php require_once "../../includes/infocard.php"; ?>

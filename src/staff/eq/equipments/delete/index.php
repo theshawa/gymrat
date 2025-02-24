@@ -22,7 +22,7 @@ require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
 
 require_once "../../../../auth-guards.php";
-auth_required_guard_with_role("eq", "/staff/login");
+auth_required_guard("eq", "/staff/login");
 ?>
 
 <main>

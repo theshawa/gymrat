@@ -28,7 +28,7 @@ require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
 
 require_once "../../../../auth-guards.php";
-auth_required_guard_with_role("admin", "/staff/login");
+auth_required_guard("admin", "/staff/login");
 ?>
 
 <main>
@@ -39,7 +39,7 @@ auth_required_guard_with_role("admin", "/staff/login");
                 <h2 style="margin-bottom: 10px;">
                     Description
                 </h2>
-                <p><?= $complaint->description?></p>
+                <p><?= $complaint->description ?></p>
             </div>
         </div>
     </div>

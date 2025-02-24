@@ -43,7 +43,7 @@ require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
 
 require_once "../../../../auth-guards.php";
-auth_required_guard_with_role("wnmp", "/staff/login");
+auth_required_guard("wnmp", "/staff/login");
 ?>
 
 <main>
@@ -62,7 +62,7 @@ auth_required_guard_with_role("wnmp", "/staff/login");
                         placeholder="Enter a workout description"><?= $workout->description ?></textarea>
                     <h2><label for="edit-duration">Duration</label></h2>
                     <input type="text" id="edit-duration" name="workout_duration"
-                           class="staff-input-primary staff-input-long" value="<?= $workout->duration ?>">
+                        class="staff-input-primary staff-input-long" value="<?= $workout->duration ?>">
                 </div>
             </form>
             <div style="padding: 5px 10px;">
@@ -104,4 +104,3 @@ auth_required_guard_with_role("wnmp", "/staff/login");
 </main>
 
 <?php require_once "../../../includes/footer.php"; ?>
-

@@ -44,7 +44,7 @@ require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
 
 require_once "../../../../auth-guards.php";
-auth_required_guard_with_role("wnmp", "/staff/login");
+auth_required_guard("wnmp", "/staff/login");
 ?>
 
 <main>
@@ -53,7 +53,8 @@ auth_required_guard_with_role("wnmp", "/staff/login");
             <form action="create_workout.php" method="POST">
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
-<!--                    --><?php //require_once "../../../includes/alert.php"; ?>
+                    <!--                    --><?php //require_once "../../../includes/alert.php"; 
+                                                ?>
                     <h2><label for="edit-title">Title</label></h2>
                     <input type="text" id="edit-title" name="exercise_title"
                         class="staff-input-primary staff-input-long" value="<?= $workout['title'] ?>">

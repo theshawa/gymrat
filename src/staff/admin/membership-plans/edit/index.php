@@ -19,7 +19,7 @@ require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
 
 require_once "../../../../auth-guards.php";
-auth_required_guard_with_role("admin", "/staff/login");
+auth_required_guard("admin", "/staff/login");
 
 require_once "../../../../db/models/MembershipPlan.php";
 
@@ -41,13 +41,16 @@ try {
 
 <main>
     <div class="staff-base-container">
-<!--        <h1>Edit Membership Plan: --><?php //= $membershipPlan->name ?><!--</h1>-->
-<!--        --><?php //if ($membershipPlan->is_locked): ?>
-<!--            <p class="paragraph">-->
-<!--                This plan is locked. New customers will not be able to see the changes you make.-->
-<!--            </p>-->
-<!--        --><?php //endif; ?>
-<!--        <form action="edit_process.php" method="post" class="form">-->
+        <!--        <h1>Edit Membership Plan: --><?php //= $membershipPlan->name 
+                                                    ?><!--</h1>-->
+        <!--        --><?php //if ($membershipPlan->is_locked): 
+                        ?>
+        <!--            <p class="paragraph">-->
+        <!--                This plan is locked. New customers will not be able to see the changes you make.-->
+        <!--            </p>-->
+        <!--        --><?php //endif; 
+                        ?>
+        <!--        <form action="edit_process.php" method="post" class="form">-->
         <form action="edit_process.php" method="post" class="form alt">
             <?php require_once "../../../includes/menubar.php"; ?>
             <h1>Edit Membership Plan: <?= $membershipPlan->name ?></h1>
@@ -69,12 +72,17 @@ try {
                 <input value="<?= $membershipPlan->duration ?>" type="number" min="1" class="staff-input-primary staff-input-long" placeholder="Duration in days" required name="duration" id="duration">
             </div>
             <input type="hidden" name="id" value="<?= $membershipPlan->id ?>">
-<!--            <input value="--><?php //= $membershipPlan->name ?><!--" type="text" class="input" placeholder="Name" required name="name" id="name">-->
-<!--            <textarea class="input" placeholder="Description" required name="description" id="description">--><?php //= $membershipPlan->description ?><!--</textarea>-->
-<!--            <input value="--><?php //= $membershipPlan->price ?><!--" type="number" min="1" class="input" placeholder="Price" required name="price" id="price">-->
-<!--            <input value="--><?php //= $membershipPlan->duration ?><!--" type="number" min="1" class="input" placeholder="Duration in days" required name="duration" id="duration">-->
-<!--            <input type="hidden" name="id" value="--><?php //= $membershipPlan->id ?><!--">-->
-<!--            <button class="btn">Save</button>-->
+            <!--            <input value="--><?php //= $membershipPlan->name 
+                                                ?><!--" type="text" class="input" placeholder="Name" required name="name" id="name">-->
+            <!--            <textarea class="input" placeholder="Description" required name="description" id="description">--><?php //= $membershipPlan->description 
+                                                                                                                                ?><!--</textarea>-->
+            <!--            <input value="--><?php //= $membershipPlan->price 
+                                                ?><!--" type="number" min="1" class="input" placeholder="Price" required name="price" id="price">-->
+            <!--            <input value="--><?php //= $membershipPlan->duration 
+                                                ?><!--" type="number" min="1" class="input" placeholder="Duration in days" required name="duration" id="duration">-->
+            <!--            <input type="hidden" name="id" value="--><?php //= $membershipPlan->id 
+                                                                        ?><!--">-->
+            <!--            <button class="btn">Save</button>-->
         </form>
     </div>
 </main>

@@ -34,7 +34,7 @@ require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
 
 require_once "../../../../auth-guards.php";
-auth_required_guard_with_role("wnmp", "/staff/login");
+auth_required_guard("wnmp", "/staff/login");
 ?>
 
 <main>
@@ -46,31 +46,31 @@ auth_required_guard_with_role("wnmp", "/staff/login");
                     <h2>
                         Description
                     </h2>
-                    <p><?= $exercise->description?></p>
+                    <p><?= $exercise->description ?></p>
                 </div>
                 <div class="view-exercise-details">
                     <h2>
                         Type
                     </h2>
-                    <p><?= $exercise->type?></p>
+                    <p><?= $exercise->type ?></p>
                 </div>
                 <div class="view-exercise-details">
                     <h2>
                         Muscle Groups
                     </h2>
-                    <p><?= $exercise->muscle_group?></p>
+                    <p><?= $exercise->muscle_group ?></p>
                 </div>
                 <div class="view-exercise-details">
                     <h2>
                         Difficulty Level
                     </h2>
-                    <p><?= $exercise->difficulty_level?></p>
+                    <p><?= $exercise->difficulty_level ?></p>
                 </div>
                 <div class="view-exercise-details">
                     <h2>
                         Equipment Needed
                     </h2>
-                    <p><?= $exercise->equipment_needed?></p>
+                    <p><?= $exercise->equipment_needed ?></p>
                 </div>
             </div>
             <div>
@@ -79,9 +79,9 @@ auth_required_guard_with_role("wnmp", "/staff/login");
                 </h2>
                 <?php if ($exercise->video_link): ?>
                     <iframe src="<?= $exercise->video_link ?>"
-                            class="exercise-video-iframe"
-                            allow="autoplay"
-                            frameborder="0">
+                        class="exercise-video-iframe"
+                        allow="autoplay"
+                        frameborder="0">
                     </iframe>
                 <?php else: ?>
                     <p>No video tutorial available</p>

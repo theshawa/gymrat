@@ -14,7 +14,7 @@ require_once "../../includes/header.php";
 require_once "../../includes/sidebar.php";
 
 require_once "../../../auth-guards.php";
-auth_required_guard_with_role("admin", "/staff/login");
+auth_required_guard("admin", "/staff/login");
 ?>
 
 <main>
@@ -51,7 +51,7 @@ auth_required_guard_with_role("admin", "/staff/login");
                 <div class="overview-small-box" style="padding: 20px; display: flex; flex-direction: column; align-items: center">
                     <h1>Income Growth Analysis</h1>
                     <svg class='container' width="529px" height="286px" viewBox="30 27 529 286" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<!--https://codepen.io/Lunnaris/pen/vKWvQN-->
+                        <!--https://codepen.io/Lunnaris/pen/vKWvQN-->
                         <g id="graph-copy" stroke="#52525b" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(30.000000, 27.000000)">
                             <g id="y_axis" font-size="11.0833333" font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" fill="#FFFFFF" opacity="0.4" font-weight="normal">
                                 <text id="0">

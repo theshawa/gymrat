@@ -18,7 +18,7 @@ if (!is_null($need_auth)) {
     if ($need_auth) {
         auth_required_guard("trainer", "/trainer/login");
     } else {
-        auth_not_required_guard_with_role("trainer", "/trainer");
+        auth_not_required_guard("trainer", "/trainer");
     }
 }
 

@@ -6,9 +6,6 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirect_with_error_alert("Method not allowed", "./");
 }
 
-require_once "../../auth-guards.php";
-auth_not_required_guard_with_role("trainer", "/trainer");
-
 $username = htmlspecialchars($_POST["username"]);
 $password = htmlspecialchars($_POST["password"]);
 

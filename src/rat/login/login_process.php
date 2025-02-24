@@ -1,13 +1,11 @@
 <?php
 
+session_start();
 
 require_once "../../alerts/functions.php";
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirect_with_error_alert("Method not allowed", "/rat/login");
 }
-
-require_once "../../auth-guards.php";
-auth_not_required_guard("/rat");
 
 require_once "../../db/models/Customer.php";
 
@@ -33,15 +31,7 @@ if (!password_verify($password, $user->password)) {
     redirect_with_error_alert("Invalid email or password", "/rat/login");
 }
 
-$_SESSION["auth"] = [
-    'id' => $user->id,
-    'email' => $user->email,
-    'fname' => $user->fname,
-    'lname' => $user->lname,
-    'session_started_at' => time(),
-    'activated' => false,
-    'role' => 'rat'
-];
+$_SESSION['subscribing'] = $user->id;
 
 if (!$user->membership_plan) {
     header("Location: ./no-subscription");
@@ -69,7 +59,6 @@ $plan_expiry_date = $user->membership_plan_activated_at;
 $plan_expiry_date->add(new DateInterval("P" . $membership_plan->duration . "D"));
 $now = new DateTime();
 
-
 if ($plan_expiry_date < $now) {
     $user->membership_plan = 0;
     $user->membership_plan_activated_at = null;
@@ -84,11 +73,20 @@ if ($plan_expiry_date < $now) {
     exit;
 }
 
+unset($_SESSION['subscribing']);
+
+$_SESSION["auth"] = [
+    'id' => $user->id,
+    'email' => $user->email,
+    'fname' => $user->fname,
+    'lname' => $user->lname,
+    'session_started_at' => time(),
+    'role' => 'rat',
+];
+
 if (!$user->onboarded) {
-    header("Location: /rat/onboarding/facts");
+    redirect_with_success_alert("Logged in successfully", "/rat/onboarding/facts");
     exit;
 }
-
-$_SESSION["auth"]["activated"] = true;
 
 redirect_with_success_alert("Logged in successfully", "/rat");

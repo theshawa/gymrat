@@ -4,8 +4,7 @@ $pageConfig = [
     "styles" => [
         "./subscription-plans.css"
     ],
-    "need_auth" => true,
-    "dont_need_active_subscription" => true
+    "need_auth" => false
 ];
 
 require_once "../includes/header.php";
@@ -13,7 +12,7 @@ require_once "../includes/titlebar.php";
 
 require_once "../../db/models/MembershipPlan.php";
 
-require_once "../../alerts/functions.php";
+
 
 $planModel = new MembershipPlan;
 

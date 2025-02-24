@@ -6,7 +6,10 @@ $pageConfig = [
     "need_auth" => true,
 ];
 
+
+
 require_once "../includes/header.php";
+
 
 ?>
 

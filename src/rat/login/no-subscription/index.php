@@ -2,8 +2,7 @@
 $pageConfig = [
     "title" => "No Active Subscription",
     "styles" => ["./no-subscription.css"],
-    "need_auth" => true,
-    "dont_need_active_subscription" => true
+    "need_auth" => false
 ];
 
 include_once "../../includes/header.php";

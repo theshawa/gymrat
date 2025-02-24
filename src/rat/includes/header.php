@@ -8,20 +8,18 @@ $pageTitle = null;
 $pageStyles = [];
 
 $need_auth = null;
-$dont_need_active_subscription = null;
 if (isset($pageConfig)) {
     $pageTitle = $pageConfig['title'] ?? null;
     $pageStyles = $pageConfig['styles'] ?? [];
     $need_auth = $pageConfig['need_auth'] ?? false;
-    $dont_need_active_subscription = $pageConfig['dont_need_active_subscription'] ?? false;
 }
 
 require_once __DIR__ . "/../../auth-guards.php";
 
 if ($need_auth) {
-    auth_required_guard_with_role("rat", "/rat/login", !$dont_need_active_subscription);
+    auth_required_guard("rat", "/rat/login");
 } else {
-    auth_not_required_guard_with_role("rat", "/rat", !$dont_need_active_subscription);
+    auth_not_required_guard("rat", "/rat");
 }
 
 ?>

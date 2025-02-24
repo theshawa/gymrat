@@ -1,4 +1,5 @@
 <?php
+
 $pageConfig = [
     "title" => "Onboarding Facts",
     "styles" => ["/rat/styles/auth.css", "./facts.css"],

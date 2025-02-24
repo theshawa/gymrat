@@ -7,9 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
     redirect_with_error_alert("Method not allowed", "./");
 }
 
-require_once "../../auth-guards.php";
-auth_required_guard("/rat/login");
-
 require_once "../../db/models/WorkoutSession.php";
 
 function start_workout()

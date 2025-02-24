@@ -1,9 +1,7 @@
 <?php
 
-require_once "../auth-guards.php";
+session_start();
 
-auth_required_guard("/rat");
-
-session_destroy();
+session_unset();
 
 header("Location: ./login");

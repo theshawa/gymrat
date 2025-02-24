@@ -48,6 +48,8 @@ class WorkoutExercise extends Model
     public function save()
     {
         // This function doesnt save the object if isUpdated is not true
+        // Make sure to have id as -1 if it is a new record that is to be inserted
+        // Else it will update an existing record
         if ($this->isDeleted) {
             $sql = "DELETE FROM $this->table WHERE id=:id";
             $stmt = $this->conn->prepare($sql);

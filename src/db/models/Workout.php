@@ -115,6 +115,23 @@ class Workout extends Model
         }
     }
 
+    
+    public function delete()
+    {
+        if (!empty($this->exercises)) {
+            foreach ($this->exercises as $exerciseData) {
+                $exercise = new WorkoutExercise($exerciseData);
+                $exercise->isDeleted = true;
+                $exercise->save();
+            }
+        }
+
+        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
+    }
+
+
     public function get_by_id(int $id = null)
     {
         $id = $id ?? $this->id;

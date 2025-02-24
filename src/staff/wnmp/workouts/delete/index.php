@@ -42,6 +42,7 @@ require_once "../../../includes/sidebar.php";
     <div class="base-container">
         <?php require_once "../../../includes/menubar.php"; ?>
         <form action="delete_workout.php" method="post" class="form">
+            <input type="hidden" name="workout_id" value="<?= $workout->id ?>">
             <div class="staff-record-delete-div">
                 <h2>Are you sure you want to delete "<?= $workout->name ?>"?</h2>
                 <p>This action cannot be undone.</p>

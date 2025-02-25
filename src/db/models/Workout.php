@@ -109,6 +109,7 @@ class Workout extends Model
     public function save()
     {
         if ($this->id === 0) {
+            // Exercises in workout_exercise is not updated
             $this->create();
         } else {
             $this->update();

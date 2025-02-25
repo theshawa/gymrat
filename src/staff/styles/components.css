@@ -278,7 +278,7 @@ select:has(option:checked:not([value=""])) option {
 
 .staff-btn-secondary-black {
   background-color: transparent;
-  border: 2px solid var(--color-zinc-800);
+  border: 2px solid var(--color-zinc-500);
   border-radius: 10px;
 }
 

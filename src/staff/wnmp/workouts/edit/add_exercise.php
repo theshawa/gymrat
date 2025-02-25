@@ -14,8 +14,8 @@ if (!isset($_SESSION['workout'], $_SESSION['workout_id'])) {
 }
 
 $workout = unserialize($_SESSION['workout']);
-$current_workout_id = $_SESSION['workout_id'];
 $lastExercise = end($workout->exercises);
+$current_workout_id = $_SESSION['workout_id'];
 
 $newExercise = [
     "id" => 0,
@@ -28,13 +28,8 @@ $newExercise = [
     "isDeleted" => false
 ];
 
-// Issues : what if the exercise id is already 2147483647
-// Issues : how to make sure id is not replacing a already existing id
-// make sure these new exercises are manually "INSERT" rather than "UPDATE"
-
 $workout->exercises[] = $newExercise;
 
 $_SESSION['workout'] = serialize($workout);
 
 redirect_with_success_alert("Action successful (Press Save Changes to complete)", "/staff/wnmp/workouts/edit?id=$current_workout_id");
-

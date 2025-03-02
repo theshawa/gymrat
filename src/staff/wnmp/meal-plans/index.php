@@ -9,36 +9,27 @@ $menuBarConfig = [
         ["title" => "Create Meal Plan", "href" => "/staff/wnmp/meal-plans/create/index.php", "type" => "secondary"]
     ]
 ];
+
+require_once "../../../db/models/MealPlan.php";
+require_once "../../../alerts/functions.php";
+
+$mealPlans = [];
+$mealPlanModel = new MealPlan();
+try {
+    $mealPlans = $mealPlanModel->get_all();
+} catch (Exception $e) {
+    redirect_with_error_alert("Failed to fetch meal plans: " . $e->getMessage(), "/staff/wnmp");
+}
+
 $infoCardConfig = [
     "showImage" => true,
     "showExtend" => true,
     "extendTo" => "/staff/wnmp/meal-plans/view/index.php",
-    "cards" => [
-        [
-            "id" => 201,
-            "title" => "Weight Loss Plan",
-            "description" => "Low-calorie meals with high protein and fiber content.",
-            "image" => null
-        ],
-        [
-            "id" => 202,
-            "title" => "Muscle Gain Plan",
-            "description" => "High-protein meals with balanced carbs and fats.",
-            "image" => null
-        ],
-        [
-            "id" => 203,
-            "title" => "Maintenance Plan",
-            "description" => "Balanced meals to maintain current weight and muscle mass.",
-            "image" => null
-        ]
-    ],
-    "isCardInList" => true
+    "cards" => $mealPlans,
+    "showCreatedAt" => false
 ];
 
 require_once "../pageconfig.php";
-
-require_once "../../../alerts/functions.php";
 
 $pageConfig['styles'][] = "./meal-plans.css";
 

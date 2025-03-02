@@ -114,6 +114,7 @@ class MealPlan extends Model
                 'id' => $meal->id,
                 'mealplan_id' => $meal->mealplan_id,
                 'meal_id' => $meal->meal_id,
+                'edit_id' => $meal->id, // Not in Database, strickly for backend use
                 'day' => $meal->day,
                 'time' => $meal->time,
                 'amount' => $meal->amount,
@@ -121,5 +122,40 @@ class MealPlan extends Model
                 'isDeleted' => $meal->isDeleted,
             ];
         }, $meals);
+    }
+
+    public function __sleep()
+    {
+        // Specify the properties to be serialized
+        return ['id', 'name', 'description', 'duration', 'created_at', 'updated_at', 'meals'];
+    }
+
+    public function __wakeup()
+    {
+        // Reinitialize the PDO instance upon unserialization
+        $this->conn = Database::get_conn();
+    }
+
+    public function get_all(): array
+    {
+        $sql = "SELECT * FROM $this->table";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        return array_map(function ($item) {
+            $mealPlan = new MealPlan();
+            $mealPlan->fill(
+                [
+                    'id' => $item['id'],
+                    'name' => $item['name'],
+                    'description' => $item['description'],
+                    'duration' => $item['duration'],
+                    'created_at' => $item['created_at'],
+                    'updated_at' => $item['updated_at'],
+                    'meals' => $this->get_meals($item['id'])
+                ]
+            );
+            return $mealPlan;
+        }, $items);
     }
 }

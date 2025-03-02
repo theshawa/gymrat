@@ -1,0 +1,74 @@
+.base-container {
+    background-color: var(--color-zinc-50);
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100% !important;
+}
+
+.view-meal-plan-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    padding: 20px;
+}
+
+.view-meal-plan-meal {
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.view-meal-plan-meal p {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.view-meal-plan-meal p.alt {
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.edit-meal-plan-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.edit-meal-plan-input-reps-sets {
+    width: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 15px;
+}
+
+.edit-meal-plan-input-update {
+    margin: 0px 15px;
+    color: var(--color-zinc-800);
+}
+
+.edit-meal-plan-input-delete {
+    margin: 0px 15px;
+    color: var(--color-red);
+}
+
+.edit-meal-plan-input-update {
+    margin: 0px 15px;
+    color: var(--color-zinc-800);
+}
+
+.edit-meal-plan-add-meal {
+    width: 70%;
+    height: 45px;
+    margin: 15px 0px;
+}
+
+.edit-meal-plan-input-update-alt {
+    margin: 0px 15px;
+    color: var(--color-zinc-800);
+    padding: 10px;   
+    width: 264px;
+}

@@ -16,8 +16,6 @@ if (!isset($_SESSION['workout'])) {
 $workout = unserialize($_SESSION['workout']);
 $current_exercise_edit_id = htmlspecialchars($_POST['exercise_edit_id']);
 
-// Since we are adding workouts all exercise ids will be 0. so when one is updayed all are updated since they have same id
-
 foreach ($workout->exercises as $key => $exercise) {
     if ($exercise['edit_id'] == $current_exercise_edit_id) {
         $workout->exercises[$key]['title'] = htmlspecialchars($_POST['exercise_title']);

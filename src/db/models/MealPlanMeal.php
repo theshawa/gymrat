@@ -52,7 +52,7 @@ class MealPlanMeal extends Model
         if ($this->isDeleted) {
             $this->delete();
         } elseif ($this->isUpdated) {
-            if ($this->id == 0) {
+            if ($this->id === 0) {
                 $this->create();
             } else {
                 $this->update();

@@ -109,12 +109,12 @@ class MealPlan extends Model
     {
         $mealPlanMeal = new MealPlanMeal();
         $meals = $mealPlanMeal->get_by_mealplan_id($mealplan_id);
-        return array_map(function($meal) {
+        $mealsArray = array_map(function($meal) {
             return [
                 'id' => $meal->id,
                 'mealplan_id' => $meal->mealplan_id,
                 'meal_id' => $meal->meal_id,
-                'edit_id' => $meal->id, // Not in Database, strickly for backend use
+                'edit_id' => $meal->id, // Not in Database, strictly for backend use
                 'day' => $meal->day,
                 'time' => $meal->time,
                 'amount' => $meal->amount,
@@ -122,6 +122,13 @@ class MealPlan extends Model
                 'isDeleted' => $meal->isDeleted,
             ];
         }, $meals);
+
+        // Sort the meals array by id in ascending order
+        usort($mealsArray, function($a, $b) {
+            return $a['id'] <=> $b['id'];
+        });
+
+        return $mealsArray;
     }
 
     public function __sleep()

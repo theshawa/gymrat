@@ -56,7 +56,7 @@ foreach ($mealPlan->meals as &$meal) {
     }
 }
 
-var_dump($mealPlan->meals, true);
+// var_dump($mealPlan->meals);
 
 $mealPlan->id = $id;
 $mealPlan->name = $name;

@@ -1,25 +1,17 @@
 <?php
+
 session_start();
 
 require_once "../../../../alerts/functions.php";
 require_once "../../../../db/models/MealPlan.php";
 require_once "../../../../db/models/Meal.php";
 
-$id = htmlspecialchars($_GET['id'] ?? null);
-$_SESSION['mealplan_id'] = $id;
-
 $mealPlan = new MealPlan();
-if (!isset($_SESSION['mealPlan'])) {
-    $mealModel = new Meal();
-    try {
-        $mealPlan->get_by_id($id);
-        $mealPlan->meals = $mealModel->addMealTitles($mealPlan->meals);
-    } catch (Exception $e) {
-        redirect_with_error_alert("Failed to fetch meal plan: " . $e->getMessage(), "/staff/wnmp/meal-plans");
-    }
-    $_SESSION['mealPlan'] = serialize($mealPlan);
-} else {
+if (isset($_SESSION['mealPlan'])) {
     $mealPlan = unserialize($_SESSION['mealPlan']);
+} else {
+    $mealPlan->fill([]);
+    $_SESSION['mealPlan'] = serialize($mealPlan);
 }
 
 if (!isset($_SESSION['mealTitles'])){    
@@ -32,9 +24,9 @@ if (!isset($_SESSION['mealTitles'])){
 
 $sidebarActive = 5;
 $menuBarConfig = [
-    "title" => "Edit " . ($mealPlan->name ?? "Unnamed Meal Plan"),
+    "title" => "Create Meal Plan",
     "showBack" => true,
-    "goBackTo" => "/staff/wnmp/meal-plans/view/index.php?id=$id",
+    "goBackTo" => "/staff/wnmp/meal-plans/index.php",
     "useButton" => true,
     "options" => [
         ["title" => "Save Changes", "buttonType" => "submit", "type" => "secondary"],
@@ -56,21 +48,28 @@ auth_required_guard("wnmp", "/staff/login");
 <main>
     <div class="base-container">
         <div class="form">
-            <form action="edit_mealplan.php" method="POST">
+            <form action="create_mealplan.php" method="POST">
                 <?php require_once "../../../includes/menubar.php"; ?>
-                <!-- <pre><?php print_r($mealPlan->meals); ?></pre> -->
+            </form>
+            <form action="edit_mealplan_details.php" method="POST">
                 <div style="padding: 5px 10px;">
                     <input type="hidden" name="mealplan_id" value="<?= $mealPlan->id ?>">
                     <h2><label for="edit-title">Title</label></h2>
                     <input type="text" id="edit-title" name="mealplan_name"
-                        class="staff-input-primary staff-input-long" value="<?= $mealPlan->name ?>">
-                    <h2><label for="edit-description">Description</label></h2>
+                        class="staff-input-primary staff-input-long" value="<?= $mealPlan->name ?>"
+                        placeholder="Enter meal plan title">
+                    <h2 style="padding-top: 5px;"><label for="edit-description">Description</label></h2>
                     <textarea id="edit-description" name="mealplan_description"
                         class="staff-textarea-primary staff-textarea-large"
                         placeholder="Enter a meal plan description"><?= $mealPlan->description ?></textarea>
-                    <h2><label for="edit-duration">Duration</label></h2>
-                    <input type="text" id="edit-duration" name="mealplan_duration"
-                        class="staff-input-primary staff-input-long" value="<?= $mealPlan->duration ?>">
+                    <div>
+                        <h2><label for="edit-duration">Duration</label></h2>
+                        <input type="text" id="edit-duration" name="mealplan_duration"
+                            class="staff-input-primary staff-input-long" value="<?= $mealPlan->duration ?>">
+                        <button type="submit" class="staff-btn-secondary-black edit-meal-plan-input-update-alt">
+                            Update
+                        </button>
+                    </div>
                 </div>
             </form>
             <div style="padding: 5px 10px;">
@@ -87,7 +86,7 @@ auth_required_guard("wnmp", "/staff/login");
                                     </option>
                                 <?php endforeach; ?>
                             </select>
-                            <div class="edit-meal-plan-input-reps-sets">
+                            <div class="edit-mealplan-input-reps-sets">
                                 <label for="meal_day">Day</label>
                                 <select name="meal_day" class="staff-input-primary staff-input-short">
                                     <option value="Monday" <?= $meal['day'] == 'Monday' ? 'selected' : '' ?>>Monday</option>
@@ -99,7 +98,7 @@ auth_required_guard("wnmp", "/staff/login");
                                     <option value="Sunday" <?= $meal['day'] == 'Sunday' ? 'selected' : '' ?>>Sunday</option>
                                 </select>
                             </div>
-                            <div class="edit-meal-plan-input-reps-sets">
+                            <div class="edit-mealplan-input-reps-sets">
                                 <label for="meal_time">Time</label>
                                 <select name="meal_time" class="staff-input-primary staff-input-short">
                                     <option value="Breakfast" <?= $meal['time'] == 'Breakfast' ? 'selected' : '' ?>>Breakfast</option>

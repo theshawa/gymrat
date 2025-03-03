@@ -22,6 +22,14 @@ if (!isset($_SESSION['workout'])) {
     $workout = unserialize($_SESSION['workout']);
 }
 
+if (!isset($_SESSION['exerciseTitles'])){    
+    $exerciseModel = new Exercise();
+    $exerciseTitles = $exerciseModel->get_all_titles();
+    $_SESSION['exerciseTitles'] = $exerciseTitles;
+} else {
+    $exerciseTitles = $_SESSION['exerciseTitles'];
+}
+
 
 $sidebarActive = 3;
 $menuBarConfig = [
@@ -70,9 +78,14 @@ auth_required_guard("wnmp", "/staff/login");
                 <?php foreach ($workout->exercises as $exercise): ?>
                     <?php if (!$exercise['isDeleted']): ?>
                         <form action="edit_current_exercise.php" method="POST" class="edit-workout-row">
-                            <input type="hidden" name="exercise_id" value="<?= $exercise['exercise_id'] ?>">
-                            <input type="text" name="exercise_title" class="staff-input-primary staff-input-long"
-                                value="<?= $exercise['title'] ?>">
+                            <input type="hidden" name="exercise_id" value="<?= $exercise['id'] ?>">
+                            <select name="exercise_title" class="staff-input-primary staff-input-long">
+                                <?php foreach ($exerciseTitles as $title): ?>
+                                    <option value="<?= $title ?>" <?= $title == $exercise['title'] ? 'selected' : '' ?>>
+                                        <?= $title ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
                             <div class="edit-workout-input-reps-sets">
                                 <label for="exercise_sets">Sets</label>
                                 <input type="text" name="exercise_sets"

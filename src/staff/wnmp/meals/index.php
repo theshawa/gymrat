@@ -9,36 +9,27 @@ $menuBarConfig = [
         ["title" => "Create Meal", "href" => "/staff/wnmp/meals/create/index.php", "type" => "secondary"]
     ]
 ];
+
+require_once "../../../db/models/Meal.php";
+require_once "../../../alerts/functions.php";
+
+$meals = [];
+$mealModel = new Meal();
+try {
+    $meals = $mealModel->get_all();
+} catch (Exception $e) {
+    redirect_with_error_alert("Failed to fetch meals: " . $e->getMessage(), "/staff/wnmp");
+}
+
 $infoCardConfig = [
     "showImage" => true,
     "showExtend" => true,
     "extendTo" => "/staff/wnmp/meals/view/index.php",
-    "cards" => [
-        [
-            "id" => 101,
-            "title" => "Banana",
-            "description" => "A high-energy fruit perfect for pre-workout.",
-            "image" => null
-        ],
-        [
-            "id" => 102,
-            "title" => "Grilled Chicken",
-            "description" => "Lean protein source ideal for post-workout recovery.",
-            "image" => null
-        ],
-        [
-            "id" => 103,
-            "title" => "Oatmeal",
-            "description" => "A great source of complex carbohydrates for sustained energy.",
-            "image" => null
-        ]
-    ],
-    "isCardInList" => true
+    "cards" => $meals,
+    "showCreatedAt" => false
 ];
 
 require_once "../pageconfig.php";
-
-require_once "../../../alerts/functions.php";
 
 $pageConfig['styles'][] = "./meals.css";
 

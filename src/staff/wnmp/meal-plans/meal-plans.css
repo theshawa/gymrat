@@ -6,14 +6,14 @@
     width: 100% !important;
 }
 
-.view-workout-container {
+.view-meal-plan-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 40px;
     padding: 20px;
 }
 
-.view-workout-exercise{
+.view-meal-plan-meal {
     margin: 10px 0px;
     display: flex;
     flex-direction: row;
@@ -21,22 +21,22 @@
     justify-content: space-between;
 }
 
-.view-workout-exercise p {
+.view-meal-plan-meal p {
     font-size: 18px;
     font-weight: 400;
 }
 
-.view-workout-exercise p.alt {
+.view-meal-plan-meal p.alt {
     font-size: 22px;
     font-weight: 400;
 }
 
-.edit-workout-row {
+.edit-meal-plan-row {
     display: flex;
     flex-direction: row;
 }
 
-.edit-workout-input-reps-sets {
+.edit-meal-plan-input-reps-sets {
     width: 10%;
     display: flex;
     flex-direction: row;
@@ -45,31 +45,31 @@
     margin: 0 15px;
 }
 
-.edit-workout-input-update {
+.edit-meal-plan-input-update {
     margin: 0px 15px;
     color: var(--color-zinc-800);
 }
 
-.edit-workout-input-delete {
+.edit-meal-plan-input-delete {
     margin: 0px 15px;
     color: var(--color-red);
 }
 
-.edit-workout-input-update {
+.edit-meal-plan-input-update {
     margin: 0px 15px;
     color: var(--color-zinc-800);
 }
 
-.edit-workout-add-exercise {
+.edit-meal-plan-add-meal {
     width: 70%;
     height: 45px;
     margin: 15px 0px;
 }
 
-.edit-workout-input-update-alt{
+.edit-meal-plan-input-update-alt {
     margin: 0px 15px;
     color: var(--color-zinc-800);
     padding: 10px;   
     width: 264px;
-
 }
+

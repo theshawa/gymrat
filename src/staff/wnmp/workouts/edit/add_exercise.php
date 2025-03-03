@@ -16,20 +16,19 @@ if (!isset($_SESSION['workout'], $_SESSION['workout_id'])) {
 $workout = unserialize($_SESSION['workout']);
 $current_workout_id = $_SESSION['workout_id'];
 $lastExercise = end($workout->exercises);
+$edit_id = $lastExercise ? $lastExercise["edit_id"] + 1 : 0;
 
 $newExercise = [
-    "id" => $lastExercise['id'] + 1,
+    "id" => 0,
+    'workout_id' => $current_workout_id,
     "exercise_id" => 2147483647,
     "title" => "Exercise",
     "sets" => 0,
     "reps" => 0,
     "isUpdated" => true,
-    "isDeleted" => false
+    "isDeleted" => false,
+    "edit_id" => $edit_id
 ];
-
-// Issues : what if the exercise id is already 2147483647
-// Issues : how to make sure id is not replacing a already existing id
-// make sure these new exercises are manually "INSERT" rather than "UPDATE"
 
 $workout->exercises[] = $newExercise;
 

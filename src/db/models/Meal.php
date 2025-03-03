@@ -13,6 +13,8 @@ class Meal extends Model
     public int $calories;
     public int $proteins;
     public int $fats;
+    public DateTime $created_at;
+    public DateTime $updated_at;
 
     public function __construct()
     {
@@ -28,6 +30,8 @@ class Meal extends Model
         $this->calories = $data['calories'] ?? 0;
         $this->proteins = $data['proteins'] ?? 0;
         $this->fats = $data['fats'] ?? 0;
+        $this->created_at = new DateTime($data['created_at'] ?? '');
+        $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
     }
 
     public function get_all(): array
@@ -57,7 +61,7 @@ class Meal extends Model
 
     public function create()
     {
-        $sql = "INSERT INTO $this->table (name, description, image, calories, proteins, fats) VALUES (:name, :description, :image, :calories, :proteins, :fats)";
+        $sql = "INSERT INTO $this->table (name, description, image, calories, proteins, fats, created_at) VALUES (:name, :description, :image, :calories, :proteins, :fats, CURRENT_TIMESTAMP)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'name' => $this->name,

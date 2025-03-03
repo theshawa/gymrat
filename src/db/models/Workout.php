@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . "/../Model.php";
+require_once __DIR__ . "/WorkoutExercise.php";
 
 class Workout extends Model
 {
@@ -98,21 +99,9 @@ class Workout extends Model
         ]);
 
         if (!empty($this->exercises)) {
-            foreach ($this->exercises as $exercise) {
-                if ($exercise['isUpdated']) {
-                    $sql = "UPDATE workout_exercises SET exercise_id=:exercise_id, sets=:sets, reps=:reps WHERE id=:id";
-                    $stmt = $this->conn->prepare($sql);
-                    $stmt->execute([
-                        'id' => $exercise['id'],
-                        'exercise_id' => $exercise['exercise_id'],
-                        'sets' => $exercise['sets'],
-                        'reps' => $exercise['reps'],
-                    ]);
-                } elseif ($exercise['isDeleted']) {
-                    $sql = "DELETE FROM workout_exercises WHERE id=:id";
-                    $stmt = $this->conn->prepare($sql);
-                    $stmt->execute(['id' => $exercise['id']]);
-                }
+            foreach ($this->exercises as $exerciseData) {
+                $exercise = new WorkoutExercise($exerciseData);
+                $exercise->save();
             }
         }
     }
@@ -120,11 +109,29 @@ class Workout extends Model
     public function save()
     {
         if ($this->id === 0) {
+            // Exercises in workout_exercise is not updated
             $this->create();
         } else {
             $this->update();
         }
     }
+
+    
+    public function delete()
+    {
+        if (!empty($this->exercises)) {
+            foreach ($this->exercises as $exerciseData) {
+                $exercise = new WorkoutExercise($exerciseData);
+                $exercise->isDeleted = true;
+                $exercise->save();
+            }
+        }
+
+        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
+    }
+
 
     public function get_by_id(int $id = null)
     {
@@ -141,15 +148,18 @@ class Workout extends Model
 
     private function get_exercises(int $workout_id): array
     {
-        $sql = "SELECT * FROM workout_exercises WHERE workout_id = :workout_id";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute(['workout_id' => $workout_id]);
-        $exercises = $stmt->fetchAll();
-
+        $workoutExercise = new WorkoutExercise();
+        $exercises = $workoutExercise->get_by_workout_id($workout_id);
         return array_map(function($exercise) {
-            $exercise['isUpdated'] = false;
-            $exercise['isDeleted'] = false;
-            return $exercise;
+            return [
+                'id' => $exercise->id,
+                'workout_id' => $exercise->workout_id,
+                'exercise_id' => $exercise->exercise_id,
+                'sets' => $exercise->sets,
+                'reps' => $exercise->reps,
+                'isUpdated' => $exercise->isUpdated,
+                'isDeleted' => $exercise->isDeleted,
+            ];
         }, $exercises);
     }
 }

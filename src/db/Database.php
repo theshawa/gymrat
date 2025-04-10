@@ -6,9 +6,9 @@ class Database
     private null|PDO $conn = null;
 
     private $CONFIG = [
-        "host" => "gymrat.cfmusmw4055v.eu-north-1.rds.amazonaws.com",
-        "username" => "admin",
-        "password" => "gymratisawesome",
+        "host" => "mysql_db",
+        "username" => "root",
+        "password" => "123456",
         "dbname" => "gymrat",
     ];
 

@@ -1,0 +1,29 @@
+services:
+  mysql_db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: gymrat
+    volumes:
+      - db_data:/var/lib/mysql
+  phpmyadmin:
+    depends_on:
+      - mysql_db
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 5000:80
+    environment:
+      PMA_HOST: mysql_db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: 123456
+  php-server:
+    build: .
+    ports:
+      - 80:80
+    volumes:
+      - ../src:/var/www/html
+  
+volumes:
+  db_data:

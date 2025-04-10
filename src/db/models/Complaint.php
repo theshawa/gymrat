@@ -1,6 +1,8 @@
 <?php
 
 require_once __DIR__ . "/../Model.php";
+require_once __DIR__ . "/Trainer.php";
+require_once __DIR__ . "/Customer.php";
 
 class Complaint extends Model
 {
@@ -12,6 +14,7 @@ class Complaint extends Model
     public int $user_id;
     public DateTime $created_at;
     public int $is_created_by_trainer;
+    private string $name;
 
     public function fill(array $data)
     {
@@ -58,5 +61,22 @@ class Complaint extends Model
             'user_id' => $this->user_id,
             'is_created_by_trainer' => $this->is_created_by_trainer
         ]);
+    }
+
+    public function update_name()
+    {
+        if ($this->is_created_by_trainer) {
+            $trainer = new Trainer();
+            $trainer->id = $this->user_id;
+            if ($trainer->get_by_id()) {
+                $this->name = $trainer->fname . ' ' . $trainer->lname;
+            }
+        } else {
+            $customer = new Customer();
+            $customer->id = $this->user_id;
+            if ($customer->get_by_id()) {
+                $this->name = $customer->fname . ' ' . $customer->lname;
+            }
+        }
     }
 }

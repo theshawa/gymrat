@@ -63,37 +63,16 @@ class Trainer extends Model
         $this->id = $this->conn->lastInsertId(); // Set ID for future updates
     }
 
-    // protected function update()
-    // {
-    //     $sql = "UPDATE $this->table SET 
-    //         fname = :fname,
-    //         lname = :lname,
-    //         bio = :bio,
-    //         avatar = :avatar,
-    //         rating = :rating,
-    //         review_count = :review_count
-    //     WHERE id = :id";
-
-    //     $stmt = $this->conn->prepare($sql);
-    //     $stmt->execute([
-    //         'id' => $this->id,
-    //         'fname' => $this->fname,
-    //         'lname' => $this->lname,
-    //         'bio' => $this->bio,
-    //         'avatar' => $this->avatar,
-    //         'rating' => $this->rating,
-    //         'review_count' => $this->review_count
-    //     ]);
-    // }
-
     protected function update()
     {
         $sql = "UPDATE $this->table SET 
-        fname = :fname,
-        lname = :lname,
-        bio = :bio,
-        avatar = :avatar
-    WHERE id = :id";
+            fname = :fname,
+            lname = :lname,
+            bio = :bio,
+            avatar = :avatar,
+            rating = :rating,
+            review_count = :review_count
+        WHERE id = :id";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
@@ -101,7 +80,9 @@ class Trainer extends Model
             'fname' => $this->fname,
             'lname' => $this->lname,
             'bio' => $this->bio,
-            'avatar' => $this->avatar
+            'avatar' => $this->avatar,
+            'rating' => $this->rating,
+            'review_count' => $this->review_count
         ]);
     }
 
@@ -114,9 +95,9 @@ class Trainer extends Model
 
         if ($data) {
             $this->fill($data);
-            return true; // Return true when a record is found
+            return true; // ✅ Return true when a record is found
         }
-        return false; // Return false if no record is found
+        return false; // ✅ Return false if no record is found
     }
 
     public function get_by_username()

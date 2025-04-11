@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 
 require_once "../../alerts/functions.php";
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -8,6 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 $username = htmlspecialchars($_POST["username"]);
 $password = htmlspecialchars($_POST["password"]);
+
 
 require_once "../../db/models/Trainer.php";
 $trainer = new Trainer();
@@ -37,4 +38,3 @@ $_SESSION["auth"] = [
 ];
 
 redirect_with_success_alert("Logged in successfully", "../");
-?>

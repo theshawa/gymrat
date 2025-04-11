@@ -45,8 +45,8 @@ require_once "../../alerts/view.php";
             <span class="review-count">Out of <?= $trainer->review_count ?> Reviews</span>
         </div>
 
-        <a href="edit.php" class="btn full-width">EDIT PROFILE</a>
-        <a href="../logout.php" class="btn secondary full-width">LOGOUT</a>
+        <a href="edit.php" class="btn btn-edit">EDIT PROFILE</a>
+        <a href="../logout.php" class="btn btn-logout">LOGOUT</a>
     </div>
 </main>
 

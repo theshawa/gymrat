@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql_db:3306
--- Generation Time: Apr 12, 2025 at 08:06 AM
+-- Generation Time: Apr 12, 2025 at 04:23 PM
 -- Server version: 9.2.0
 -- PHP Version: 8.2.27
 
@@ -20,6 +20,21 @@ SET time_zone = "+00:00";
 --
 -- Database: `gymrat`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bmi_records`
+--
+
+CREATE TABLE `bmi_records` (
+  `user` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `bmi` float NOT NULL,
+  `weight` float NOT NULL,
+  `height` float NOT NULL,
+  `age` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -349,8 +364,21 @@ CREATE TABLE `workout_sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `workout_sessions`
+--
+
+INSERT INTO `workout_sessions` (`id`, `user`, `workout`, `started_at`, `ended_at`) VALUES
+(1, 30, 1, '2025-04-12 08:19:06', '2025-04-12 08:19:14');
+
+--
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `bmi_records`
+--
+ALTER TABLE `bmi_records`
+  ADD PRIMARY KEY (`user`,`created_at`);
 
 --
 -- Indexes for table `complaints`
@@ -494,11 +522,17 @@ ALTER TABLE `workout_exercises`
 -- AUTO_INCREMENT for table `workout_sessions`
 --
 ALTER TABLE `workout_sessions`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `bmi_records`
+--
+ALTER TABLE `bmi_records`
+  ADD CONSTRAINT `fk_user_bmi_record` FOREIGN KEY (`user`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `customers`

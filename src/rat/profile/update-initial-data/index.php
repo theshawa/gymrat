@@ -10,8 +10,25 @@ $pageConfig = [
     "need_auth" => true
 ];
 
+session_start();
+
+require_once "../../../alerts/functions.php";
+require_once "../../../db/models/CustomerInitialData.php";
+$initial_data = new CustomerInitialData();
+try {
+    $initial_data->get_by_id($_SESSION['auth']['id']);
+} catch (PDOException $e) {
+    redirect_with_error_alert("Failed to fetch initial data due to error: " . $e->getMessage(), "./");
+}
+
+if (!$initial_data->customer_id) {
+    redirect_with_error_alert("Initial data not found", "./");
+}
+
 require_once "../../includes/header.php";
 require_once "../../includes/titlebar.php";
+
+
 ?>
 
 <main class="onboarding">
@@ -23,7 +40,7 @@ require_once "../../includes/titlebar.php";
             <span class="title">Gender</span>
             <div class="gender">
                 <label class="input line radio">
-                    <input type="radio" name="gender" value="male" checked required>
+                    <input type="radio" name="gender" value="male" <?= $initial_data->gender == "male" ? "checked" : "" ?> required>
                     <div class="tick">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
@@ -32,7 +49,7 @@ require_once "../../includes/titlebar.php";
                     <span class="option">Male</span>
                 </label>
                 <label class="input line radio">
-                    <input type="radio" name="gender" value="female" required>
+                    <input type="radio" name="gender" value="female" <?= $initial_data->gender == "female" ? "checked" : "" ?> required>
                     <div class="tick">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
@@ -45,7 +62,7 @@ require_once "../../includes/titlebar.php";
         <div class="question">
             <span class="title">Age</span>
             <div class="line">
-                <input class="input" min="10" max="150" type="number" name="age" placeholder="16" required>
+                <input class="input" min="10" max="150" type="number" name="age" placeholder="16" value="<?= $initial_data->age ?>" required>
                 <span class="">YRS</span>
             </div>
         </div>
@@ -53,38 +70,63 @@ require_once "../../includes/titlebar.php";
             <span class="title">Goal</span>
             <select name="goal" class="input">
                 <option disabled value="">Select option</option>
-                <option value="weight_loss">Weight Loss</option>
-                <option value="weight_gain">Weight Gain</option>
-                <option value="muscle_mass_gain">Muscle Mass Gain</option>
-                <option value="shape_body">Shape Body</option>
-                <option value="other">Other</option>
+                <?php
+                $goals = [
+                    ['value' => 'weight_loss', 'label' => 'Weight Loss'],
+                    ['value' => 'weight_gain', 'label' => 'Weight Gain'],
+                    ['value' => 'muscle_mass_gain', 'label' => 'Muscle Mass Gain'],
+                    ['value' => 'shape_body', 'label' => 'Shape Body'],
+                    ['value' => 'other', 'label' => 'Other']
+                ];
+                foreach ($goals as $goal) {
+                    $selected = $initial_data->goal == $goal['value'] ? 'selected' : '';
+                    echo "<option value=\"{$goal['value']}\" $selected>{$goal['label']}</option>";
+                }
+                ?>
             </select>
-            <textarea name="other_goal" class="input" placeholder="Describe your goal briefly"></textarea>
+            <textarea name="other_goal" class="input" placeholder="Describe your goal briefly"><?= $initial_data->goal == "other" ? $initial_data->other_goal : "" ?></textarea>
         </div>
         <div class="question">
             <span class="title">Physical activity level</span>
             <select name="physical_activity_level" class="input">
-                <option disabled value="">Select option</option>
-                <option value="beginner">Beginner</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="advanced">Advanced</option>
+                <?php
+                $activity_levels = [
+                    ['value' => 'beginner', 'label' => 'Beginner'],
+                    ['value' => 'intermediate', 'label' => 'Intermediate'],
+                    ['value' => 'advanced', 'label' => 'Advanced'],
+                ];
+                foreach ($activity_levels as $level) {
+                    $selected = $initial_data->physical_activity_level == $level['value'] ? 'selected' : '';
+                    echo "<option value=\"{$level['value']}\" $selected>{$level['label']}</option>";
+                }
+                ?>
             </select>
         </div>
         <div class="question">
-            <span class="title">Dietary preferences</span>
-            <select name="dietary_preferences" class="input">
-                <option value="vegitarian">Vegitarian</option>
-                <option value="non_vegitarian">Non-vegitarian</option>
-                <option value="gluten_free">Gluten - Free</option>
-                <option value="keto">Keto</option>
-                <option value="paleo">Paleo</option>
-                <option value="" selected>No Preferences</option>
+            <span class="title">Dietary preference</span>
+            <select name="dietary_preference" class="input">
+                <?php
+                $dietary_preferences = [
+                    ['value' => 'vegitarian', 'label' => 'Vegitarian'],
+                    ['value' => 'non_vegitarian', 'label' => 'Non-vegitarian'],
+                    ['value' => 'gluten_free', 'label' => 'Gluten - Free'],
+                    ['value' => 'keto', 'label' => 'Keto'],
+                    ['value' => 'paleo', 'label' => 'Paleo'],
+                    ['value' => '', 'label' => 'No Preferences']
+                ];
+                foreach ($dietary_preferences as $preference) {
+                    $selected = $initial_data->dietary_preference == $preference['value'] ? 'selected' : '';
+                    echo "<option value=\"{$preference['value']}\" $selected>{$preference['label']}</option>";
+                }
+                ?>
             </select>
         </div>
         <div class="question">
             <span class="title">Allergies</span>
-            <textarea name="allergies" class="input" placeholder="Describe your allergies briefly(if there's any)"></textarea>
+            <textarea name="allergies" class="input" placeholder="Describe your allergies briefly(if there's any)"><?= $initial_data->allergies ?></textarea>
         </div>
+        <input type="hidden" name="weight" value="<?= $initial_data->weight ?>">
+        <input type="hidden" name="height" value="<?= $initial_data->height ?>">
         <button class="btn">Save</button>
     </form>
 </main>
@@ -95,15 +137,18 @@ require_once "../../includes/titlebar.php";
     otherGoal.style.display = 'none';
     otherGoal.removeAttribute('required');
 
-    goal.addEventListener('change', (e) => {
-        if (e.target.value === 'other') {
+    const handleOther = () => {
+        if (goal.value === 'other') {
             otherGoal.style.display = 'block';
             otherGoal.setAttribute('required', 'true');
         } else {
             otherGoal.style.display = 'none';
             otherGoal.removeAttribute('required');
         }
-    });
+    }
+
+    goal.addEventListener('change', handleOther);
+    handleOther();
 </script>
 
 <?php require_once "../../includes/navbar.php" ?>

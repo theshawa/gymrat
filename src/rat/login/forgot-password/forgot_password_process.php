@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 }
 
 require_once "../../../auth-guards.php";
-auth_not_required_guard("/rat/login");
+auth_not_required_guard("rat", "/rat/login");
 
 $email = htmlspecialchars($_POST['email']);
 

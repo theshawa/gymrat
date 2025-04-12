@@ -1,27 +1,12 @@
 <?php
-$pageConfig = [
-    "title" => "My Progress",
-    "titlebar" => [
-        "back_url" => "../"
-    ],
-    "styles" => ["./progress.css"],
-    "scripts" => [
-        "https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js",
-        "https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js",
-        "./bmi-progress.js"
-    ],
-    "navbar_active" => 1,
-    "need_auth" => true
-];
-
-require_once "../includes/header.php";
-require_once "../includes/titlebar.php";
+session_start();
 
 $range = (int)htmlspecialchars($_GET['range'] ?? "30");
 
 $records = [];
 
 require_once "../../db/models/BmiRecord.php";
+require_once "../../alerts/functions.php";
 
 $record = new BmiRecord();
 
@@ -72,7 +57,25 @@ $rangeOptions = [
         'title' => 'Records from the start',
         'value' => -1
     ]
-]
+];
+
+$pageConfig = [
+    "title" => "My Progress",
+    "titlebar" => [
+        "back_url" => "../"
+    ],
+    "styles" => ["./progress.css"],
+    "scripts" => [
+        "https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js",
+        "https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js",
+        "./bmi-progress.js"
+    ],
+    "navbar_active" => 1,
+    "need_auth" => true
+];
+
+require_once "../includes/header.php";
+require_once "../includes/titlebar.php";
 
 ?>
 

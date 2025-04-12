@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 }
 
 require_once "../../auth-guards.php";
-//auth_not_required_guard("/staff/login");
+//auth_not_required_guard("staff", "/staff/login");
 
 require_once "../../db/models/Staff.php";
 
@@ -57,4 +57,3 @@ switch ($_SESSION["auth"]["role"]) {
         redirect_with_error_alert("Logged in successfully but undefined role", "/staff/login");
         break;
 }
-

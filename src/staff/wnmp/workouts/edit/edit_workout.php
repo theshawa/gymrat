@@ -43,8 +43,6 @@ if (!$workout) {
     redirect_with_error_alert("Failed to load workout from session", "/staff/wnmp/workouts");
 }
 
-var_dump($workout->exercises);
-
 $exerciseModel = new Exercise();
 $exerciseTitles = $exerciseModel->get_all_titles();
 
@@ -62,6 +60,7 @@ $workout->id = $id;
 $workout->name = $name;
 $workout->description = $description;
 $workout->duration = $duration;
+
 
 try {
     $workout->save();

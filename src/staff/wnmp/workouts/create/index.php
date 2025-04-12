@@ -3,21 +3,26 @@
 session_start();
 
 require_once "../../../../alerts/functions.php";
+require_once "../../../../db/models/Workout.php";
+require_once "../../../../db/models/Exercise.php";
 
-$id = htmlspecialchars($_GET['id'] ?? null);
-
-if (!isset($_SESSION['workout'])) {
-    $_SESSION['workout'] = [
-        "id" => 000,
-        "title" => "New Workout",
-        "description" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "exercise" => [],
-        "img" => null
-    ];
-    $_SESSION['workout_id'] = $_SESSION['workout']['id'];
+$workout = new Workout();
+if (isset($_SESSION['workout'])) {
+    $workout = unserialize($_SESSION['workout']);
+} else {
+    $workout->fill([]);
+    $_SESSION['workout'] = serialize($workout);
 }
 
-$workout = &$_SESSION['workout'];
+if (!isset($_SESSION['exerciseTitles'])){    
+    $exerciseModel = new Exercise();
+    $exerciseTitles = $exerciseModel->get_all_titles();
+    $_SESSION['exerciseTitles'] = $exerciseTitles;
+} else {
+    $exerciseTitles = $_SESSION['exerciseTitles'];
+}
+
+
 $sidebarActive = 3;
 $menuBarConfig = [
     "title" => "Create Workout",
@@ -30,11 +35,6 @@ $menuBarConfig = [
     ]
 ];
 
-//$alertConfig = [
-//    "status" => $_GET['status'] ?? null,
-//    "error" => $_GET['err'] ?? null,
-//    "message" => $_GET['msg'] ?? null
-//];
 
 require_once "../../pageconfig.php";
 
@@ -52,43 +52,61 @@ auth_required_guard("wnmp", "/staff/login");
         <div class="form">
             <form action="create_workout.php" method="POST">
                 <?php require_once "../../../includes/menubar.php"; ?>
-                <div style="padding: 5px 10px;">
-                    <!--                    --><?php //require_once "../../../includes/alert.php"; 
-                                                ?>
-                    <h2><label for="edit-title">Title</label></h2>
-                    <input type="text" id="edit-title" name="exercise_title"
-                        class="staff-input-primary staff-input-long" value="<?= $workout['title'] ?>">
-                    <h2><label for="edit-description">Description</label></h2>
-                    <textarea id="edit-description" name="workout_desc"
-                        class="staff-textarea-primary staff-textarea-large"
-                        placeholder="Enter a workout description"><?= $workout['description'] ?></textarea>
-                </div>
             </form>
-            <div style="padding: 0px 10px;">
-                <h2>Exercise</h2>
-                <?php foreach ($workout["exercise"] as $exercise): ?>
-                    <form action="edit_current_exercise.php" method="POST" class="edit-workout-row">
-                        <input type="hidden" name="exercise_id" value="<?= $exercise['id'] ?>">
-                        <input type="text" name="exercise_title" class="staff-input-primary staff-input-long"
-                            value="<?= $exercise['title'] ?>">
-                        <div class="edit-workout-input-reps-sets">
-                            <label for="exercise_reps">Reps</label>
-                            <input type="text" name="exercise_reps"
-                                value="<?= $exercise['reps'] ?>" class="staff-input-primary staff-input-short">
-                        </div>
-                        <div class="edit-workout-input-reps-sets">
-                            <label for="exercise_sets">Sets</label>
-                            <input type="text" name="exercise_sets"
-                                value="<?= $exercise['sets'] ?>" class="staff-input-primary staff-input-short">
-                        </div>
-                        <button type="submit" class="staff-btn-outline edit-workout-input-update">
+            <form action="edit_workout_details.php" method="POST">
+                <div style="padding: 5px 10px;">
+                    <input type="hidden" name="workout_id" value="<?= $workout->id ?>">
+                    <h2><label for="edit-title">Title</label></h2>
+                    <input type="text" id="edit-title" name="workout_name"
+                        class="staff-input-primary staff-input-long" value="<?= $workout->name ?>"
+                        placeholder="Enter workout title">
+                    <h2 style="padding-top: 5px;"><label for="edit-description">Description</label></h2>
+                    <textarea id="edit-description" name="workout_description"
+                        class="staff-textarea-primary staff-textarea-large"
+                        placeholder="Enter a workout description"><?= $workout->description ?></textarea>
+                    <div>
+                        <h2><label for="edit-duration">Duration</label></h2>
+                        <input type="text" id="edit-duration" name="workout_duration"
+                            class="staff-input-primary staff-input-long" value="<?= $workout->duration ?>">
+                        <button type="submit" class="staff-btn-secondary-black edit-workout-input-update-alt">
                             Update
                         </button>
-                        <button type="submit" class="staff-btn-outline edit-workout-input-delete"
-                            formaction="delete_current_exercise.php">
-                            Delete
-                        </button>
-                    </form>
+                    </div>
+                </div>
+            </form>
+            <div style="padding: 5px 10px;">
+                <h2>Exercise</h2>
+                <?php foreach ($workout->exercises as $exercise): ?>
+                    <?php if (!$exercise['isDeleted']): ?>
+                        <form action="edit_current_exercise.php" method="POST" class="edit-workout-row">
+                            <input type="hidden" name="exercise_id" value="<?= $exercise['id'] ?>">
+                            <input type="hidden" name="exercise_edit_id" value="<?= $exercise['edit_id'] ?>">
+                            <select name="exercise_title" class="staff-input-primary staff-input-long">
+                                <?php foreach ($exerciseTitles as $title): ?>
+                                    <option value="<?= $title ?>" <?= $title == $exercise['title'] ? 'selected' : '' ?>>
+                                        <?= $title ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <div class="edit-workout-input-reps-sets">
+                                <label for="exercise_sets">Sets</label>
+                                <input type="text" name="exercise_sets"
+                                    value="<?= $exercise['sets'] ?>" class="staff-input-primary staff-input-short">
+                            </div>
+                            <div class="edit-workout-input-reps-sets">
+                                <label for="exercise_reps">Reps</label>
+                                <input type="text" name="exercise_reps"
+                                    value="<?= $exercise['reps'] ?>" class="staff-input-primary staff-input-short">
+                            </div>
+                            <button type="submit" class="staff-btn-outline edit-workout-input-update">
+                                Update
+                            </button>
+                            <button type="submit" class="staff-btn-outline edit-workout-input-delete"
+                                formaction="delete_current_exercise.php">
+                                Delete
+                            </button>
+                        </form>
+                    <?php endif; ?>
                 <?php endforeach; ?>
                 <form action="add_exercise.php" method="POST">
                     <button type="submit" class="staff-btn-secondary-black edit-workout-add-exercise">
@@ -99,5 +117,6 @@ auth_required_guard("wnmp", "/staff/login");
         </div>
     </div>
 </main>
+
 
 <?php require_once "../../../includes/footer.php"; ?>

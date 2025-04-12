@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 require_once "../../auth-guards.php";
-auth_not_required_guard("/rat");
+auth_not_required_guard("rat", "/rat");
 
 $fname = htmlspecialchars($_POST['fname']);
 $lname = htmlspecialchars($_POST['lname']);
@@ -44,9 +44,10 @@ require_once "../../uploads.php";
 $avatar = $_FILES['avatar']['name'] ? $_FILES['avatar'] : null;
 if ($avatar) {
     // upload to temp folder
-    $avatar = upload_file("tmp/customer-avatars", $avatar);
-    if (!$avatar) {
-        redirect_with_error_alert("Failed to upload avatar due to an error: failed to upload file", "/rat/register");
+    try {
+        $avatar = upload_file("tmp/customer-avatars", $avatar);
+    } catch (\Throwable $th) {
+        redirect_with_error_alert("Failed to upload avatar due to an error: " . $th->getMessage(), "/rat/register");
     }
 }
 
@@ -105,4 +106,4 @@ try {
     redirect_with_error_alert("Failed to send email due to error: " . $e->getMessage(), "/rat/register");
 }
 
-redirect_with_info_alert("Email verification request sent. Please check your email", "/rat/register/email-verification");
+redirect_with_success_alert("Email verification request sent. Please check your email", "/rat/register/email-verification");

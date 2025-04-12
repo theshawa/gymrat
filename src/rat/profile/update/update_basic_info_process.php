@@ -37,9 +37,10 @@ if ($updated_avatar !== $user->avatar) {
     $avatar = $_FILES['avatar']['name'] ? $_FILES['avatar'] : null;
     if ($avatar) {
         // upload new avatar
-        $avatar = upload_file("customer-avatars", $avatar);
-        if (!$avatar) {
-            redirect_with_error_alert("Failed to update avatar due to an error: failed to upload file", "./");
+        try {
+            $avatar = upload_file("customer-avatars", $avatar);
+        } catch (Exception $e) {
+            redirect_with_error_alert("Failed to update avatar due to an error: " . $e->getMessage(), "./");
         }
         $user->avatar = $avatar;
     } else {

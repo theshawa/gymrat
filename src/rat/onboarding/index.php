@@ -87,7 +87,7 @@ require_once "../includes/header.php";
         </div>
         <div class="question">
             <span class="title">Your dietary preferences?</span>
-            <select name="dietary_preferences" class="input">
+            <select name="dietary_preference" class="input">
                 <option value="vegitarian">Vegitarian</option>
                 <option value="non_vegitarian">Non-vegitarian</option>
                 <option value="gluten_free">Gluten - Free</option>

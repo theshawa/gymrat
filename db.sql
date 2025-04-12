@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql_db:3306
--- Generation Time: Apr 12, 2025 at 05:01 AM
+-- Generation Time: Apr 12, 2025 at 08:06 AM
 -- Server version: 9.2.0
 -- PHP Version: 8.2.27
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `gymrat`
 --
-CREATE DATABASE IF NOT EXISTS `gymrat` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `gymrat`;
 
 -- --------------------------------------------------------
 
@@ -31,8 +29,8 @@ USE `gymrat`;
 
 CREATE TABLE `complaints` (
   `id` int NOT NULL,
-  `type` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `user_id` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `is_created_by_trainer` tinyint(1) NOT NULL DEFAULT '0'
@@ -57,12 +55,12 @@ INSERT INTO `complaints` (`id`, `type`, `description`, `user_id`, `created_at`, 
 
 CREATE TABLE `customers` (
   `id` int NOT NULL,
-  `fname` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `lname` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(120) COLLATE utf8mb4_general_ci NOT NULL,
-  `phone` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(60) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'https://stackoverflow.com/questions/247304/what-data-type-to-use-for-hashed-password-field-and-what-length',
-  `avatar` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `fname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `lname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'https://stackoverflow.com/questions/247304/what-data-type-to-use-for-hashed-password-field-and-what-length',
+  `avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `onboarded` tinyint(1) NOT NULL DEFAULT '0',
   `membership_plan` int NOT NULL,
   `membership_plan_activated_at` timestamp NULL DEFAULT NULL,
@@ -82,7 +80,7 @@ INSERT INTO `customers` (`id`, `fname`, `lname`, `email`, `phone`, `password`, `
 (23, 'Rona', 'New', 'ronanew@gmail.com', '001223', '$2y$10$lxeC2LN4GFaXnEhsiW47AetY83yQAH2afBvquuDZaEncUB1HMt.4a', NULL, 1, 14, '2024-11-26 05:02:27', NULL, NULL, '2024-11-26 09:31:35', '2024-11-26 09:31:35'),
 (25, 'Emily', 'Carter', 'emily.carter@example.com', '0771234567', '$2y$10$oNFBPqdhK6HK/EICyTB9JugEoGzqcn.Y.s/RZkLi0zaIIyQHpgBWW', NULL, 1, 14, '2025-04-11 20:15:18', 1, NULL, '2024-11-27 10:44:59', '2024-11-27 10:44:59'),
 (26, 'Liam', 'Johnson', 'liam.johnson@example.co.uk', '0771234568', '$2y$10$v0Hl20SW7r.tQNutvfKAhep6WktBBZqtNjH74nZXwGnzaalwMIRU.', 'customer-avatars/6746fda47d8c2.jpg', 1, 18, '2024-11-27 11:08:44', 3, NULL, '2024-11-27 11:08:30', '2024-11-27 11:08:30'),
-(28, 'Theshawa', 'Nimantha', 'mrclocktd@gmail.com', '0766743755', '$2y$10$.z7fm3Zh4KdQffbAwlhMhO346QekcWxvE4Zo.8LZgTudOX7iyYIGa', NULL, 1, 14, '2025-01-11 23:49:09', NULL, NULL, '2025-01-12 04:16:50', '2025-01-12 07:07:44');
+(30, 'Theshawa', 'Nimantha', 'mrclocktd@gmail.com', '0766743755', '$2y$10$FVx1kGvBRN0e7HgMkQEyDuosucLqiubWLWrDUn1N1.qi3gVgxtle6', 'customer-avatars/67fa1eaa3e36c.jpg', 1, 14, '2025-04-12 07:06:54', NULL, NULL, '2025-04-12 07:06:41', '2025-04-12 07:06:41');
 
 -- --------------------------------------------------------
 
@@ -91,11 +89,38 @@ INSERT INTO `customers` (`id`, `fname`, `lname`, `email`, `phone`, `password`, `
 --
 
 CREATE TABLE `customer_email_verification_requests` (
-  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `code` varchar(6) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `code` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `creation_attempt` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_initial_data`
+--
+
+CREATE TABLE `customer_initial_data` (
+  `customer_id` int NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `age` int NOT NULL,
+  `goal` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `other_goal` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `height` float NOT NULL,
+  `weight` float NOT NULL,
+  `physical_activity_level` varchar(255) NOT NULL,
+  `dietary_preference` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `allergies` text NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `customer_initial_data`
+--
+
+INSERT INTO `customer_initial_data` (`customer_id`, `gender`, `age`, `goal`, `other_goal`, `height`, `weight`, `physical_activity_level`, `dietary_preference`, `allergies`, `created_at`) VALUES
+(30, 'male', 24, 'other', 'hasd asd asd sad sa dasasd ', 123, 123, 'beginner', 'gluten_free', '123adsads', '2025-04-12 07:37:03');
 
 -- --------------------------------------------------------
 
@@ -104,8 +129,8 @@ CREATE TABLE `customer_email_verification_requests` (
 --
 
 CREATE TABLE `customer_password_reset_requests` (
-  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `code` varchar(6) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `code` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `creation_attempt` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -118,11 +143,11 @@ CREATE TABLE `customer_password_reset_requests` (
 
 CREATE TABLE `equipments` (
   `id` int NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
-  `manufacturer` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `image` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `manufacturer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `purchase_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_maintenance` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -150,16 +175,16 @@ INSERT INTO `equipments` (`id`, `name`, `type`, `description`, `manufacturer`, `
 
 CREATE TABLE `exercises` (
   `id` int NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
-  `video_link` varchar(255) COLLATE utf8mb4_general_ci DEFAULT 'https://www.youtube.com/watch?v=a3ICNMQW7Ok',
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `video_link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'https://www.youtube.com/watch?v=a3ICNMQW7Ok',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
-  `muscle_group` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `difficulty_level` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `type` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `equipment_needed` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `muscle_group` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `difficulty_level` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `equipment_needed` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -184,8 +209,8 @@ INSERT INTO `exercises` (`id`, `name`, `description`, `video_link`, `created_at`
 
 CREATE TABLE `membership_plans` (
   `id` int NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `price` int NOT NULL,
   `duration` int NOT NULL COMMENT 'In days',
   `is_locked` tinyint(1) NOT NULL DEFAULT '1',
@@ -211,10 +236,10 @@ INSERT INTO `membership_plans` (`id`, `name`, `description`, `price`, `duration`
 
 CREATE TABLE `staff` (
   `id` int NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `role` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `role` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -264,8 +289,8 @@ INSERT INTO `trainers` (`id`, `fname`, `lname`, `username`, `password`, `avatar`
 
 CREATE TABLE `workouts` (
   `id` int NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `duration` int NOT NULL COMMENT 'In Days',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -348,6 +373,12 @@ ALTER TABLE `customer_email_verification_requests`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indexes for table `customer_initial_data`
+--
+ALTER TABLE `customer_initial_data`
+  ADD PRIMARY KEY (`customer_id`);
+
+--
 -- Indexes for table `customer_password_reset_requests`
 --
 ALTER TABLE `customer_password_reset_requests`
@@ -421,7 +452,7 @@ ALTER TABLE `complaints`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `equipments`
@@ -474,6 +505,12 @@ ALTER TABLE `workout_sessions`
 --
 ALTER TABLE `customers`
   ADD CONSTRAINT `customer_workout` FOREIGN KEY (`workout`) REFERENCES `workouts` (`id`) ON DELETE CASCADE ON UPDATE SET NULL;
+
+--
+-- Constraints for table `customer_initial_data`
+--
+ALTER TABLE `customer_initial_data`
+  ADD CONSTRAINT `fk_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
 
 --
 -- Constraints for table `workout_exercises`

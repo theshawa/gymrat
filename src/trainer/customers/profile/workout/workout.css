@@ -1,0 +1,186 @@
+.workout-page {
+    padding: 20px;
+    padding-top: 10px;
+}
+
+/* Top action bar with Request Edit button */
+.top-action {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+.request-edit-btn {
+    background-color: #52525B;
+    color: #F4F4F5;
+    border: 1px solid #09090B;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.request-edit-btn.save-btn {
+    background-color: #6700E6;
+    border-color: #7200FF;
+}
+
+.request-edit-btn.cancel-btn {
+    background-color: #3F3F46;
+    margin-left: 10px;
+}
+
+/* Exercise list styling */
+.exercise-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.exercise-item {
+    background-color: #18181B;
+    border-radius: 10px;
+    padding: 13px 15px;
+}
+
+.exercise-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.exercise-name {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.005em;
+    color: #FFFFFF;
+}
+
+.exercise-sets {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.005em;
+    color: #FFFFFF;
+}
+
+/* Edit mode styles */
+.exercise-item.editable {
+    background-color: #27272A;
+}
+
+.exercise-input {
+    background-color: #18181B;
+    border: 1px solid #3F3F46;
+    color: #FFFFFF;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-family: 'DM Sans', sans-serif;
+    width: 140px;
+}
+
+.sets-reps-inputs {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #FFFFFF;
+}
+
+.sets-input,
+.reps-input {
+    background-color: #18181B;
+    border: 1px solid #3F3F46;
+    color: #FFFFFF;
+    padding: 8px;
+    width: 50px;
+    border-radius: 6px;
+    font-size: 16px;
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.remove-exercise {
+    background-color: #D53A3A;
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+}
+
+.add-exercise-btn {
+    background-color: #6700E6;
+    color: #FFFFFF;
+    border: 1px solid #7200FF;
+    border-radius: 10px;
+    padding: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Notification for successful update */
+.notification {
+    background-color: rgba(114, 0, 255, 0.2);
+    border: 1px solid #7200FF;
+    border-radius: 10px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    animation: fadeOut 5s forwards;
+}
+
+.notification.success {
+    background-color: rgba(52, 211, 153, 0.2);
+    border-color: #34D399;
+}
+
+.notification p {
+    color: #FFFFFF;
+    text-align: center;
+    margin: 0;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 400px) {
+    .workout-page {
+        padding: 15px 10px;
+    }
+
+    .exercise-input {
+        width: 120px;
+    }
+}

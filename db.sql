@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql_db:3306
--- Generation Time: Apr 12, 2025 at 04:23 PM
+-- Generation Time: Apr 12, 2025 at 08:00 PM
 -- Server version: 9.2.0
 -- PHP Version: 8.2.27
 
@@ -219,6 +219,93 @@ INSERT INTO `exercises` (`id`, `name`, `description`, `video_link`, `created_at`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `mealplans`
+--
+
+CREATE TABLE `mealplans` (
+  `id` int NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text,
+  `duration` int NOT NULL COMMENT 'Duration in days',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `mealplans`
+--
+
+INSERT INTO `mealplans` (`id`, `name`, `description`, `duration`, `created_at`, `updated_at`) VALUES
+(1, 'Weight Loss Plan', 'A balanced meal plan designed for weight loss with calorie deficit', 30, '2025-03-01 18:28:49', '2025-03-03 07:53:07'),
+(2, 'Muscle Building', 'High protein meal plan to support muscle growth and recovery', 14, '2025-03-01 18:28:49', '2025-03-01 18:28:49'),
+(3, 'Vegetarian Essentials', 'Plant-based complete nutrition plan', 7, '2025-03-01 18:28:49', '2025-03-01 18:28:49');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mealplan_meals`
+--
+
+CREATE TABLE `mealplan_meals` (
+  `id` int NOT NULL,
+  `mealplan_id` int NOT NULL,
+  `meal_id` int NOT NULL,
+  `day` varchar(10) NOT NULL COMMENT 'Monday, Tuesday, etc.',
+  `time` varchar(20) NOT NULL COMMENT 'Breakfast, Lunch, Dinner',
+  `amount` int NOT NULL COMMENT 'Amount/portion of the meal',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `mealplan_meals`
+--
+
+INSERT INTO `mealplan_meals` (`id`, `mealplan_id`, `meal_id`, `day`, `time`, `amount`, `created_at`, `updated_at`) VALUES
+(1, 1, 5, 'Monday', 'Breakfast', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
+(2, 1, 4, 'Monday', 'Lunch', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
+(3, 1, 3, 'Monday', 'Dinner', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
+(4, 1, 2, 'Tuesday', 'Breakfast', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
+(5, 1, 5, 'Tuesday', 'Lunch', 1, '2025-03-01 18:29:01', '2025-03-02 12:50:55'),
+(6, 1, 2, 'Saturday', 'Lunch', 1, '2025-03-01 18:29:01', '2025-03-02 12:50:55'),
+(7, 2, 4, 'Monday', 'Breakfast', 2, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
+(8, 2, 3, 'Monday', 'Lunch', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
+(9, 2, 3, 'Monday', 'Dinner', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
+(10, 3, 2, 'Monday', 'Breakfast', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
+(11, 3, 5, 'Monday', 'Lunch', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
+(12, 3, 2, 'Monday', 'Dinner', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `meals`
+--
+
+CREATE TABLE `meals` (
+  `id` int NOT NULL,
+  `description` text,
+  `name` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `calories` int DEFAULT NULL,
+  `proteins` int DEFAULT NULL,
+  `fats` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `meals`
+--
+
+INSERT INTO `meals` (`id`, `description`, `name`, `image`, `calories`, `proteins`, `fats`, `created_at`, `updated_at`) VALUES
+(2, 'Oatmeal topped with fresh fruits and nuts', 'Fruit Oatmeal Bowl', '', 300, 10, 10, '2025-02-26 12:45:26', '2025-04-12 19:59:50'),
+(3, 'Salmon fillet with roasted sweet potatoes and asparagus', 'Salmon Delight', '', 500, 35, 20, '2025-02-26 12:45:26', '2025-02-26 12:45:26'),
+(4, 'Protein shake with banana, peanut butter, and almond milk', 'Protein Shake', '', 250, 25, 10, '2025-02-26 12:45:26', '2025-02-26 12:45:26'),
+(5, 'Avocado toast with a poached egg on whole-grain bread', 'Avocado Toast', '', 350, 15, 18, '2025-02-26 12:45:26', '2025-02-26 12:45:26');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `membership_plans`
 --
 
@@ -425,6 +512,26 @@ ALTER TABLE `exercises`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `mealplans`
+--
+ALTER TABLE `mealplans`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `mealplan_meals`
+--
+ALTER TABLE `mealplan_meals`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_meal_in_plan` (`mealplan_id`,`day`,`time`,`meal_id`),
+  ADD KEY `meal_id` (`meal_id`);
+
+--
+-- Indexes for table `meals`
+--
+ALTER TABLE `meals`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `membership_plans`
 --
 ALTER TABLE `membership_plans`
@@ -495,6 +602,24 @@ ALTER TABLE `exercises`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `mealplans`
+--
+ALTER TABLE `mealplans`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `mealplan_meals`
+--
+ALTER TABLE `mealplan_meals`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT for table `meals`
+--
+ALTER TABLE `meals`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `membership_plans`
 --
 ALTER TABLE `membership_plans`
@@ -545,6 +670,13 @@ ALTER TABLE `customers`
 --
 ALTER TABLE `customer_initial_data`
   ADD CONSTRAINT `fk_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
+
+--
+-- Constraints for table `mealplan_meals`
+--
+ALTER TABLE `mealplan_meals`
+  ADD CONSTRAINT `mealplan_meals_ibfk_1` FOREIGN KEY (`mealplan_id`) REFERENCES `mealplans` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `mealplan_meals_ibfk_2` FOREIGN KEY (`meal_id`) REFERENCES `meals` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `workout_exercises`

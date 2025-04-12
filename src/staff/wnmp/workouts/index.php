@@ -1,5 +1,8 @@
 <?php
 
+require_once "../../../auth-guards.php";
+auth_required_guard("wnmp", "/staff/login");
+
 $pageTitle = "Workouts";
 $sidebarActive = 3;
 $menuBarConfig = [
@@ -39,9 +42,6 @@ $pageConfig['styles'][] = "./workouts.css";
 
 require_once "../../includes/header.php";
 require_once "../../includes/sidebar.php";
-
-require_once "../../../auth-guards.php";
-auth_required_guard("wnmp", "/staff/login");
 ?>
 
 <main>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jan 12, 2025 at 08:27 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: mysql_db:3306
+-- Generation Time: Apr 12, 2025 at 05:01 AM
+-- Server version: 9.2.0
+-- PHP Version: 8.2.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `gymrat`
 --
+CREATE DATABASE IF NOT EXISTS `gymrat` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `gymrat`;
 
 -- --------------------------------------------------------
 
@@ -28,12 +30,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `complaints` (
-  `id` int(11) NOT NULL,
-  `type` varchar(100) NOT NULL,
-  `description` varchar(500) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `is_created_by_trainer` tinyint(1) NOT NULL DEFAULT 0
+  `id` int NOT NULL,
+  `type` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_id` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_created_by_trainer` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -54,20 +56,20 @@ INSERT INTO `complaints` (`id`, `type`, `description`, `user_id`, `created_at`, 
 --
 
 CREATE TABLE `customers` (
-  `id` int(11) NOT NULL,
-  `fname` varchar(100) NOT NULL,
-  `lname` varchar(100) NOT NULL,
-  `email` varchar(120) NOT NULL,
-  `phone` varchar(15) NOT NULL,
-  `password` varchar(60) NOT NULL COMMENT 'https://stackoverflow.com/questions/247304/what-data-type-to-use-for-hashed-password-field-and-what-length',
-  `avatar` varchar(100) DEFAULT NULL,
-  `onboarded` tinyint(1) NOT NULL DEFAULT 0,
-  `membership_plan` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `fname` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `lname` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(120) COLLATE utf8mb4_general_ci NOT NULL,
+  `phone` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(60) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'https://stackoverflow.com/questions/247304/what-data-type-to-use-for-hashed-password-field-and-what-length',
+  `avatar` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `onboarded` tinyint(1) NOT NULL DEFAULT '0',
+  `membership_plan` int NOT NULL,
   `membership_plan_activated_at` timestamp NULL DEFAULT NULL,
-  `workout` int(11) DEFAULT NULL COMMENT 'add related workout id',
-  `meal_plan` int(11) DEFAULT NULL COMMENT 'add related meal plan id',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `workout` int DEFAULT NULL COMMENT 'add related workout id',
+  `meal_plan` int DEFAULT NULL COMMENT 'add related meal plan id',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -78,7 +80,7 @@ INSERT INTO `customers` (`id`, `fname`, `lname`, `email`, `phone`, `password`, `
 (21, 'Craig', 'Bricknell', 'ron@gmail.com', '119', '$2y$10$FjUeSnitJt4GslR2H9IZVu6D4EmW//tSxD0lkDvP30se3UN0ipDFa', 'customer-avatars/67459044d47b9.jpeg', 1, 14, '2024-11-26 04:40:06', NULL, NULL, '2024-11-26 09:09:46', '2024-11-26 09:09:46'),
 (22, 'Craig', 'Boss', 'craig@gmail.com', '119', '$2y$10$zLuimhijl2g7jyPLbO6rB.BghjmFeyUAAfdqopHhsD7RDqOLkCYNS', 'customer-avatars/67459114de138.jpeg', 1, 14, '2024-11-26 04:43:16', NULL, NULL, '2024-11-26 09:13:04', '2024-11-26 09:13:04'),
 (23, 'Rona', 'New', 'ronanew@gmail.com', '001223', '$2y$10$lxeC2LN4GFaXnEhsiW47AetY83yQAH2afBvquuDZaEncUB1HMt.4a', NULL, 1, 14, '2024-11-26 05:02:27', NULL, NULL, '2024-11-26 09:31:35', '2024-11-26 09:31:35'),
-(25, 'Emily', 'Carter', 'emily.carter@example.com', '0771234567', '$2y$10$oNFBPqdhK6HK/EICyTB9JugEoGzqcn.Y.s/RZkLi0zaIIyQHpgBWW', NULL, 1, 17, '2024-11-27 11:06:31', 1, NULL, '2024-11-27 10:44:59', '2024-11-27 10:44:59'),
+(25, 'Emily', 'Carter', 'emily.carter@example.com', '0771234567', '$2y$10$oNFBPqdhK6HK/EICyTB9JugEoGzqcn.Y.s/RZkLi0zaIIyQHpgBWW', NULL, 1, 14, '2025-04-11 20:15:18', 1, NULL, '2024-11-27 10:44:59', '2024-11-27 10:44:59'),
 (26, 'Liam', 'Johnson', 'liam.johnson@example.co.uk', '0771234568', '$2y$10$v0Hl20SW7r.tQNutvfKAhep6WktBBZqtNjH74nZXwGnzaalwMIRU.', 'customer-avatars/6746fda47d8c2.jpg', 1, 18, '2024-11-27 11:08:44', 3, NULL, '2024-11-27 11:08:30', '2024-11-27 11:08:30'),
 (28, 'Theshawa', 'Nimantha', 'mrclocktd@gmail.com', '0766743755', '$2y$10$.z7fm3Zh4KdQffbAwlhMhO346QekcWxvE4Zo.8LZgTudOX7iyYIGa', NULL, 1, 14, '2025-01-11 23:49:09', NULL, NULL, '2025-01-12 04:16:50', '2025-01-12 07:07:44');
 
@@ -89,10 +91,10 @@ INSERT INTO `customers` (`id`, `fname`, `lname`, `email`, `phone`, `password`, `
 --
 
 CREATE TABLE `customer_email_verification_requests` (
-  `email` varchar(100) NOT NULL,
-  `code` varchar(6) NOT NULL,
-  `creation_attempt` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `code` varchar(6) COLLATE utf8mb4_general_ci NOT NULL,
+  `creation_attempt` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -102,10 +104,10 @@ CREATE TABLE `customer_email_verification_requests` (
 --
 
 CREATE TABLE `customer_password_reset_requests` (
-  `email` varchar(100) NOT NULL,
-  `code` varchar(6) NOT NULL,
-  `creation_attempt` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `code` varchar(6) COLLATE utf8mb4_general_ci NOT NULL,
+  `creation_attempt` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -115,16 +117,16 @@ CREATE TABLE `customer_password_reset_requests` (
 --
 
 CREATE TABLE `equipments` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `description` varchar(500) NOT NULL,
-  `manufacturer` varchar(255) NOT NULL,
-  `image` varchar(500) DEFAULT NULL,
-  `purchase_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `last_maintenance` timestamp NOT NULL DEFAULT current_timestamp(),
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id` int NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `manufacturer` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `purchase_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_maintenance` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -147,17 +149,17 @@ INSERT INTO `equipments` (`id`, `name`, `type`, `description`, `manufacturer`, `
 --
 
 CREATE TABLE `exercises` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `description` varchar(500) NOT NULL,
-  `video_link` varchar(255) DEFAULT 'https://www.youtube.com/watch?v=a3ICNMQW7Ok',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `image` varchar(255) NOT NULL DEFAULT '',
-  `muscle_group` varchar(255) NOT NULL,
-  `difficulty_level` varchar(100) NOT NULL,
-  `type` varchar(100) NOT NULL,
-  `equipment_needed` varchar(255) NOT NULL
+  `id` int NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `video_link` varchar(255) COLLATE utf8mb4_general_ci DEFAULT 'https://www.youtube.com/watch?v=a3ICNMQW7Ok',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `muscle_group` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `difficulty_level` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `type` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `equipment_needed` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -181,14 +183,14 @@ INSERT INTO `exercises` (`id`, `name`, `description`, `video_link`, `created_at`
 --
 
 CREATE TABLE `membership_plans` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `description` varchar(500) NOT NULL,
-  `price` int(11) NOT NULL,
-  `duration` int(11) NOT NULL COMMENT 'In days',
-  `is_locked` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id` int NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `price` int NOT NULL,
+  `duration` int NOT NULL COMMENT 'In days',
+  `is_locked` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -208,13 +210,13 @@ INSERT INTO `membership_plans` (`id`, `name`, `description`, `price`, `duration`
 --
 
 CREATE TABLE `staff` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `role` varchar(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id` int NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `role` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -232,16 +234,41 @@ INSERT INTO `staff` (`id`, `name`, `email`, `password`, `role`, `created_at`, `u
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `trainers`
+--
+
+CREATE TABLE `trainers` (
+  `id` int NOT NULL,
+  `fname` varchar(255) NOT NULL,
+  `lname` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `avatar` blob,
+  `bio` text NOT NULL,
+  `rating` float DEFAULT '0',
+  `review_count` int DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `trainers`
+--
+
+INSERT INTO `trainers` (`id`, `fname`, `lname`, `username`, `password`, `avatar`, `bio`, `rating`, `review_count`) VALUES
+(1, 'Cos', 'Mama', 'john', '$2y$12$DqWWm8SbOhtT2.P0NEUkoO6YEou.4fKDxUnLSDX4X8Xqv1tzGBUXW', NULL, 'Default trainer account with expertise in strength training and cardio.', 4.8, 483);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `workouts`
 --
 
 CREATE TABLE `workouts` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `description` varchar(500) NOT NULL,
-  `duration` int(11) NOT NULL COMMENT 'In Days',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id` int NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `duration` int NOT NULL COMMENT 'In Days',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -260,12 +287,12 @@ INSERT INTO `workouts` (`id`, `name`, `description`, `duration`, `created_at`, `
 --
 
 CREATE TABLE `workout_exercises` (
-  `id` int(11) NOT NULL,
-  `workout_id` int(11) NOT NULL,
-  `exercise_id` int(11) NOT NULL,
-  `day` int(11) NOT NULL,
-  `sets` int(11) NOT NULL,
-  `reps` int(11) NOT NULL
+  `id` int NOT NULL,
+  `workout_id` int NOT NULL,
+  `exercise_id` int NOT NULL,
+  `day` int NOT NULL,
+  `sets` int NOT NULL,
+  `reps` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -289,10 +316,10 @@ INSERT INTO `workout_exercises` (`id`, `workout_id`, `exercise_id`, `day`, `sets
 --
 
 CREATE TABLE `workout_sessions` (
-  `id` int(11) NOT NULL,
-  `user` int(11) NOT NULL,
-  `workout` int(11) NOT NULL,
-  `started_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id` int NOT NULL,
+  `user` int NOT NULL,
+  `workout` int NOT NULL,
+  `started_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ended_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -352,6 +379,13 @@ ALTER TABLE `staff`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Indexes for table `trainers`
+--
+ALTER TABLE `trainers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
 -- Indexes for table `workouts`
 --
 ALTER TABLE `workouts`
@@ -381,49 +415,55 @@ ALTER TABLE `workout_sessions`
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `equipments`
 --
 ALTER TABLE `equipments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `exercises`
 --
 ALTER TABLE `exercises`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `membership_plans`
 --
 ALTER TABLE `membership_plans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `trainers`
+--
+ALTER TABLE `trainers`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `workouts`
 --
 ALTER TABLE `workouts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `workout_exercises`
 --
 ALTER TABLE `workout_exercises`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `workout_sessions`
 --
 ALTER TABLE `workout_sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

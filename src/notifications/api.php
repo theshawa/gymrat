@@ -12,25 +12,25 @@ function get(int $user_id, string $user_type): array
     $notification = new Notification();
     try {
         $data =  $notification->get_all_of_user($user_id, $user_type);
+        return [
+            "success" => true,
+            "data" => array_map(function ($notification) {
+                return [
+                    "id" => $notification->id,
+                    "title" => $notification->title,
+                    "message" => $notification->message,
+                    "created_at" => $notification->created_at->format("Y-m-d H:i:s"),
+                    "valid_till" => $notification->valid_till ? $notification->valid_till->format("Y-m-d H:i:s") : null,
+                    "is_read" => $notification->is_read,
+                ];
+            }, $data),
+        ];
     } catch (\Throwable $th) {
         return [
             "success" => false,
             "data" => $th->getMessage(),
         ];
     }
-
-    return [
-        "success" => true,
-        "data" => array_map(function ($notification) {
-            return [
-                "id" => $notification->id,
-                "title" => $notification->title,
-                "message" => $notification->message,
-                "created_at" => $notification->created_at->format("Y-m-d H:i:s"),
-                "valid_till" => $notification->valid_till ? $notification->valid_till->format("Y-m-d H:i:s") : null,
-            ];
-        }, $data),
-    ];
 }
 
 function delete(int $user_id, string $user_type)
@@ -38,17 +38,16 @@ function delete(int $user_id, string $user_type)
     $notification = new NotificationUser();
     try {
         $notification->delete_all_of_user($user_id, $user_type);
+        return [
+            "success" => true,
+            "data" => "deleted",
+        ];
     } catch (Exception $th) {
         return [
             "success" => false,
             "data" => $th->getMessage(),
         ];
     }
-
-    return [
-        "success" => true,
-        "data" => "deleted",
-    ];
 }
 
 $method = $_SERVER["REQUEST_METHOD"];

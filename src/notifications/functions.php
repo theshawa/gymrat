@@ -19,7 +19,6 @@ function __new_notification_to_users(string $user_type, array $user_ids, string 
             "user_id" => $user_id,
             "notification_id" => $notification->id,
             "user_type" => $user_type,
-            "is_read" => false,
         ]);
         return $notification_user;
     }, $user_ids);
@@ -28,9 +27,9 @@ function __new_notification_to_users(string $user_type, array $user_ids, string 
     $notification_user->bulk_create($notification_users);
 }
 
-function new_notification_to_customers(array $customer_ids, string $title, string $message, ?DateTime $valid_till)
+function new_notification_to_rats(array $rat_ids, string $title, string $message, ?DateTime $valid_till)
 {
-    __new_notification_to_users("customer", $customer_ids, $title, $message, $valid_till);
+    __new_notification_to_users("rat", $rat_ids, $title, $message, $valid_till);
 }
 
 function new_notification_to_trainers(array $trainer_ids, string $title, string $message, ?DateTime $valid_till)

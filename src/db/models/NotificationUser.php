@@ -18,7 +18,7 @@ class NotificationUser extends Model
         $this->user_id = $data['user_id'] ?? 0;
         $this->notification_id = $data['notification_id'] ?? "";
         $this->user_type = $data['user_type'] ?? "";
-        $this->is_read = $data['is_read'] ?? false;
+        $this->is_read = $data['is_read'] ?? 0;
     }
 
     public function get_all_of_notification(int $notification_id)
@@ -38,13 +38,12 @@ class NotificationUser extends Model
 
     public function create()
     {
-        $sql = "INSERT INTO $this->table (user_id, notification_id, user_type, is_read) VALUES (:user_id, :notification_id, :user_type, :is_read)";
+        $sql = "INSERT INTO $this->table (user_id, notification_id, user_type) VALUES (:user_id, :notification_id, :user_type)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'user_id' => $this->user_id,
             'notification_id' => $this->notification_id,
             'user_type' => $this->user_type,
-            'is_read' => $this->is_read,
         ]);
     }
 
@@ -52,14 +51,13 @@ class NotificationUser extends Model
     {
         $this->conn->beginTransaction();
         try {
-            $sql = "INSERT INTO $this->table (user_id, notification_id, user_type, is_read) VALUES (:user_id, :notification_id, :user_type, :is_read)";
+            $sql = "INSERT INTO $this->table (user_id, notification_id, user_type) VALUES (:user_id, :notification_id, :user_type)";
             $stmt = $this->conn->prepare($sql);
             foreach ($notifications as $notification) {
                 $stmt->execute([
                     'user_id' => $notification->user_id,
                     'notification_id' => $notification->notification_id,
                     'user_type' => $notification->user_type,
-                    'is_read' => false,
                 ]);
             }
             $this->conn->commit();
@@ -80,12 +78,14 @@ class NotificationUser extends Model
         ]);
     }
 
-    public function mark_as_read(int $id)
+    public function mark_as_read()
     {
-        $sql = "UPDATE $this->table SET is_read = 1 WHERE id = :id";
+        $sql = "UPDATE $this->table SET is_read = 1 WHERE notification_id = :notification_id AND user_id = :user_id AND user_type = :user_type";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
-            'id' => $id,
+            'notification_id' => $this->notification_id,
+            'user_id' => $this->user_id,
+            'user_type' => $this->user_type,
         ]);
     }
 

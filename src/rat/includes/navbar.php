@@ -29,14 +29,16 @@ $active = $pageConfig['navbar_active'] ?? null;
 </div>
 
 <script>
-    const notifications_count = document.querySelector("a[href='/rat/notifications/index.php'] span.count");
-    when_notifications_update = () => {
-        if (notifications.unread_count) {
-            notifications_count.innerText = notifications.unread_count;
-            notifications_count.classList.add("active");
+    const notifications_count_span = document.querySelector("a[href='/rat/notifications/index.php'] span.count");
+    const when_notifications_update = (_, unread_count) => {
+        if (unread_count) {
+            notifications_count_span.innerText = unread_count;
+            notifications_count_span.classList.add("active");
         } else {
-            notifications_count.innerText = "";
-            notifications_count.classList.remove("active");
+            notifications_count_span.innerText = "";
+            notifications_count_span.classList.remove("active");
         }
     }
+    init_notifications();
+    notification_listeners.add_listener(when_notifications_update);
 </script>

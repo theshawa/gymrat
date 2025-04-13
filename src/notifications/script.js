@@ -1,16 +1,8 @@
-const notifications = {
-  items: [],
-  unread_count: 0,
-};
-
-let when_notifications_update = () => {};
-
-const set_notifications = (data) => {
-  notifications.items = data;
-  notifications.unread_count = data.filter(
-    (notification) => !notification.is_read
-  ).length;
-  when_notifications_update();
+const notification_listeners = {
+  listners: [],
+  add_listener: function (listner) {
+    this.listners.push(listner);
+  },
 };
 
 const fetch_notifications = async () => {
@@ -18,11 +10,18 @@ const fetch_notifications = async () => {
     method: "GET",
   });
   const { success, data } = await res.json();
+
   if (!success) {
-    alert("Error fetching notifications: " + data.message);
+    alert("Error fetching notifications: " + data);
     return;
   }
-  set_notifications(data);
+
+  const unread_count = data.filter(
+    (notification) => !notification.is_read
+  ).length;
+  notification_listeners.listners.forEach((listner) => {
+    listner(data, unread_count);
+  });
 };
 
 const delete_notifications = async () => {
@@ -34,17 +33,22 @@ const delete_notifications = async () => {
     alert("Error deleting notifications: " + data.message);
     return;
   }
-  set_notifications([]);
+
+  notification_listeners.listners.forEach((listner) => {
+    listner([], 0);
+  });
 };
-
 let interval;
-window.addEventListener("DOMContentLoaded", () => {
-  interval = setInterval(() => {
-    fetch_notifications();
-  }, 5000);
-  fetch_notifications();
-});
 
-window.addEventListener("beforeunload", () => {
-  clearInterval(interval);
-});
+function init_notifications(cb) {
+  window.addEventListener("DOMContentLoaded", async () => {
+    interval = setInterval(async () => {
+      await fetch_notifications();
+    }, 5000);
+    await fetch_notifications();
+  });
+
+  window.addEventListener("beforeunload", () => {
+    clearInterval(interval);
+  });
+}

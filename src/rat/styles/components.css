@@ -229,6 +229,30 @@ main {
   color: var(--color-zinc-50);
 }
 
+.navbar a span.count {
+  position: absolute;
+  top: -2px;
+  right: 0;
+  background-color: var(--color-red);
+  color: var(--color-zinc-50);
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  display: none;
+}
+
+.navbar a span.count.active {
+  display: flex;
+}
+
+.navbar a {
+  position: relative;
+}
+
 /* Form */
 .form {
   display: flex;

@@ -3,6 +3,10 @@
 require_once "../../../auth-guards.php";
 auth_required_guard("wnmp", "/staff/login");
 
+echo '<pre>';
+print_r($_SESSION); // Print all session variables in a readable format
+echo '</pre>';
+
 $pageTitle = "Workouts";
 $sidebarActive = 3;
 $menuBarConfig = [

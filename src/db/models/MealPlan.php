@@ -92,7 +92,7 @@ class MealPlan extends Model
         $stmt->execute(['id' => $this->id]);
     }
 
-    public function get_by_id(int $id = null)
+    public function get_by_id(int $id)
     {
         $id = $id ?? $this->id;
         $sql = "SELECT * FROM $this->table WHERE id = :id LIMIT 1";

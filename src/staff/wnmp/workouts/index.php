@@ -3,9 +3,6 @@
 require_once "../../../auth-guards.php";
 auth_required_guard("wnmp", "/staff/login");
 
-echo '<pre>';
-print_r($_SESSION); // Print all session variables in a readable format
-echo '</pre>';
 
 $pageTitle = "Workouts";
 $sidebarActive = 3;
@@ -13,6 +10,7 @@ $menuBarConfig = [
     "title" => $pageTitle,
     "useLink" => true,
     "options" => [
+        ["title" => "Workout Requests", "href" => "/staff/wnmp/workouts/requests/index.php", "type" => "primary"],
         ["title" => "Create Workout", "href" => "/staff/wnmp/workouts/create/index.php", "type" => "secondary"]
     ]
 ];

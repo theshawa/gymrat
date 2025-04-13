@@ -28,6 +28,18 @@ function start_workout()
     }
 
     $_SESSION['workout_session'] = $workoutSession->id;
+
+    require_once "../../notifications/functions.php";
+    try {
+        new_notification_to_rats(
+            [$_SESSION['auth']['id']],
+            "Workout started",
+            "Your workout has started.",
+            null
+        );
+    } catch (\Throwable $th) {
+        redirect_with_info_alert("Workout started, but failed to send notification: " . $th->getMessage(), "./");
+    }
     redirect_with_success_alert("Workout started successfully.", "./");
 }
 

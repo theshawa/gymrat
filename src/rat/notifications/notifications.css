@@ -9,6 +9,10 @@ main {
   flex-direction: column;
   padding: 10px 20px;
   border-radius: 10px;
+  background-color: var(--color-zinc-800);
+}
+
+.notification.read {
   background-color: var(--color-zinc-900);
 }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql_db:3306
--- Generation Time: Apr 12, 2025 at 08:00 PM
+-- Generation Time: Apr 13, 2025 at 11:48 AM
 -- Server version: 9.2.0
 -- PHP Version: 8.2.27
 
@@ -95,7 +95,7 @@ INSERT INTO `customers` (`id`, `fname`, `lname`, `email`, `phone`, `password`, `
 (23, 'Rona', 'New', 'ronanew@gmail.com', '001223', '$2y$10$lxeC2LN4GFaXnEhsiW47AetY83yQAH2afBvquuDZaEncUB1HMt.4a', NULL, 1, 14, '2024-11-26 05:02:27', NULL, NULL, '2024-11-26 09:31:35', '2024-11-26 09:31:35'),
 (25, 'Emily', 'Carter', 'emily.carter@example.com', '0771234567', '$2y$10$oNFBPqdhK6HK/EICyTB9JugEoGzqcn.Y.s/RZkLi0zaIIyQHpgBWW', NULL, 1, 14, '2025-04-11 20:15:18', 1, NULL, '2024-11-27 10:44:59', '2024-11-27 10:44:59'),
 (26, 'Liam', 'Johnson', 'liam.johnson@example.co.uk', '0771234568', '$2y$10$v0Hl20SW7r.tQNutvfKAhep6WktBBZqtNjH74nZXwGnzaalwMIRU.', 'customer-avatars/6746fda47d8c2.jpg', 1, 18, '2024-11-27 11:08:44', 3, NULL, '2024-11-27 11:08:30', '2024-11-27 11:08:30'),
-(30, 'Theshawa', 'Nimantha', 'mrclocktd@gmail.com', '0766743755', '$2y$10$FVx1kGvBRN0e7HgMkQEyDuosucLqiubWLWrDUn1N1.qi3gVgxtle6', 'customer-avatars/67fa1eaa3e36c.jpg', 1, 14, '2025-04-12 07:06:54', NULL, NULL, '2025-04-12 07:06:41', '2025-04-12 07:06:41');
+(38, 'Theshawa', 'Nimantha', 'mrclocktd@gmail.com', '0766743755', '$2y$10$479CEeEBC4DJGEJIuAijIOql11UUTeopP/uyNTjxrjVaL7TYA1126', 'customer-avatars/67fb98ce0e22d.jpg', 1, 14, '2025-04-13 10:58:49', NULL, NULL, '2025-04-13 10:58:43', '2025-04-13 10:58:43');
 
 -- --------------------------------------------------------
 
@@ -135,7 +135,7 @@ CREATE TABLE `customer_initial_data` (
 --
 
 INSERT INTO `customer_initial_data` (`customer_id`, `gender`, `age`, `goal`, `other_goal`, `height`, `weight`, `physical_activity_level`, `dietary_preference`, `allergies`, `created_at`) VALUES
-(30, 'male', 24, 'other', 'hasd asd asd sad sa dasasd ', 123, 123, 'beginner', 'gluten_free', '123adsads', '2025-04-12 07:37:03');
+(38, 'male', 24, 'weight_loss', '', 123, 122, 'beginner', 'paleo', '', '2025-04-13 10:59:01');
 
 -- --------------------------------------------------------
 
@@ -333,6 +333,33 @@ INSERT INTO `membership_plans` (`id`, `name`, `description`, `price`, `duration`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` int NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `valid_till` date DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notification_user`
+--
+
+CREATE TABLE `notification_user` (
+  `user_id` int NOT NULL,
+  `user_type` enum('rat','trainer') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'rat',
+  `notification_id` int NOT NULL,
+  `is_read` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `staff`
 --
 
@@ -455,7 +482,12 @@ CREATE TABLE `workout_sessions` (
 --
 
 INSERT INTO `workout_sessions` (`id`, `user`, `workout`, `started_at`, `ended_at`) VALUES
-(1, 30, 1, '2025-04-12 08:19:06', '2025-04-12 08:19:14');
+(2, 38, 1, '2025-04-13 11:06:48', '2025-04-13 11:06:54'),
+(3, 38, 1, '2025-04-13 11:06:56', '2025-04-13 11:19:45'),
+(4, 38, 1, '2025-04-13 11:36:58', '2025-04-13 11:37:01'),
+(5, 38, 1, '2025-04-13 11:44:11', '2025-04-13 11:44:37'),
+(6, 38, 1, '2025-04-13 11:45:05', '2025-04-13 11:46:36'),
+(7, 38, 1, '2025-04-13 11:46:38', '2025-04-13 11:47:25');
 
 --
 -- Indexes for dumped tables
@@ -539,6 +571,19 @@ ALTER TABLE `membership_plans`
   ADD UNIQUE KEY `name` (`name`);
 
 --
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notification_user`
+--
+ALTER TABLE `notification_user`
+  ADD PRIMARY KEY (`user_id`,`user_type`,`notification_id`),
+  ADD KEY `fk_notification_user_notification` (`notification_id`);
+
+--
 -- Indexes for table `staff`
 --
 ALTER TABLE `staff`
@@ -587,7 +632,7 @@ ALTER TABLE `complaints`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `equipments`
@@ -626,6 +671,12 @@ ALTER TABLE `membership_plans`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
 -- AUTO_INCREMENT for table `trainers`
 --
 ALTER TABLE `trainers`
@@ -647,7 +698,7 @@ ALTER TABLE `workout_exercises`
 -- AUTO_INCREMENT for table `workout_sessions`
 --
 ALTER TABLE `workout_sessions`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
@@ -669,7 +720,7 @@ ALTER TABLE `customers`
 -- Constraints for table `customer_initial_data`
 --
 ALTER TABLE `customer_initial_data`
-  ADD CONSTRAINT `fk_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
+  ADD CONSTRAINT `fk_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `mealplan_meals`
@@ -677,6 +728,12 @@ ALTER TABLE `customer_initial_data`
 ALTER TABLE `mealplan_meals`
   ADD CONSTRAINT `mealplan_meals_ibfk_1` FOREIGN KEY (`mealplan_id`) REFERENCES `mealplans` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `mealplan_meals_ibfk_2` FOREIGN KEY (`meal_id`) REFERENCES `meals` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `notification_user`
+--
+ALTER TABLE `notification_user`
+  ADD CONSTRAINT `fk_notification_user_notification` FOREIGN KEY (`notification_id`) REFERENCES `notifications` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `workout_exercises`

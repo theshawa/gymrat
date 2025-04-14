@@ -33,7 +33,7 @@ if (!isset($id)) {
 }
 
 $pageConfig = [
-    "title" => "Notification",
+    "title" => $type == "announcement" ? "Announcement" : "Notification",
     "styles" => ["./notifications.css"],
     "titlebar" => [
         "back_url" => "./",

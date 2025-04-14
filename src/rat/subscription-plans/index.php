@@ -1,4 +1,16 @@
 <?php
+
+require_once "../../db/models/MembershipPlan.php";
+require_once "../../alerts/functions.php";
+
+$planModel = new MembershipPlan;
+
+try {
+    $plans = $planModel->get_all();
+} catch (PDOException $e) {
+    redirect_with_error_alert("Failed to fetch plans due to error: " . $e->getMessage(), "./");
+}
+
 $pageConfig = [
     "title" => "Subscription Plans",
     "styles" => [
@@ -10,26 +22,13 @@ $pageConfig = [
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";
 
-require_once "../../db/models/MembershipPlan.php";
-
-
-
-$planModel = new MembershipPlan;
-
-try {
-    $plans = $planModel->get_all();
-} catch (PDOException $e) {
-    redirect_with_error_alert("Failed to fetch plans due to error: " . $e->getMessage(), "./");
-}
-
-
 ?>
 
 <main>
     <p class="paragraph small">
         The following plans are created by the gym owner. Customers have to pay the amount mentioned for each plan to subscribe to that plan.
     </p>
-    <form action="subscribe_process.php" method="post">
+    <form action="checkout.php" method="post">
         <div class="plans">
             <?php foreach ($plans as $i => $plan): ?>
                 <label class="plan">

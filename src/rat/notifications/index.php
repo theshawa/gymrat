@@ -56,7 +56,7 @@ require_once "../includes/titlebar.php";
             clear_notifications.onclick = () => {
 
                 if (hasUnread) {
-                    const confirm = window.confirm("Are you sure you want to clear all notifications?")
+                    const confirm = window.confirm("Are you sure you want to clear all notifications? There are unread notifications.")
                     if (!confirm) return
                     delete_notifications()
                 } else {

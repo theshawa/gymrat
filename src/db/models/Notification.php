@@ -48,7 +48,7 @@ class Notification extends Model
 
     public function get_all_of_user(int $user_id, string $user_type)
     {
-        $sql = "SELECT * FROM $this->table WHERE receiver_id = :receiver_id AND receiver_type = :receiver_type";
+        $sql = "SELECT * FROM $this->table WHERE receiver_id = :receiver_id AND receiver_type = :receiver_type ORDER BY created_at DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'receiver_id' => $user_id,

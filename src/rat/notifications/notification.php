@@ -1,19 +1,28 @@
 <?php
 
 $id = htmlspecialchars($_GET["id"]);
+$type = isset($_GET['type']) ? (htmlspecialchars($_GET['type']) === "announcement" ? "announcement" : "notification") : "notification";
 
 session_start();
 
 require_once "../../alerts/functions.php";
 require_once "../../db/models/Notification.php";
 $notification;
-try {
+
+if ($type === "announcement") {
+    require_once "../../db/models/Announcement.php";
+    $notification = new Announcement();
+} else {
     $notification = new Notification();
+}
+try {
     $notification->fill([
-        "id" => $id,
+        "id" => (int)$id,
     ]);
     $notification->get_by_id();
-    $notification->mark_as_read();
+    if ($type === "notification") {
+        $notification->mark_as_read();
+    }
 } catch (\Throwable $th) {
     redirect_with_error_alert("Failed to get notification due to error: " . $th->getMessage(), "./");
 }
@@ -40,7 +49,7 @@ require_once "../includes/titlebar.php";
     <h1><?= $notification->title ?></h1>
     <?php if ($notification->source): ?>
         <p class="time">
-            From <?= $notification->source ?>
+            From <?= $type == "announcement" ? ($notification->source != "admin" ? "trainer" : "admin") : $notification->source ?>
         </p>
     <?php endif; ?>
     <p class="time">

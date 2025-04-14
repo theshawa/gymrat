@@ -1,6 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../db/models/NotificationUser.php";
 require_once __DIR__ . "/../db/models/Notification.php";
 
 if (session_status() == PHP_SESSION_NONE) {
@@ -22,6 +21,9 @@ function get(int $user_id, string $user_type): array
                     "created_at" => $notification->created_at->format("Y-m-d H:i:s"),
                     "valid_till" => $notification->valid_till ? $notification->valid_till->format("Y-m-d H:i:s") : null,
                     "is_read" => $notification->is_read,
+                    "source" => $notification->source,
+                    "receiver_id" => $notification->receiver_id,
+                    "receiver_type" => $notification->receiver_type,
                 ];
             }, $data),
         ];
@@ -35,7 +37,7 @@ function get(int $user_id, string $user_type): array
 
 function delete(int $user_id, string $user_type)
 {
-    $notification = new NotificationUser();
+    $notification = new Notification();
     try {
         $notification->delete_all_of_user($user_id, $user_type);
         return [

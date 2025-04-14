@@ -28,9 +28,14 @@ class WorkoutRequest extends Model
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
     }
 
-    public function get_all(): array
+    public function get_all(int $sort = 0) 
     {
         $sql = "SELECT * FROM $this->table";
+        if ($sort === 1) {
+            $sql .= " ORDER BY created_at ASC"; 
+        } elseif ($sort === -1) {
+            $sql .= " ORDER BY created_at DESC"; 
+        }
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $items = $stmt->fetchAll();
@@ -39,5 +44,17 @@ class WorkoutRequest extends Model
             $workoutRequest->fill($item);
             return $workoutRequest;
         }, $items);
+    }
+
+    public function get_by_id(int $id)
+    {
+        $sql = "SELECT * FROM $this->table WHERE id = :id LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $item = $stmt->fetch();
+        if (!$item) {
+            die("WorkoutRequest not found");
+        }
+        $this->fill($item);
     }
 }

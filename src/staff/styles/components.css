@@ -219,6 +219,10 @@ select:has(option:checked:not([value=""])) option {
   min-height: 98%;
 }
 
+.staff-base-sub-container{
+  margin: 0px 10px;
+}
+
 .staff-card-container {
   display: flex;
   flex-direction: column;

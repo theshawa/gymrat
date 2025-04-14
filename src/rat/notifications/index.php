@@ -31,6 +31,9 @@ require_once "../includes/titlebar.php";
                 notification.classList.add("read")
             }
             notification.href = `/rat/notifications/notification.php?id=${item.id}`
+            if (item.type === "announcement") {
+                notification.href += `/rat/notifications/notification.php?id=${item.id}&type=announcement`
+            }
             notification.innerHTML = `
                 <h4>${item.title}</h4>
                 <p class="paragraph truncate">${item.message}</p>

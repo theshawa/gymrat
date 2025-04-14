@@ -18,6 +18,7 @@ class Customer extends Model
     public int $onboarded;
     public int $membership_plan;
     public DateTime|null $membership_plan_activated_at;
+    public ?int $trainer;
 
     public function fill(array $data)
     {
@@ -30,10 +31,10 @@ class Customer extends Model
         $this->avatar = $data['avatar'] ?? null;
         $this->created_at = new DateTime($data['created_at'] ?? '');
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
-        $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
         $this->membership_plan_activated_at = (array_key_exists('membership_plan_activated_at', $data)  && $data['membership_plan_activated_at']) ?  new DateTime($data['membership_plan_activated_at']) : null;
         $this->onboarded = $data['onboarded'] ?? 0;
         $this->membership_plan = $data['membership_plan'] ?? 0;
+        $this->trainer = $data['trainer'] ?? null;
     }
 
     public function create()
@@ -57,7 +58,19 @@ class Customer extends Model
 
     public function update()
     {
-        $sql = "UPDATE $this->table SET fname=:fname, lname=:lname, email=:email, phone=:phone, avatar=:avatar, password=:password, onboarded=:onboarded, membership_plan=:membership_plan, updated_at=:updated_at,membership_plan_activated_at=:membership_plan_activated_at WHERE id=:id";
+        $sql = "UPDATE $this->table SET 
+        fname=:fname, 
+        lname=:lname, 
+        email=:email, 
+        phone=:phone, 
+        avatar=:avatar, 
+        password=:password, 
+        onboarded=:onboarded, 
+        membership_plan=:membership_plan, 
+        updated_at=:updated_at,
+        membership_plan_activated_at=:membership_plan_activated_at 
+        trainer=:trainer
+        WHERE id=:id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'id' => $this->id,
@@ -70,7 +83,8 @@ class Customer extends Model
             'onboarded' => $this->onboarded,
             'membership_plan' => $this->membership_plan,
             'updated_at' => $this->updated_at->format("Y-m-d H:i:s"),
-            'membership_plan_activated_at' => $this->membership_plan_activated_at ? $this->membership_plan_activated_at->format("Y-m-d H:i:s") : null
+            'membership_plan_activated_at' => $this->membership_plan_activated_at ? $this->membership_plan_activated_at->format("Y-m-d H:i:s") : null,
+            'trainer' => $this->trainer
         ]);
     }
 
@@ -110,6 +124,20 @@ class Customer extends Model
         $sql = "SELECT * FROM $this->table WHERE membership_plan=:membership_plan_id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['membership_plan_id' => $membership_plan_id]);
+        $data = $stmt->fetchAll();
+        $users = array_map(function ($user) {
+            $new_user = new Customer();
+            $new_user->fill($user);
+            return $new_user;
+        }, $data);
+        return $users;
+    }
+
+    public function get_all_by_trainer(int $trainer_id)
+    {
+        $sql = "SELECT * FROM $this->table WHERE trainer=:trainer_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['trainer_id' => $trainer_id]);
         $data = $stmt->fetchAll();
         $users = array_map(function ($user) {
             $new_user = new Customer();

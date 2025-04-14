@@ -2,6 +2,29 @@
 
 $id = htmlspecialchars($_GET["id"]);
 
+session_start();
+
+require_once "../../alerts/functions.php";
+require_once "../../db/models/Notification.php";
+require_once "../../db/models/NotificationUser.php";
+$notification;
+try {
+    $notification = new Notification();
+    $notification->fill([
+        "id" => $id,
+    ]);
+    $notification->get_by_id();
+    $notification_user = new NotificationUser();
+    $notification_user->fill([
+        "user_id" => $_SESSION["auth"]["id"],
+        "notification_id" => $notification->id,
+        "user_type" => $_SESSION["auth"]["role"],
+    ]);
+    $notification_user->mark_as_read();
+} catch (\Throwable $th) {
+    redirect_with_error_alert("Failed to get notification due to error: " . $th->getMessage(), "./");
+}
+
 if (!isset($id)) {
     header("Location: ./");
     exit();
@@ -21,10 +44,12 @@ require_once "../includes/titlebar.php";
 ?>
 
 <main>
-    <h1>Temporary Gym Closure Due to Bad Weather</h1>
-    <p class="time">22.9.2024 09:10 AM</p>
+    <h1><?= $notification->title ?></h1>
+    <p class="time">
+        <?= $notification->created_at->format("Y-m-d h:i") ?>
+    </p>
     <p class="paragraph" style="margin-top: 20px;">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, facilis dolores dolor exercitationem animi maxime architecto, iste porro inventore doloribus soluta error fugit eius ea! Dolores itaque consectetur excepturi officia.
+        <?= $notification->message ?>
     </p>
 </main>
 

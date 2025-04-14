@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 $pageTitle = null;
 $pageStyles = [];
@@ -37,6 +39,8 @@ if (!is_null($need_auth)) {
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/rat/styles/globals.css">
     <link rel="stylesheet" href="/rat/styles/components.css">
+    <script src="/notifications/script.js"></script>
+
     <?php
     foreach ($pageStyles as $style) {
         echo "<link rel='stylesheet' href='$style'/>";

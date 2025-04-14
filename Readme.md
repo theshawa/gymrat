@@ -27,3 +27,8 @@ wnmp@example.com
 
 Password for All Users:
 `123456`
+
+## Payhere Dashboard
+
+Email: 2022cs136@stu.ucsc.cmb.ac.lk
+Pw: 123kngine21

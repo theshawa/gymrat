@@ -60,7 +60,7 @@ $plan_expiry_date->add(new DateInterval("P" . $membership_plan->duration . "D"))
 $now = new DateTime();
 
 if ($plan_expiry_date < $now) {
-    $user->membership_plan = 0;
+    $user->membership_plan = null;
     $user->membership_plan_activated_at = null;
 
     try {

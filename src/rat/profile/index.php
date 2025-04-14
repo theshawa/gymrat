@@ -23,7 +23,7 @@ try {
     redirect_with_error_alert("Failed to get user due to error: " . $e->getMessage(), "./");
 }
 
-$plan = new MembershipPlan;
+$plan = new MembershipPlan();
 $plan->fill([
     "id" => $user->membership_plan
 ]);

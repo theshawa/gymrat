@@ -31,6 +31,9 @@ require_once "../includes/titlebar.php";
                 notification.classList.add("read")
             }
             notification.href = `/rat/notifications/notification.php?id=${item.id}`
+            if (item.type === "announcement") {
+                notification.href += `/rat/notifications/notification.php?id=${item.id}&type=announcement`
+            }
             notification.innerHTML = `
                 <h4>${item.title}</h4>
                 <p class="paragraph truncate">${item.message}</p>
@@ -56,7 +59,7 @@ require_once "../includes/titlebar.php";
             clear_notifications.onclick = () => {
 
                 if (hasUnread) {
-                    const confirm = window.confirm("Are you sure you want to clear all notifications?")
+                    const confirm = window.confirm("Are you sure you want to clear all notifications? There are unread notifications.")
                     if (!confirm) return
                     delete_notifications()
                 } else {

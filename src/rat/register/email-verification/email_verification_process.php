@@ -71,7 +71,7 @@ unset($_SESSION['customer_registration']);
 
 require_once "../../../notifications/functions.php";
 try {
-    new_notification_to_rats([$user->id], "Welcome to GYMRAT", "Thank you for registering with us. We hope you have a great experience!", null);
+    notify_rat($user->id, "Welcome to GYMRAT", "Thank you for registering with us. We hope you have a great experience!");
 } catch (\Throwable $th) {
     redirect_with_info_alert("Registration successful, but failed to send notification: " . $th->getMessage(), "/rat/login");
 }

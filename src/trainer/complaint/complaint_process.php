@@ -34,4 +34,12 @@ try {
     redirect_with_error_alert("An error occurred: " . $e->getMessage(), "./");
 }
 
+require_once "../../notifications/functions.php";
+
+try {
+    notify_trainer($_SESSION['auth']['id'], "New complaint submitted", "Your complaint has been submitted successfully. We will review it and get back to you soon.");
+} catch (\Throwable $th) {
+    redirect_with_info_alert("Complaint submitted, but failed to send notification: " . $th->getMessage(), "./");
+}
+
 redirect_with_success_alert("Complaint submitted successfully.", "./");

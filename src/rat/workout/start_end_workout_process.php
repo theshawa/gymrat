@@ -31,11 +31,10 @@ function start_workout()
 
     require_once "../../notifications/functions.php";
     try {
-        new_notification_to_rats(
-            [$_SESSION['auth']['id']],
+        notify_rat(
+            $_SESSION['auth']['id'],
             "Workout started",
             "Your workout has started.",
-            null
         );
     } catch (\Throwable $th) {
         redirect_with_info_alert("Workout started, but failed to send notification: " . $th->getMessage(), "./");

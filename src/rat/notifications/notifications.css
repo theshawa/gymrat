@@ -34,4 +34,5 @@ main {
 .time {
   color: var(--color-zinc-500);
   font-size: 12px;
+  text-transform: uppercase;
 }

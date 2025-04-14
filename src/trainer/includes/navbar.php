@@ -30,7 +30,8 @@ $active = $pageConfig['navbar_active'] ?? null;
 
 <script>
     const notifications_count_span = document.querySelector("a[href='/trainer/notifications/index.php'] span.count");
-    const when_notifications_update = (_, unread_count) => {
+    const when_notifications_update = (notifications) => {
+        const unread_count = notifications.filter(notification => !notification.is_read).length;
         if (unread_count) {
             notifications_count_span.innerText = unread_count;
             notifications_count_span.classList.add("active");

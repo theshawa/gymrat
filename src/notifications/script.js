@@ -16,11 +16,8 @@ const fetch_notifications = async () => {
     return;
   }
 
-  const unread_count = data.filter(
-    (notification) => !notification.is_read
-  ).length;
   notification_listeners.listners.forEach((listner) => {
-    listner(data, unread_count);
+    listner(data);
   });
 };
 
@@ -34,8 +31,18 @@ const delete_notifications = async () => {
     return;
   }
 
+  const notifications_res = await fetch("/notifications/api.php", {
+    method: "GET",
+  });
+  const { success: notification_success, data: notifications } =
+    await notifications_res.json();
+  if (!notification_success) {
+    alert("Error fetching notifications: " + data.message);
+    return;
+  }
+
   notification_listeners.listners.forEach((listner) => {
-    listner([], 0);
+    listner(notifications);
   });
 };
 let interval;

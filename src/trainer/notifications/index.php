@@ -31,6 +31,9 @@ require_once "../includes/titlebar.php";
                 notification.classList.add("read")
             }
             notification.href = `/trainer/notifications/notification.php?id=${item.id}`
+            if (item.type === "announcement") {
+                notification.href += `&type=announcement`
+            }
             notification.innerHTML = `
                 <h4>${item.title}</h4>
                 <p class="paragraph truncate">${item.message}</p>
@@ -48,22 +51,27 @@ require_once "../includes/titlebar.php";
             container.appendChild(no_notifications)
         }
         if (items.length > 0) {
-            const clear_notifications = document.createElement("button")
-            const hasUnread = items.some((item) => !item.is_read)
+            const notifications = items.filter(item => item.type === "notification")
+            if (notifications.length) {
+                const clear_notifications = document.createElement("button")
 
-            clear_notifications.className = `btn ${hasUnread ? "outlined" : "secondary"}`
-            clear_notifications.innerText = "Clear Notifications"
-            clear_notifications.onclick = () => {
+                const hasUnread = notifications.some((item) => !item.is_read)
 
-                if (hasUnread) {
-                    const confirm = window.confirm("Are you sure you want to clear all notifications? There are unread notifications.")
-                    if (!confirm) return
-                    delete_notifications()
-                } else {
-                    delete_notifications()
+                clear_notifications.className = `btn ${hasUnread ? "outlined" : "secondary"}`
+                clear_notifications.innerText = "Clear Notifications"
+                clear_notifications.onclick = () => {
+
+                    if (hasUnread) {
+                        const confirm = window.confirm("Are you sure you want to clear all notifications? There are unread notifications.")
+                        if (!confirm) return
+                        delete_notifications()
+                    } else {
+                        delete_notifications()
+                    }
                 }
+                container.appendChild(clear_notifications)
             }
-            container.appendChild(clear_notifications)
+
         }
     })
 </script>

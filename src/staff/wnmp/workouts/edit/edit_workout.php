@@ -63,37 +63,63 @@ if (!empty($workout->exercises)) {
     }
 }
 
-// Validation
-$days = array_column($workout->exercises, 'day');
-$max_day = max($days);
-if ($max_day < 1 || $max_day > 7) {
-    $errors[] = "The number of days must be between 1 and 7.";
-}
-
-for ($day = 1; $day <= $max_day; $day++) {
-    if (!in_array($day, $days)) {
-        $errors[] = "There must be at least one exercise for each day between 1 and $max_day.";
-        break;
-    }
-}
-
-if (!empty($errors)) {
-    $error_message = implode(" ", $errors);
-    redirect_with_error_alert($error_message, "/staff/wnmp/workouts/edit?id=" . $workout_id );
-}
-
-
+// Delete Logic
 if (isset($_POST['delete_exercise'])) {
     $current_exercise_edit_id = htmlspecialchars($_POST['delete_exercise']);
 
     foreach ($workout->exercises as $key => $exercise) {
-        if ($exercise['id'] == 0 && $exercise['edit_id'] == $current_exercise_edit_id) {
-            // catch newly added exercises
+        if ($exercise['edit_id'] == $current_exercise_edit_id) {
             $workout->exercises[$key]['isDeleted'] = true;
         }
     }   
 } 
 
+
+// Validation
+if (empty($workout->exercises) && (!isset($_POST['action']) || $_POST['action'] !== 'add')) {
+    $errors[] = "At least one exercise is required. [0]";
+}
+
+if (!empty($workout->exercises)) {
+    $allDeleted = true;
+    foreach ($workout->exercises as $exercise) {
+        if (empty($exercise['isDeleted']) || !$exercise['isDeleted']) {
+            $allDeleted = false;
+            break;
+        }
+    }
+    if ($allDeleted) {
+        $errors[] = "At least one exercise is required. [1]";
+    }
+
+    // Only get not deleted ones
+    $activeExercises = array_filter($workout->exercises, function ($exercise) {
+        return empty($exercise['isDeleted']) || !$exercise['isDeleted'];
+    });
+
+    $days = array_column($activeExercises, 'day');
+    $max_day = !empty($days) ? max($days) : 0;
+
+    if ($max_day < 1 || $max_day > 7) {
+        $errors[] = "The number of days must be between 1 and 7.";
+    }
+
+    for ($day = 1; $day <= $max_day; $day++) {
+        if (!in_array($day, $days)) {
+            $errors[] = "There must be at least one exercise for each day between 1 and $max_day.";
+            break;
+        }
+    }
+}
+
+if (!empty($errors)) {
+    $error_message = implode(" ", $errors);
+    $_SESSION['workout'] = serialize($workout);
+    redirect_with_error_alert($error_message, "/staff/wnmp/workouts/edit?id=" . $workout_id );
+}
+
+
+// Add Logic
 if (isset($_POST['action']) && $_POST['action'] === 'add') {
     $lastExercise = end($workout->exercises);
     $edit_id = $lastExercise ? $lastExercise["edit_id"] + 1 : 0;
@@ -116,6 +142,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'add') {
 
 $_SESSION['workout'] = serialize($workout);
 
+// Save Logic
 if (isset($_POST['action']) && $_POST['action'] === 'edit') {
     foreach ($workout->exercises as &$exercise) {
         if (isset($exercise['title']) && $exercise['isUpdated'] && !$exercise['isDeleted']) {
@@ -126,10 +153,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'edit') {
             $exercise['exercise_id'] = $exerciseId;
         }
     }
-
-// echo '<pre>';
-// print_r($workout);
-// echo '</pre>';
 
     try {
         $workout->save();
@@ -145,6 +168,11 @@ if (isset($_POST['action']) && $_POST['action'] === 'edit') {
 
     redirect_with_success_alert("Workout updated successfully", "/staff/wnmp/workouts/view?id=" . $workout_id );
 }
+
+// echo '<pre>';
+// print_r($workout);
+// echo '</pre>';
+
 
 redirect_with_success_alert("Action successful (Press Save Changes to complete)", "/staff/wnmp/workouts/edit?id=" . $workout_id );
 ?>

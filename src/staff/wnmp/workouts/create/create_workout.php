@@ -58,25 +58,6 @@ if (!empty($workout->exercises)) {
     }
 }
 
-// Validation
-$days = array_column($workout->exercises, 'day');
-$max_day = max($days);
-if ($max_day < 1 || $max_day > 7) {
-    $errors[] = "The number of days must be between 1 and 7.";
-}
-
-for ($day = 1; $day <= $max_day; $day++) {
-    if (!in_array($day, $days)) {
-        $errors[] = "There must be at least one exercise for each day between 1 and $max_day.";
-        break;
-    }
-}
-
-if (!empty($errors)) {
-    $error_message = implode(" ", $errors);
-    redirect_with_error_alert($error_message, "/staff/wnmp/workouts/create");
-}
-
 // Delete Logic
 if (isset($_POST['delete_exercise'])) {
     $current_exercise_edit_id = htmlspecialchars($_POST['delete_exercise']);
@@ -89,6 +70,49 @@ if (isset($_POST['delete_exercise'])) {
     }   
 } 
 
+
+// Validation
+if (empty($workout->exercises) && (!isset($_POST['action']) || $_POST['action'] !== 'add')) {
+    $errors[] = "At least one exercise is required. [0]";
+}
+
+if (!empty($workout->exercises)) {
+    $allDeleted = true;
+    foreach ($workout->exercises as $exercise) {
+        if (empty($exercise['isDeleted']) || !$exercise['isDeleted']) {
+            $allDeleted = false;
+            break;
+        }
+    }
+    if ($allDeleted) {
+        $errors[] = "At least one exercise is required. [1]";
+    }
+
+    // Only get not deleted ones
+    $activeExercises = array_filter($workout->exercises, function ($exercise) {
+        return empty($exercise['isDeleted']) || !$exercise['isDeleted'];
+    });
+
+    $days = array_column($activeExercises, 'day');
+    $max_day = !empty($days) ? max($days) : 0;
+
+    if ($max_day < 1 || $max_day > 7) {
+        $errors[] = "The number of days must be between 1 and 7.";
+    }
+
+    for ($day = 1; $day <= $max_day; $day++) {
+        if (!in_array($day, $days)) {
+            $errors[] = "There must be at least one exercise for each day between 1 and $max_day.";
+            break;
+        }
+    }
+}
+
+if (!empty($errors)) {
+    $error_message = implode(" ", $errors);
+    $_SESSION['workout'] = serialize($workout);
+    redirect_with_error_alert($error_message, "/staff/wnmp/workouts/create");
+}
 
 // Add Logic
 if (isset($_POST['action']) && $_POST['action'] === 'add') {

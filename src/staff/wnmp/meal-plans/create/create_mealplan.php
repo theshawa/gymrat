@@ -48,6 +48,10 @@ if (!empty($mealPlan->meals)) {
 }
 
 // Validation
+if (empty($mealPlan->meals)) {
+    $errors[] = "Meal plan must contain at least one meal.";
+}
+
 if (!empty($errors)) {
     $error_message = implode(" ", $errors);
     redirect_with_error_alert($error_message, "/staff/wnmp/meal-plans/create");

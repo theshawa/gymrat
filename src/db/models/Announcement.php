@@ -62,9 +62,10 @@ class Announcement extends Model
             $stmt->execute(['user_id' => $user_id]);
             $trainer_id = $stmt->fetchColumn();
 
-            $sql = "SELECT * FROM $this->table WHERE to_all = 'rats' OR to_all = 'rats+trainers'
+            $sql = "SELECT * FROM $this->table WHERE (to_all = 'rats' OR to_all = 'rats+trainers') AND valid_till >= NOW()
             UNION
-            SELECT * FROM $this->table WHERE source=:trainer_id AND to_all = 'rats' ORDER BY created_at DESC";
+            SELECT * FROM $this->table WHERE source=:trainer_id AND to_all = 'rats' AND valid_till >= NOW()
+            ORDER BY created_at DESC";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([
@@ -78,7 +79,8 @@ class Announcement extends Model
                 return $announcement;
             }, $items);
         } else if ($user_type == "trainer") {
-            $sql = "SELECT * FROM $this->table WHERE to_all = 'trainers' OR to_all = 'rats+trainers' ORDER BY created_at DESC";
+            $sql = "SELECT * FROM $this->table WHERE (to_all = 'trainers' OR to_all = 'rats+trainers') AND valid_till >= NOW()
+             ORDER BY created_at DESC";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             $items = $stmt->fetchAll();

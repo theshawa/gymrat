@@ -30,7 +30,8 @@ $menuBarConfig = [
     "goBackTo" => "/staff/wnmp/workouts/index.php",
     "useButton" => true,
     "options" => [
-        ["title" => "Save Changes", "buttonType" => "submit", "type" => "secondary"],
+        ["title" => "Save Changes", "buttonType" => "submit", 
+            "buttonName" => "action", "buttonValue" => "create", "type" => "secondary"],
         ["title" => "Revert Changes", "buttonType" => "submit", "formAction" => "revert_exercise.php", "type" => "destructive"]
     ]
 ];
@@ -52,8 +53,6 @@ auth_required_guard("wnmp", "/staff/login");
         <div class="form">
             <form action="create_workout.php" method="POST">
                 <?php require_once "../../../includes/menubar.php"; ?>
-            </form>
-            <form action="edit_workout_details.php" method="POST">
                 <div style="padding: 5px 10px;">
                     <input type="hidden" name="workout_id" value="<?= $workout->id ?>">
                     <h2><label for="edit-title">Title</label></h2>
@@ -68,48 +67,43 @@ auth_required_guard("wnmp", "/staff/login");
                         <h2><label for="edit-duration">Duration</label></h2>
                         <input type="text" id="edit-duration" name="workout_duration"
                             class="staff-input-primary staff-input-long" value="<?= $workout->duration ?>">
-                        <button type="submit" class="staff-btn-secondary-black edit-workout-input-update-alt">
-                            Update
-                        </button>
                     </div>
                 </div>
-            </form>
-            <div style="padding: 5px 10px;">
-                <h2>Exercise</h2>
-                <?php foreach ($workout->exercises as $exercise): ?>
-                    <?php if (!$exercise['isDeleted']): ?>
-                        <form action="edit_current_exercise.php" method="POST" class="edit-workout-row">
-                            <input type="hidden" name="exercise_id" value="<?= $exercise['id'] ?>">
-                            <input type="hidden" name="exercise_edit_id" value="<?= $exercise['edit_id'] ?>">
-                            <select name="exercise_title" class="staff-input-primary staff-input-long">
-                                <?php foreach ($exerciseTitles as $title): ?>
-                                    <option value="<?= $title ?>" <?= $title == $exercise['title'] ? 'selected' : '' ?>>
-                                        <?= $title ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                            <div class="edit-workout-input-reps-sets">
-                                <label for="exercise_sets">Sets</label>
-                                <input type="text" name="exercise_sets"
-                                    value="<?= $exercise['sets'] ?>" class="staff-input-primary staff-input-short">
-                            </div>
-                            <div class="edit-workout-input-reps-sets">
-                                <label for="exercise_reps">Reps</label>
-                                <input type="text" name="exercise_reps"
-                                    value="<?= $exercise['reps'] ?>" class="staff-input-primary staff-input-short">
-                            </div>
-                            <button type="submit" class="staff-btn-outline edit-workout-input-update">
-                                Update
-                            </button>
-                            <button type="submit" class="staff-btn-outline edit-workout-input-delete"
-                                formaction="delete_current_exercise.php">
-                                Delete
-                            </button>
-                        </form>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-                <form action="add_exercise.php" method="POST">
-                    <button type="submit" class="staff-btn-secondary-black edit-workout-add-exercise">
+                <div style="padding: 5px 10px;">
+                    <h2>Exercise</h2>
+                    <?php foreach ($workout->exercises as $exercise): ?>
+                        <div class="edit-workout-row">
+                            <?php if (!$exercise['isDeleted']): ?>
+                                <select name="exercise_title_<?= $exercise['edit_id'] ?>" class="staff-input-primary staff-input-long">
+                                    <?php foreach ($exerciseTitles as $title): ?>
+                                        <option value="<?= $title ?>" <?= $title == $exercise['title'] ? 'selected' : '' ?>>
+                                            <?= $title ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <div class="edit-workout-input-reps-sets">
+                                    <label for="exercise_day_<?= $exercise['edit_id'] ?>">Day</label>
+                                    <input type="text" name="exercise_day_<?= $exercise['edit_id'] ?>" pattern="\d+"
+                                        value="<?= $exercise['day'] ?>" class="staff-input-primary staff-input-short">
+                                </div>
+                                <div class="edit-workout-input-reps-sets">
+                                    <label for="exercise_sets_<?= $exercise['edit_id'] ?>">Sets</label>
+                                    <input type="text" name="exercise_sets_<?= $exercise['edit_id'] ?>" pattern="\d+"
+                                        value="<?= $exercise['sets'] ?>" class="staff-input-primary staff-input-short">
+                                </div>
+                                <div class="edit-workout-input-reps-sets">
+                                    <label for="exercise_reps_<?= $exercise['edit_id'] ?>">Reps</label>
+                                    <input type="text" name="exercise_reps_<?= $exercise['edit_id'] ?>" pattern="\d+"
+                                        value="<?= $exercise['reps'] ?>" class="staff-input-primary staff-input-short">
+                                </div>
+                                <button type="submit" class="staff-btn-outline edit-workout-input-delete"
+                                    name="delete_exercise" value="<?= $exercise['edit_id'] ?>">
+                                    Delete
+                                </button>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                    <button type="submit" name="action" value="add" class="staff-btn-secondary-black edit-workout-add-exercise">
                         + Add Exercise
                     </button>
                 </form>

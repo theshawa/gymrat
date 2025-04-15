@@ -15,10 +15,15 @@ class Database
     private function __construct()
     {
         try {
+            $tz = (new DateTime('now', new DateTimeZone('Asia/Colombo')))->format('P');
             $this->conn = new PDO(
                 "mysql:host=" . $this->CONFIG['host'] . ";dbname=" . $this->CONFIG['dbname'],
                 $this->CONFIG['username'],
-                $this->CONFIG['password']
+                $this->CONFIG['password'],
+                [
+                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                    \PDO::MYSQL_ATTR_INIT_COMMAND => "SET time_zone='$tz'"
+                ]
             );
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);

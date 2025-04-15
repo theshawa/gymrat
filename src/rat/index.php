@@ -1,4 +1,29 @@
 <?php
+
+session_start();
+
+$workoutSession =  null;
+if (isset($_SESSION['workout_session'])) {
+    require_once "../db/models/WorkoutSession.php";
+    $workoutSession = new WorkoutSession();
+    $workoutSession->fill([
+        'session_key' => $_SESSION['workout_session']
+    ]);
+    try {
+        $workoutSession->get_by_session_key();
+
+        // automatically end workout if it has been more than 4 hrs
+        if ($workoutSession->get_duration_in_hours() > 4) {
+            $ended_at = (clone $workoutSession->started_at)->modify('+4 hours');
+            $workoutSession->mark_ended($ended_at);
+            unset($_SESSION['workout_session']);
+            $workoutSession = null;
+        }
+    } catch (\Throwable $th) {
+        die("Failed to get workout session: " . $th->getMessage());
+    }
+}
+
 $pageConfig = [
     "title" => "Home",
     "styles" => [
@@ -14,24 +39,13 @@ $pageConfig = [
     "need_auth" => true
 ];
 
-require_once "./includes/header.php";
-
 if (isset($_SESSION['auth'])) {
     $fname = $_SESSION['auth']['fname'];
     $pageConfig['titlebar']['title'] = "Hi, $fname!";
 }
 
+require_once "./includes/header.php";
 require_once "./includes/titlebar.php";
-
-$workoutSession =  null;
-if (isset($_SESSION['workout_session'])) {
-    require_once "../db/models/WorkoutSession.php";
-    $workoutSession = new WorkoutSession();
-    $workoutSession->fill([
-        'id' => $_SESSION['workout_session']
-    ]);
-    $workoutSession->get_by_id();
-}
 ?>
 
 <script>

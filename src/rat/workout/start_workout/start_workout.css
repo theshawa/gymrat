@@ -1,0 +1,55 @@
+main {
+  text-align: center;
+}
+
+#reader {
+  width: calc(100% - 40px);
+  margin: 20px auto;
+  background-color: var(--color-zinc-900);
+  border-radius: 10px;
+  border: 2px solid var(--color-violet-600);
+  overflow: hidden;
+}
+
+.error-message {
+  color: var(--color-red);
+  padding: 10px;
+  background-color: rgba(213, 58, 58, 0.1);
+  border-radius: 20px;
+  display: none;
+  margin-top: 20px;
+}
+
+.try-again {
+  margin-top: 10px;
+  display: none;
+}
+
+h2 {
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.camera-selection {
+  display: flex;
+  flex-direction: column;
+  display: none;
+}
+
+.camera-selection label {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: var(--color-zinc-500);
+  text-transform: uppercase;
+  margin-top: 20px;
+}
+
+select {
+  text-transform: uppercase;
+  text-align: center;
+}

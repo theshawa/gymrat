@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql_db:3306
--- Generation Time: Apr 15, 2025 at 11:56 PM
+-- Generation Time: Apr 15, 2025 at 11:44 PM
 -- Server version: 9.2.0
 -- PHP Version: 8.2.27
 
@@ -73,8 +73,8 @@ CREATE TABLE `complaints` (
   `type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `user_id` int NOT NULL,
-  `user_type` enum('rat','trainer') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'rat',
-  `review_message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `user_type` enum('rat','trainer') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'rat',
+  `review_message` text COLLATE utf8mb4_general_ci,
   `reviewed_at` datetime DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -85,8 +85,7 @@ CREATE TABLE `complaints` (
 
 INSERT INTO `complaints` (`id`, `type`, `description`, `user_id`, `user_type`, `review_message`, `reviewed_at`, `created_at`) VALUES
 (16, 'Facility Issues', 'asdasd', 44, 'rat', 'A gym trainer, often referred to as a personal trainer or fitness coach, is an individual who\nspecializes in guiding and instructing clients in their fitness journeys.', '2025-04-30 15:05:23', '2025-04-15 09:35:07'),
-(20, 'Membership Issues', 'asda ad sad asd as das das dasd', 44, 'rat', NULL, NULL, '2025-04-15 10:18:18'),
-(21, 'Equipment Misuse', 'asd', 44, 'rat', NULL, NULL, '2025-04-15 18:26:07');
+(20, 'Membership Issues', 'asda ad sad asd as das das dasd', 44, 'rat', NULL, NULL, '2025-04-15 10:18:18');
 
 -- --------------------------------------------------------
 
@@ -392,6 +391,14 @@ CREATE TABLE `notifications` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `title`, `message`, `receiver_id`, `receiver_type`, `source`, `is_read`, `valid_till`, `created_at`) VALUES
+(50, 'Workout started', 'Your workout has started.', 44, 'rat', 'system', 0, NULL, '2025-04-15 10:52:18'),
+(51, 'Workout started', 'Your workout has started.', 44, 'rat', 'system', 1, NULL, '2025-04-15 10:58:00');
+
 -- --------------------------------------------------------
 
 --
@@ -537,7 +544,7 @@ CREATE TABLE `workout_session_keys` (
 --
 
 INSERT INTO `workout_session_keys` (`session_key`, `created_at`) VALUES
-('gymrat_wsk_a504de61c0f5aef61db628b20d615e74c829888d42aed470438a75ee71973865', '2025-04-15 23:55:45');
+('gymrat_wsk_007c308577dd808f065cc96dfb65174fc00d41361e7921bdde1e04becf1a1c93', '2025-04-15 23:41:55');
 
 --
 -- Indexes for dumped tables
@@ -697,7 +704,7 @@ ALTER TABLE `announcements`
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `customers`

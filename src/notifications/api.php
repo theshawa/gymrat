@@ -12,8 +12,8 @@ function get(int $user_id, string $user_type): array
     $notification = new Notification();
     $announcement = new Announcement();
     try {
-        $notifications =  $notification->get_all_of_user($user_id, $user_type);
-        $announcements =  $announcement->get_all_of_user($user_type, $user_id);
+        $notifications = $notification->get_all_of_user($user_id, $user_type);
+        $announcements = $announcement->get_all_of_user($user_type, $user_id);
 
         $data_1 = array_map(function ($notification) {
             return [

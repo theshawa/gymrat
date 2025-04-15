@@ -1,6 +1,9 @@
 <?php
 $pageConfig = [
     "title" => "Report Customer",
+    "styles" => [
+        "./report.css"
+    ],
     "titlebar" => [
         "back_url" => isset($_GET['id']) ? "../?id=" . $_GET['id'] : "../../",
         "title" => "REPORT CUSTOMER"
@@ -44,37 +47,52 @@ if ($customerId > 0) {
 // Fetch complaints made by this trainer for this customer
 $reports = [];
 try {
+    // UPDATED QUERY: Search in both type (for legacy data) and description (for new format)
     $sql = "SELECT * FROM complaints 
             WHERE user_id = :trainer_id 
-            AND is_created_by_trainer = 1 
-            AND type LIKE '%[Customer:%'
+            AND user_type = 'trainer' 
+            AND (
+                type LIKE :customer_pattern 
+                OR description LIKE :customer_id_desc
+            )
             ORDER BY created_at DESC";
+
+    $customerPattern = "Customer #" . $customerId . "%";
+    $customerIdDesc = "%[Customer #" . $customerId . "]%";
 
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(':trainer_id', $trainerId);
+    $stmt->bindValue(':customer_pattern', $customerPattern);
+    $stmt->bindValue(':customer_id_desc', $customerIdDesc);
     $stmt->execute();
 
     $reports = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Process reports to extract severity
     foreach ($reports as &$report) {
-        // Extract severity if stored in format "SEVERITY: Description"
-        if (preg_match('/^\[([a-zA-Z]+)\]:\s*(.*)$/s', $report['description'], $matches)) {
-            $report['severity'] = strtolower($matches[1]);
-            $report['clean_description'] = $matches[2];
+        // Extract severity if stored in format "[Severity: LEVEL] Description"
+        if (preg_match('/\[Severity:\s*([a-zA-Z]+)\](.*)/s', $report['description'], $matches)) {
+            $report['severity'] = strtolower(trim($matches[1]));
+            $report['clean_description'] = trim($matches[2]);
         } else {
             $report['severity'] = 'medium'; // Default
             $report['clean_description'] = $report['description'];
         }
 
-        // Extract customer ID if stored in format "[Customer:ID]"
-        if (preg_match('/\[Customer:(\d+)\]/', $report['type'], $matches)) {
-            $report['customer_id'] = $matches[1];
+        // Extract customer ID from description if it exists in the new format
+        if (preg_match('/\[Customer #(\d+)\]/', $report['description'], $customerMatches)) {
+            // This is a report in the new format
+            // We can use this if needed
         }
+
+        // For display purposes in the UI, strip the customer ID from type if it exists
+        // This is for legacy data where customer ID is in the type field
+        $report['display_type'] = preg_replace('/^Customer #\d+ - /', '', $report['type']);
     }
 
 } catch (Exception $e) {
-    // Handle error silently
+    // Handle error silently - but could log it for debugging
+    // error_log("Error fetching reports: " . $e->getMessage());
 }
 ?>
 
@@ -135,31 +153,11 @@ try {
         <div class="reports-list">
             <?php foreach ($reports as $report): ?>
                 <?php
-                // Check if this report is for the current customer
-                if (isset($report['customer_id']) && $report['customer_id'] != $customerId) {
-                    continue;
-                }
-
                 // Determine status class and text
                 $statusClass = 'status-pending';
                 $statusText = 'Pending';
 
-                if (isset($report['status'])) {
-                    if ($report['status'] == 'in_progress') {
-                        $statusClass = 'status-in-progress';
-                        $statusText = 'In progress';
-                    } else if ($report['status'] == 'resolved' || $report['status'] == 'reviewed') {
-                        $statusClass = 'status-resolved';
-                        $statusText = 'Resolved';
-                    } else if ($report['status'] == 'dismissed') {
-                        $statusClass = 'status-dismissed';
-                        $statusText = 'Dismissed';
-                    }
-                }
-
-                // Admin has replied if admin_reply is set
-                $hasAdminReply = isset($report['admin_reply']) && !empty($report['admin_reply']);
-                if ($hasAdminReply) {
+                if (isset($report['reviewed_at']) && $report['reviewed_at']) {
                     $statusClass = 'status-resolved';
                     $statusText = 'Reviewed';
                 }
@@ -167,14 +165,16 @@ try {
 
                 <div class="report-item">
                     <div class="report-header">
-                        <h3><?= htmlspecialchars(preg_replace('/\[Customer:\d+\]\s*/', '', $report['type'])) ?></h3>
+                        <h3><?= htmlspecialchars(isset($report['display_type']) ? $report['display_type'] : $report['type']) ?>
+                        </h3>
                         <span class="report-status <?= $statusClass ?>">
                             <?= $statusText ?>
                         </span>
                     </div>
 
                     <p class="report-description">
-                        <?= htmlspecialchars($report['clean_description'] ?? $report['description']) ?></p>
+                        <?= htmlspecialchars($report['clean_description']) ?>
+                    </p>
 
                     <div class="report-footer">
                         <span class="report-date">
@@ -186,17 +186,17 @@ try {
                         </span>
                     </div>
 
-                    <?php if ($hasAdminReply): ?>
+                    <?php if (isset($report['review_message']) && !empty($report['review_message'])): ?>
                         <div class="admin-reply">
                             <div class="reply-header">
                                 <span class="admin-label">Admin Response</span>
-                                <?php if (!empty($report['replied_at'])): ?>
+                                <?php if (isset($report['reviewed_at']) && !empty($report['reviewed_at'])): ?>
                                     <span class="reply-date">
-                                        <?= date('M d, Y', strtotime($report['replied_at'])) ?>
+                                        <?= date('M d, Y', strtotime($report['reviewed_at'])) ?>
                                     </span>
                                 <?php endif; ?>
                             </div>
-                            <p><?= htmlspecialchars($report['admin_reply']) ?></p>
+                            <p><?= htmlspecialchars($report['review_message']) ?></p>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -204,206 +204,6 @@ try {
         </div>
     <?php endif; ?>
 </main>
-
-<style>
-    main {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .customer-info {
-        margin-bottom: 10px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid var(--color-zinc-800);
-    }
-
-    .customer-info h3 {
-        margin: 0;
-        font-size: 16px;
-        text-transform: none;
-        letter-spacing: normal;
-    }
-
-    .severity-selector {
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-
-    .severity-selector label {
-        display: block;
-        font-size: 14px;
-        color: var(--color-zinc-400);
-        margin-bottom: 10px;
-    }
-
-    .severity-options {
-        display: flex;
-        gap: 10px;
-    }
-
-    .severity-option {
-        flex: 1;
-        text-align: center;
-    }
-
-    .severity-option input {
-        position: absolute;
-        opacity: 0;
-    }
-
-    .severity-option span {
-        display: block;
-        padding: 8px;
-        background-color: var(--color-zinc-800);
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-
-    /* Using violet shades for severity */
-    .severity-option:first-child input:checked+span {
-        background-color: var(--color-violet-700);
-        color: var(--color-zinc-50);
-    }
-
-    .severity-option:nth-child(2) input:checked+span {
-        background-color: var(--color-violet-600);
-        color: var(--color-zinc-50);
-    }
-
-    .severity-option:last-child input:checked+span {
-        background-color: var(--color-violet-500);
-        color: var(--color-zinc-50);
-    }
-
-    .previous-reports-title {
-        margin-top: 20px;
-        margin-bottom: 10px;
-    }
-
-    .reports-list {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .report-item {
-        background-color: var(--color-zinc-900);
-        border-radius: 10px;
-        padding: 15px;
-    }
-
-    .report-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-
-    .report-status {
-        font-size: 12px;
-        font-weight: 500;
-        padding: 4px 10px;
-        border-radius: 12px;
-    }
-
-    .status-pending {
-        background-color: var(--color-zinc-800);
-        color: var(--color-zinc-400);
-    }
-
-    .status-in-progress {
-        background-color: var(--color-zinc-700);
-        color: var(--color-zinc-200);
-    }
-
-    .status-resolved {
-        background-color: var(--color-green);
-        color: var(--color-zinc-50);
-    }
-
-    .status-dismissed {
-        background-color: var(--color-red);
-        color: var(--color-zinc-50);
-    }
-
-    .report-description {
-        font-size: 14px;
-        color: var(--color-zinc-400);
-        margin: 10px 0;
-        line-height: 1.5;
-    }
-
-    .report-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 10px;
-        padding-top: 10px;
-        border-top: 1px solid var(--color-zinc-800);
-    }
-
-    .report-date {
-        font-size: 12px;
-        color: var(--color-zinc-500);
-    }
-
-    .severity-badge {
-        font-size: 12px;
-        font-weight: 500;
-        padding: 4px 10px;
-        border-radius: 12px;
-    }
-
-    /* Using violet shades for severity badges */
-    .severity-low {
-        background-color: var(--color-violet-700);
-        color: var(--color-zinc-50);
-    }
-
-    .severity-medium {
-        background-color: var(--color-violet-600);
-        color: var(--color-zinc-50);
-    }
-
-    .severity-high {
-        background-color: var(--color-violet-500);
-        color: var(--color-zinc-50);
-    }
-
-    .admin-reply {
-        background-color: var(--color-zinc-800);
-        padding: 12px;
-        margin-top: 10px;
-        border-radius: 8px;
-    }
-
-    .reply-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 8px;
-    }
-
-    .admin-label {
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--color-green-light);
-    }
-
-    .reply-date {
-        font-size: 11px;
-        color: var(--color-zinc-500);
-    }
-
-    .admin-reply p {
-        margin: 0;
-        color: var(--color-zinc-300);
-        font-size: 13px;
-        line-height: 1.5;
-    }
-</style>
 
 <?php require_once "../../../includes/navbar.php" ?>
 <?php require_once "../../../includes/footer.php" ?>

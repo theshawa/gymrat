@@ -98,14 +98,6 @@ if (!empty($customer->avatar)) {
         $avatarPath = '/uploads/' . $customer->avatar;
     }
 }
-
-// Create username from first and last name if not set
-$username = '@' . strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $customer->fname)) . '_' .
-    strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $customer->lname));
-
-// Calculate or mock rating data 
-// In a real system, this would come from a ratings table
-$rating = 4.7; // Example mock rating that could later be replaced with real data
 ?>
 
 <main class="profile-view">
@@ -114,19 +106,6 @@ $rating = 4.7; // Example mock rating that could later be replaced with real dat
         <div class="profile-info">
             <img src="<?= $avatarPath ?>" alt="Profile" class="profile-avatar">
             <h1 class="profile-name"><?= htmlspecialchars($customer->fname . ' ' . $customer->lname) ?></h1>
-            <p class="profile-username"><?= htmlspecialchars($username) ?></p>
-            <p class="profile-goal"><?= htmlspecialchars($goal) ?></p>
-        </div>
-
-        <div class="rating-box">
-            <div class="rating-score"><?= $rating ?></div>
-            <div class="rating-stars">
-                <span class="star filled">★</span>
-                <span class="star filled">★</span>
-                <span class="star filled">★</span>
-                <span class="star filled">★</span>
-                <span class="star">★</span>
-            </div>
         </div>
     </div>
 

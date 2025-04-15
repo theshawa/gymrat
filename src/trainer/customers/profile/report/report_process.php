@@ -25,28 +25,27 @@ if ($customerId <= 0) {
 
 $trainerId = $_SESSION['auth']['id'];
 
+// Format the description to include Customer ID and Severity
+// Now including the customer ID reference in the description, not in the type
+$formattedDescription = "[Customer #$customerId] [Severity: $severity] $description";
+
+// Just use the issue type as is, without customer reference
+$formattedIssueType = $issueType;
+
 // Get database connection
 require_once "../../../../db/Database.php";
-$conn = Database::get_conn();
+require_once "../../../../db/models/Complaint.php";
 
 try {
-    // Format the description to include Customer ID and Severity
-    $formattedDescription = "[Customer ID: $customerId] [Severity: $severity] $description";
-
-    // Use plain issue type without appending customer ID
-    $formattedIssueType = $issueType;
-
-    // Insert into complaints table
-    $sql = "INSERT INTO complaints 
-            (type, description, user_id, is_created_by_trainer) 
-            VALUES (:type, :description, :user_id, 1)";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([
+    $complaint = new Complaint();
+    $complaint->fill([
         'type' => $formattedIssueType,
         'description' => $formattedDescription,
-        'user_id' => $trainerId
+        'user_id' => $trainerId,
+        'user_type' => 'trainer'
     ]);
+
+    $complaint->create();
 
     // Redirect on success
     redirect_with_success_alert("Customer report submitted successfully.", "./index.php?id=" . $customerId);

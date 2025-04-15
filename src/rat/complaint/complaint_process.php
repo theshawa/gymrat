@@ -22,12 +22,21 @@ $complaint->fill(
         'user_id' => $_SESSION['auth']['id'],
         'type' => $type,
         'description' => $description,
-        'user_type' => $_SESSION['auth']['role'],
+        'user_type' => 'rat',
     ]
 );
 
 try {
     $complaint->create();
+
+    // Attempt to send notification
+    require_once "../../notifications/functions.php";
+    try {
+        notify_rat($_SESSION['auth']['id'], "Complaint Submitted", "Your complaint has been submitted successfully. An admin will review it shortly.");
+    } catch (\Throwable $th) {
+        // Continue even if notification fails
+    }
+
 } catch (PDOException $e) {
     redirect_with_error_alert("An error occurred: " . $e->getMessage(), "./");
 }

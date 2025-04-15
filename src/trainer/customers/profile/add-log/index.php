@@ -1,21 +1,8 @@
 <?php
 // File path: src/trainer/customers/profile/add-log/index.php
 
-$pageConfig = [
-    "title" => "Add Progress Log",
-    "styles" => [
-        "./add-log.css" // CSS file to be created
-    ],
-    "navbar_active" => 1,
-    "titlebar" => [
-        "back_url" => "../?id=" . (isset($_GET['id']) ? $_GET['id'] : ''),
-        "title" => "ADD PROGRESS LOG"
-    ],
-    "need_auth" => true
-];
-
-require_once "../../../includes/header.php";
-require_once "../../../includes/titlebar.php";
+// Start session and include required files first
+session_start();
 require_once "../../../../db/Database.php";
 require_once "../../../../alerts/functions.php";
 
@@ -43,10 +30,7 @@ if (!$customer) {
     exit;
 }
 
-// Handle form submission
-$successMessage = null;
-$errorMessage = null;
-
+// Handle form submission - do this before including header files
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form data
     $message = isset($_POST['message']) ? trim($_POST['message']) : '';
@@ -91,9 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Insert the progress record
             $insertSql = "INSERT INTO customer_progress 
-                            (customer_id, trainer_id, message, performance_type) 
+                          (customer_id, trainer_id, message, performance_type) 
                           VALUES 
-                            (:customer_id, :trainer_id, :message, :performance_type)";
+                          (:customer_id, :trainer_id, :message, :performance_type)";
 
             $insertStmt = $conn->prepare($insertSql);
             $insertStmt->bindValue(':customer_id', $customerId);
@@ -102,14 +86,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $insertStmt->bindValue(':performance_type', $performanceType);
             $insertStmt->execute();
 
-            // Show success message
-            $successMessage = "Progress feedback added successfully";
+            // Use the standard alert system
+            redirect_with_success_alert("Progress feedback added successfully", "?id=" . $customerId);
+            exit;
 
         } catch (Exception $e) {
-            $errorMessage = "Error saving progress: " . $e->getMessage();
+            redirect_with_error_alert("Error saving progress: " . $e->getMessage(), "?id=" . $customerId);
+            exit;
         }
     } else {
-        $errorMessage = implode(", ", $errors);
+        redirect_with_error_alert(implode(", ", $errors), "?id=" . $customerId);
+        exit;
     }
 }
 
@@ -136,21 +123,27 @@ try {
 } catch (Exception $e) {
     // Silently handle error - logs array will remain empty
 }
+
+// Set up page configuration - only after all the processing is done
+$pageConfig = [
+    "title" => "Add Progress Log",
+    "styles" => [
+        "./add-log.css"
+    ],
+    "navbar_active" => 1,
+    "titlebar" => [
+        "back_url" => "../?id=" . $customerId,
+        "title" => "ADD PROGRESS LOG"
+    ],
+    "need_auth" => true
+];
+
+// Now include the header files which will output content
+require_once "../../../includes/header.php";
+require_once "../../../includes/titlebar.php";
 ?>
 
 <main class="add-log-page">
-    <?php if ($successMessage): ?>
-        <div class="notification success">
-            <p><?= htmlspecialchars($successMessage) ?></p>
-        </div>
-    <?php endif; ?>
-
-    <?php if ($errorMessage): ?>
-        <div class="notification error">
-            <p><?= htmlspecialchars($errorMessage) ?></p>
-        </div>
-    <?php endif; ?>
-
     <div class="customer-info">
         <h2>Customer: <?= htmlspecialchars($customer['fname'] . ' ' . $customer['lname']) ?></h2>
     </div>

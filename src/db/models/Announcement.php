@@ -24,7 +24,7 @@ class Announcement extends Model
         $this->to_all = $data['to_all'] ?? "";
         $this->source = $data['source'] ?? "";
         $this->created_at = new DateTime($data['created_at'] ?? '');
-        $this->valid_till =  new DateTime($data['valid_till'] ?? '');
+        $this->valid_till = new DateTime($data['valid_till'] ?? '');
     }
 
     public function create()
@@ -56,21 +56,27 @@ class Announcement extends Model
 
     public function get_all_of_user(string $user_type, int $user_id = 0)
     {
-        if ($user_type == "rat") {
-            $sql = "SELECT trainer FROM customers WHERE id=:user_id LIMIT 1";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['user_id' => $user_id]);
-            $trainer_id = $stmt->fetchColumn();
+        try {
+            if ($user_type == "rat") {
+                // Use a simplified query that doesn't rely on the trainer field
+                $sql = "SELECT * FROM $this->table 
+                        WHERE (to_all = 'rats' OR to_all = 'rats+trainers') 
+                        AND valid_till >= NOW()
+                        ORDER BY created_at DESC";
 
-            $sql = "SELECT * FROM $this->table WHERE (to_all = 'rats' OR to_all = 'rats+trainers') AND valid_till >= NOW()
-            UNION
-            SELECT * FROM $this->table WHERE source=:trainer_id AND to_all = 'rats' AND valid_till >= NOW()
-            ORDER BY created_at DESC";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->execute();
+            } else if ($user_type == "trainer") {
+                $sql = "SELECT * FROM $this->table 
+                        WHERE (to_all = 'trainers' OR to_all = 'rats+trainers') 
+                        AND valid_till >= NOW()
+                        ORDER BY created_at DESC";
 
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([
-                'trainer_id' => $trainer_id,
-            ]);
+                $stmt = $this->conn->prepare($sql);
+                $stmt->execute();
+            } else {
+                throw new Exception("Invalid user type");
+            }
 
             $items = $stmt->fetchAll();
             return array_map(function ($item) {
@@ -78,19 +84,10 @@ class Announcement extends Model
                 $announcement->fill($item);
                 return $announcement;
             }, $items);
-        } else if ($user_type == "trainer") {
-            $sql = "SELECT * FROM $this->table WHERE (to_all = 'trainers' OR to_all = 'rats+trainers') AND valid_till >= NOW()
-             ORDER BY created_at DESC";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute();
-            $items = $stmt->fetchAll();
-            return array_map(function ($item) {
-                $announcement = new Announcement();
-                $announcement->fill($item);
-                return $announcement;
-            }, $items);
-        } else {
-            throw new Exception("Invalid user type");
+        } catch (Exception $e) {
+            // Return an empty array if there's an error
+            error_log("Error getting announcements: " . $e->getMessage());
+            return [];
         }
     }
 

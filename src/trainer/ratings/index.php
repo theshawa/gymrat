@@ -136,9 +136,20 @@ $maxDistribution = max($ratingData['distribution']) ?: 1; // Avoid division by z
     <!-- Rating Summary Section -->
     <div class="rating-card">
         <div class="rating-distribution">
-            <?php for ($i = 5; $i >= 1; $i--): ?>
+            <?php
+            // Define descriptive labels for ratings
+            $ratingLabels = [
+                5 => "Excellent",
+                4 => "Great",
+                3 => "Good",
+                2 => "Fair",
+                1 => "Poor"
+            ];
+
+            for ($i = 5; $i >= 1; $i--):
+                ?>
                 <div class="distribution-row">
-                    <div class="star-level"><?= $i ?></div>
+                    <div class="star-level"><?= $ratingLabels[$i] ?></div>
                     <div class="distribution-bar-container">
                         <div class="distribution-bar"
                             style="width: <?= ($ratingData['distribution'][$i] / $maxDistribution) * 100 ?>%;"></div>

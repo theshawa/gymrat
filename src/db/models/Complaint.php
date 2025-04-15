@@ -56,15 +56,23 @@ class Complaint extends Model
 
     public function create()
     {
-        $sql = "INSERT INTO $this->table (type, description, user_id, user_type) VALUES (:type, :description, :user_id, :user_type)";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([
-            'type' => $this->type,
-            'description' => $this->description,
-            'user_id' => $this->user_id,
-            'user_type' => $this->user_type,
-        ]);
-        $this->id = $this->conn->lastInsertId();
+        try {
+            $sql = "INSERT INTO $this->table (type, description, user_id, user_type) 
+                    VALUES (:type, :description, :user_id, :user_type)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                'type' => $this->type,
+                'description' => $this->description,
+                'user_id' => $this->user_id,
+                'user_type' => $this->user_type,
+            ]);
+
+            $this->id = $this->conn->lastInsertId();
+            return true;
+        } catch (PDOException $e) {
+            // Provide more detailed error message
+            throw new PDOException("Error creating complaint: " . $e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     public function review()

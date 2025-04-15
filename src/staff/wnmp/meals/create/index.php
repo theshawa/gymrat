@@ -13,7 +13,8 @@ $menuBarConfig = [
     "goBackTo" => "/staff/wnmp/meals/index.php",
     "useButton" => true,
     "options" => [
-        ["title" => "Save Changes", "buttonType" => "submit", "type" => "secondary"]
+        ["title" => "Save Changes", "buttonType" => "submit", "type" => "secondary"],
+        ["title" => "Revert", "buttonType" => "submit", "type" => "danger", "name" => "action", "value" => "revert"]
     ]
 ];
 

@@ -71,8 +71,6 @@ auth_required_guard("wnmp", "/staff/login");
                 <?php foreach ($mealPlan->meals as $meal): ?>
                     <?php if (!$meal['isDeleted']): ?>
                         <div class="edit-meal-plan-row">
-                            <!-- <input type="hidden" name="meal_id" value="<?= $meal['id'] ?>">
-                            <input type="hidden" name="meal_edit_id" value="<?= $meal['edit_id'] ?>"> -->
                             <select name="meal_title_<?= $meal['edit_id'] ?>" class="staff-input-primary staff-input-long">
                                 <?php foreach ($mealTitles as $title): ?>
                                     <option value="<?= $title ?>" <?= $title == $meal['title'] ? 'selected' : '' ?>>

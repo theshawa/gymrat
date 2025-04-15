@@ -1,0 +1,90 @@
+.complaint-history {
+  margin-top: 40px;
+  border-top: 1px solid var(--color-zinc-900);
+  padding-top: 20px;
+}
+
+.complaint-history h3 {
+  margin-bottom: 20px;
+}
+
+.complaint-history ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+}
+
+.complaint-history li {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border: 1px solid var(--color-zinc-800);
+  border-radius: 10px;
+  background-color: var(--color-zinc-900);
+}
+
+.complaint-history li .inline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.complaint-history li .time {
+  font-size: 11px;
+  color: var(--color-zinc-400);
+  text-transform: uppercase;
+}
+
+.complaint-history li .delete-button {
+  color: var(--color-red-light);
+  background-color: transparent;
+}
+
+.complaint-history li .delete-button:active {
+  transform: scale(0.9);
+}
+
+.complaint-history li .delete-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.complaint-history li .type {
+  margin-bottom: 5px;
+}
+
+.complaint-history li .review-message {
+  margin-top: 15px;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.complaint-history li .review-message.reviewed {
+  background-color: rgba(66, 179, 77, 0.1);
+}
+
+.complaint-history li .review-message.pending {
+  background-color: rgba(255, 193, 7, 0.1);
+}
+
+.complaint-history li .review-status {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-green-light);
+}
+
+.complaint-history li .review-status.pending {
+  color: rgb(255, 193, 7);
+}
+
+.complaint-history li .review-message p {
+  margin: 0;
+  font-size: 14px;
+  margin-top: 10px;
+}

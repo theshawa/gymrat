@@ -30,6 +30,20 @@ $complaint->fill([
 
 try {
     $complaint->create();
+
+    // Send notification to trainer
+    require_once "../../notifications/functions.php";
+
+    try {
+        notify_trainer(
+            $userId,
+            "Complaint Submitted",
+            "Your complaint has been submitted successfully. You will be notified when an admin reviews it."
+        );
+    } catch (\Throwable $th) {
+        // Continue even if notification fails
+    }
+
 } catch (PDOException $e) {
     redirect_with_error_alert("An error occurred: " . $e->getMessage(), "./");
 }

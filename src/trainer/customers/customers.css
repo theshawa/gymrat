@@ -19,7 +19,7 @@
   height: 36px;
   border-radius: 9999px;
   background-color: var(--color-zinc-800);
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .customer h4 {

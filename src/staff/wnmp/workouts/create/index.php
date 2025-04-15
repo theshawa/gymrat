@@ -65,7 +65,7 @@ auth_required_guard("wnmp", "/staff/login");
                         placeholder="Enter a workout description"><?= $workout->description ?></textarea>
                     <div>
                         <h2><label for="edit-duration">Duration</label></h2>
-                        <input type="text" id="edit-duration" name="workout_duration"
+                        <input type="text" id="edit-duration" name="workout_duration" pattern="\d+"
                             class="staff-input-primary staff-input-long" value="<?= $workout->duration ?>">
                     </div>
                 </div>
@@ -83,7 +83,7 @@ auth_required_guard("wnmp", "/staff/login");
                                 </select>
                                 <div class="edit-workout-input-reps-sets">
                                     <label for="exercise_day_<?= $exercise['edit_id'] ?>">Day</label>
-                                    <input type="text" name="exercise_day_<?= $exercise['edit_id'] ?>" pattern="\d+"
+                                    <input type="text" name="exercise_day_<?= $exercise['edit_id'] ?>" pattern="[1-7]" min="1" max="7"
                                         value="<?= $exercise['day'] ?>" class="staff-input-primary staff-input-short">
                                 </div>
                                 <div class="edit-workout-input-reps-sets">

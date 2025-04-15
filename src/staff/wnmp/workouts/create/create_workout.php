@@ -20,6 +20,7 @@ if (!isset($_SESSION['exerciseTitles'])) {
 } else {
     $exerciseTitles = $_SESSION['exerciseTitles'];
 }
+$errors = [];
 
 
 // Handle workout details update
@@ -28,16 +29,9 @@ if (isset($_POST['workout_name'], $_POST['workout_description'], $_POST['workout
     $description = htmlspecialchars($_POST['workout_description']);
     $duration = htmlspecialchars($_POST['workout_duration']);
 
-    // Validation
-    $errors = [];
     if (empty($name)) $errors[] = "Name is required.";
     if (empty($description)) $errors[] = "Description is required.";
     if (empty($duration)) $errors[] = "Duration is required.";
-
-    if (!empty($errors)) {
-        $error_message = implode(" ", $errors);
-        redirect_with_error_alert($error_message, "/staff/wnmp/workouts/create");
-    }
 
     $workout->name = $name;
     $workout->description = $description;
@@ -45,18 +39,6 @@ if (isset($_POST['workout_name'], $_POST['workout_description'], $_POST['workout
 }
 
 // Handle exercise updates
-if (isset($_POST['exercise_edit_id'])) {
-    $current_exercise_edit_id = htmlspecialchars($_POST['exercise_edit_id']);
-    foreach ($workout->exercises as $key => $exercise) {
-        if ($exercise['edit_id'] == $current_exercise_edit_id) {
-            $workout->exercises[$key]['title'] = htmlspecialchars($_POST['exercise_title']);
-            $workout->exercises[$key]['reps'] = htmlspecialchars($_POST['exercise_reps']);
-            $workout->exercises[$key]['sets'] = htmlspecialchars($_POST['exercise_sets']);
-            $workout->exercises[$key]['isUpdated'] = true;
-        }
-    }
-}
-
 if (!empty($workout->exercises)) {
     foreach ($workout->exercises as $key => $exercise) {
         $edit_id = $exercise['edit_id'];
@@ -77,6 +59,24 @@ if (!empty($workout->exercises)) {
     }
 }
 
+// Validation
+$days = array_column($workout->exercises, 'day');
+$max_day = max($days);
+if ($max_day < 1 || $max_day > 7) {
+    $errors[] = "The number of days must be between 1 and 7.";
+}
+
+for ($day = 1; $day <= $max_day; $day++) {
+    if (!in_array($day, $days)) {
+        $errors[] = "There must be at least one exercise for each day between 1 and $max_day.";
+        break;
+    }
+}
+
+if (!empty($errors)) {
+    $error_message = implode(" ", $errors);
+    redirect_with_error_alert($error_message, "/staff/wnmp/workouts/create");
+}
 
 // Delete Logic
 if (isset($_POST['delete_exercise'])) {

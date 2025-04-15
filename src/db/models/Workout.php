@@ -153,9 +153,11 @@ class Workout extends Model
         return array_map(function($exercise) {
             return [
                 'id' => $exercise->id,
+                'edit_id' => $exercise->id,
                 'workout_id' => $exercise->workout_id,
                 'exercise_id' => $exercise->exercise_id,
                 'sets' => $exercise->sets,
+                'day' => $exercise->day,
                 'reps' => $exercise->reps,
                 'isUpdated' => $exercise->isUpdated,
                 'isDeleted' => $exercise->isDeleted,

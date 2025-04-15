@@ -16,7 +16,7 @@ class Customer extends Model
     public DateTime $created_at;
     public DateTime $updated_at;
     public int $onboarded;
-    public int $membership_plan;
+    public ?int $membership_plan;
     public DateTime|null $membership_plan_activated_at;
     public ?int $trainer;
 
@@ -33,7 +33,7 @@ class Customer extends Model
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
         $this->membership_plan_activated_at = (array_key_exists('membership_plan_activated_at', $data)  && $data['membership_plan_activated_at']) ?  new DateTime($data['membership_plan_activated_at']) : null;
         $this->onboarded = $data['onboarded'] ?? 0;
-        $this->membership_plan = $data['membership_plan'] ?? 0;
+        $this->membership_plan = $data['membership_plan'] ?? null;
         $this->trainer = $data['trainer'] ?? null;
     }
 
@@ -68,7 +68,7 @@ class Customer extends Model
         onboarded=:onboarded, 
         membership_plan=:membership_plan, 
         updated_at=:updated_at,
-        membership_plan_activated_at=:membership_plan_activated_at 
+        membership_plan_activated_at=:membership_plan_activated_at, 
         trainer=:trainer
         WHERE id=:id";
         $stmt = $this->conn->prepare($sql);

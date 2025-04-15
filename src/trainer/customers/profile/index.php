@@ -1,9 +1,10 @@
 <?php
+// File path: src/trainer/customers/profile/index.php
 
 $pageConfig = [
     "title" => "Client Status",
     "styles" => [
-        "./profile.css" // The CSS file we'll create
+        "./profile.css" // The CSS file
     ],
     "navbar_active" => 1,
     "titlebar" => [
@@ -15,49 +16,110 @@ $pageConfig = [
 
 require_once "../../includes/header.php";
 require_once "../../includes/titlebar.php";
+require_once "../../../db/models/Customer.php";
+require_once "../../../db/models/CustomerInitialData.php";
+require_once "../../../alerts/functions.php";
 
 // Get customer ID from URL
 $customerId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// Get customer data
-require_once "../data.php"; // Using the mock data file
-
-// Find customer by ID
-$customer = null;
-foreach ($data as $item) {
-    if ($item['id'] == $customerId) {
-        $customer = $item;
-        break;
-    }
-}
-
-// If customer not found, redirect back to customers list
-if (!$customer) {
-    header("Location: ../");
+// If customer ID is missing, redirect back to customers list
+if (!$customerId) {
+    redirect_with_error_alert("Invalid customer ID", "../");
     exit;
 }
 
-// Mock data for customer details
-$customerDetails = [
-    'username' => '@' . strtolower($customer['fname']) . '_' . strtolower($customer['lname']),
-    'goal' => 'My Goal is to burn my fat in my tummy and gain muscles in forearms within 9 months.',
-    'rating' => 4.7,
-    'profile_image' => '/uploads/default-images/default-avatar.png'
-];
+// Get customer data from database
+$customer = new Customer();
+$customer->id = $customerId;
+$customerExists = false;
+
+try {
+    $customer->get_by_id();
+    $customerExists = true;
+} catch (Exception $e) {
+    redirect_with_error_alert("Customer not found: " . $e->getMessage(), "../");
+    exit;
+}
+
+// Get customer's initial data (including their goal)
+$hasInitialData = false;
+$goal = "No goal set";
+
+// Try to get initial data but don't fail if it doesn't exist
+try {
+    $conn = Database::get_conn();
+    $sql = "SELECT * FROM customer_initial_data WHERE customer_id = :customer_id LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':customer_id', $customerId);
+    $stmt->execute();
+
+    $initialData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($initialData) {
+        $hasInitialData = true;
+
+        // Check if there's a goal or other_goal set
+        if (!empty($initialData['goal'])) {
+            $goalFromDb = $initialData['goal'];
+
+            // Convert goal from database code to readable text if needed
+            if ($goalFromDb == "weight_loss") {
+                $goal = "My goal is to lose weight and improve fitness";
+            } elseif ($goalFromDb == "muscle_gain") {
+                $goal = "My goal is to gain muscle and improve strength";
+            } elseif ($goalFromDb == "fitness") {
+                $goal = "My goal is to improve overall fitness and health";
+            } else {
+                $goal = $goalFromDb; // Use as-is if not a known code
+            }
+        } elseif (!empty($initialData['other_goal'])) {
+            $goal = $initialData['other_goal'];
+        }
+    }
+} catch (Exception $e) {
+    // Silently catch errors - we'll just use the default goal text
+}
+
+// Correctly handle the avatar path
+$avatarPath = '/uploads/default-images/default-avatar.png'; // Default
+
+if (!empty($customer->avatar)) {
+    // Check if avatar already starts with "/uploads/"
+    if (strpos($customer->avatar, '/uploads/') === 0) {
+        $avatarPath = $customer->avatar;
+    }
+    // Check if it starts with "uploads/"
+    else if (strpos($customer->avatar, 'uploads/') === 0) {
+        $avatarPath = '/' . $customer->avatar;
+    }
+    // Otherwise, assume it's in "customer-avatars/"
+    else {
+        $avatarPath = '/uploads/' . $customer->avatar;
+    }
+}
+
+// Create username from first and last name if not set
+$username = '@' . strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $customer->fname)) . '_' .
+    strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $customer->lname));
+
+// Calculate or mock rating data 
+// In a real system, this would come from a ratings table
+$rating = 4.7; // Example mock rating that could later be replaced with real data
 ?>
 
 <main class="profile-view">
     <!-- Customer Profile Section -->
     <div class="profile-section">
         <div class="profile-info">
-            <img src="<?= $customerDetails['profile_image'] ?>" alt="Profile" class="profile-avatar">
-            <h1 class="profile-name"><?= $customer['fname'] . ' ' . $customer['lname'] ?></h1>
-            <p class="profile-username"><?= $customerDetails['username'] ?></p>
-            <p class="profile-goal"><?= $customerDetails['goal'] ?></p>
+            <img src="<?= $avatarPath ?>" alt="Profile" class="profile-avatar">
+            <h1 class="profile-name"><?= htmlspecialchars($customer->fname . ' ' . $customer->lname) ?></h1>
+            <p class="profile-username"><?= htmlspecialchars($username) ?></p>
+            <p class="profile-goal"><?= htmlspecialchars($goal) ?></p>
         </div>
 
         <div class="rating-box">
-            <div class="rating-score"><?= $customerDetails['rating'] ?></div>
+            <div class="rating-score"><?= $rating ?></div>
             <div class="rating-stars">
                 <span class="star filled">★</span>
                 <span class="star filled">★</span>

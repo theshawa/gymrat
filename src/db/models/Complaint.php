@@ -12,9 +12,10 @@ class Complaint extends Model
     public string $type;
     public string $description;
     public int $user_id;
+    public string $user_type;
     public DateTime $created_at;
-    public int $is_created_by_trainer;
-    private string $name;
+    public ?string $review_message;
+    public ?DateTime $reviewed_at;
 
     public function fill(array $data)
     {
@@ -22,13 +23,15 @@ class Complaint extends Model
         $this->type = $data['type'] ?? "";
         $this->description = $data['description'] ?? "";
         $this->user_id = $data['user_id'] ?? 0;
+        $this->user_type = $data['user_type'] ?? "rat";
         $this->created_at = new DateTime($data['created_at'] ?? '');
-        $this->is_created_by_trainer = $data['is_created_by_trainer'] ?? 0;
+        $this->review_message = $data['review_message'] ?? null;
+        $this->reviewed_at = isset($data['reviewed_at']) ? new DateTime($data['reviewed_at']) : null;
     }
 
     public function get_all(): array
     {
-        $sql = "SELECT * FROM $this->table";
+        $sql = "SELECT * FROM $this->table ORDER BY created_at DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $items = $stmt->fetchAll();
@@ -53,30 +56,54 @@ class Complaint extends Model
 
     public function create()
     {
-        $sql = "INSERT INTO $this->table (type, description, user_id, is_created_by_trainer) VALUES (:type, :description, :user_id, :is_created_by_trainer)";
+        $sql = "INSERT INTO $this->table (type, description, user_id, user_type) VALUES (:type, :description, :user_id, :user_type)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'type' => $this->type,
             'description' => $this->description,
             'user_id' => $this->user_id,
-            'is_created_by_trainer' => $this->is_created_by_trainer
+            'user_type' => $this->user_type,
+        ]);
+        $this->id = $this->conn->lastInsertId();
+    }
+
+    public function review()
+    {
+        $sql = "UPDATE $this->table SET review_message = :review_message, reviewed_at = NOW() WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'review_message' => $this->review_message,
+            'id' => $this->id,
         ]);
     }
 
-    public function update_name()
+    public function delete()
     {
-        if ($this->is_created_by_trainer) {
-            $trainer = new Trainer();
-            $trainer->id = $this->user_id;
-            if ($trainer->get_by_id()) {
-                $this->name = $trainer->fname . ' ' . $trainer->lname;
-            }
-        } else {
-            $customer = new Customer();
-            $customer->id = $this->user_id;
-            if ($customer->get_by_id()) {
-                $this->name = $customer->fname . ' ' . $customer->lname;
-            }
-        }
+        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
+    }
+
+    public function get_all_of_user(int $user_id, string $user_type)
+    {
+        $sql = "SELECT * FROM $this->table WHERE user_id = :user_id AND user_type = :user_type ORDER BY created_at DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'user_id' => $user_id,
+            'user_type' => $user_type,
+        ]);
+        $items = $stmt->fetchAll();
+        return array_map(function ($item) {
+            $complaint = new Complaint();
+            $complaint->fill($item);
+            return $complaint;
+        }, $items);
+    }
+
+    public function delete_all_reviewed()
+    {
+        $sql = "DELETE FROM $this->table WHERE reviewed_at IS NOT NULL";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
     }
 }

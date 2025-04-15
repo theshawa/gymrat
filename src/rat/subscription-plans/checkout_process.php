@@ -63,6 +63,7 @@ $fields = get_checkout_fields(
     $user->fname,
     $user->lname,
     $user->email,
+    $user->phone,
 );
 
 $action_url = payhere_config['action_url'];

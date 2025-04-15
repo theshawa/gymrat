@@ -8,7 +8,8 @@ function get_checkout_fields(
     string $item,
     string $fname,
     string $lname,
-    string $email
+    string $email,
+    string $phone,
 ): string {
     $hash = strtoupper(
         md5(
@@ -29,7 +30,7 @@ function get_checkout_fields(
         $get_field("first_name", $fname),
         $get_field("last_name", $lname),
         $get_field("email", $email),
-        $get_field("phone", "+94766743755"),
+        $get_field("phone", $phone),
         $get_field("address", "University of Colombo School of Computing, Reid Avenue, Colombo 7"),
         $get_field("city", "Colombo 7"),
         $get_field("country", "Sri Lanka"),

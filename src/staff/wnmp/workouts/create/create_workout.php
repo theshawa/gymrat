@@ -71,6 +71,28 @@ if (isset($_POST['delete_exercise'])) {
 } 
 
 
+// Add Logic
+if (isset($_POST['action']) && $_POST['action'] === 'add') {
+    $lastExercise = end($workout->exercises);
+    $edit_id = $lastExercise ? $lastExercise["edit_id"] + 1 : 0;
+
+    $newExercise = [
+        "id" => 0,
+        'workout_id' => 0,
+        "edit_id" => $edit_id,
+        "exercise_id" => 2147483647,
+        "title" => $exerciseTitles[1],
+        "sets" => 0,
+        "reps" => 0,
+        "day" => 0,
+        "isUpdated" => true,
+        "isDeleted" => false
+    ];
+
+    $workout->exercises[] = $newExercise;
+}
+
+
 // Validation
 if (empty($workout->exercises) && (!isset($_POST['action']) || $_POST['action'] !== 'add')) {
     $errors[] = "At least one exercise is required. [0]";
@@ -112,27 +134,6 @@ if (!empty($errors)) {
     $error_message = implode(" ", $errors);
     $_SESSION['workout'] = serialize($workout);
     redirect_with_error_alert($error_message, "/staff/wnmp/workouts/create");
-}
-
-// Add Logic
-if (isset($_POST['action']) && $_POST['action'] === 'add') {
-    $lastExercise = end($workout->exercises);
-    $edit_id = $lastExercise ? $lastExercise["edit_id"] + 1 : 0;
-
-    $newExercise = [
-        "id" => 0,
-        'workout_id' => 0,
-        "edit_id" => $edit_id,
-        "exercise_id" => 2147483647,
-        "title" => $exerciseTitles[1],
-        "sets" => 0,
-        "reps" => 0,
-        "day" => 0,
-        "isUpdated" => true,
-        "isDeleted" => false
-    ];
-
-    $workout->exercises[] = $newExercise;
 }
 
 $_SESSION['workout'] = serialize($workout);

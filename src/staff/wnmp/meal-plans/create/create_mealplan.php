@@ -47,15 +47,7 @@ if (!empty($mealPlan->meals)) {
     }
 }
 
-// Validation
-if (empty($mealPlan->meals)) {
-    $errors[] = "Meal plan must contain at least one meal.";
-}
 
-if (!empty($errors)) {
-    $error_message = implode(" ", $errors);
-    redirect_with_error_alert($error_message, "/staff/wnmp/meal-plans/create");
-}
 
 // Delete Logic
 if (isset($_POST['delete_meal'])) {
@@ -87,6 +79,29 @@ if (isset($_POST['action']) && $_POST['action'] === 'add'){
     ];
 
     $mealPlan->meals[] = $newMeal;
+}
+
+// Validation
+if (empty($mealPlan->meals) && (!isset($_POST['action']) || $_POST['action'] !== 'add')) {
+    $errors[] = "Meal plan must contain at least one meal. [0]";
+}
+
+if (!empty($mealPlan->meals)) {
+    $allDeleted = true;
+    foreach ($mealPlan->meals as $meal) {
+        if (empty($meal['isDeleted']) || !$meal['isDeleted']) {
+            $allDeleted = false;
+            break;
+        }
+    }
+    if ($allDeleted) {
+        $errors[] = "Meal plan must contain at least one meal. [1]";
+    }
+}
+
+if (!empty($errors)) {
+    $error_message = implode(" ", $errors);
+    redirect_with_error_alert($error_message, "/staff/wnmp/meal-plans/create");
 }
 
 

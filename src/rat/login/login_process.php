@@ -89,4 +89,27 @@ if (!$user->onboarded) {
     exit;
 }
 
+// end any existing workout sessions
+require_once "../../db/models/WorkoutSession.php";
+$workout_session_model = new WorkoutSession();
+try {
+    $workout_session_model->fill([
+        'user' => $user->id,
+    ]);
+    $workout_sessions = $workout_session_model->get_all_by_user();
+    foreach ($workout_sessions as $session) {
+        if ($session->ended_at) {
+            continue;
+        }
+        if ($session->get_duration_in_hours() > 4) {
+            $session->mark_ended((clone $session->started_at)->modify('+4 hours'));
+        } else {
+            $session->mark_ended();
+        }
+    }
+} catch (\Throwable $th) {
+    unset($_SESSION['auth']);
+    redirect_with_error_alert("Failed to reset workout sessions due to an error: " . $th->getMessage(), "./");
+}
+
 redirect_with_success_alert("Logged in successfully", "/rat");

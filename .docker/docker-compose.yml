@@ -7,6 +7,8 @@ services:
       MYSQL_DATABASE: gymrat
     volumes:
       - db_data:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+      - /etc/localtime:/etc/localtime:ro
   phpmyadmin:
     depends_on:
       - mysql_db
@@ -18,12 +20,15 @@ services:
       PMA_HOST: mysql_db
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: 123456
+      TZ: Asia/Colombo
   php-server:
     build: .
     ports:
       - 80:80
     volumes:
       - ../src:/var/www/html
+    environment:
+      TZ: Asia/Colombo
   
 volumes:
   db_data:

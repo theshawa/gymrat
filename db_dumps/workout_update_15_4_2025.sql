@@ -3,9 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql_db:3306
-
 -- Generation Time: Apr 15, 2025 at 11:44 PM
-
 -- Server version: 9.2.0
 -- PHP Version: 8.2.27
 
@@ -393,10 +391,14 @@ CREATE TABLE `notifications` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `notifications`
+--
 
 INSERT INTO `notifications` (`id`, `title`, `message`, `receiver_id`, `receiver_type`, `source`, `is_read`, `valid_till`, `created_at`) VALUES
 (50, 'Workout started', 'Your workout has started.', 44, 'rat', 'system', 0, NULL, '2025-04-15 10:52:18'),
 (51, 'Workout started', 'Your workout has started.', 44, 'rat', 'system', 1, NULL, '2025-04-15 10:58:00');
+
 -- --------------------------------------------------------
 
 --
@@ -518,7 +520,6 @@ CREATE TABLE `workout_sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
-
 -- Dumping data for table `workout_sessions`
 --
 
@@ -546,7 +547,6 @@ INSERT INTO `workout_session_keys` (`session_key`, `created_at`) VALUES
 ('gymrat_wsk_007c308577dd808f065cc96dfb65174fc00d41361e7921bdde1e04becf1a1c93', '2025-04-15 23:41:55');
 
 --
-
 -- Indexes for dumped tables
 --
 
@@ -760,7 +760,6 @@ ALTER TABLE `membership_plans`
 ALTER TABLE `notifications`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
-
 --
 -- AUTO_INCREMENT for table `trainers`
 --
@@ -778,12 +777,6 @@ ALTER TABLE `workouts`
 --
 ALTER TABLE `workout_exercises`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `workout_sessions`
---
-ALTER TABLE `workout_sessions`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- Constraints for dumped tables

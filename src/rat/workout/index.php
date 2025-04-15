@@ -2,6 +2,37 @@
 
 session_start();
 
+$start_command = $_GET['start'] ?? null;
+
+if ($start_command) {
+    header("Location: ./start_workout");
+    exit;
+}
+
+$workoutSession = null;
+if (isset($_SESSION['workout_session'])) {
+    require_once "../../db/models/WorkoutSession.php";
+    $workoutSession = new WorkoutSession();
+    $workoutSession->fill([
+        'session_key' => $_SESSION['workout_session']
+    ]);
+    try {
+        $workoutSession->get_by_session_key();
+
+        // automatically end workout if it has been more than 4 hrs
+        if ($workoutSession->get_duration_in_hours() > 4) {
+            $ended_at = (clone $workoutSession->started_at)->modify('+4 hours');
+            $workoutSession->mark_ended($ended_at);
+            unset($_SESSION['workout_session']);
+            $workoutSession = null;
+        }
+    } catch (\Throwable $th) {
+        die("Failed to get workout session: " . $th->getMessage());
+    }
+}
+
+$day = $_GET['day'] ?? 1;
+
 $pageConfig = [
     "title" => "My Workout",
     "styles" => ["./workout.css"],
@@ -15,25 +46,6 @@ $pageConfig = [
 ];
 
 require_once "./data.php";
-
-$start_command = $_GET['start'] ?? null;
-
-if ($start_command) {
-    header("Location: ./start_end_workout_process.php");
-    exit;
-}
-
-$workoutSession = null;
-if (isset($_SESSION['workout_session'])) {
-    require_once "../../db/models/WorkoutSession.php";
-    $workoutSession = new WorkoutSession();
-    $workoutSession->fill([
-        'id' => $_SESSION['workout_session']
-    ]);
-    $workoutSession->get_by_id();
-}
-
-$day = $_GET['day'] ?? 1;
 
 $subnavbar_links = array_map(function ($day) {
     return [
@@ -61,12 +73,33 @@ require_once "../includes/titlebar.php";
 </script>
 
 <main>
-    <a href="./start_end_workout_process.php" class="btn <?= $workoutSession ? "danger" : "success" ?>">
-        <span><?= $workoutSession ? "End" : "Start" ?> Workout</span>
-        <?php if ($workoutSession): ?>
+
+    <?php if ($workoutSession): ?>
+        <button class="btn danger" onclick="endWorkout()">
+            <span>End Workout</span>
             <span class="sub-text workout-timer"></span>
-        <?php endif; ?>
-    </a>
+        </button>
+        <script>
+            const endWorkout = () => {
+                const startedAt = new Date($WORKOUT_STARTED_AT)
+                const now = Date.now();
+                const diffInSeconds = Math.floor((now - startedAt) / 1000);
+                const seconds = diffInSeconds % 60;
+                const minutes = Math.floor(diffInSeconds / 60) % 60;
+                const hours = Math.floor(diffInSeconds / 3600) % 24;
+
+                if (hours >= 1 || confirm("Are you sure you want to end the workout? You have been working out for " +
+                        (minutes > 0 ? minutes + " minutes" : seconds + " seconds") +
+                        ". It's recommended to workout for at least one hour for best results.")) {
+                    window.location.href = "./end_workout_process.php";
+                }
+            }
+        </script>
+    <?php else: ?>
+        <a href="./start_workout" class="btn success">
+            <span>Start Workout</span>
+        </a>
+    <?php endif; ?>
 
     <?php
     $subnavbarConfig = [

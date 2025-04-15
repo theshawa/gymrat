@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #6700e6;
+  display: flex;
+  padding: 20px;
+  min-height: 100vh;
+}
+#qrcode {
+  width: 300px;
+  height: 300px;
+  margin: auto;
+}
+
+#qrcode img {
+  width: 100% !important;
+  height: 100% !important;
+}

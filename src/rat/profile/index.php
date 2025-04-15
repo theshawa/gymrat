@@ -82,7 +82,16 @@ $avatar = $user->avatar ? "/uploads/" . $user->avatar : "/uploads/default-images
 
     </div>
     <a href="./update" class="btn">Update Profile</a>
-    <a href="../logout.php" class="btn secondary">Logout</a>
+    <button onclick="logout()" class="btn secondary">Logout</button>
+    <script>
+        const logout = () => {
+            if (<?= isset($_SESSION['workout_session']) ? 'true' : 'false' ?>) {
+                alert("You have an active workout session. Please end it before logging out.");
+            } else {
+                window.location.href = "../logout.php";
+            }
+        }
+    </script>
     <?php if (!$user->avatar): ?>
         <p class="paragraph" style="text-align: center;font-size: 10px;margin-top:20px;color: var(--color-zinc-500)">Default
             avatar image is <br />downloaded from <a href="https://www.freepik.com" target="_blank"

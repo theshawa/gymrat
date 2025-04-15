@@ -94,10 +94,18 @@ if (empty($mealPlan->meals) && (!isset($_POST['action']) || $_POST['action'] !==
 
 if (!empty($mealPlan->meals)) {
     $allDeleted = true;
+    $mealCombinationTracker = [];
     foreach ($mealPlan->meals as $meal) {
         if (empty($meal['isDeleted']) || !$meal['isDeleted']) {
             $allDeleted = false;
-            break;
+
+            // Check for duplicate meals
+            $combinationKey = $meal['title'] . '|' . $meal['time'] . '|' . $meal['day'];
+            if (isset($mealCombinationTracker[$combinationKey])) {
+                $errors[] = "Duplicate meal found: Title '{$meal['title']}', Time '{$meal['time']}', Day '{$meal['day']}'.";
+            } else {
+                $mealCombinationTracker[$combinationKey] = true;
+            }
         }
     }
     if ($allDeleted) {

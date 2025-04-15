@@ -104,10 +104,18 @@ if (empty($workout->exercises) && (!isset($_POST['action']) || $_POST['action'] 
 
 if (!empty($workout->exercises)) {
     $allDeleted = true;
+    $exerciseCombinationTracker = [];
     foreach ($workout->exercises as $exercise) {
         if (empty($exercise['isDeleted']) || !$exercise['isDeleted']) {
             $allDeleted = false;
-            break;
+
+            // Check for duplicate exercises
+            $combinationKey = $exercise['title'] . '|' . $exercise['reps'] . '|' . $exercise['sets'] . '|' . $exercise['day'];
+            if (isset($exerciseCombinationTracker[$combinationKey])) {
+                $errors[] = "Duplicate exercise found: Title '{$exercise['title']}', Reps '{$exercise['reps']}', Sets '{$exercise['sets']}', Day '{$exercise['day']}'.";
+            } else {
+                $exerciseCombinationTracker[$combinationKey] = true;
+            }
         }
     }
     if ($allDeleted) {

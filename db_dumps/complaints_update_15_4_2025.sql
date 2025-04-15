@@ -3,9 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql_db:3306
-
--- Generation Time: Apr 15, 2025 at 11:44 PM
-
+-- Generation Time: Apr 15, 2025 at 10:18 AM
 -- Server version: 9.2.0
 -- PHP Version: 8.2.27
 
@@ -393,10 +391,6 @@ CREATE TABLE `notifications` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
-INSERT INTO `notifications` (`id`, `title`, `message`, `receiver_id`, `receiver_type`, `source`, `is_read`, `valid_till`, `created_at`) VALUES
-(50, 'Workout started', 'Your workout has started.', 44, 'rat', 'system', 0, NULL, '2025-04-15 10:52:18'),
-(51, 'Workout started', 'Your workout has started.', 44, 'rat', 'system', 1, NULL, '2025-04-15 10:58:00');
 -- --------------------------------------------------------
 
 --
@@ -510,7 +504,7 @@ INSERT INTO `workout_exercises` (`id`, `workout_id`, `exercise_id`, `day`, `sets
 --
 
 CREATE TABLE `workout_sessions` (
-  `session_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id` int NOT NULL,
   `user` int NOT NULL,
   `workout` int NOT NULL,
   `started_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -518,35 +512,6 @@ CREATE TABLE `workout_sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
-
--- Dumping data for table `workout_sessions`
---
-
-INSERT INTO `workout_sessions` (`session_key`, `user`, `workout`, `started_at`, `ended_at`) VALUES
-('gymrat_wsk_2c8624d1a9e3909ebfe2fbfd8a1bd174ab3662a1908714e2aca0f3e739101e51', 44, 1, '2025-04-15 13:46:35', '2025-04-15 17:46:35'),
-('gymrat_wsk_6a4fcc92edff8112fec52f38ef80a4d4e034bff8603732b7b95af4b765ffd697', 44, 1, '2025-04-15 13:49:09', '2025-04-15 17:49:26'),
-('gymrat_wsk_c62d360a9ed20f26f75d509f7786fe8fd82c8b35f17b4cb904f77bd003f2e4b2', 44, 1, '2025-04-15 10:57:49', '2025-04-15 14:57:49');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `workout_session_keys`
---
-
-CREATE TABLE `workout_session_keys` (
-  `session_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `workout_session_keys`
---
-
-INSERT INTO `workout_session_keys` (`session_key`, `created_at`) VALUES
-('gymrat_wsk_007c308577dd808f065cc96dfb65174fc00d41361e7921bdde1e04becf1a1c93', '2025-04-15 23:41:55');
-
---
-
 -- Indexes for dumped tables
 --
 
@@ -680,15 +645,9 @@ ALTER TABLE `workout_exercises`
 -- Indexes for table `workout_sessions`
 --
 ALTER TABLE `workout_sessions`
-  ADD PRIMARY KEY (`session_key`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `WorkoutSession_User` (`user`),
   ADD KEY `WorkoutSession_Workout` (`workout`);
-
---
--- Indexes for table `workout_session_keys`
---
-ALTER TABLE `workout_session_keys`
-  ADD PRIMARY KEY (`session_key`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -758,8 +717,7 @@ ALTER TABLE `membership_plans`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
-
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `trainers`

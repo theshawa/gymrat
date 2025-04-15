@@ -3,10 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql_db:3306
-
--- Generation Time: Apr 15, 2025 at 11:44 PM
-
--- Server version: 9.2.0
+-- Generation Time: Apr 15, 2025 at 11:07 AM
+-- Server version: 9.3.0
 -- PHP Version: 8.2.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -75,19 +73,27 @@ CREATE TABLE `complaints` (
   `type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `user_id` int NOT NULL,
-  `user_type` enum('rat','trainer') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'rat',
-  `review_message` text COLLATE utf8mb4_general_ci,
-  `reviewed_at` datetime DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_created_by_trainer` tinyint(1) NOT NULL DEFAULT '0',
+  `admin_reply` text COLLATE utf8mb4_general_ci COMMENT 'Admin response to the complaint',
+  `status` enum('pending','reviewed') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'pending' COMMENT 'Status of the complaint review',
+  `replied_at` timestamp NULL DEFAULT NULL COMMENT 'When the admin replied to the complaint'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `complaints`
 --
 
-INSERT INTO `complaints` (`id`, `type`, `description`, `user_id`, `user_type`, `review_message`, `reviewed_at`, `created_at`) VALUES
-(16, 'Facility Issues', 'asdasd', 44, 'rat', 'A gym trainer, often referred to as a personal trainer or fitness coach, is an individual who\nspecializes in guiding and instructing clients in their fitness journeys.', '2025-04-30 15:05:23', '2025-04-15 09:35:07'),
-(20, 'Membership Issues', 'asda ad sad asd as das das dasd', 44, 'rat', NULL, NULL, '2025-04-15 10:18:18');
+INSERT INTO `complaints` (`id`, `type`, `description`, `user_id`, `created_at`, `is_created_by_trainer`, `admin_reply`, `status`, `replied_at`) VALUES
+(1, 'Equipment Issue', 'The treadmill is not functioning properly.', 101, '2024-11-25 20:25:18', 0, NULL, 'pending', NULL),
+(2, 'Cleanliness', 'The locker room needs cleaning.', 102, '2024-11-25 20:25:18', 0, NULL, 'pending', NULL),
+(3, 'Schedule Conflict', 'Trainer not available during requested hours.', 103, '2024-11-25 20:25:18', 1, NULL, 'pending', NULL),
+(4, 'Billing Error', 'Charged extra for last month\'s subscription.', 104, '2024-11-25 20:25:18', 0, NULL, 'pending', NULL),
+(5, 'Feedback', 'Requesting more yoga classes.', 105, '2024-11-25 20:25:18', 1, NULL, 'pending', NULL),
+(11, 'Billing Error', 'Not credited my salary to my account', 1, '2025-04-15 09:42:50', 1, 'Okay, I will check', 'reviewed', NULL),
+(12, 'Other Issue', 'Shoulder Press Machine is not functioning well.', 1, '2025-04-15 09:57:03', 1, NULL, 'pending', NULL),
+(15, 'Attendance Problem', '[Customer ID: 1] [Severity: medium] He is not coming regularly and not infoming me early about his absence.', 1, '2025-04-15 10:17:49', 1, NULL, 'pending', NULL),
+(16, 'Inappropriate Behavior', '[Customer ID: 1] [Severity: high] Hello! you are bad!', 1, '2025-04-15 10:59:03', 1, NULL, 'pending', NULL);
 
 -- --------------------------------------------------------
 
@@ -104,8 +110,7 @@ CREATE TABLE `customers` (
   `password` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'https://stackoverflow.com/questions/247304/what-data-type-to-use-for-hashed-password-field-and-what-length',
   `avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `onboarded` tinyint(1) NOT NULL DEFAULT '0',
-  `trainer` int DEFAULT NULL,
-  `membership_plan` int DEFAULT NULL,
+  `membership_plan` int NOT NULL,
   `membership_plan_activated_at` timestamp NULL DEFAULT NULL,
   `workout` int DEFAULT NULL COMMENT 'add related workout id',
   `meal_plan` int DEFAULT NULL COMMENT 'add related meal plan id',
@@ -117,8 +122,13 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`id`, `fname`, `lname`, `email`, `phone`, `password`, `avatar`, `onboarded`, `trainer`, `membership_plan`, `membership_plan_activated_at`, `workout`, `meal_plan`, `created_at`, `updated_at`) VALUES
-(44, 'Theshawa', 'Nimantha', 'mrclocktd@gmail.com', '0766743755', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, NULL, 15, '2025-04-15 07:27:46', NULL, NULL, '2025-04-15 07:27:26', '2025-04-15 07:27:26');
+INSERT INTO `customers` (`id`, `fname`, `lname`, `email`, `phone`, `password`, `avatar`, `onboarded`, `membership_plan`, `membership_plan_activated_at`, `workout`, `meal_plan`, `created_at`, `updated_at`) VALUES
+(1, 'Craig', 'Bricknell', 'ron@gmail.com', '119', '$2y$10$FjUeSnitJt4GslR2H9IZVu6D4EmW//tSxD0lkDvP30se3UN0ipDFa', 'customer-avatars/6746fda47d8c2.jpg', 1, 14, '2024-11-26 04:40:06', NULL, 1, '2024-11-26 09:09:46', '2024-11-26 09:09:46'),
+(2, 'Craig', 'Boss', 'craig@gmail.com', '119', '$2y$10$zLuimhijl2g7jyPLbO6rB.BghjmFeyUAAfdqopHhsD7RDqOLkCYNS', 'customer-avatars/67fa1eaa3e36c.png', 1, 14, '2024-11-26 04:43:16', NULL, 2, '2024-11-26 09:13:04', '2024-11-26 09:13:04'),
+(3, 'Rona', 'New', 'ronanew@gmail.com', '001223', '$2y$10$lxeC2LN4GFaXnEhsiW47AetY83yQAH2afBvquuDZaEncUB1HMt.4a', NULL, 1, 14, '2024-11-26 05:02:27', NULL, 3, '2024-11-26 09:31:35', '2024-11-26 09:31:35'),
+(4, 'Emily', 'Carter', 'emily.carter@example.com', '0771234567', '$2y$10$oNFBPqdhK6HK/EICyTB9JugEoGzqcn.Y.s/RZkLi0zaIIyQHpgBWW', NULL, 1, 14, '2025-04-11 20:15:18', 1, 3, '2024-11-27 10:44:59', '2024-11-27 10:44:59'),
+(5, 'Liam', 'Johnson', 'liam.johnson@example.co.uk', '0771234568', '$2y$10$v0Hl20SW7r.tQNutvfKAhep6WktBBZqtNjH74nZXwGnzaalwMIRU.', 'customer-avatars/674590fdb9828.jpg', 1, 18, '2024-11-27 11:08:44', 3, 1, '2024-11-27 11:08:30', '2024-11-27 11:08:30'),
+(6, 'Theshawa', 'Nimantha', 'mrclocktd@gmail.com', '0766743755', '$2y$10$FVx1kGvBRN0e7HgMkQEyDuosucLqiubWLWrDUn1N1.qi3gVgxtle6', 'customer-avatars/67459044d47b9.jpg', 1, 14, '2025-04-12 07:06:54', NULL, 2, '2025-04-12 07:06:41', '2025-04-12 07:06:41');
 
 -- --------------------------------------------------------
 
@@ -158,7 +168,7 @@ CREATE TABLE `customer_initial_data` (
 --
 
 INSERT INTO `customer_initial_data` (`customer_id`, `gender`, `age`, `goal`, `other_goal`, `height`, `weight`, `physical_activity_level`, `dietary_preference`, `allergies`, `created_at`) VALUES
-(44, 'male', 23, 'weight_loss', '', 123, 123, 'beginner', '', '', '2025-04-15 07:30:04');
+(1, 'male', 24, 'other', 'hasd asd asd sad sa dasasd ', 123, 123, 'beginner', 'gluten_free', '123adsads', '2025-04-12 07:37:03');
 
 -- --------------------------------------------------------
 
@@ -172,6 +182,47 @@ CREATE TABLE `customer_password_reset_requests` (
   `creation_attempt` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_progress`
+--
+
+CREATE TABLE `customer_progress` (
+  `id` int NOT NULL,
+  `customer_id` int NOT NULL,
+  `trainer_id` int NOT NULL,
+  `message` text NOT NULL,
+  `performance_type` enum('well_done','try_harder') NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `customer_progress`
+--
+
+INSERT INTO `customer_progress` (`id`, `customer_id`, `trainer_id`, `message`, `performance_type`, `created_at`) VALUES
+(1, 1, 1, 'You need to focus more on your diet.', 'try_harder', '2024-11-14 10:00:00'),
+(2, 1, 1, 'Great job on your flexibility exercises.', 'well_done', '2024-11-15 10:00:00'),
+(3, 1, 1, 'You missed your workout today.', 'try_harder', '2024-11-16 10:00:00'),
+(4, 1, 1, 'Your stamina is improving.', 'well_done', '2024-11-17 10:00:00'),
+(5, 1, 1, 'Try to maintain a consistent workout schedule.', 'try_harder', '2024-11-18 10:00:00'),
+(6, 1, 1, 'Excellent performance in today\'s session.', 'well_done', '2024-11-19 10:00:00'),
+(7, 1, 1, 'You need to work on your balance.', 'try_harder', '2024-11-20 10:00:00'),
+(8, 1, 1, 'Great improvement in your strength training.', 'well_done', '2024-11-21 10:00:00'),
+(9, 1, 1, 'You skipped your warm-up exercises.', 'try_harder', '2024-11-22 10:00:00'),
+(10, 2, 1, 'Good progress with your weight lifting routine.', 'well_done', '2024-11-14 11:00:00'),
+(11, 2, 1, 'Need to increase your water intake.', 'try_harder', '2024-11-16 11:00:00'),
+(12, 2, 1, 'Excellent form on your squats today.', 'well_done', '2024-11-18 11:00:00'),
+(13, 3, 1, 'Great progress with your cardio endurance.', 'well_done', '2024-11-15 09:00:00'),
+(14, 3, 1, 'You need to work on your stretching routine.', 'try_harder', '2024-11-17 09:00:00'),
+(15, 3, 1, 'Impressive improvement in your push-ups.', 'well_done', '2024-11-19 09:00:00'),
+(16, 2, 1, 'Your V shape is now getting sharpened. Keep going champ!', 'well_done', '2025-04-13 14:13:18'),
+(17, 6, 1, 'Ubawa hadanna bah matto!', 'try_harder', '2025-04-13 14:14:13'),
+(18, 6, 1, 'Dhamya ekata enna kollo!', 'well_done', '2025-04-13 14:14:27'),
+(19, 6, 1, 'Maru bn!', 'well_done', '2025-04-13 14:29:26'),
+(20, 1, 1, 'ANe shoi!', 'well_done', '2025-04-15 06:54:52');
 
 -- --------------------------------------------------------
 
@@ -259,9 +310,9 @@ CREATE TABLE `mealplans` (
 --
 
 INSERT INTO `mealplans` (`id`, `name`, `description`, `duration`, `created_at`, `updated_at`) VALUES
-(1, 'Weight Loss Plan', 'A balanced meal plan designed for weight loss with calorie deficit', 30, '2025-03-01 18:28:49', '2025-03-03 07:53:07'),
-(2, 'Muscle Building', 'High protein meal plan to support muscle growth and recovery', 14, '2025-03-01 18:28:49', '2025-03-01 18:28:49'),
-(3, 'Vegetarian Essentials', 'Plant-based complete nutrition plan', 7, '2025-03-01 18:28:49', '2025-03-01 18:28:49');
+(1, 'Weight Loss Plan', 'A balanced meal plan designed for weight loss with calorie deficit. Includes lean proteins, healthy fats, and controlled carbs to promote fat loss while maintaining energy levels.', 30, '2025-03-01 18:28:49', '2025-04-13 13:28:43'),
+(2, 'Muscle Building', 'High protein meal plan to support muscle growth and recovery. Features increased portion sizes and protein content to fuel muscle development and support intense training sessions.', 14, '2025-03-01 18:28:49', '2025-04-13 13:28:43'),
+(3, 'Vegetarian Essentials', 'Plant-based complete nutrition plan with balanced macronutrients. Focuses on nutrient-dense vegetarian options that provide all essential vitamins and minerals without animal products.', 7, '2025-03-01 18:28:49', '2025-04-13 13:28:43');
 
 -- --------------------------------------------------------
 
@@ -285,18 +336,69 @@ CREATE TABLE `mealplan_meals` (
 --
 
 INSERT INTO `mealplan_meals` (`id`, `mealplan_id`, `meal_id`, `day`, `time`, `amount`, `created_at`, `updated_at`) VALUES
-(1, 1, 5, 'Monday', 'Breakfast', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
-(2, 1, 4, 'Monday', 'Lunch', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
-(3, 1, 3, 'Monday', 'Dinner', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
-(4, 1, 2, 'Tuesday', 'Breakfast', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
-(5, 1, 5, 'Tuesday', 'Lunch', 1, '2025-03-01 18:29:01', '2025-03-02 12:50:55'),
-(6, 1, 2, 'Saturday', 'Lunch', 1, '2025-03-01 18:29:01', '2025-03-02 12:50:55'),
-(7, 2, 4, 'Monday', 'Breakfast', 2, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
-(8, 2, 3, 'Monday', 'Lunch', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
-(9, 2, 3, 'Monday', 'Dinner', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
-(10, 3, 2, 'Monday', 'Breakfast', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
-(11, 3, 5, 'Monday', 'Lunch', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01'),
-(12, 3, 2, 'Monday', 'Dinner', 1, '2025-03-01 18:29:01', '2025-03-01 18:29:01');
+(1, 1, 5, 'Monday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(2, 1, 4, 'Monday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(3, 1, 3, 'Monday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(4, 1, 2, 'Tuesday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(5, 1, 5, 'Tuesday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(6, 1, 4, 'Tuesday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(7, 1, 4, 'Wednesday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(8, 1, 3, 'Wednesday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(9, 1, 2, 'Wednesday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(10, 1, 5, 'Thursday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(11, 1, 2, 'Thursday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(12, 1, 3, 'Thursday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(13, 1, 2, 'Friday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(14, 1, 4, 'Friday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(15, 1, 5, 'Friday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(16, 1, 4, 'Saturday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(17, 1, 2, 'Saturday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(18, 1, 3, 'Saturday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(19, 1, 5, 'Sunday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(20, 1, 3, 'Sunday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(21, 1, 4, 'Sunday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(22, 2, 4, 'Monday', 'Breakfast', 2, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(23, 2, 3, 'Monday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(24, 2, 3, 'Monday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(25, 2, 2, 'Tuesday', 'Breakfast', 2, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(26, 2, 3, 'Tuesday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(27, 2, 5, 'Tuesday', 'Dinner', 2, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(28, 2, 4, 'Wednesday', 'Breakfast', 2, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(29, 2, 3, 'Wednesday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(30, 2, 3, 'Wednesday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(31, 2, 2, 'Thursday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(32, 2, 3, 'Thursday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(33, 2, 4, 'Thursday', 'Dinner', 2, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(34, 2, 4, 'Friday', 'Breakfast', 2, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(35, 2, 5, 'Friday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(36, 2, 3, 'Friday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(37, 2, 2, 'Saturday', 'Breakfast', 2, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(38, 2, 3, 'Saturday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(39, 2, 4, 'Saturday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(40, 2, 4, 'Sunday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(41, 2, 3, 'Sunday', 'Lunch', 2, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(42, 2, 2, 'Sunday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(43, 3, 2, 'Monday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(44, 3, 5, 'Monday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(45, 3, 2, 'Monday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(46, 3, 5, 'Tuesday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(47, 3, 4, 'Tuesday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(48, 3, 5, 'Tuesday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(49, 3, 2, 'Wednesday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(50, 3, 2, 'Wednesday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(51, 3, 4, 'Wednesday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(52, 3, 4, 'Thursday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(53, 3, 5, 'Thursday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(54, 3, 2, 'Thursday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(55, 3, 5, 'Friday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(56, 3, 2, 'Friday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(57, 3, 4, 'Friday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(58, 3, 2, 'Saturday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(59, 3, 4, 'Saturday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(60, 3, 5, 'Saturday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(61, 3, 4, 'Sunday', 'Breakfast', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(62, 3, 5, 'Sunday', 'Lunch', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43'),
+(63, 3, 2, 'Sunday', 'Dinner', 1, '2025-04-13 13:28:43', '2025-04-13 13:28:43');
 
 -- --------------------------------------------------------
 
@@ -325,28 +427,6 @@ INSERT INTO `meals` (`id`, `description`, `name`, `image`, `calories`, `proteins
 (3, 'Salmon fillet with roasted sweet potatoes and asparagus', 'Salmon Delight', '', 500, 35, 20, '2025-02-26 12:45:26', '2025-02-26 12:45:26'),
 (4, 'Protein shake with banana, peanut butter, and almond milk', 'Protein Shake', '', 250, 25, 10, '2025-02-26 12:45:26', '2025-02-26 12:45:26'),
 (5, 'Avocado toast with a poached egg on whole-grain bread', 'Avocado Toast', '', 350, 15, 18, '2025-02-26 12:45:26', '2025-02-26 12:45:26');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `membership_payments`
---
-
-CREATE TABLE `membership_payments` (
-  `id` int NOT NULL,
-  `customer` int NOT NULL,
-  `membership_plan` int NOT NULL,
-  `amount` double NOT NULL,
-  `completed_at` datetime DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `membership_payments`
---
-
-INSERT INTO `membership_payments` (`id`, `customer`, `membership_plan`, `amount`, `completed_at`, `created_at`) VALUES
-(19, 44, 15, 15000, '2025-04-15 07:27:46', '2025-04-15 07:27:35');
 
 -- --------------------------------------------------------
 
@@ -393,10 +473,6 @@ CREATE TABLE `notifications` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
-INSERT INTO `notifications` (`id`, `title`, `message`, `receiver_id`, `receiver_type`, `source`, `is_read`, `valid_till`, `created_at`) VALUES
-(50, 'Workout started', 'Your workout has started.', 44, 'rat', 'system', 0, NULL, '2025-04-15 10:52:18'),
-(51, 'Workout started', 'Your workout has started.', 44, 'rat', 'system', 1, NULL, '2025-04-15 10:58:00');
 -- --------------------------------------------------------
 
 --
@@ -448,7 +524,48 @@ CREATE TABLE `trainers` (
 --
 
 INSERT INTO `trainers` (`id`, `fname`, `lname`, `username`, `password`, `avatar`, `bio`, `rating`, `review_count`) VALUES
-(1, 'Cos', 'Mama', 'john', '$2y$12$DqWWm8SbOhtT2.P0NEUkoO6YEou.4fKDxUnLSDX4X8Xqv1tzGBUXW', NULL, 'Default trainer account with expertise in strength training and cardio.', 4.8, 483);
+(1, 'Cos', 'Nanda', 'john', '$2y$12$DqWWm8SbOhtT2.P0NEUkoO6YEou.4fKDxUnLSDX4X8Xqv1tzGBUXW', NULL, 'Default trainer account with expertise in strength training and cardio.', 4, 20);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `trainer_ratings`
+--
+
+CREATE TABLE `trainer_ratings` (
+  `id` int NOT NULL,
+  `trainer_id` int NOT NULL,
+  `customer_id` int NOT NULL,
+  `rating` int NOT NULL,
+  `review` text,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `trainer_ratings`
+--
+
+INSERT INTO `trainer_ratings` (`id`, `trainer_id`, `customer_id`, `rating`, `review`, `created_at`) VALUES
+(1, 1, 1, 5, 'Excellent trainer! Really helped me achieve my fitness goals.Excellent trainer! Really helped me achieve my fitness goals.Excellent trainer! Really helped me achieve my fitness goals.Excellent trainer! Really helped me achieve my fitness goals.Excellent trainer! Really helped me achieve my fitness goals.Excellent trainer! Really helped me achieve my fitness goals.', '2025-03-16 05:35:56'),
+(2, 1, 4, 5, 'The best trainer I have ever had! Very knowledgeable and motivating.', '2025-03-31 05:35:56'),
+(3, 1, 6, 5, 'Helped me transform my fitness level completely. I can\'t thank them enough.', '2025-04-10 05:35:56'),
+(4, 1, 3, 5, 'Very professional and knowledgeable about proper form and technique.', '2025-03-26 05:35:56'),
+(5, 1, 11, 5, 'Amazing trainer! Tailored workouts to my specific needs and goals.', '2025-02-14 05:35:56'),
+(6, 1, 14, 5, 'Always punctual and prepared for our sessions. Highly recommended!', '2025-03-01 05:35:56'),
+(7, 1, 16, 5, 'I\'ve seen incredible results since working with this trainer.', '2025-02-22 05:35:56'),
+(8, 1, 18, 5, 'Extremely knowledgeable about nutrition alongside fitness training.', '2025-03-08 05:35:56'),
+(9, 1, 19, 5, 'Changed my perspective on fitness entirely. So grateful!', '2025-03-24 05:35:56'),
+(10, 1, 21, 5, 'Outstanding approach to balancing strength and flexibility training.', '2025-04-03 05:35:56'),
+(11, 1, 2, 4, 'Good knowledge and motivating sessions. Could improve on scheduling flexibility.', '2025-03-21 05:35:56'),
+(12, 1, 5, 4, 'Great sessions and helpful advice on nutrition. Sometimes runs a bit over time.', '2025-04-05 05:35:56'),
+(13, 1, 8, 4, 'Very effective workouts but occasionally late to sessions.', '2025-03-13 05:35:56'),
+(14, 1, 10, 4, 'Really knows their stuff! Just wish the gym had better equipment.', '2025-03-19 05:35:56'),
+(15, 1, 13, 4, 'Excellent training program, though sometimes communication could be better.', '2025-03-06 05:35:56'),
+(16, 1, 7, 3, 'Decent trainer but seems distracted at times during our sessions.', '2025-03-11 05:35:56'),
+(17, 1, 15, 3, 'Knowledgeable but sometimes doesn\'t listen to my concerns about certain exercises.', '2025-02-26 05:35:56'),
+(18, 1, 9, 2, 'Often reschedules at the last minute. When we do train, it\'s good though.', '2025-02-19 05:35:56'),
+(19, 1, 17, 1, 'Frequently late to sessions and doesn\'t seem prepared with a workout plan.', '2025-03-03 05:35:56'),
+(20, 1, 20, 1, 'Not attentive to form corrections which led to minor injury. Disappointed.', '2025-03-28 05:35:56');
 
 -- --------------------------------------------------------
 
@@ -472,7 +589,12 @@ CREATE TABLE `workouts` (
 INSERT INTO `workouts` (`id`, `name`, `description`, `duration`, `created_at`, `updated_at`) VALUES
 (1, 'Strength Training', 'Squats, Deadlifts, Bench Press, Pull-Ups, Overhead Press, Lunges, Quads, Dumbbell Rows', 30, '2024-11-15 06:13:10', '2024-11-15 06:13:10'),
 (2, 'Cardio', 'Running, Cycling, Swimming, Rowing, Jump Rope, Stair Climbing, Hiking, Elliptical', 30, '2024-11-15 06:13:10', '2024-11-15 06:13:10'),
-(3, 'Flexibility', 'Stretching, Yoga, Pilates, Tai Chi, Foam Rolling, Dynamic Stretching, Static Stretching', 30, '2024-11-15 06:13:10', '2024-11-15 06:13:10');
+(3, 'Flexibility', 'Stretching, Yoga, Pilates, Tai Chi, Foam Rolling, Dynamic Stretching, Static Stretching', 30, '2024-11-15 06:13:10', '2024-11-15 06:13:10'),
+(4, 'Default Workout', 'Custom workout for customer #2', 30, '2025-04-13 10:38:45', '2025-04-13 10:38:45'),
+(5, 'Strength Training', 'Custom version of Strength Training for customer #1', 30, '2025-04-13 10:39:49', '2025-04-13 10:39:49'),
+(6, 'Default Workout', 'Custom workout for customer #6', 30, '2025-04-13 14:28:59', '2025-04-13 14:28:59'),
+(7, 'Default Workout', 'Custom version of Default Workout for customer #6', 30, '2025-04-13 14:29:09', '2025-04-13 14:29:09'),
+(8, 'Strength Training', 'Custom version of Strength Training for customer #1', 30, '2025-04-15 06:52:30', '2025-04-15 06:52:30');
 
 -- --------------------------------------------------------
 
@@ -510,7 +632,7 @@ INSERT INTO `workout_exercises` (`id`, `workout_id`, `exercise_id`, `day`, `sets
 --
 
 CREATE TABLE `workout_sessions` (
-  `session_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id` int NOT NULL,
   `user` int NOT NULL,
   `workout` int NOT NULL,
   `started_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -518,43 +640,16 @@ CREATE TABLE `workout_sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
-
 -- Dumping data for table `workout_sessions`
 --
 
-INSERT INTO `workout_sessions` (`session_key`, `user`, `workout`, `started_at`, `ended_at`) VALUES
-('gymrat_wsk_2c8624d1a9e3909ebfe2fbfd8a1bd174ab3662a1908714e2aca0f3e739101e51', 44, 1, '2025-04-15 13:46:35', '2025-04-15 17:46:35'),
-('gymrat_wsk_6a4fcc92edff8112fec52f38ef80a4d4e034bff8603732b7b95af4b765ffd697', 44, 1, '2025-04-15 13:49:09', '2025-04-15 17:49:26'),
-('gymrat_wsk_c62d360a9ed20f26f75d509f7786fe8fd82c8b35f17b4cb904f77bd003f2e4b2', 44, 1, '2025-04-15 10:57:49', '2025-04-15 14:57:49');
-
--- --------------------------------------------------------
+INSERT INTO `workout_sessions` (`id`, `user`, `workout`, `started_at`, `ended_at`) VALUES
+(1, 6, 1, '2025-04-12 08:19:06', '2025-04-12 08:19:14'),
+(2, 4, 1, '2025-04-13 14:03:32', '2025-04-13 14:05:11');
 
 --
--- Table structure for table `workout_session_keys`
---
-
-CREATE TABLE `workout_session_keys` (
-  `session_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `workout_session_keys`
---
-
-INSERT INTO `workout_session_keys` (`session_key`, `created_at`) VALUES
-('gymrat_wsk_007c308577dd808f065cc96dfb65174fc00d41361e7921bdde1e04becf1a1c93', '2025-04-15 23:41:55');
-
---
-
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `announcements`
---
-ALTER TABLE `announcements`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `bmi_records`
@@ -574,9 +669,7 @@ ALTER TABLE `complaints`
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD KEY `customer_workout` (`workout`),
-  ADD KEY `fk_customer_trainer` (`trainer`),
-  ADD KEY `fk_customer_membership_plan` (`membership_plan`);
+  ADD KEY `customer_workout` (`workout`);
 
 --
 -- Indexes for table `customer_email_verification_requests`
@@ -595,6 +688,14 @@ ALTER TABLE `customer_initial_data`
 --
 ALTER TABLE `customer_password_reset_requests`
   ADD PRIMARY KEY (`email`);
+
+--
+-- Indexes for table `customer_progress`
+--
+ALTER TABLE `customer_progress`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_progress_customer_id` (`customer_id`),
+  ADD KEY `customer_progress_trainer_id` (`trainer_id`);
 
 --
 -- Indexes for table `equipments`
@@ -629,25 +730,11 @@ ALTER TABLE `meals`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `membership_payments`
---
-ALTER TABLE `membership_payments`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_subscription_payment_membership_plan` (`membership_plan`),
-  ADD KEY `fk_subscription_payment_customer` (`customer`);
-
---
 -- Indexes for table `membership_plans`
 --
 ALTER TABLE `membership_plans`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
-
---
--- Indexes for table `notifications`
---
-ALTER TABLE `notifications`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `staff`
@@ -661,6 +748,14 @@ ALTER TABLE `staff`
 ALTER TABLE `trainers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indexes for table `trainer_ratings`
+--
+ALTER TABLE `trainer_ratings`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `trainer_ratings_trainer_id` (`trainer_id`),
+  ADD KEY `trainer_ratings_customer_id` (`customer_id`);
 
 --
 -- Indexes for table `workouts`
@@ -680,37 +775,31 @@ ALTER TABLE `workout_exercises`
 -- Indexes for table `workout_sessions`
 --
 ALTER TABLE `workout_sessions`
-  ADD PRIMARY KEY (`session_key`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `WorkoutSession_User` (`user`),
   ADD KEY `WorkoutSession_Workout` (`workout`);
-
---
--- Indexes for table `workout_session_keys`
---
-ALTER TABLE `workout_session_keys`
-  ADD PRIMARY KEY (`session_key`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `announcements`
---
-ALTER TABLE `announcements`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=266;
+
+--
+-- AUTO_INCREMENT for table `customer_progress`
+--
+ALTER TABLE `customer_progress`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `equipments`
@@ -734,7 +823,7 @@ ALTER TABLE `mealplans`
 -- AUTO_INCREMENT for table `mealplan_meals`
 --
 ALTER TABLE `mealplan_meals`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `meals`
@@ -743,23 +832,10 @@ ALTER TABLE `meals`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `membership_payments`
---
-ALTER TABLE `membership_payments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
 -- AUTO_INCREMENT for table `membership_plans`
 --
 ALTER TABLE `membership_plans`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- AUTO_INCREMENT for table `notifications`
---
-ALTER TABLE `notifications`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
-
 
 --
 -- AUTO_INCREMENT for table `trainers`
@@ -768,10 +844,16 @@ ALTER TABLE `trainers`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `trainer_ratings`
+--
+ALTER TABLE `trainer_ratings`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
 -- AUTO_INCREMENT for table `workouts`
 --
 ALTER TABLE `workouts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `workout_exercises`
@@ -783,7 +865,7 @@ ALTER TABLE `workout_exercises`
 -- AUTO_INCREMENT for table `workout_sessions`
 --
 ALTER TABLE `workout_sessions`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -799,15 +881,13 @@ ALTER TABLE `bmi_records`
 -- Constraints for table `customers`
 --
 ALTER TABLE `customers`
-  ADD CONSTRAINT `customer_workout` FOREIGN KEY (`workout`) REFERENCES `workouts` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,
-  ADD CONSTRAINT `fk_customer_membership_plan` FOREIGN KEY (`membership_plan`) REFERENCES `membership_plans` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_customer_trainer` FOREIGN KEY (`trainer`) REFERENCES `trainers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `customer_workout` FOREIGN KEY (`workout`) REFERENCES `workouts` (`id`) ON DELETE CASCADE ON UPDATE SET NULL;
 
 --
 -- Constraints for table `customer_initial_data`
 --
 ALTER TABLE `customer_initial_data`
-  ADD CONSTRAINT `fk_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
 
 --
 -- Constraints for table `mealplan_meals`
@@ -815,13 +895,6 @@ ALTER TABLE `customer_initial_data`
 ALTER TABLE `mealplan_meals`
   ADD CONSTRAINT `mealplan_meals_ibfk_1` FOREIGN KEY (`mealplan_id`) REFERENCES `mealplans` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `mealplan_meals_ibfk_2` FOREIGN KEY (`meal_id`) REFERENCES `meals` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `membership_payments`
---
-ALTER TABLE `membership_payments`
-  ADD CONSTRAINT `fk_subscription_payment_customer` FOREIGN KEY (`customer`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_subscription_payment_membership_plan` FOREIGN KEY (`membership_plan`) REFERENCES `membership_plans` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `workout_exercises`

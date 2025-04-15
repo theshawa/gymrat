@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once "../../alerts/functions.php";
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirect_with_error_alert("Method not allowed", "./");
@@ -14,15 +16,15 @@ if (empty($description)) {
     redirect_with_error_alert("Description cannot be empty", "./");
 }
 
-$userId = $_SESSION['auth']['id'];
-
 $complaint = new Complaint();
-
-$complaint->fill([
-    'type' => $type,
-    'description' => $description,
-    'user_id' => $userId,
-]);
+$complaint->fill(
+    [
+        'user_id' => $_SESSION['auth']['id'],
+        'type' => $type,
+        'description' => $description,
+        'user_type' => $_SESSION['auth']['role'],
+    ]
+);
 
 try {
     $complaint->create();

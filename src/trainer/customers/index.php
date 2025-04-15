@@ -13,37 +13,74 @@ $pageConfig = [
 
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";
+require_once "../../db/models/Customer.php";
+require_once "../../db/Database.php";
+require_once "../../alerts/functions.php";
 
-require_once "./data.php";
-
-// Get search query if present
+// Search query
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
-// Filter customers if search is provided
-$filtered_customers = $data;
-if (!empty($search)) {
-    $filtered_customers = array_filter($data, function ($customer) use ($search) {
-        $fullName = strtolower($customer['fname'] . ' ' . $customer['lname']);
-        return strpos($fullName, strtolower($search)) !== false;
-    });
+// Get customers from database
+$customers = [];
+try {
+    // Get database connection
+    $conn = Database::get_conn();
+
+    // Build query based on search
+    $sql = "SELECT * FROM customers";
+
+    // Add search functionality
+    if (!empty($search)) {
+        $sql .= " WHERE fname LIKE :search OR lname LIKE :search OR email LIKE :search";
+        $stmt = $conn->prepare($sql);
+        $searchParam = "%$search%";
+        $stmt->bindParam(':search', $searchParam);
+    } else {
+        $stmt = $conn->prepare($sql);
+    }
+
+    $stmt->execute();
+    $customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (Exception $e) {
+    redirect_with_error_alert("Error fetching customers: " . $e->getMessage(), "../");
 }
 ?>
 
 <main>
-    <!-- Search functionality - unchanged visually but functional -->
+    <!-- Search functionality -->
     <input type="search" name="search" id="searchInput" class="input" placeholder="Search customers..."
         value="<?= htmlspecialchars($search) ?>">
 
     <div class="customers-list">
-        <?php if (count($filtered_customers) === 0): ?>
+        <?php if (count($customers) === 0): ?>
             <div class="no-results">
                 <p style="text-align: center; padding: 20px; color: #a1a1aa;">No customers found</p>
             </div>
         <?php else: ?>
-            <?php foreach ($filtered_customers as $customer): ?>
+            <?php foreach ($customers as $customer): ?>
                 <a class="customer" href="./profile?id=<?= $customer['id'] ?>">
-                    <img src="/uploads/default-images/default-avatar.png" alt="Avatar Image" class="avatar">
-                    <h4><?= $customer['fname'] . " " . $customer['lname'] ?></h4>
+                    <?php
+                    // Correctly handle the avatar path
+                    $avatarPath = '/uploads/default-images/default-avatar.png'; // Default
+            
+                    if (!empty($customer['avatar'])) {
+                        // Check if avatar already starts with "/uploads/"
+                        if (strpos($customer['avatar'], '/uploads/') === 0) {
+                            $avatarPath = $customer['avatar'];
+                        }
+                        // Check if it starts with "uploads/"
+                        else if (strpos($customer['avatar'], 'uploads/') === 0) {
+                            $avatarPath = '/' . $customer['avatar'];
+                        }
+                        // Otherwise, assume it's in "customer-avatars/"
+                        else {
+                            $avatarPath = '/uploads/' . $customer['avatar'];
+                        }
+                    }
+                    ?>
+                    <img src="<?= $avatarPath ?>" alt="Avatar Image" class="avatar">
+                    <h4><?= htmlspecialchars($customer['fname'] . " " . $customer['lname']) ?></h4>
                     <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
                         <path
                             d="M8.50002 1.46445C8.50002 1.18831 8.27617 0.964455 8.00002 0.964455L3.50002 0.964455C3.22388 0.964455 3.00002 1.18831 3.00002 1.46445C3.00002 1.7406 3.22388 1.96445 3.50002 1.96445L7.50002 1.96445L7.50002 5.96445C7.50002 6.2406 7.72388 6.46445 8.00002 6.46445C8.27617 6.46445 8.50002 6.2406 8.50002 5.96445L8.50002 1.46445ZM1.28251 8.88908L8.35358 1.81801L7.64647 1.1109L0.575402 8.18197L1.28251 8.88908Z"

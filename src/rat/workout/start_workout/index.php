@@ -6,7 +6,7 @@ $pageConfig = [
     "scripts" => ["https://unpkg.com/html5-qrcode", "./start_workout.js"],
     "titlebar" => [
         "title" => "Start Workout",
-        "back_url" => "./"
+        "back_url" => "../"
     ],
     "navbar_active" => 1,
     "need_auth" => true

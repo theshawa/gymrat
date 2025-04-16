@@ -1,8 +1,10 @@
 <?php
-
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     die("Method not allowed");
 }
+
+require_once "../../auth-guards.php";
+if (auth_required_guard("rat", "/rat/login")) exit;
 
 $height = (float)htmlspecialchars($_POST['height']);
 $weight = (float)htmlspecialchars($_POST['weight']);
@@ -75,13 +77,11 @@ $pageConfig = [
     "navbar_active" => 1,
     "titlebar" => [
         "back_url" => "/rat/bmi/index.php",
-    ],
-    "need_auth" => true
+    ]
 ];
 
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";
-
 ?>
 
 <main id="result">

@@ -1,27 +1,26 @@
 <?php
+require_once "../../auth-guards.php";
+if (auth_not_required_guard("rat", "/rat")) exit;
+
+$pageConfig = [
+    "title" => "Subscription Plans",
+    "styles" => [
+        "./subscription-plans.css"
+    ]
+];
+
+require_once "../includes/header.php";
+require_once "../includes/titlebar.php";
 
 require_once "../../db/models/MembershipPlan.php";
-require_once "../../alerts/functions.php";
 
 $planModel = new MembershipPlan;
 
 try {
     $plans = $planModel->get_all();
 } catch (PDOException $e) {
-    redirect_with_error_alert("Failed to fetch plans due to error: " . $e->getMessage(), "./");
+    die("Failed to fetch plans due to error: " . $e->getMessage());
 }
-
-$pageConfig = [
-    "title" => "Subscription Plans",
-    "styles" => [
-        "./subscription-plans.css"
-    ],
-    "need_auth" => false
-];
-
-require_once "../includes/header.php";
-require_once "../includes/titlebar.php";
-
 ?>
 
 <main>

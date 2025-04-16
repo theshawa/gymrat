@@ -1,21 +1,6 @@
 <?php
-$pageConfig = [
-    "title" => "Gym Traffic",
-    "styles" => ["../gym-traffic.css", "./week.css"],
-    "scripts" => [
-        "https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js",
-        "./week.js"
-    ],
-    "titlebar" => [
-        "title" => "Weekly Gym Traffic",
-        "back_url" => "../../",
-    ],
-    "navbar_active" => 1,
-    "need_auth" => true
-];
-
-require_once "../../includes/header.php";
-require_once "../../includes/titlebar.php";
+require_once "../../../auth-guards.php";
+if (auth_required_guard("rat", "/rat/login")) exit;
 
 $day = $_GET['day'] ?? 1;
 if (!is_numeric($day) || $day < 1 || $day > 7) {
@@ -52,7 +37,22 @@ $freeHrs = array_filter($dayData, function ($line) use ($maximumRats) {
 });
 $freeHrs = array_slice($freeHrs, 0, 3);
 
+$pageConfig = [
+    "title" => "Gym Traffic",
+    "styles" => ["../gym-traffic.css", "./week.css"],
+    "scripts" => [
+        "https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js",
+        "./week.js"
+    ],
+    "titlebar" => [
+        "title" => "Weekly Gym Traffic",
+        "back_url" => "../../",
+    ],
+    "navbar_active" => 1
+];
 
+require_once "../../includes/header.php";
+require_once "../../includes/titlebar.php";
 ?>
 
 <script>

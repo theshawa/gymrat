@@ -1,15 +1,14 @@
 <?php
+require_once "../../auth-guards.php";
+if (auth_required_guard("rat", "/rat/login")) exit;
 
 require_once "../../db/models/Complaint.php";
-require_once "../../alerts/functions.php";
 $complaint = new Complaint();
-
-session_start();
 
 try {
     $complaints = $complaint->get_all_of_user($_SESSION['auth']['id'], $_SESSION['auth']['role']);
 } catch (\Throwable $th) {
-    redirect_with_error_alert("Failed to load complaints due to an error:" . $th->getMessage(), "../");
+    die("Failed to load complaints due to an error:" . $th->getMessage());
 }
 
 $pageConfig = [
@@ -18,8 +17,7 @@ $pageConfig = [
         "back_url" => "/rat/index.php",
     ],
     "styles" => ["./complaint.css"],
-    "navbar_active" => 1,
-    "need_auth" => true
+    "navbar_active" => 1
 ];
 
 require_once "../includes/header.php";

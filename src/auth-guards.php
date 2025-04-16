@@ -1,10 +1,12 @@
 <?php
 
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 require_once __DIR__ . "/alerts/functions.php";
+require_once __DIR__ . "/constants.php";
 
 function is_auth_valid(string $role): bool
 {
@@ -16,8 +18,7 @@ function is_auth_valid(string $role): bool
     $now = time();
     $diff = $now - $created_at;
 
-    require_once __DIR__ . "/constants.php";
-    if ($diff > $SESSION_EXPIRE_TIME) {
+    if ($diff > SESSION_EXPIRE_TIME) {
         return false;
     }
 
@@ -28,16 +29,20 @@ function is_auth_valid(string $role): bool
     return true;
 }
 
-function auth_required_guard(string $role, string $redirect)
+function auth_required_guard(string $role, string $redirect): bool
 {
-    if (!is_auth_valid($role)) {
+    $must_redirect = !is_auth_valid($role);
+    if ($must_redirect) {
         redirect_with_error_alert("You need to login first", $redirect);
     }
+    return $must_redirect;
 }
 
-function auth_not_required_guard(string $role, string $redirect)
+function auth_not_required_guard(string $role, string $redirect): bool
 {
-    if (is_auth_valid($role)) {
+    $must_redirect = is_auth_valid($role);
+    if ($must_redirect) {
         redirect_with_error_alert("You are already logged in", $redirect);
     }
+    return $must_redirect;
 }

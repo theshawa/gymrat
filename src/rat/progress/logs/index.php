@@ -1,12 +1,14 @@
 <?php
+require_once "../../../auth-guards.php";
+if (auth_required_guard("rat", "/rat/login")) exit;
+
 $pageConfig = [
     "title" => "My Progress",
     "styles" => ["../progress.css"],
     "titlebar" => [
         "back_url" => "../../"
     ],
-    "navbar_active" => 1,
-    "need_auth" => true
+    "navbar_active" => 1
 ];
 
 require_once "../../includes/header.php";

@@ -4,7 +4,7 @@ session_start();
 
 require_once "../../alerts/functions.php";
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    redirect_with_error_alert("Method not allowed", "./");
+    die("Method not allowed");
 }
 
 $bmi = floatval(htmlspecialchars($_POST['bmi']));
@@ -29,6 +29,7 @@ try {
     $record->create();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to save BMI record due to error: " . $e->getMessage(), "./");
+    exit;
 }
 
 redirect_with_success_alert("BMI record saved successfully", "./");

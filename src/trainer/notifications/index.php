@@ -1,12 +1,14 @@
 <?php
+require_once "../../auth-guards.php";
+if (auth_required_guard("trainer", "/trainer/login")) exit;
+
 $pageConfig = [
     "title" => "Notifications",
     "styles" => ["./notifications.css"],
     "navbar_active" => 2,
     "titlebar" => [
         "title" => "Notifications",
-    ],
-    "need_auth" => true
+    ]
 ];
 
 require_once "../includes/header.php";

@@ -5,14 +5,14 @@ session_start();
 require_once "../../alerts/functions.php";
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    redirect_with_error_alert('Method not allowed', './');
+    die("Method not allowed");
 }
 
 // update user onboarded status
 require_once "../../db/models/Customer.php";
 
 if (!isset($_SESSION['subscribing'])) {
-    redirect_with_error_alert("You have to login first.", "/rat/login");
+    die("You have to login first.");
 }
 
 $user = new Customer();
@@ -26,6 +26,7 @@ try {
     $user->get_by_id();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to fetch user due to error: " . $e->getMessage(), "./");
+    exit;
 }
 
 require_once "../../db/models/MembershipPlan.php";
@@ -38,6 +39,7 @@ try {
     $plan->get_by_id();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to fetch plan due to error: " . $e->getMessage(), "./");
+    exit;
 }
 
 require_once "../../db/models/MembershipPayment.php";
@@ -52,6 +54,7 @@ try {
     $payment->create();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to create payment due to error: " . $e->getMessage(), "./");
+    exit;
 }
 
 require_once "../../payhere/functions.php";

@@ -1,19 +1,18 @@
 <?php
+require_once "../../../../auth-guards.php";
+if (auth_not_required_guard("rat", "/rat")) exit;
+
+if (!isset($_SESSION['customer_password_reset'])) {
+    die("No password reset data found. Please request a password reset first.");
+}
+
 $pageConfig = [
     "title" => "Email Verification | Forgot Password",
     "styles" => ["/rat/styles/auth.css"],
-    "scripts" => ["/rat/scripts/forms.js"],
-    "need_auth" => false
+    "scripts" => ["/rat/scripts/forms.js"]
 ];
 
 require_once "../../../includes/header.php";
-
-require_once "../../../../alerts/functions.php";
-
-if (!isset($_SESSION['customer_password_reset'])) {
-    redirect_with_error_alert("Invalid request", "../");
-}
-
 ?>
 
 <main class="auth">
@@ -24,7 +23,7 @@ if (!isset($_SESSION['customer_password_reset'])) {
             <input required class="input" type="text" placeholder="Enter code" name="code">
             <button class="btn">Verify</button>
         </form>
-        <a href="resend.php" class="dimmed-link">
+        <a href="resend_process.php" class="dimmed-link">
             Resend code
         </a>
     </div>

@@ -1,13 +1,6 @@
 <?php
-$pageConfig = [
-    "title" => "My Profile",
-    "navbar_active" => 3,
-    "styles" => ["./profile.css"],
-    "need_auth" => true
-];
-
-require_once "../includes/header.php";
-require_once "../includes/titlebar.php";
+require_once "../../auth-guards.php";
+if (auth_required_guard("trainer", "/trainer/login")) exit;
 
 require_once "../../db/models/Trainer.php";
 
@@ -19,13 +12,19 @@ $trainer->fill([
 try {
     $trainer->get_by_id();
 } catch (PDOException $e) {
-    redirect_with_error_alert("Failed to get trainer data: " . $e->getMessage(), "./");
+    die("Failed to get trainer data due to error: " . $e->getMessage());
 }
 
 $avatar = $trainer->avatar ? "/uploads/" . $trainer->avatar : "/uploads/default-images/default-avatar.png";
 
-// Include the alert view
-require_once "../../alerts/view.php";
+$pageConfig = [
+    "title" => "My Profile",
+    "navbar_active" => 3,
+    "styles" => ["./profile.css"]
+];
+
+require_once "../includes/header.php";
+require_once "../includes/titlebar.php";
 ?>
 
 <main>

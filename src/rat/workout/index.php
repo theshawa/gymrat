@@ -1,6 +1,7 @@
 <?php
 
-session_start();
+require_once "../../auth-guards.php";
+if (auth_required_guard("rat", "/rat/login")) exit;
 
 $start_command = $_GET['start'] ?? null;
 
@@ -33,18 +34,6 @@ if (isset($_SESSION['workout_session'])) {
 
 $day = $_GET['day'] ?? 1;
 
-$pageConfig = [
-    "title" => "My Workout",
-    "styles" => ["./workout.css"],
-    "scripts" => ["./workout-timer.js"],
-    "titlebar" => [
-        "title" => "My Workout",
-        "back_url" => "/rat/index.php"
-    ],
-    "navbar_active" => 1,
-    "need_auth" => true
-];
-
 require_once "./data.php";
 
 $subnavbar_links = array_map(function ($day) {
@@ -63,6 +52,17 @@ if (count($day) === 0) {
 } else {
     $day = array_values($day)[0]['exercises'];
 }
+
+$pageConfig = [
+    "title" => "My Workout",
+    "styles" => ["./workout.css"],
+    "scripts" => ["./workout-timer.js"],
+    "titlebar" => [
+        "title" => "My Workout",
+        "back_url" => "/rat/index.php"
+    ],
+    "navbar_active" => 1
+];
 
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";

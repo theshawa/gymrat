@@ -4,7 +4,7 @@
 require_once "../../../alerts/functions.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    redirect_with_error_alert("Method not allowed", "/rat/login/forgot-password");
+    die("Method not allowed");
 }
 
 require_once "../../../auth-guards.php";
@@ -22,10 +22,12 @@ try {
     $request->get_by_email();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to create password reset request user due to error: " . $e->getMessage(), "./");
+    exit;
 }
 
 if ($request->code) {
     redirect_with_error_alert("Password reset request already sent. Please check your email.", "./");
+    exit;
 }
 
 $request->fill([
@@ -35,8 +37,9 @@ $request->fill([
 
 try {
     $request->create();
-} catch (PDOException $e) {
+} catch (Exception $e) {
     redirect_with_error_alert("Failed to create password reset request due to error: " . $e->getMessage(), "./");
+    exit;
 }
 
 require_once "../../../phpmailer/send-mail.php";
@@ -54,6 +57,7 @@ try {
     );
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to send email due to error: " . $e->getMessage(), "./");
+    exit;
 }
 
 $_SESSION['customer_password_reset'] = [

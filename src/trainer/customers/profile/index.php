@@ -1,21 +1,8 @@
 <?php
 // File path: src/trainer/customers/profile/index.php
+require_once "../../../auth-guards.php";
+if (auth_required_guard("trainer", "/trainer/login")) exit;
 
-$pageConfig = [
-    "title" => "Client Status",
-    "styles" => [
-        "./profile.css" // The CSS file
-    ],
-    "navbar_active" => 1,
-    "titlebar" => [
-        "back_url" => "../",
-        "title" => "CLIENT STATUS"
-    ],
-    "need_auth" => true
-];
-
-require_once "../../includes/header.php";
-require_once "../../includes/titlebar.php";
 require_once "../../../db/models/Customer.php";
 require_once "../../../db/models/CustomerInitialData.php";
 require_once "../../../alerts/functions.php";
@@ -38,8 +25,7 @@ try {
     $customer->get_by_id();
     $customerExists = true;
 } catch (Exception $e) {
-    redirect_with_error_alert("Customer not found: " . $e->getMessage(), "../");
-    exit;
+    die("Error fetching customer: " . $e->getMessage());
 }
 
 // Get customer's initial data (including their goal)
@@ -78,7 +64,7 @@ try {
         }
     }
 } catch (Exception $e) {
-    // Silently catch errors - we'll just use the default goal text
+    die("Error fetching initial data: " . $e->getMessage());
 }
 
 // Correctly handle the avatar path
@@ -106,6 +92,23 @@ $username = '@' . strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $customer->fname
 // Calculate or mock rating data 
 // In a real system, this would come from a ratings table
 $rating = 4.7; // Example mock rating that could later be replaced with real data
+
+
+$pageConfig = [
+    "title" => "Client Status",
+    "styles" => [
+        "./profile.css" // The CSS file
+    ],
+    "navbar_active" => 1,
+    "titlebar" => [
+        "back_url" => "../",
+        "title" => "CLIENT STATUS"
+    ],
+    "need_auth" => true
+];
+
+require_once "../../includes/header.php";
+require_once "../../includes/titlebar.php";
 ?>
 
 <main class="profile-view">

@@ -1,23 +1,22 @@
 <?php
-$pageConfig = [
-    "title" => "Reset Password",
-    "styles" => ["/rat/styles/auth.css"],
-    "scripts" => ["/rat/scripts/forms.js"],
-    "need_auth" => false
-];
-
-require_once "../../../includes/header.php";
-
-require_once "../../../../alerts/functions.php";
+require_once "../../../../auth-guards.php";
+if (auth_not_required_guard("rat", "/rat")) exit;
 
 if (!isset($_SESSION['customer_password_reset'])) {
-    redirect_with_error_alert("Invalid request", "../");
+    die("No password reset data found. Please request a password reset first.");
 }
 
 if (!isset($_SESSION['customer_password_reset']['verified'])) {
-    redirect_with_error_alert("Please verify email", "../");
+    die("Email not verified. Please verify your email first.");
 }
 
+$pageConfig = [
+    "title" => "Reset Password",
+    "styles" => ["/rat/styles/auth.css"],
+    "scripts" => ["/rat/scripts/forms.js"]
+];
+
+require_once "../../../includes/header.php";
 ?>
 
 <main class="auth">

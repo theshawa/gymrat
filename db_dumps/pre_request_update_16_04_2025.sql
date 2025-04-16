@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql_db:3306
--- Generation Time: Apr 16, 2025 at 01:21 PM
+-- Generation Time: Apr 15, 2025 at 11:56 PM
 -- Server version: 9.2.0
 -- PHP Version: 8.2.27
 
@@ -300,31 +300,6 @@ INSERT INTO `mealplan_meals` (`id`, `mealplan_id`, `meal_id`, `day`, `time`, `am
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mealplan_requests`
---
-
-CREATE TABLE `mealplan_requests` (
-  `id` int NOT NULL,
-  `trainer_id` int NOT NULL,
-  `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `reviewed` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `mealplan_requests`
---
-
-INSERT INTO `mealplan_requests` (`id`, `trainer_id`, `description`, `created_at`, `updated_at`, `reviewed`) VALUES
-(1, 1, 'I need a high-protein meal plan to support muscle growth. Include lean meats, legumes, and protein shakes. Also need a shopping list and prep instructions.', '2025-04-10 08:00:00', '2025-04-10 08:00:00', 0),
-(2, 1, 'I’m looking for a vegetarian meal plan that helps with weight loss and keeps energy levels high. Include balanced macros, snacks, and hydration tips.', '2025-04-11 13:15:00', '2025-04-11 13:15:00', 0),
-(3, 1, 'Please create a diabetic-friendly meal plan that controls blood sugar. Include portion guidance and low-glycemic foods with recipes.', '2025-04-12 11:00:00', '2025-04-12 11:00:00', 0),
-(4, 1, 'I want a meal plan tailored for intermittent fasting. Include suitable meals for eating windows and hydration strategies.', '2025-04-13 16:30:00', '2025-04-13 16:30:00', 0);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `meals`
 --
 
@@ -526,31 +501,6 @@ INSERT INTO `workout_exercises` (`id`, `workout_id`, `exercise_id`, `day`, `sets
 -- --------------------------------------------------------
 
 --
--- Table structure for table `workout_requests`
---
-
-CREATE TABLE `workout_requests` (
-  `id` int NOT NULL,
-  `trainer_id` int NOT NULL,
-  `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `reviewed` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `workout_requests`
---
-
-INSERT INTO `workout_requests` (`id`, `trainer_id`, `description`, `created_at`, `updated_at`, `reviewed`) VALUES
-(1, 1, 'I want a strength training program to build muscle and improve strength. It should include compound and isolation exercises, proper form guidance, and a weekly schedule with progressive overload. Warm-up and cool-down routines are also needed for safety and recovery.', '2025-04-10 10:00:00', '2025-04-10 10:00:00', 0),
-(2, 1, 'I need a cardio workout plan for weight loss with running, cycling, and HIIT. Tips on consistency, progress tracking, and combining cardio with a healthy diet are appreciated. A balanced plan with rest days and low-impact options for sustainability is ideal.', '2025-04-11 12:30:00', '2025-04-11 12:30:00', 0),
-(3, 1, 'I want a flexibility and mobility program with stretches, yoga, and drills for range of motion. Exercises for hips, shoulders, and hamstrings are needed. Gradual progression and tips for daily routine integration are essential for long-term benefits.', '2025-04-12 15:45:00', '2025-04-12 15:45:00', 0),
-(4, 1, 'I need a beginner-friendly workout routine with simple exercises for cardio, strength, and flexibility. Clear instructions on form, gradual intensity increase, and a weekly schedule with rest days are essential for building a fitness foundation.', '2025-04-13 09:00:00', '2025-04-13 09:00:00', 0);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `workout_sessions`
 --
 
@@ -666,13 +616,6 @@ ALTER TABLE `mealplan_meals`
   ADD KEY `meal_id` (`meal_id`);
 
 --
--- Indexes for table `mealplan_requests`
---
-ALTER TABLE `mealplan_requests`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `trainer_id` (`trainer_id`);
-
---
 -- Indexes for table `meals`
 --
 ALTER TABLE `meals`
@@ -725,13 +668,6 @@ ALTER TABLE `workout_exercises`
   ADD PRIMARY KEY (`id`),
   ADD KEY `workout_id` (`workout_id`),
   ADD KEY `exercise_id` (`exercise_id`);
-
---
--- Indexes for table `workout_requests`
---
-ALTER TABLE `workout_requests`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `trainer_id` (`trainer_id`);
 
 --
 -- Indexes for table `workout_sessions`
@@ -794,12 +730,6 @@ ALTER TABLE `mealplan_meals`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
--- AUTO_INCREMENT for table `mealplan_requests`
---
-ALTER TABLE `mealplan_requests`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT for table `meals`
 --
 ALTER TABLE `meals`
@@ -842,12 +772,6 @@ ALTER TABLE `workout_exercises`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `workout_requests`
---
-ALTER TABLE `workout_requests`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- Constraints for dumped tables
 --
 
@@ -879,12 +803,6 @@ ALTER TABLE `mealplan_meals`
   ADD CONSTRAINT `mealplan_meals_ibfk_2` FOREIGN KEY (`meal_id`) REFERENCES `meals` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `mealplan_requests`
---
-ALTER TABLE `mealplan_requests`
-  ADD CONSTRAINT `mealplan_requests_ibfk_1` FOREIGN KEY (`trainer_id`) REFERENCES `trainers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `membership_payments`
 --
 ALTER TABLE `membership_payments`
@@ -897,12 +815,6 @@ ALTER TABLE `membership_payments`
 ALTER TABLE `workout_exercises`
   ADD CONSTRAINT `workout_exercises_ibfk_1` FOREIGN KEY (`workout_id`) REFERENCES `workouts` (`id`),
   ADD CONSTRAINT `workout_exercises_ibfk_2` FOREIGN KEY (`exercise_id`) REFERENCES `exercises` (`id`);
-
---
--- Constraints for table `workout_requests`
---
-ALTER TABLE `workout_requests`
-  ADD CONSTRAINT `workout_requests_ibfk_1` FOREIGN KEY (`trainer_id`) REFERENCES `trainers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `workout_sessions`

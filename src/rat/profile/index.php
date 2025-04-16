@@ -2,14 +2,6 @@
 require_once "../../auth-guards.php";
 if (auth_required_guard("rat", "/rat/login")) exit;
 
-$pageConfig = [
-    "title" => "My Profile",
-    "navbar_active" => 3,
-    "styles" => ["./profile.css"]
-];
-
-require_once "../includes/header.php";
-require_once "../includes/titlebar.php";
 
 require_once "../../db/models/Customer.php";
 require_once "../../db/models/MembershipPlan.php";
@@ -47,6 +39,14 @@ if ($user->membership_plan_activated_at) {
 
 $avatar = $user->avatar ? "/uploads/" . $user->avatar : "/uploads/default-images/default-avatar.png";
 
+$pageConfig = [
+    "title" => "My Profile",
+    "navbar_active" => 3,
+    "styles" => ["./profile.css"]
+];
+
+require_once "../includes/header.php";
+require_once "../includes/titlebar.php";
 ?>
 
 <main>

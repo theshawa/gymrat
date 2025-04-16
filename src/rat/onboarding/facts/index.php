@@ -2,13 +2,6 @@
 require_once "../../../auth-guards.php";
 if (auth_required_guard("rat", "/rat/login")) exit;
 
-$pageConfig = [
-    "title" => "Onboarding Facts",
-    "styles" => ["/rat/styles/auth.css", "./facts.css"],
-    "scripts" => ["/rat/scripts/forms.js"]
-];
-
-require_once "../../includes/header.php";
 
 $facts = [
     [
@@ -33,6 +26,13 @@ if (isset($_GET['i']) && $_GET['i'] > 0 && $_GET['i'] < count($facts) + 1) {
     $currentFact = htmlspecialchars($_GET['i']);
 }
 
+$pageConfig = [
+    "title" => "Onboarding Facts",
+    "styles" => ["/rat/styles/auth.css", "./facts.css"],
+    "scripts" => ["/rat/scripts/forms.js"]
+];
+
+require_once "../../includes/header.php";
 ?>
 
 <main class="fact" style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000 100%), url(<?= $facts[$currentFact - 1]['image'] ?>);">

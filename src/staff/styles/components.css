@@ -223,6 +223,18 @@ select:has(option:checked:not([value=""])) option {
   margin: 0px 10px;
 }
 
+.staff-base-sub-container-alt {
+  margin: 0px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-between;
+}
+
+.staff-base-sub-container-alt > * {
+  flex: 1 1 calc(50% - 15px); 
+}
+
 .staff-card-container {
   display: flex;
   flex-direction: column;
@@ -317,6 +329,7 @@ select:has(option:checked:not([value=""])) option {
   margin-bottom: 6px;
   display: flex;
   align-items: center;
+  justify-content: center; 
   text-align: center;
   cursor: pointer;
   transition: background-color 0.6s;

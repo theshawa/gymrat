@@ -11,12 +11,16 @@ class WorkoutRequest extends Model
     public string $description;
     public DateTime $created_at;
     public DateTime $updated_at;
+    public int $reviewed; 
+    public ?string $trainer; // Only for API
 
     public function __construct()
     {
         parent::__construct();
         $this->created_at = new DateTime();
         $this->updated_at = new DateTime();
+        $this->reviewed = 0; 
+        $this->trainer = null; 
     }
 
     public function fill(array $data)
@@ -26,6 +30,8 @@ class WorkoutRequest extends Model
         $this->description = $data['description'] ?? "";
         $this->created_at = new DateTime($data['created_at'] ?? '');
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
+        $this->reviewed = $data['reviewed'] ?? 0; 
+        $this->trainer = null; 
     }
 
     public function get_all(int $sort = 0) 
@@ -56,5 +62,12 @@ class WorkoutRequest extends Model
             die("WorkoutRequest not found");
         }
         $this->fill($item);
+    }
+
+    public function confirm_request()
+    {
+        $sql = "UPDATE $this->table SET reviewed = 1 WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
     }
 }

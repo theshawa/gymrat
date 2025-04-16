@@ -87,6 +87,19 @@ class Workout extends Model
         }, $items);
     }
 
+    public function get_all_titles(): array
+    {
+        $sql = "SELECT id, name FROM $this->table";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        $titles = [];
+        foreach ($items as $item) {
+            $titles[$item['id']] = $item['name'];
+        }
+        return $titles;
+    }
+
     public function update()
     {
         $sql = "UPDATE $this->table SET name=:name, description=:description, duration=:duration, updated_at=CURRENT_TIMESTAMP WHERE id=:id";

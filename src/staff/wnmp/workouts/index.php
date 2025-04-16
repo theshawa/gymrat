@@ -10,7 +10,7 @@ $menuBarConfig = [
     "title" => $pageTitle,
     "useLink" => true,
     "options" => [
-        ["title" => "Workout Requests", "href" => "/staff/wnmp/workouts/requests/index.php", "type" => "primary"],
+        ["title" => "Workout Requests", "href" => "/staff/wnmp/workouts/requests/index.php?filter=1", "type" => "primary"],
         ["title" => "Create Workout", "href" => "/staff/wnmp/workouts/create/index.php", "type" => "secondary"]
     ]
 ];

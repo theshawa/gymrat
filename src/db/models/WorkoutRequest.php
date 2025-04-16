@@ -34,9 +34,12 @@ class WorkoutRequest extends Model
         $this->trainer = null; 
     }
 
-    public function get_all(int $sort = 0) 
+    public function get_all(int $sort = 0, int $filter = 0) 
     {
         $sql = "SELECT * FROM $this->table";
+        if ($filter === 1) {
+            $sql .= " WHERE reviewed = 0";
+        }
         if ($sort === 1) {
             $sql .= " ORDER BY created_at ASC"; 
         } elseif ($sort === -1) {

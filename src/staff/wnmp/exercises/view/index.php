@@ -72,6 +72,14 @@ auth_required_guard("wnmp", "/staff/login");
                     </h2>
                     <p><?= $exercise->equipment_needed ?></p>
                 </div>
+                <div class="view-exercise-details">
+                    <?php if ($exercise->image): ?>
+                        <h2>
+                            Image
+                        </h2>
+                        <img src="../../../../uploads/<?= $exercise->image ?>" alt="Exercise Image" style="width: 200px; height: 200px; object-fit: cover;">
+                    <?php endif; ?>
+                </div>
             </div>
             <div>
                 <h2 style="margin: 10px 0px;">

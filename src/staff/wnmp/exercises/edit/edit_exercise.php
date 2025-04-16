@@ -14,6 +14,7 @@ if ($_POST['exercise_id'] !== $_SESSION['exercise_id']) {
 $id = $_POST['exercise_id'];
 $name = $_POST['exercise_name'];
 $description = $_POST['exercise_description'];
+// image upload done seperately
 $video_link = $_POST['exercise_video_link'];
 $muscle_group = $_POST['exercise_muscle_group'];
 $difficulty_level = $_POST['exercise_difficulty_level'];
@@ -50,6 +51,24 @@ if (!empty($errors)) {
     redirect_with_error_alert($error_message, "/staff/wnmp/exercises/edit?id=" . $id);
 }
 
+// image upload
+require_once "../../../../uploads.php";
+
+// echo '<pre>';
+// print_r($_FILES);
+// echo '</pre>';
+
+
+$image = $_FILES['exercise_image']['name'] ? $_FILES['exercise_image'] : null;
+if ($image) {
+    try {
+        $image = upload_file("staff-exercise-images", $image);
+    } catch (\Throwable $th) {
+        redirect_with_error_alert("Failed to upload image due to an error: " . $th->getMessage(), "/staff/wnmp/exercises/edit?id=" . $id);
+        exit;
+    }
+}
+
 require_once "../../../../db/models/Exercise.php";
 
 $newExercise = new Exercise();
@@ -58,6 +77,7 @@ $newExercise->fill([
     'name' => $name,
     'description' => $description,
     'video_link' => $video_link,
+    'image' => $image,
     'muscle_group' => $muscle_group,
     'difficulty_level' => $difficulty_level,
     'type' => $type,

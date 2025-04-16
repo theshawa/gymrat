@@ -8,7 +8,8 @@ $extendTo = null;
 $cards = null;
 $isCardInList = false; // REMOVE WHEN FULLY TURNED TO CRUD
 $gridColumns = 2;
-$defaultImage = "../../../uploads/default-images/infoCardDefault.png";
+$uploadsPath = "../../../uploads/";
+$defaultImage = "default-images/infoCardDefault.png";
 
 if (isset($infoCardConfig)) {
     if (isset($infoCardConfig['defaultName'])) {
@@ -68,9 +69,9 @@ if (!$isCardInList) {
             <?php if ($showImage): ?>
                 <div>
                     <?php if ($card['image']): ?>
-                        <img src="<?= $card['image'] ?>" alt="<?= $card['title'] ?>" class="info-card-img">
+                        <img src="<?= $uploadsPath . $card['image'] ?>" alt="<?= $card['title'] ?>" class="info-card-img">
                     <?php else: ?>
-                        <img src="<?= $defaultImage ?>" alt="Default" class="info-card-img">
+                        <img src="<?= $uploadsPath . $defaultImage ?>" alt="Default" class="info-card-img">
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
@@ -107,7 +108,11 @@ if (!$isCardInList) {
         align-items: center;
     }
     .info-card-img {
-        width: 60%;
+        width: 100px; 
+        height: 100px; 
+        object-fit: cover;
+        margin-right: 20px;
+        border-radius: 10px;
     }
     .info-card-desc {
         display: flex;

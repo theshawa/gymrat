@@ -46,7 +46,7 @@ auth_required_guard("wnmp", "/staff/login");
 <main>
     <div class="staff-base-container">
         <div class="form">
-            <form action="edit_exercise.php" method="POST">
+            <form action="edit_exercise.php" method="POST" enctype="multipart/form-data">
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
                     <input type="hidden" name="exercise_id" value="<?= $exercise->id ?>">
@@ -81,6 +81,11 @@ auth_required_guard("wnmp", "/staff/login");
                         <textarea id="edit-description" name="exercise_description"
                             class="staff-textarea-primary staff-textarea-large"
                             placeholder="Enter a exercise description"><?= $exercise->description ?></textarea>
+                    </div>
+                    <div style="margin: 10px 0">
+                        <h2><label for="edit-image">Image</label></h2>
+                        <input type="file" id="edit-image" name="exercise_image" accept="image/*"
+                            class="staff-input-primary staff-input-long">
                     </div>
                     <div style="margin: 10px 0">
                         <h2><label for="edit-video_link">Video Link (Embeded link)</label></h2>

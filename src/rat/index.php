@@ -90,7 +90,7 @@ require_once "./includes/titlebar.php";
                 Meal Plan
             </span>
         </a>
-        <a href="/rat/trainer/index.php" class="tile">
+        <a <?= $customer->trainer ? 'href="/rat/trainer/index.php"' : "" ?> class="tile <?= !$customer->trainer ? 'disalbed' : '' ?>">
             <span>
                 My<br />
                 Trainer

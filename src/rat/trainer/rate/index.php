@@ -25,7 +25,7 @@ require_once "../../includes/titlebar.php";
             <option value="2">Poor</option>
             <option value="1">Terrible</option>
         </select>
-        <textarea required type="text" placeholder="Describe your experience" name="message" class="input"></textarea>
+        <textarea required type="text" placeholder="Describe your experience" name="review" class="input"></textarea>
         <button class="btn">Rate</button>
     </form>
 

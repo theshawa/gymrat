@@ -2,18 +2,6 @@
 require_once "../../../auth-guards.php";
 if (auth_required_guard("rat", "/rat/login")) exit;
 
-$pageConfig = [
-    "title" => "Update Profile",
-    "styles" => ["/rat/styles/auth.css", "../profile.css"],
-    "scripts" => ["/rat/scripts/forms.js"],
-    "titlebar" => [
-        "back_url" => "../"
-    ],
-    "navbar_active" => 3
-];
-
-require_once "../../includes/header.php";
-require_once "../../includes/titlebar.php";
 
 require_once "../../../db/models/Customer.php";
 
@@ -30,6 +18,18 @@ try {
 
 $avatar = $user->avatar ? "/uploads/" . $user->avatar : null;
 
+$pageConfig = [
+    "title" => "Update Profile",
+    "styles" => ["/rat/styles/auth.css", "../profile.css"],
+    "scripts" => ["/rat/scripts/forms.js"],
+    "titlebar" => [
+        "back_url" => "../"
+    ],
+    "navbar_active" => 3
+];
+
+require_once "../../includes/header.php";
+require_once "../../includes/titlebar.php";
 ?>
 
 <main class="auth" style="padding-top: 0;">

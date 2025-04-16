@@ -1,15 +1,7 @@
 <?php
 // trainer/profile/edit.php
-
-$pageConfig = [
-    "title" => "Edit Profile",
-    "navbar_active" => 3,
-    "styles" => ["./profile.css", "./edit.css"],
-    "need_auth" => true
-];
-
-require_once "../includes/header.php";
-require_once "../includes/titlebar.php";
+require_once "../../auth-guards.php";
+if (auth_required_guard("trainer", "/trainer/login")) exit;
 
 // Initialize trainer data with default values
 $trainer = array_merge([
@@ -18,6 +10,15 @@ $trainer = array_merge([
     'bio' => '',
     'avatar' => null
 ], $_SESSION['auth'] ?? []);
+
+$pageConfig = [
+    "title" => "Edit Profile",
+    "navbar_active" => 3,
+    "styles" => ["./profile.css", "./edit.css"],
+];
+
+require_once "../includes/header.php";
+require_once "../includes/titlebar.php";
 
 ?>
 

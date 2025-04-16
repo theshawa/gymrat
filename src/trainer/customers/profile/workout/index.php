@@ -1,13 +1,10 @@
 <?php
+require_once "../../../../auth-guards.php";
+if (auth_required_guard("trainer", "/trainer/login")) exit;
 // File path: src/trainer/customers/profile/workout/index.php
 
 // Disable notices and deprecation warnings for this page only
 error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
-
-// Start session only if one doesn't exist already
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
 // Include database models
 require_once __DIR__ . "/../../../../db/models/Workout.php";
@@ -35,8 +32,7 @@ try {
     $customerModel->get_by_id();
     $customerExists = true;
 } catch (Exception $e) {
-    // Customer doesn't exist in the database
-    // We'll use session storage as a fallback
+    die("Error fetching customer: " . $e->getMessage());
 }
 
 // Process form submission for saving workout changes
@@ -118,24 +114,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_workout'])) {
     header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $customerId);
     exit;
 }
-
-// Configure the page
-$pageConfig = [
-    "title" => "Current Workout",
-    "styles" => [
-        "./workout.css"
-    ],
-    "navbar_active" => 1,
-    "titlebar" => [
-        "back_url" => $editMode ? $_SERVER['PHP_SELF'] . "?id=" . $customerId : "../?id=" . $customerId,
-        "title" => $editMode ? "EDIT WORKOUT" : "CURRENT WORKOUT"
-    ],
-    "need_auth" => true
-];
-
-// Include header files
-require_once "../../../includes/header.php";
-require_once "../../../includes/titlebar.php";
 
 // Get the customer's workout from the database
 $workout = null;
@@ -230,8 +208,25 @@ $allExercises = [];
 try {
     $allExercises = $exerciseModel->get_all_titles();
 } catch (Exception $e) {
-    // Silently fail
+    die("Error fetching exercises: " . $e->getMessage());
 }
+
+// Configure the page
+$pageConfig = [
+    "title" => "Current Workout",
+    "styles" => [
+        "./workout.css"
+    ],
+    "navbar_active" => 1,
+    "titlebar" => [
+        "back_url" => $editMode ? $_SERVER['PHP_SELF'] . "?id=" . $customerId : "../?id=" . $customerId,
+        "title" => $editMode ? "EDIT WORKOUT" : "CURRENT WORKOUT"
+    ]
+];
+
+// Include header files
+require_once "../../../includes/header.php";
+require_once "../../../includes/titlebar.php";
 ?>
 
 <main class="workout-page">
@@ -344,7 +339,7 @@ try {
         }
 
         // Function to add a new exercise
-        document.getElementById('add-exercise').addEventListener('click', function () {
+        document.getElementById('add-exercise').addEventListener('click', function() {
             const exerciseList = document.querySelector('.exercise-list');
 
             // Create new exercise item

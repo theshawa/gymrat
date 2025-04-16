@@ -1,8 +1,10 @@
 <?php
+require_once "../../../auth-guards.php";
+if (auth_not_required_guard("rat", "/rat")) exit;
+
 $pageConfig = [
     "title" => "No Active Subscription",
-    "styles" => ["./no-subscription.css"],
-    "need_auth" => false
+    "styles" => ["./no-subscription.css"]
 ];
 
 include_once "../../includes/header.php";

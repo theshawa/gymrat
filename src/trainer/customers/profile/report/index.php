@@ -1,4 +1,6 @@
 <?php
+require_once "../../../../auth-guards.php";
+if (auth_required_guard("trainer", "/trainer/login")) exit;
 
 require_once "../../../../db/models/Customer.php";
 require_once "../../../../db/models/Complaint.php";
@@ -27,6 +29,7 @@ if ($customerId > 0) {
         }
     } catch (Exception $e) {
         // Handle error silently
+        die("Error fetching customer: " . $e->getMessage());
     }
 }
 
@@ -36,8 +39,7 @@ $pageConfig = [
         "back_url" => isset($_GET['id']) ? "../?id=" . $_GET['id'] : "../../",
         "title" => "REPORT CUSTOMER"
     ],
-    "navbar_active" => 1,
-    "need_auth" => true
+    "navbar_active" => 1
 ];
 
 require_once "../../../includes/header.php";

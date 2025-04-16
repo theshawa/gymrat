@@ -1,16 +1,14 @@
 <?php
+require_once "../../auth-guards.php";
+if (auth_required_guard("rat", "/rat/login")) exit;
+
 $pageConfig = [
     "title" => "Onboarding",
     "styles" => ["/rat/styles/auth.css", "./onboarding.css"],
-    "scripts" => ["/rat/scripts/forms.js"],
-    "need_auth" => true,
+    "scripts" => ["/rat/scripts/forms.js"]
 ];
 
-
-
 require_once "../includes/header.php";
-
-
 ?>
 
 <main class="onboarding">

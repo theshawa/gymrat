@@ -1,20 +1,14 @@
 <?php
+require_once "../../auth-guards.php";
+if (auth_required_guard("trainer", "/trainer/login")) exit;
 
 require_once "../../db/models/Complaint.php";
-require_once "../../alerts/functions.php";
 $complaint = new Complaint();
-
-
-session_start();
-
-if (!isset($_SESSION['auth'])) {
-    redirect_with_error_alert("You need to login first.", "/trainer/login");
-}
 
 try {
     $complaints = $complaint->get_all_of_user($_SESSION['auth']['id'], $_SESSION['auth']['role']);
 } catch (\Throwable $th) {
-    redirect_with_error_alert("Failed to load complaints due to an error:" . $th->getMessage(), "../");
+    die("Failed to load complaints due to an error:" . $th->getMessage());
 }
 
 $pageConfig = [
@@ -30,7 +24,6 @@ $pageConfig = [
 
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";
-require_once "../../db/models/Complaint.php";
 ?>
 
 <main>

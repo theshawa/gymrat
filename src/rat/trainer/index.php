@@ -1,4 +1,7 @@
 <?php
+require_once "../../auth-guards.php";
+if (auth_required_guard("rat", "/rat/login")) exit;
+
 $pageConfig = [
     "title" => "My Trainer",
     "styles" => ["./trainer.css"],
@@ -6,7 +9,6 @@ $pageConfig = [
         "back_url" => "../"
     ],
     "navbar_active" => 1,
-    "need_auth" => true
 ];
 
 require_once "../includes/header.php";

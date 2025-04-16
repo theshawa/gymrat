@@ -1,21 +1,8 @@
 <?php
 // File path: src/trainer/customers/profile/workout.php
+require_once "../../../auth-guards.php";
+if (auth_required_guard("trainer", "/trainer/login")) exit;
 
-$pageConfig = [
-    "title" => "Current Workout",
-    "styles" => [
-        "./workout.css" // The CSS file we'll create
-    ],
-    "navbar_active" => 1,
-    "titlebar" => [
-        "back_url" => "./index.php?id=" . $_GET['id'],
-        "title" => "CURRENT WORKOUT"
-    ],
-    "need_auth" => true
-];
-
-require_once "../../includes/header.php";
-require_once "../../includes/titlebar.php";
 
 // Get customer ID from URL
 $customerId = isset($_GET['id']) ? intval($_GET['id']) : 0;
@@ -70,6 +57,21 @@ $workout = [
         ]
     ]
 ];
+
+$pageConfig = [
+    "title" => "Current Workout",
+    "styles" => [
+        "./workout.css" // The CSS file we'll create
+    ],
+    "navbar_active" => 1,
+    "titlebar" => [
+        "back_url" => "./index.php?id=" . $_GET['id'],
+        "title" => "CURRENT WORKOUT"
+    ]
+];
+
+require_once "../../includes/header.php";
+require_once "../../includes/titlebar.php";
 ?>
 
 <main class="workout-page">

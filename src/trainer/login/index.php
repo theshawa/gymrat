@@ -1,9 +1,11 @@
 <?php
+require_once "../../auth-guards.php";
+if (auth_not_required_guard("trainer", "/trainer")) exit;
+
 $pageConfig = [
     "title" => "Login",
     "styles" => ["/rat/styles/auth.css"],
     "scripts" => ["/rat/scripts/forms.js"],
-    "need_auth" => false
 ];
 
 require_once "../includes/header.php";

@@ -1,6 +1,7 @@
 <?php
 
-session_start();
+require_once "../auth-guards.php";
+if (auth_required_guard("rat", "/rat/login")) exit;
 
 $workoutSession =  null;
 if (isset($_SESSION['workout_session'])) {
@@ -24,6 +25,18 @@ if (isset($_SESSION['workout_session'])) {
     }
 }
 
+require_once "../db/models/Customer.php";
+
+$customer = new Customer();
+$customer->fill([
+    'id' => $_SESSION['auth']['id']
+]);
+try {
+    $customer->get_by_id();
+} catch (\Throwable $th) {
+    die("Failed to get customer: " . $th->getMessage());
+}
+
 $pageConfig = [
     "title" => "Home",
     "styles" => [
@@ -36,16 +49,14 @@ $pageConfig = [
     "titlebar" => [
         "title" => "Welcome!",
     ],
-    "need_auth" => true
 ];
 
-if (isset($_SESSION['auth'])) {
-    $fname = $_SESSION['auth']['fname'];
-    $pageConfig['titlebar']['title'] = "Hi, $fname!";
-}
+$fname = $_SESSION['auth']['fname'];
+$pageConfig['titlebar']['title'] = "Hi, $fname!";
 
 require_once "./includes/header.php";
 require_once "./includes/titlebar.php";
+
 ?>
 
 <script>

@@ -1,4 +1,7 @@
 <?php
+require_once "../auth-guards.php";
+if (auth_required_guard("trainer", "/trainer/login")) exit;
+
 $pageConfig = [
     "title" => "Home",
     "styles" => [
@@ -7,16 +10,13 @@ $pageConfig = [
     "navbar_active" => 1,
     "titlebar" => [
         "title" => "Welcome!",
-    ],
-    "need_auth" => true
+    ]
 ];
 
 require_once "./includes/header.php";
 
-if (isset($_SESSION['auth'])) {
-    $fname = $_SESSION['auth']['fname'];
-    $pageConfig['titlebar']['title'] = "Hi, $fname!";
-}
+$fname = $_SESSION['auth']['fname'];
+$pageConfig['titlebar']['title'] = "Hi, $fname!";
 
 require_once "./includes/titlebar.php";
 

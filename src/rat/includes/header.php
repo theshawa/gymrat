@@ -7,19 +7,9 @@ if (session_status() === PHP_SESSION_NONE) {
 $pageTitle = null;
 $pageStyles = [];
 
-$need_auth = null;
 if (isset($pageConfig)) {
     $pageTitle = $pageConfig['title'] ?? null;
     $pageStyles = $pageConfig['styles'] ?? [];
-    $need_auth = $pageConfig['need_auth'] ?? false;
-}
-
-require_once __DIR__ . "/../../auth-guards.php";
-
-if ($need_auth) {
-    auth_required_guard("rat", "/rat/login");
-} else {
-    auth_not_required_guard("rat", "/rat");
 }
 
 ?>

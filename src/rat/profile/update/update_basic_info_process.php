@@ -5,7 +5,7 @@ session_start();
 require_once "../../../alerts/functions.php";
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    redirect_with_error_alert('Method not allowed', '../');
+    die("Method not allowed");
 }
 
 $fname = htmlspecialchars($_POST['fname']);
@@ -24,6 +24,7 @@ try {
     $user->get_by_id();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to get user due to error: " . $e->getMessage(), "./");
+    exit;
 }
 
 
@@ -32,6 +33,7 @@ if ($updated_avatar !== $user->avatar) {
     // delete current avatar
     if ($user->avatar && !delete_file($user->avatar)) {
         redirect_with_error_alert("Failed to update avatar due to an error: failed to delete current avatar", "./");
+        exit;
     }
 
     $avatar = $_FILES['avatar']['name'] ? $_FILES['avatar'] : null;
@@ -41,6 +43,7 @@ if ($updated_avatar !== $user->avatar) {
             $avatar = upload_file("customer-avatars", $avatar);
         } catch (Exception $e) {
             redirect_with_error_alert("Failed to update avatar due to an error: " . $e->getMessage(), "./");
+            exit;
         }
         $user->avatar = $avatar;
     } else {
@@ -56,6 +59,7 @@ try {
     $user->update();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to update user due to error: " . $e->getMessage(), "./");
+    exit;
 }
 
 redirect_with_success_alert("Profile updated successfully", "../");

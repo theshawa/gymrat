@@ -1,4 +1,6 @@
 <?php
+require_once "../../auth-guards.php";
+if (auth_required_guard("trainer", "/trainer/login")) exit;
 
 $id = htmlspecialchars($_GET["id"]);
 $type = isset($_GET['type']) ? (htmlspecialchars($_GET['type']) === "announcement" ? "announcement" : "notification") : "notification";
@@ -37,8 +39,7 @@ $pageConfig = [
     "styles" => ["./notifications.css"],
     "titlebar" => [
         "back_url" => "./",
-    ],
-    "need_auth" => true
+    ]
 ];
 
 require_once "../includes/header.php";

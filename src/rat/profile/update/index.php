@@ -1,4 +1,7 @@
 <?php
+require_once "../../../auth-guards.php";
+if (auth_required_guard("rat", "/rat/login")) exit;
+
 $pageConfig = [
     "title" => "Update Profile",
     "styles" => ["/rat/styles/auth.css", "../profile.css"],
@@ -6,8 +9,7 @@ $pageConfig = [
     "titlebar" => [
         "back_url" => "../"
     ],
-    "navbar_active" => 3,
-    "need_auth" => true
+    "navbar_active" => 3
 ];
 
 require_once "../../includes/header.php";
@@ -23,7 +25,7 @@ $user->fill([
 try {
     $user->get_by_id();
 } catch (PDOException $e) {
-    redirect_with_error_alert("Failed to get user due to error: " . $e->getMessage(), "./");
+    die("Failed to get user due to error: " . $e->getMessage());
 }
 
 $avatar = $user->avatar ? "/uploads/" . $user->avatar : null;

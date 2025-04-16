@@ -1,11 +1,13 @@
 <?php
+require_once "../../auth-guards.php";
+if (auth_required_guard("trainer", "/trainer/login")) exit;
+
 $pageConfig = [
     "title" => "Post Announcement",
     "navbar_active" => 1,
     "titlebar" => [
         "back_url" => "../",
-    ],
-    "need_auth" => true
+    ]
 ];
 
 require_once "../includes/header.php";

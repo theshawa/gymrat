@@ -123,7 +123,9 @@ $records = [
             <div href="view.php?id=<?= $record['id'] ?>" class="log-record">
                 <p class="message"><?= $record['message'] ?></p>
                 <div class="bottom">
-                    <span class="time"><?= date_create($record['time'])->format('M d, Y') ?></span>
+                    <span class="time"><?php
+                                        require_once "../../../utils.php";
+                                        echo format_time(date_create($record['time'])); ?></span>
                     <span class="status <?= $record['status'] ?>"><?= ['good' => 'Well Done', 'bad' => 'Try Harder'][$record['status']] ?></span>
                 </div>
             </div>

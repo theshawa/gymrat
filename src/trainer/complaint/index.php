@@ -59,11 +59,13 @@ require_once "../../db/models/Complaint.php";
         <?php else: ?>
             <ul class="complaint-list">
                 <?php foreach ($complaints as $complaint): ?>
-                    <?php $reveiewed = $complaint->reviewed_at !== null;  ?>
+                    <?php
+                    require_once "../../utils.php";
+                    $reveiewed = $complaint->reviewed_at !== null;  ?>
                     <li class="complaint-item">
                         <div class="inline">
                             <span class="paragraph small">
-                                <?= htmlspecialchars($complaint->created_at->format("F j, Y g:i A")) ?>
+                                <?= format_time($complaint->created_at) ?>
                             </span>
                             <button class="delete-button" onclick="delete_<?= $complaint->id ?>()">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -90,7 +92,7 @@ require_once "../../db/models/Complaint.php";
                         <h4 class="type"><?= htmlspecialchars($complaint->type) ?></h4>
                         <p class="paragraph"><?= htmlspecialchars($complaint->description) ?></p>
                         <div class="review-message <?= $reveiewed ? "reviewed" : "pending" ?>">
-                            <div class="review-status <?= $reveiewed ? "reviewed" : "pending" ?>"><?= $reveiewed ? "Reviewed by admin at " . $complaint->reviewed_at->format("F j, Y g:i A") : "To be reviewed" ?></div>
+                            <div class="review-status <?= $reveiewed ? "reviewed" : "pending" ?>"><?= $reveiewed ? "Reviewed by admin at " . format_time($complaint->reviewed_at) : "To be reviewed" ?></div>
                             <?php if ($reveiewed): ?>
                                 <p class="paragraph"><?= $complaint->review_message ?></p>
                             <?php endif; ?>

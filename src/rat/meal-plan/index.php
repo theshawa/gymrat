@@ -2,6 +2,9 @@
 require_once "../../auth-guards.php";
 if (auth_required_guard("rat", "/rat/login")) exit;
 
+require_once "./data.php";
+
+
 $pageConfig = [
     "title" => "My Meal Plan",
     "styles" => ["./meal-plan.css"],
@@ -14,9 +17,6 @@ $pageConfig = [
 
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";
-
-require_once "./data.php";
-
 ?>
 
 <main>

@@ -2,18 +2,6 @@
 require_once "../../../auth-guards.php";
 if (auth_required_guard("rat", "/rat/login")) exit;
 
-$pageConfig = [
-    "title" => "Update Initial Data",
-    "styles" => ["/rat/styles/auth.css", "../../onboarding/onboarding.css"],
-    "scripts" => ["/rat/scripts/forms.js"],
-    "titlebar" => [
-        "back_url" => "../"
-    ],
-    "navbar_active" => 3
-];
-
-require_once "../../includes/header.php";
-require_once "../../includes/titlebar.php";
 
 require_once "../../../db/models/CustomerInitialData.php";
 $initial_data = new CustomerInitialData();
@@ -27,6 +15,18 @@ if (!$initial_data->customer_id) {
     die("Initial data not found for customer ID: " . $_SESSION['auth']['id']);
 }
 
+$pageConfig = [
+    "title" => "Update Initial Data",
+    "styles" => ["/rat/styles/auth.css", "../../onboarding/onboarding.css"],
+    "scripts" => ["/rat/scripts/forms.js"],
+    "titlebar" => [
+        "back_url" => "../"
+    ],
+    "navbar_active" => 3
+];
+
+require_once "../../includes/header.php";
+require_once "../../includes/titlebar.php";
 ?>
 
 <main class="onboarding">

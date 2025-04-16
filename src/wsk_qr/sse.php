@@ -12,15 +12,10 @@ ini_set('zlib.output_compression', false);
 set_time_limit(0);
 ignore_user_abort(true);
 
+$last_sent_wsk = "";
 
-
-$file_path  = __DIR__ . '/QR.txt';
-
-if (!file_exists($file_path)) {
-    file_put_contents($file_path, '');
-}
-
-$current_qr_code = file_get_contents($file_path);
+require_once "../db/models/WorkoutSessionKey.php";
+$wsk = new WorkoutSessionKey();
 
 echo "event: connected\n";
 echo "data: " . $current_qr_code . "\n\n";
@@ -32,10 +27,18 @@ while (true) {
         break;
     }
 
-    if (file_get_contents($file_path) !== $current_qr_code) {
-        $current_qr_code = file_get_contents($file_path);
-        echo "event: qr_code_changed\n";
-        echo "data: " . $current_qr_code . "\n\n";
+    try {
+        $wsk->get_one();
+        $loaded_wsk = $wsk->session_key;
+        if ($loaded_wsk !== $last_sent_wsk) {
+            echo "event: qr_code_changed\n";
+            echo "data: " . $loaded_wsk . "\n\n";
+            flush();
+            $last_sent_wsk = $loaded_wsk;
+        }
+    } catch (Exception $e) {
+        echo "event: error\n";
+        echo "data: " . $e->getMessage() . "\n\n";
         flush();
     }
 

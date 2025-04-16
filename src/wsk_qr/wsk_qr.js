@@ -5,8 +5,8 @@ const qrcode_element = document.querySelector("#qrcode");
 var qrcode = new QRCode(qrcode_element, {
   width: 300,
   height: 300,
-  colorDark: "#09090b",
-  colorLight: "#6700e6",
+  colorDark: "black",
+  colorLight: "white",
   correctLevel: QRCode.CorrectLevel.H,
 });
 qrcode.clear();
@@ -25,6 +25,10 @@ evtSource.addEventListener("qr_code_changed", (event) => {
   console.log("qr_code_changed", event.data);
 
   if (event.data) showQrCode(event.data);
+});
+
+evtSource.addEventListener("error", (event) => {
+  console.log("error", event.data);
 });
 
 evtSource.onerror = (error) => {

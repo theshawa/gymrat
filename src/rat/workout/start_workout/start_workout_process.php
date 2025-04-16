@@ -27,10 +27,6 @@ try {
     $session_key->delete_all();
     // create new session key
     $session_key->create($key);
-    // generate qr code png
-    $filePath = "../../../wsk_qr/QR.txt";
-    // clear current content and add new key
-    file_put_contents($filePath, $session_key->session_key);
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to scan session key due to error: " . $e->getMessage(), "./");
     exit;

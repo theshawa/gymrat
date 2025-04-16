@@ -49,4 +49,16 @@ class WorkoutSessionKey extends Model
         }
         $this->fill($item);
     }
+
+    public function get_one()
+    {
+        $sql = "SELECT * FROM $this->table ORDER BY created_at DESC LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $item = $stmt->fetch();
+        if (!$item) {
+            throw new Exception("Session key not found");
+        }
+        $this->fill($item);
+    }
 }

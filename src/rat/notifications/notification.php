@@ -1,9 +1,9 @@
 <?php
+require_once "../../auth-guards.php";
+if (auth_required_guard("rat", "/rat/login")) exit;
 
 $id = htmlspecialchars($_GET["id"]);
 $type = isset($_GET['type']) ? (htmlspecialchars($_GET['type']) === "announcement" ? "announcement" : "notification") : "notification";
-
-session_start();
 
 require_once "../../alerts/functions.php";
 require_once "../../db/models/Notification.php";
@@ -24,7 +24,7 @@ try {
         $notification->mark_as_read();
     }
 } catch (\Throwable $th) {
-    redirect_with_error_alert("Failed to get notification due to error: " . $th->getMessage(), "./");
+    die("Failed to load notification due to error: " . $th->getMessage());
 }
 
 if (!isset($id)) {
@@ -37,8 +37,7 @@ $pageConfig = [
     "styles" => ["./notifications.css"],
     "titlebar" => [
         "back_url" => "./",
-    ],
-    "need_auth" => true
+    ]
 ];
 
 require_once "../includes/header.php";

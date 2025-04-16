@@ -6,7 +6,7 @@ session_start();
 require_once "../../alerts/functions.php";
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    redirect_with_error_alert('Method not allowed', '../register');
+    die("Method not allowed");
 }
 
 require_once "../../auth-guards.php";
@@ -21,6 +21,7 @@ $phone = htmlspecialchars($_POST['phone']);
 
 if ($password !== $cpassword) {
     redirect_with_error_alert("Passwords do not match", "/rat/register");
+    exit;
 }
 
 // check if email is already registered
@@ -34,10 +35,12 @@ try {
     $already_customer->get_by_email();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to register customer due to error: " . $e->getMessage(), "/rat/register");
+    exit;
 }
 
 if ($already_customer->id) {
     redirect_with_error_alert("Email is already registered", "/rat/register");
+    exit;
 }
 
 require_once "../../uploads.php";
@@ -48,6 +51,7 @@ if ($avatar) {
         $avatar = upload_file("tmp/customer-avatars", $avatar);
     } catch (\Throwable $th) {
         redirect_with_error_alert("Failed to upload avatar due to an error: " . $th->getMessage(), "/rat/register");
+        exit;
     }
 }
 
@@ -72,10 +76,12 @@ try {
     $request->get_by_email();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to register customer due to error: " . $e->getMessage(), "/rat/register");
+    exit;
 }
 
 if ($request->code) {
     redirect_with_error_alert("Email verification request already sent. Please check your email", "/rat/register/email-verification");
+    exit;
 }
 
 $request->fill([
@@ -87,6 +93,7 @@ try {
     $request->create();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to create email verification request due to error: " . $e->getMessage(), "/rat/register");
+    exit;
 }
 
 require_once "../../phpmailer/send-mail.php";
@@ -104,6 +111,7 @@ try {
     );
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to send email due to error: " . $e->getMessage(), "/rat/register");
+    exit;
 }
 
 redirect_with_success_alert("Email verification request sent. Please check your email", "/rat/register/email-verification");

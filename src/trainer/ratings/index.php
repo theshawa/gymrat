@@ -1,26 +1,9 @@
 <?php
 // File path: src/trainer/ratings/index.php
+require_once "../../auth-guards.php";
+if (auth_required_guard("trainer", "/trainer/login")) exit;
 
-$pageConfig = [
-    "title" => "My Ratings",
-    "styles" => [
-        "./ratings.css" // CSS file to be created
-    ],
-    "scripts" => [
-        "./ratings.js" // Add the JavaScript file
-    ],
-    "navbar_active" => 1,
-    "titlebar" => [
-        "back_url" => "../",
-        "title" => "MY RATINGS"
-    ],
-    "need_auth" => true
-];
-
-require_once "../includes/header.php";
-require_once "../includes/titlebar.php";
 require_once "../../db/Database.php";
-require_once "../../alerts/functions.php";
 
 // Get trainer ID from session
 $trainerId = $_SESSION['auth']['id'] ?? 0;
@@ -130,6 +113,25 @@ try {
 
 // Calculate the maximum distribution count for scaling bars
 $maxDistribution = max($ratingData['distribution']) ?: 1; // Avoid division by zero
+
+
+$pageConfig = [
+    "title" => "My Ratings",
+    "styles" => [
+        "./ratings.css" // CSS file to be created
+    ],
+    "scripts" => [
+        "./ratings.js" // Add the JavaScript file
+    ],
+    "navbar_active" => 1,
+    "titlebar" => [
+        "back_url" => "../",
+        "title" => "MY RATINGS"
+    ]
+];
+
+require_once "../includes/header.php";
+require_once "../includes/titlebar.php";
 ?>
 
 <main class="ratings-page">
@@ -185,7 +187,7 @@ $maxDistribution = max($ratingData['distribution']) ?: 1; // Avoid division by z
     }
 
     if (!empty($reviews)):
-        ?>
+    ?>
         <div class="reviews-section">
             <h3>Recent Reviews</h3>
 
@@ -196,7 +198,7 @@ $maxDistribution = max($ratingData['distribution']) ?: 1; // Avoid division by z
                             <?php
                             // Correctly handle the avatar path
                             $reviewerAvatarPath = '/uploads/default-images/default-avatar.png'; // Default
-                    
+
                             if (!empty($review['avatar'])) {
                                 // Check if avatar already starts with "/uploads/"
                                 if (strpos($review['avatar'], '/uploads/') === 0) {

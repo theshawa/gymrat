@@ -1,19 +1,19 @@
 <?php
-session_start();
+require_once "../../auth-guards.php";
+if (auth_required_guard("rat", "/rat/login")) exit;
 
 $range = (int)htmlspecialchars($_GET['range'] ?? "30");
 
 $records = [];
 
 require_once "../../db/models/BmiRecord.php";
-require_once "../../alerts/functions.php";
 
 $record = new BmiRecord();
 
 try {
     $records = $record->get_all_of_user($_SESSION['auth']['id']);
 } catch (PDOException $e) {
-    redirect_with_error_alert("Failed to get records due to error: " . $e->getMessage(), "./");
+    die("Failed to get records due to error: " . $e->getMessage());
 }
 
 $records = array_filter($records, function (BmiRecord $item) use ($range) {
@@ -59,6 +59,7 @@ $rangeOptions = [
     ]
 ];
 
+
 $pageConfig = [
     "title" => "My Progress",
     "titlebar" => [
@@ -70,13 +71,11 @@ $pageConfig = [
         "https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js",
         "./bmi-progress.js"
     ],
-    "navbar_active" => 1,
-    "need_auth" => true
+    "navbar_active" => 1
 ];
 
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";
-
 ?>
 
 <script>
@@ -100,18 +99,19 @@ require_once "../includes/titlebar.php";
     ];
 
     require_once "../includes/subnavbar.php"; ?>
-    <form class="filter" action=".">
-        <select class="input" name="range" required>
-            <?php foreach ($rangeOptions as $option): ?>
-                <option value="<?= $option['value'] ?>" <?= $option['value'] == $range ? 'selected' : '' ?>>
-                    <?= $option['title'] ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </form>
+
     <?php if (count($records) === 0): ?>
         <p class="info">No records found</p>
     <?php else: ?>
+        <form class="filter" action=".">
+            <select class="input" name="range" required>
+                <?php foreach ($rangeOptions as $option): ?>
+                    <option value="<?= $option['value'] ?>" <?= $option['value'] == $range ? 'selected' : '' ?>>
+                        <?= $option['title'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </form>
         <canvas id="progress-chart"></canvas>
         <p class="info">
             *Your BMI progress is displayed in the chart above. To maintain a healthy BMI, ensure that your values fall between the two green lines.

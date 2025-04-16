@@ -1,4 +1,7 @@
 <?php
+require_once "../../../auth-guards.php";
+if (auth_required_guard("rat", "/rat/login")) exit;
+
 $pageConfig = [
     "title" => "Update Initial Data",
     "styles" => ["/rat/styles/auth.css", "../../onboarding/onboarding.css"],
@@ -6,28 +9,23 @@ $pageConfig = [
     "titlebar" => [
         "back_url" => "../"
     ],
-    "navbar_active" => 3,
-    "need_auth" => true
+    "navbar_active" => 3
 ];
 
-session_start();
+require_once "../../includes/header.php";
+require_once "../../includes/titlebar.php";
 
-require_once "../../../alerts/functions.php";
 require_once "../../../db/models/CustomerInitialData.php";
 $initial_data = new CustomerInitialData();
 try {
     $initial_data->get_by_id($_SESSION['auth']['id']);
 } catch (PDOException $e) {
-    redirect_with_error_alert("Failed to fetch initial data due to error: " . $e->getMessage(), "./");
+    die("Failed to get initial data due to error: " . $e->getMessage());
 }
 
 if (!$initial_data->customer_id) {
-    redirect_with_error_alert("Initial data not found", "./");
+    die("Initial data not found for customer ID: " . $_SESSION['auth']['id']);
 }
-
-require_once "../../includes/header.php";
-require_once "../../includes/titlebar.php";
-
 
 ?>
 

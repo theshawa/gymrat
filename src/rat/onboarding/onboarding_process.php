@@ -5,7 +5,7 @@ session_start();
 require_once "../../alerts/functions.php";
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    redirect_with_error_alert('Method not allowed', './');
+    die("Method not allowed");
 }
 
 // save initial data
@@ -40,6 +40,7 @@ try {
     $initial_data->create();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to create initial data due to error: " . $e->getMessage(), "./");
+    exit;
 }
 
 // update user onboarded status
@@ -53,6 +54,7 @@ try {
     $user->get_by_id();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to fetch user due to error: " . $e->getMessage(), "./");
+    exit;
 }
 
 $user->onboarded = true;
@@ -61,6 +63,7 @@ try {
     $user->save();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to update user due to error: " . $e->getMessage(), "./");
+    exit;
 }
 
 redirect_with_success_alert("Welcome to GYMRAT!", "/rat");

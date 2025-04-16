@@ -1,4 +1,7 @@
 <?php
+require_once "../../auth-guards.php";
+if (auth_required_guard("trainer", "/trainer/login")) exit;
+
 $pageConfig = [
     "title" => "My Customers",
     "styles" => [
@@ -7,8 +10,7 @@ $pageConfig = [
     "navbar_active" => 1,
     "titlebar" => [
         "back_url" => "../"
-    ],
-    "need_auth" => true
+    ]
 ];
 
 require_once "../includes/header.php";
@@ -41,7 +43,6 @@ try {
 
     $stmt->execute();
     $customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 } catch (Exception $e) {
     redirect_with_error_alert("Error fetching customers: " . $e->getMessage(), "../");
 }
@@ -63,7 +64,7 @@ try {
                     <?php
                     // Correctly handle the avatar path
                     $avatarPath = '/uploads/default-images/default-avatar.png'; // Default
-            
+
                     if (!empty($customer['avatar'])) {
                         // Check if avatar already starts with "/uploads/"
                         if (strpos($customer['avatar'], '/uploads/') === 0) {
@@ -94,7 +95,7 @@ try {
 
 <!-- Script for search functionality -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('searchInput');
         let debounceTimer;
 
@@ -124,7 +125,7 @@ try {
         searchInput.addEventListener('keyup', handleSearch);
 
         // Listen for input events (including when user clears with X)
-        searchInput.addEventListener('input', function () {
+        searchInput.addEventListener('input', function() {
             // If the field is empty, reload immediately
             if (this.value === '') {
                 clearTimeout(debounceTimer);

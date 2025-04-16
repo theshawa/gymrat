@@ -16,6 +16,7 @@ try {
     $workoutSession->mark_ended();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to end workout due to error: " . $e->getMessage(), "./");
+    exit;
 }
 
 unset($_SESSION['workout_session']);

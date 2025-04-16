@@ -5,7 +5,8 @@ session_start();
 require_once "../../../alerts/functions.php";
 
 if (!isset($_SESSION['subscribing'])) {
-    redirect_with_error_alert("You are currently not in the process of subscribing to a plan.", "/rat/login");
+    die("You are not in the process of subscribing to a plan.");
+    exit;
 }
 
 $order_id = htmlspecialchars($_GET['order_id']);
@@ -13,6 +14,7 @@ $order_id = htmlspecialchars($_GET['order_id']);
 
 if (empty($order_id)) {
     redirect_with_error_alert("Order ID is required", "../");
+    exit;
 }
 
 require_once "../../../db/models/MembershipPayment.php";
@@ -26,6 +28,7 @@ try {
     $payment->get_by_id();
 } catch (Exception $e) {
     redirect_with_error_alert("Subscription failed! Failed to fetch payment due to error: " . $e->getMessage(), "../");
+    exit;
 }
 
 // mark completed
@@ -33,6 +36,7 @@ try {
     $payment->mark_completed();
 } catch (PDOException $e) {
     redirect_with_error_alert("Subscription failed! Failed to mark payment as completed due to error: " . $e->getMessage(), "../");
+    exit;
 }
 
 // subscribe user to the plan
@@ -46,6 +50,7 @@ try {
     $user->get_by_id();
 } catch (Exception $e) {
     redirect_with_error_alert("Subscription failed! Failed to fetch customer due to error: " . $e->getMessage(), "../");
+    exit;
 }
 
 $user->membership_plan = $payment->membership_plan;
@@ -55,6 +60,7 @@ try {
     $user->save();
 } catch (PDOException $e) {
     redirect_with_error_alert("Subscription failed! Failed to update user due to error: " . $e->getMessage(), "../");
+    exit;
 }
 
 unset($_SESSION['subscribing']);
@@ -78,6 +84,7 @@ try {
     $plan->get_by_id();
 } catch (Exception $e) {
     redirect_with_info_alert("Subscription successful! But failed to send email due to error: Failed to fetch plan due to error: " . $e->getMessage(), $user->onboarded ? "/rat" : "/rat/onboarding/facts");
+    exit;
 }
 
 require_once "../../../phpmailer/send-mail.php";
@@ -93,6 +100,7 @@ try {
     );
 } catch (\Throwable $e) {
     redirect_with_info_alert("Subscription successful! But failed to send email due to error: " . $e->getMessage(), $user->onboarded ? "/rat" : "/rat/onboarding/facts");
+    exit;
 }
 
 redirect_with_success_alert("Subscription Plan activated successfully", $user->onboarded ? "/rat" : "/rat/onboarding/facts");

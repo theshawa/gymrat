@@ -1,213 +1,83 @@
-/* complaint.css */
-main {
-    padding: 15px;
-    padding-bottom: 80px;
-    /* Space for navbar */
-    background-color: #000000;
+.complaint-history {
+  margin-top: 40px;
+  border-top: 1px solid var(--color-zinc-900);
+  padding-top: 20px;
 }
 
-/* Form styling */
-.complaint-form {
-    background-color: #18181B;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 30px;
+.complaint-history h3 {
+  margin-bottom: 20px;
 }
 
-.field {
-    margin-bottom: 15px;
+.complaint-history ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
 }
 
-.input {
-    width: 100%;
-    padding: 15px;
-    border-radius: 8px;
-    background-color: #27272A;
-    border: none;
-    color: #ffffff;
-    font-size: 14px;
+.complaint-history li {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border: 1px solid var(--color-zinc-800);
+  border-radius: 10px;
+  background-color: var(--color-zinc-900);
 }
 
-textarea.input {
-    min-height: 100px;
-    resize: vertical;
+.complaint-history li .inline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-.submit-btn {
-    display: block;
-    width: 100%;
-    padding: 15px;
-    background-color: #D53A3A;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s;
+.complaint-history li .delete-button {
+  color: var(--color-red-light);
+  background-color: transparent;
 }
 
-.submit-btn:hover {
-    background-color: #C43030;
+.complaint-history li .delete-button:active {
+  transform: scale(0.9);
 }
 
-/* Previous reports section */
-.previous-reports-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #ffffff;
-    margin: 25px 0 15px 0;
+.complaint-history li .delete-button svg {
+  width: 16px;
+  height: 16px;
 }
 
-.reports-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.complaint-history li .type {
+  margin-bottom: 5px;
 }
 
-.report-item {
-    background-color: #18181B;
-    border-radius: 12px;
-    overflow: hidden;
-    position: relative;
-    padding: 15px;
-    border-left: 4px solid;
+.complaint-history li .review-message {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 14px;
+  border-radius: 10px;
 }
 
-/* Border colors */
-.border-orange {
-    border-left-color: #FFA500;
+.complaint-history li .review-message.reviewed {
+  background-color: rgba(66, 179, 77, 0.1);
 }
 
-.border-red {
-    border-left-color: #FF4D4D;
+.complaint-history li .review-message.pending {
+  background-color: rgba(255, 193, 7, 0.1);
 }
 
-.border-yellow {
-    border-left-color: #FFD700;
+.complaint-history li .review-status {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-green-light);
 }
 
-.report-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+.complaint-history li .review-status.pending {
+  color: rgb(255, 193, 7);
 }
 
-.report-type {
-    font-size: 16px;
-    font-weight: 600;
-    color: #ffffff;
-    margin: 0;
-}
-
-.report-status {
-    font-size: 12px;
-    font-weight: 500;
-    padding: 4px 12px;
-    border-radius: 6px;
-}
-
-.status-pending {
-    background-color: #635F29;
-    color: #E3D370;
-}
-
-.status-in-progress {
-    background-color: #1E5251;
-    color: #64D9D7;
-}
-
-.status-resolved {
-    background-color: #163832;
-    color: #4CD964;
-}
-
-.report-description {
-    font-size: 14px;
-    color: #E0E0E0;
-    margin: 10px 0;
-    line-height: 1.5;
-}
-
-.report-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid #27272A;
-}
-
-.report-date {
-    font-size: 12px;
-    color: #A0A0A0;
-}
-
-.report-severity {
-    font-size: 12px;
-    padding: 4px 12px;
-    border-radius: 20px;
-}
-
-.severity-low {
-    background-color: #635F29;
-    color: #E3D370;
-}
-
-.severity-medium {
-    background-color: #704A14;
-    color: #FCA054;
-}
-
-.severity-high {
-    background-color: #702014;
-    color: #FF4D4D;
-}
-
-.admin-reply {
-    background-color: #27272A;
-    padding: 12px;
-    margin-top: 15px;
-    border-radius: 8px;
-}
-
-.reply-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-}
-
-.admin-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: #64D9D7;
-}
-
-.reply-date {
-    font-size: 11px;
-    color: #A0A0A0;
-}
-
-.admin-reply p {
-    margin: 0;
-    color: #E0E0E0;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-/* Responsive adjustments */
-@media (max-width: 480px) {
-
-    .report-header,
-    .report-footer {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .report-status,
-    .report-severity {
-        margin-top: 8px;
-    }
+.complaint-history li .review-message p {
+  margin: 0;
+  font-size: 14px;
+  margin-top: 5px;
 }

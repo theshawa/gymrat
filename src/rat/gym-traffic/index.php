@@ -1,15 +1,6 @@
 <?php
-$pageConfig = [
-    "title" => "Live Gym Traffic",
-    "styles" => ["./gym-traffic.css"],
-    "scripts" => ["./gym-traffic.js"],
-    "navbar_active" => 1,
-    "titlebar" => [
-        "title" => "Gym Traffic",
-        "back_url" => "../",
-    ],
-    "need_auth" => true
-];
+require_once "../../auth-guards.php";
+if (auth_required_guard("rat", "/rat/login")) exit;
 
 $rats = 64;
 $maximumRats = 83;
@@ -22,6 +13,17 @@ $status_list = [
 ];
 
 $status = $traffic > 0.66 * 10 ? $status_list[2] : ($traffic > 0.33 * 10 ? $status_list[1] : $status_list[0]);
+
+$pageConfig = [
+    "title" => "Live Gym Traffic",
+    "styles" => ["./gym-traffic.css"],
+    "scripts" => ["./gym-traffic.js"],
+    "navbar_active" => 1,
+    "titlebar" => [
+        "title" => "Gym Traffic",
+        "back_url" => "../",
+    ],
+];
 
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";

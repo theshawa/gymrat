@@ -1,9 +1,11 @@
 <?php
+require_once "../../auth-guards.php";
+if (auth_required_guard("rat", "/rat/login")) exit;
+
 $pageConfig = [
     "title" => "My Profile",
     "navbar_active" => 3,
-    "styles" => ["./profile.css"],
-    "need_auth" => true
+    "styles" => ["./profile.css"]
 ];
 
 require_once "../includes/header.php";
@@ -20,7 +22,7 @@ $user->fill([
 try {
     $user->get_by_id();
 } catch (PDOException $e) {
-    redirect_with_error_alert("Failed to get user due to error: " . $e->getMessage(), "./");
+    die("Failed to get user due to error: " . $e->getMessage());
 }
 
 $plan = new MembershipPlan();
@@ -31,7 +33,7 @@ $plan->fill([
 try {
     $plan->get_by_id();
 } catch (PDOException $e) {
-    redirect_with_error_alert("Failed to get plan due to error: " . $e->getMessage(), "./");
+    die("Failed to get plan due to error: " . $e->getMessage());
 }
 
 $plan_expiry = null;

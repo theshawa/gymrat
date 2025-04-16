@@ -1,21 +1,8 @@
 <?php
 // File path: src/trainer/customers/profile/meal-plan/index.php
+require_once "../../../../auth-guards.php";
+if (auth_required_guard("trainer", "/trainer/login")) exit;
 
-$pageConfig = [
-    "title" => "Customer Meal Plan",
-    "styles" => [
-        "./meal-plan.css" // CSS file
-    ],
-    "navbar_active" => 1,
-    "titlebar" => [
-        "back_url" => "../?id=" . (isset($_GET['id']) ? $_GET['id'] : ''),
-        "title" => "MEAL PLAN"
-    ],
-    "need_auth" => true
-];
-
-require_once "../../../includes/header.php";
-require_once "../../../includes/titlebar.php";
 require_once "../../../../db/models/Customer.php";
 require_once "../../../../db/models/MealPlan.php";
 require_once "../../../../db/models/Meal.php";
@@ -41,8 +28,7 @@ $stmt->execute();
 $customer = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$customer) {
-    redirect_with_error_alert("Customer not found", "../../");
-    exit;
+    die("Customer not found.");
 }
 
 // Get the meal plan ID from the customer record
@@ -111,7 +97,7 @@ if ($mealPlanId) {
             }
         }
     } catch (Exception $e) {
-        // If there's an error, we'll show the default "no meal plan" message
+        die("Error fetching meal plan: " . $e->getMessage());
     }
 }
 
@@ -124,6 +110,21 @@ $debugInfo = [
     'Meal Plan Name' => $mealPlanName,
     'Number of Meals' => count($meals)
 ];
+
+$pageConfig = [
+    "title" => "Customer Meal Plan",
+    "styles" => [
+        "./meal-plan.css" // CSS file
+    ],
+    "navbar_active" => 1,
+    "titlebar" => [
+        "back_url" => "../?id=" . (isset($_GET['id']) ? $_GET['id'] : ''),
+        "title" => "MEAL PLAN"
+    ]
+];
+
+require_once "../../../includes/header.php";
+require_once "../../../includes/titlebar.php";
 ?>
 
 <main class="meal-plan-page">

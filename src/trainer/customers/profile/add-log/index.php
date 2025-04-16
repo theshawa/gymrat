@@ -1,21 +1,8 @@
 <?php
 // File path: src/trainer/customers/profile/add-log/index.php
+require_once "../../../../auth-guards.php";
+if (auth_required_guard("trainer", "/trainer/login")) exit;
 
-$pageConfig = [
-    "title" => "Add Progress Log",
-    "styles" => [
-        "./add-log.css" // CSS file to be created
-    ],
-    "navbar_active" => 1,
-    "titlebar" => [
-        "back_url" => "../?id=" . (isset($_GET['id']) ? $_GET['id'] : ''),
-        "title" => "ADD PROGRESS LOG"
-    ],
-    "need_auth" => true
-];
-
-require_once "../../../includes/header.php";
-require_once "../../../includes/titlebar.php";
 require_once "../../../../db/Database.php";
 require_once "../../../../alerts/functions.php";
 
@@ -24,8 +11,7 @@ $customerId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 // If customer ID is missing, redirect back to customers list
 if (!$customerId) {
-    redirect_with_error_alert("Invalid customer ID", "../../");
-    exit;
+    die("Invalid customer ID");
 }
 
 // Get database connection
@@ -39,8 +25,7 @@ $stmt->execute();
 $customer = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$customer) {
-    redirect_with_error_alert("Customer not found", "../../");
-    exit;
+    die("Customer not found");
 }
 
 // Handle form submission
@@ -104,7 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Show success message
             $successMessage = "Progress feedback added successfully";
-
         } catch (Exception $e) {
             $errorMessage = "Error saving progress: " . $e->getMessage();
         }
@@ -134,8 +118,23 @@ try {
         $progressLogs = $logsStmt->fetchAll(PDO::FETCH_ASSOC);
     }
 } catch (Exception $e) {
-    // Silently handle error - logs array will remain empty
+    die("Error fetching progress logs: " . $e->getMessage());
 }
+
+$pageConfig = [
+    "title" => "Add Progress Log",
+    "styles" => [
+        "./add-log.css" // CSS file to be created
+    ],
+    "navbar_active" => 1,
+    "titlebar" => [
+        "back_url" => "../?id=" . (isset($_GET['id']) ? $_GET['id'] : ''),
+        "title" => "ADD PROGRESS LOG"
+    ]
+];
+
+require_once "../../../includes/header.php";
+require_once "../../../includes/titlebar.php";
 ?>
 
 <main class="add-log-page">

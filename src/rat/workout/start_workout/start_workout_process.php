@@ -33,6 +33,7 @@ try {
     file_put_contents($filePath, $session_key->session_key);
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to scan session key due to error: " . $e->getMessage(), "./");
+    exit;
 }
 
 $workout_session = new WorkoutSession();
@@ -46,6 +47,7 @@ try {
     $workout_session->create();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to start workout due to error: " . $e->getMessage(), "./");
+    exit;
 }
 
 $_SESSION['workout_session'] = $workout_session->session_key;

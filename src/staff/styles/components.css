@@ -353,6 +353,15 @@ select:has(option:checked:not([value=""])) option {
   border: 1px solid var(--color-red);
 }
 
+.staff-alert-red-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-red);
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
  /*Alert*/
 .alert-wrapper {
   display: flex;

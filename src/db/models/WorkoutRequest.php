@@ -73,4 +73,13 @@ class WorkoutRequest extends Model
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['id' => $this->id]);
     }
+
+    public function has_unreviewed_requests(): bool
+    {
+        $sql = "SELECT COUNT(*) FROM $this->table WHERE reviewed = 0";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
 }

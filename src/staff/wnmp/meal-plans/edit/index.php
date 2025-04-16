@@ -22,7 +22,7 @@ if (!isset($_SESSION['mealPlan'])) {
     $mealPlan = unserialize($_SESSION['mealPlan']);
 }
 
-if (!isset($_SESSION['mealTitles'])){    
+if (!isset($_SESSION['mealTitles'])) {    
     $mealModel = new Meal();
     $mealTitles = $mealModel->get_all_titles();
     $_SESSION['mealTitles'] = $mealTitles;
@@ -37,8 +37,10 @@ $menuBarConfig = [
     "goBackTo" => "/staff/wnmp/meal-plans/view/index.php?id=$id",
     "useButton" => true,
     "options" => [
-        ["title" => "Save Changes", "buttonType" => "submit", "type" => "secondary"],
-        ["title" => "Revert Changes", "buttonType" => "submit", "formAction" => "revert_meal.php", "type" => "destructive"]
+        ["title" => "Save Changes", "buttonType" => "submit", 
+        "buttonName" => "action", "buttonValue" => "edit", "type" => "secondary"],
+        ["title" => "Revert Changes", "buttonType" => "submit", 
+        "buttonName" => "action", "buttonValue" => "revert", "type" => "destructive"]
     ]
 ];
 
@@ -72,58 +74,51 @@ auth_required_guard("wnmp", "/staff/login");
                     <input type="text" id="edit-duration" name="mealplan_duration"
                         class="staff-input-primary staff-input-long" value="<?= $mealPlan->duration ?>">
                 </div>
-            </form>
-            <div style="padding: 5px 10px;">
-                <h2>Meals</h2>
-                <?php foreach ($mealPlan->meals as $meal): ?>
-                    <?php if (!$meal['isDeleted']): ?>
-                        <form action="edit_current_meal.php" method="POST" class="edit-meal-plan-row">
-                            <input type="hidden" name="meal_id" value="<?= $meal['id'] ?>">
-                            <input type="hidden" name="meal_edit_id" value="<?= $meal['edit_id'] ?>">
-                            <select name="meal_title" class="staff-input-primary staff-input-long">
-                                <?php foreach ($mealTitles as $title): ?>
-                                    <option value="<?= $title ?>" <?= $title == $meal['title'] ? 'selected' : '' ?>>
-                                        <?= $title ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                            <div class="edit-meal-plan-input-reps-sets">
-                                <label for="meal_day">Day</label>
-                                <select name="meal_day" class="staff-input-primary staff-input-short">
-                                    <option value="Monday" <?= $meal['day'] == 'Monday' ? 'selected' : '' ?>>Monday</option>
-                                    <option value="Tuesday" <?= $meal['day'] == 'Tuesday' ? 'selected' : '' ?>>Tuesday</option>
-                                    <option value="Wednesday" <?= $meal['day'] == 'Wednesday' ? 'selected' : '' ?>>Wednesday</option>
-                                    <option value="Thursday" <?= $meal['day'] == 'Thursday' ? 'selected' : '' ?>>Thursday</option>
-                                    <option value="Friday" <?= $meal['day'] == 'Friday' ? 'selected' : '' ?>>Friday</option>
-                                    <option value="Saturday" <?= $meal['day'] == 'Saturday' ? 'selected' : '' ?>>Saturday</option>
-                                    <option value="Sunday" <?= $meal['day'] == 'Sunday' ? 'selected' : '' ?>>Sunday</option>
+                <div style="padding: 5px 10px;">
+                    <h2>Meals</h2>
+                    <?php foreach ($mealPlan->meals as $meal): ?>
+                        <?php if (!$meal['isDeleted']): ?>
+                            <div class="edit-meal-plan-row">
+                                <select name="meal_title_<?= $meal['edit_id'] ?>" class="staff-input-primary staff-input-long">
+                                    <?php foreach ($mealTitles as $title): ?>
+                                        <option value="<?= $title ?>" <?= $title == $meal['title'] ? 'selected' : '' ?>>
+                                            <?= $title ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
+                                <div class="edit-meal-plan-input-reps-sets">
+                                    <label for="meal_day_<?= $meal['edit_id'] ?>">Day</label>
+                                    <select name="meal_day_<?= $meal['edit_id'] ?>" class="staff-input-primary staff-input-short">
+                                        <option value="Monday" <?= $meal['day'] == 'Monday' ? 'selected' : '' ?>>Monday</option>
+                                        <option value="Tuesday" <?= $meal['day'] == 'Tuesday' ? 'selected' : '' ?>>Tuesday</option>
+                                        <option value="Wednesday" <?= $meal['day'] == 'Wednesday' ? 'selected' : '' ?>>Wednesday</option>
+                                        <option value="Thursday" <?= $meal['day'] == 'Thursday' ? 'selected' : '' ?>>Thursday</option>
+                                        <option value="Friday" <?= $meal['day'] == 'Friday' ? 'selected' : '' ?>>Friday</option>
+                                        <option value="Saturday" <?= $meal['day'] == 'Saturday' ? 'selected' : '' ?>>Saturday</option>
+                                        <option value="Sunday" <?= $meal['day'] == 'Sunday' ? 'selected' : '' ?>>Sunday</option>
+                                    </select>
+                                </div>
+                                <div class="edit-meal-plan-input-reps-sets">
+                                    <label for="meal_time_<?= $meal['edit_id'] ?>">Time</label>
+                                    <select name="meal_time_<?= $meal['edit_id'] ?>" class="staff-input-primary staff-input-short">
+                                        <option value="Breakfast" <?= $meal['time'] == 'Breakfast' ? 'selected' : '' ?>>Breakfast</option>
+                                        <option value="Lunch" <?= $meal['time'] == 'Lunch' ? 'selected' : '' ?>>Lunch</option>
+                                        <option value="Dinner" <?= $meal['time'] == 'Dinner' ? 'selected' : '' ?>>Dinner</option>
+                                        <option value="Snack" <?= $meal['time'] == 'Snack' ? 'selected' : '' ?>>Snack</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="staff-btn-outline edit-meal-plan-input-delete"
+                                    name="delete_meal" value="<?= $meal['edit_id'] ?>">
+                                    Delete
+                                </button>
                             </div>
-                            <div class="edit-meal-plan-input-reps-sets">
-                                <label for="meal_time">Time</label>
-                                <select name="meal_time" class="staff-input-primary staff-input-short">
-                                    <option value="Breakfast" <?= $meal['time'] == 'Breakfast' ? 'selected' : '' ?>>Breakfast</option>
-                                    <option value="Lunch" <?= $meal['time'] == 'Lunch' ? 'selected' : '' ?>>Lunch</option>
-                                    <option value="Dinner" <?= $meal['time'] == 'Dinner' ? 'selected' : '' ?>>Dinner</option>
-                                    <option value="Snack" <?= $meal['time'] == 'Snack' ? 'selected' : '' ?>>Snack</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="staff-btn-outline edit-meal-plan-input-update">
-                                Update
-                            </button>
-                            <button type="submit" class="staff-btn-outline edit-meal-plan-input-delete"
-                                formaction="delete_current_meal.php">
-                                Delete
-                            </button>
-                        </form>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-                <form action="add_meal.php" method="POST">
-                    <button type="submit" class="staff-btn-secondary-black edit-meal-plan-add-meal">
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    <button type="submit" name="action" value="add" class="staff-btn-secondary-black edit-meal-plan-add-meal">
                         + Add Meal
                     </button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </main>

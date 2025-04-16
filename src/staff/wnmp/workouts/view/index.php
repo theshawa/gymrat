@@ -50,7 +50,7 @@ auth_required_guard("wnmp", "/staff/login");
                 </h2>
                 <?php foreach ($workout->exercises as $exercise): ?>
                     <div class="view-workout-exercise">
-                        <p><?= $exercise['title'] ?></p>
+                        <p>[ Day <?= $exercise['day'] ?> ] - <?= $exercise['title'] ?></p>
                         <p class="alt"><?= $exercise['sets'] ?> x <?= $exercise['reps'] ?></p>
                     </div>
                     <hr>

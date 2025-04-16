@@ -13,8 +13,12 @@ require_once "../../../alerts/functions.php";
 
 
 $workoutRequestModel = new WorkoutRequest();
-$hasUnreviewedRequests = $workoutRequestModel->has_unreviewed_requests();
-
+try {
+    $hasUnreviewedRequests = $workoutRequestModel->has_unreviewed_requests();
+    // throw new Exception("test");
+} catch (Exception $e) {
+    $_SESSION['error'] = "Failed to access workout requests: " . $e->getMessage();
+}
 
 $menuBarConfig = [
     "title" => $pageTitle,
@@ -24,7 +28,7 @@ $menuBarConfig = [
             "title" => "Workout Requests", 
             "href" => "/staff/wnmp/workouts/requests/index.php?filter=1",
             "type" => "primary",
-            "setAlert" => $hasUnreviewedRequests
+            "setAttentionDot" => $hasUnreviewedRequests
         ],
         ["title" => "Create Workout", "href" => "/staff/wnmp/workouts/create/index.php", "type" => "secondary"]
     ]

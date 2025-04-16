@@ -48,7 +48,7 @@ if (isset($menuBarConfig)) {
         <?php if ($useLink && $options): ?>
             <?php foreach ($options as $option): ?>
                 <a href="<?= $option['href'] ?>" class="staff-button <?= empty($option['type']) ? 'primary' : $option['type'] ?>">
-                    <?php if (!empty($option['setAlert']) && $option['setAlert']): ?>
+                    <?php if (!empty($option['setAttentionDot']) && $option['setAttentionDot']): ?>
                         <span class="staff-alert-red-dot"></span>
                     <?php endif; ?>
                     &nbsp;<?= $option['title'] ?>
@@ -64,7 +64,7 @@ if (isset($menuBarConfig)) {
                     <?= !empty($option['buttonName']) ? 'name="' . $option['buttonName'] . '"' : '' ?>
                     <?= !empty($option['buttonValue']) ? 'value="' . $option['buttonValue'] . '"' : '' ?>
                 >
-                <?php if (!empty($option['setAlert']) && $option['setAlert']): ?>
+                <?php if (!empty($option['setAttentionDot']) && $option['setAttentionDot']): ?>
                     <span class="staff-alert-red-dot"></span>
                 <?php endif; ?>
                 &nbsp;<?= $option['title'] ?>

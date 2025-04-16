@@ -3,37 +3,34 @@
 
 $id = $_GET['id'] ?? null;
 
-$sidebarActive = 3;
+$sidebarActive = 5;
 
 require_once "../../../../../alerts/functions.php";
 require_once "../../../../../db/models/Trainer.php";
-require_once "../../../../../db/models/WorkoutRequest.php";
-require_once "../../../../../db/models/Workout.php";
+require_once "../../../../../db/models/MealPlanRequest.php";
+require_once "../../../../../db/models/MealPlan.php";
 
-$workoutRequest = new WorkoutRequest();
+$mealPlanRequest = new MealPlanRequest();
 try {
     $trainerModel = new Trainer();
-    $workoutRequest->get_by_id($id);
-    $workoutRequest->trainer = $trainerModel->get_username_by_id($workoutRequest->trainerId);
-    // $_SESSION['workout_request'] = serialize($workoutRequest);
+    $mealPlanRequest->get_by_id($id);
+    $mealPlanRequest->trainer = $trainerModel->get_username_by_id($mealPlanRequest->trainerId);
 } catch (Exception $e) {
-    redirect_with_error_alert("Failed to fetch workout request: " . $e->getMessage(), "/staff/wnmp/workouts/requests");
+    redirect_with_error_alert("Failed to fetch meal plan request: " . $e->getMessage(), "/staff/wnmp/meal-plans/requests");
 }
 
-
-$workoutTitles = [];
+$mealPlanTitles = [];
 try {
-    $workoutModel = new Workout();
-    $workoutTitles = $workoutModel->get_all_titles();
+    $mealPlanModel = new MealPlan();
+    $mealPlanTitles = $mealPlanModel->get_all_titles();
 } catch (Exception $e) {
-    $_SESSION['error'] = "Failed to fetch workout titles: " . $e->getMessage();
+    $_SESSION['error'] = "Failed to fetch meal plan titles: " . $e->getMessage();
 }
-
 
 $menuBarConfig = [
-    "title" => "Workout Request #" . $workoutRequest->id,
+    "title" => "Meal Plan Request #" . $mealPlanRequest->id,
     "showBack" => true,
-    "goBackTo" => "/staff/wnmp/workouts/requests/index.php?filter=1",
+    "goBackTo" => "/staff/wnmp/meal-plans/requests/index.php?filter=1",
 ];
 
 require_once "../../../pageconfig.php";
@@ -53,24 +50,24 @@ auth_required_guard("wnmp", "/staff/login");
                 <h2 style="margin-bottom: 10px;">
                     Description
                 </h2>
-                <p><?= $workoutRequest->description ?></p>
+                <p><?= $mealPlanRequest->description ?></p>
                 <div style="display: flex; flex-direction: row; margin-top: 20px; align-items: center; ">
                     <h2>
                         Trainer : 
                     </h2>
-                    <p>&emsp;<?= $workoutRequest->trainer ?></p>
+                    <p>&emsp;<?= $mealPlanRequest->trainer ?></p>
                 </div>
             </div>
-            <?php if ($workoutRequest->reviewed == 0): ?>
+            <?php if ($mealPlanRequest->reviewed == 0): ?>
             <form action="confirm_request.php" method="POST" style="display: flex; flex-direction: column; gap: 20px;">
-                <input type="hidden" name="id" value="<?= $workoutRequest->id ?>">
+                <input type="hidden" name="id" value="<?= $mealPlanRequest->id ?>">
                 <h2>
                     Acknowledge Request
                 </h2>
-                <p>Select relevant workout to confirm the successful creation of the requested workout</p>
+                <p>Select relevant meal plan to confirm the successful creation of the requested meal plan</p>
                 <div style = "display: flex; flex-direction: row; gap: 20px; align-items: center;">
-                <select name="confirmation_workout" class="staff-input-primary staff-input-long">
-                    <?php foreach ($workoutTitles as $title): ?>
+                <select name="confirmation_meal_plan" class="staff-input-primary staff-input-long">
+                    <?php foreach ($mealPlanTitles as $title): ?>
                         <option value="<?= $title ?>">
                             <?= $title ?>
                         </option>

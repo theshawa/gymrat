@@ -2,16 +2,16 @@
 
 require_once __DIR__ . "/../Model.php";
 
-class WorkoutRequest extends Model
+class MealPlanRequest extends Model
 {
-    protected $table = "workout_requests";
+    protected $table = "mealplan_requests";
 
     public int $id;
     public int $trainerId;
     public string $description;
     public DateTime $created_at;
     public DateTime $updated_at;
-    public int $reviewed; 
+    public int $reviewed;
     public ?string $trainer; // Only for api
 
     public function __construct()
@@ -19,7 +19,7 @@ class WorkoutRequest extends Model
         parent::__construct();
         $this->created_at = new DateTime();
         $this->updated_at = new DateTime();
-        $this->reviewed = 0; 
+        $this->reviewed = 0;
         $this->trainer = null; 
     }
 
@@ -30,28 +30,28 @@ class WorkoutRequest extends Model
         $this->description = $data['description'] ?? "";
         $this->created_at = new DateTime($data['created_at'] ?? '');
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
-        $this->reviewed = $data['reviewed'] ?? 0; 
+        $this->reviewed = $data['reviewed'] ?? 0;
         $this->trainer = null; 
     }
 
-    public function get_all(int $sort = 0, int $filter = 0) 
+    public function get_all(int $sort = 0, int $filter = 0)
     {
         $sql = "SELECT * FROM $this->table";
         if ($filter === 1) {
             $sql .= " WHERE reviewed = 0";
         }
         if ($sort === 1) {
-            $sql .= " ORDER BY created_at ASC"; 
+            $sql .= " ORDER BY created_at ASC";
         } elseif ($sort === -1) {
-            $sql .= " ORDER BY created_at DESC"; 
+            $sql .= " ORDER BY created_at DESC";
         }
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $items = $stmt->fetchAll();
         return array_map(function ($item) {
-            $workoutRequest = new WorkoutRequest();
-            $workoutRequest->fill($item);
-            return $workoutRequest;
+            $mealPlanRequest = new MealPlanRequest();
+            $mealPlanRequest->fill($item);
+            return $mealPlanRequest;
         }, $items);
     }
 
@@ -62,7 +62,7 @@ class WorkoutRequest extends Model
         $stmt->execute(['id' => $id]);
         $item = $stmt->fetch();
         if (!$item) {
-            die("WorkoutRequest not found");
+            die("MealPlanRequest not found");
         }
         $this->fill($item);
     }

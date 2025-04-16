@@ -117,17 +117,6 @@ $rating = 4.7; // Example mock rating that could later be replaced with real dat
             <p class="profile-username"><?= htmlspecialchars($username) ?></p>
             <p class="profile-goal"><?= htmlspecialchars($goal) ?></p>
         </div>
-
-        <div class="rating-box">
-            <div class="rating-score"><?= $rating ?></div>
-            <div class="rating-stars">
-                <span class="star filled">★</span>
-                <span class="star filled">★</span>
-                <span class="star filled">★</span>
-                <span class="star filled">★</span>
-                <span class="star">★</span>
-            </div>
-        </div>
     </div>
 
     <!-- Action Tiles Section -->

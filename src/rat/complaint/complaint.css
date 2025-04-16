@@ -31,12 +31,6 @@
   margin-bottom: 15px;
 }
 
-.complaint-history li .time {
-  font-size: 11px;
-  color: var(--color-zinc-400);
-  text-transform: uppercase;
-}
-
 .complaint-history li .delete-button {
   color: var(--color-red-light);
   background-color: transparent;
@@ -57,10 +51,9 @@
 
 .complaint-history li .review-message {
   margin-top: 15px;
-  padding-top: 10px;
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 12px 14px;
   border-radius: 10px;
 }
 
@@ -86,5 +79,5 @@
 .complaint-history li .review-message p {
   margin: 0;
   font-size: 14px;
-  margin-top: 10px;
+  margin-top: 5px;
 }

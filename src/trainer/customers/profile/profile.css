@@ -1,166 +1,165 @@
 .profile-view {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 20px;
 }
 
 /* Profile Section Styles */
 .profile-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 .profile-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
 }
 
 .profile-avatar {
-    width: 128px;
-    height: 128px;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .profile-name {
-    font-size: 24px;
-    font-weight: 600;
-    color: #FAFAFA;
-    margin: 0;
-    text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: #fafafa;
+  margin: 0;
+  text-align: center;
 }
 
 .profile-username {
-    font-size: 14px;
-    color: #3F3F46;
-    margin: 0;
-    text-align: center;
+  font-size: 14px;
+  color: var(--color-zinc-500);
+  margin: 0;
+  text-align: center;
 }
 
 .profile-goal {
-    font-size: 14px;
-    color: #D4D4D8;
-    text-align: center;
-    margin: 0;
-    max-width: 384px;
-    line-height: 20px;
+  font-size: 14px;
+  color: #d4d4d8;
+  text-align: center;
+  margin: 0;
+  max-width: 384px;
+  line-height: 20px;
 }
 
 /* Rating Box Styles */
 .rating-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    gap: 8px;
-    width: 100%;
-    max-width: 384px;
-    border: 1px solid #27272A;
-    border-radius: 20px;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  gap: 8px;
+  width: 100%;
+  max-width: 384px;
+  border: 1px solid #27272a;
+  border-radius: 20px;
+  box-sizing: border-box;
 }
 
 .rating-score {
-    font-size: 18px;
-    font-weight: 50 0;
-    color: #FAFAFA;
-    text-align: center;
-    width: 100%;
+  font-size: 18px;
+  font-weight: 50 0;
+  color: #fafafa;
+  text-align: center;
+  width: 100%;
 }
 
 .rating-stars {
-    display: flex;
-    gap: 2px;
+  display: flex;
+  gap: 2px;
 }
 
 .star {
-    font-size: 18px;
-    color: #52525B;
+  font-size: 18px;
+  color: #52525b;
 }
 
 .star.filled {
-    color: #FAFAFA;
+  color: #fafafa;
 }
 
 /* Action Tiles Styles */
 .action-tiles {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 0 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 6px;
 }
 
 .action-row {
-    display: flex;
-    gap: 16px;
-    width: 100%;
+  display: flex;
+  gap: 16px;
+  width: 100%;
 }
 
 .action-tile {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 20px;
-    border-radius: 30px;
-    color: #FAFAFA;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 28px;
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  border-radius: 30px;
+  color: #fafafa;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
 }
 
 .action-tile.purple {
-    background-color: #6700E6;
-    border: 1px solid #7200FF;
-    flex: 1;
-    height: 174px;
+  background-color: #6700e6;
+  border: 1px solid #7200ff;
+  flex: 1;
+  height: 174px;
 }
 
 .action-tile.red {
-    background-color: #D53A3A;
-    border: 1px solid #F05050;
+  background-color: #d53a3a;
+  border: 1px solid #f05050;
 }
 
 .action-tile.full-width {
-    height: 111px;
+  height: 111px;
 }
 
 .action-arrow {
-    position: absolute;
-    top: 14px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    background-color: rgba(250, 250, 250, 0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: rotate(-15deg);
-
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(250, 250, 250, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-15deg);
 }
 
 .action-arrow span {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 /* Media queries for responsive design */
 @media (max-width: 400px) {
-    .action-row {
-        flex-direction: column;
-    }
+  .action-row {
+    flex-direction: column;
+  }
 
-    .action-tile.purple {
-        height: 120px;
-    }
+  .action-tile.purple {
+    height: 120px;
+  }
 }

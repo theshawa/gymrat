@@ -14,11 +14,13 @@ $exercise = new Exercise();
 if (!isset($_SESSION['exercise'])) {
     try {
         $exercise->get_by_id($id);
+        $_SESSION['exercise'] = serialize($exercise);
     } catch (Exception $e) {
         redirect_with_error_alert("Failed to fetch exercise: " . $e->getMessage(), "/staff/wnmp");
     }
 } else {
-    $exercise = &$_SESSION['exercise'];
+    // $exercise = &$_SESSION['exercise'];
+    $exercise = unserialize($_SESSION['exercise']);
 }
 
 $menuBarConfig = [
@@ -63,8 +65,11 @@ auth_required_guard("wnmp", "/staff/login");
                     </div>
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-difficulty-level">Difficulty Level</label></h2>
-                        <input type="text" id="edit-difficulty-level" name="exercise_difficulty_level"
-                            class="staff-input-primary staff-input-long" value="<?= $exercise->difficulty_level ?>">
+                        <select name="exercise_difficulty_level" id="edit-difficulty-level" class="staff-input-primary staff-input-long">
+                            <option value="Beginner" <?= $exercise->difficulty_level == 'Beginner' ? 'selected' : '' ?>>Beginner</option>
+                            <option value="Intermediate" <?= $exercise->difficulty_level == 'Intermediate' ? 'selected' : '' ?>>Intermediate</option>
+                            <option value="Advanced" <?= $exercise->difficulty_level == 'Advanced' ? 'selected' : '' ?>>Advanced</option>
+                        </select>
                     </div>
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-type">Type</label></h2>

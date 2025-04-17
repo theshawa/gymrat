@@ -69,17 +69,17 @@ auth_required_guard("wnmp", "/staff/login");
                     </div>
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-calories">Calories</label></h2>
-                        <input type="text" id="edit-calories" name="meal_calories" pattern="\d+"
+                        <input type="text" id="edit-calories" name="meal_calories" pattern="^[0-9]+(\.[0-9]+)?$"
                             class="staff-input-primary staff-input-long" value="<?= $meal->calories ?>">
                     </div>
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-proteins">Proteins</label></h2>
-                        <input type="text" id="edit-proteins" name="meal_proteins" pattern="\d+"
+                        <input type="text" id="edit-proteins" name="meal_proteins" pattern="^[0-9]+(\.[0-9]+)?$"
                             class="staff-input-primary staff-input-long" value="<?= $meal->proteins ?>">
                     </div>
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-fats">Fats</label></h2>
-                        <input type="text" id="edit-fats" name="meal_fats" pattern="\d+"
+                        <input type="text" id="edit-fats" name="meal_fats" pattern="^[0-9]+(\.[0-9]+)?$"
                             class="staff-input-primary staff-input-long" value="<?= $meal->fats ?>">
                     </div>
                 </div>

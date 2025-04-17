@@ -10,9 +10,9 @@ class Meal extends Model
     public string $name;
     public string $description;
     public string $image;
-    public int $calories;
-    public int $proteins;
-    public int $fats;
+    public float $calories;
+    public float $proteins;
+    public float $fats;
     public DateTime $created_at;
     public DateTime $updated_at;
 
@@ -40,9 +40,9 @@ class Meal extends Model
         $this->name = $data['name'] ?? "";
         $this->description = $data['description'] ?? "";
         $this->image = $data['image'] ?? "";
-        $this->calories = $data['calories'] ?? 0;
-        $this->proteins = $data['proteins'] ?? 0;
-        $this->fats = $data['fats'] ?? 0;
+        $this->calories = isset($data['calories']) ? (float)$data['calories'] : 0.0; 
+        $this->proteins = isset($data['proteins']) ? (float)$data['proteins'] : 0.0; 
+        $this->fats = isset($data['fats']) ? (float)$data['fats'] : 0.0;
         $this->created_at = new DateTime($data['created_at'] ?? '');
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
     }

@@ -27,9 +27,9 @@ $errors = [];
 
 if (empty($name)) $errors[] = "Name is required.";
 if (empty($description)) $errors[] = "Description is required.";
-if (empty($calories)) $errors[] = "Calories are required.";
-if (empty($proteins)) $errors[] = "Proteins are required.";
-if (empty($fats)) $errors[] = "Fats are required.";
+// if (empty($calories)) $errors[] = "Calories are required.";
+// if (empty($proteins)) $errors[] = "Proteins are required.";
+// if (empty($fats)) $errors[] = "Fats are required.";
 
 
 // image upload
@@ -71,6 +71,7 @@ $meal->image = $image ?? $meal->image;
 if (!empty($errors)) {
     $error_message = implode(" ", $errors);
     redirect_with_error_alert($error_message, "/staff/wnmp/meals/edit?id=" . $id);
+    exit;
 }
 
 

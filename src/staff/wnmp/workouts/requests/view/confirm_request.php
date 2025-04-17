@@ -7,6 +7,7 @@ require_once "../../../../../db/models/WorkoutRequest.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirect_with_error_alert("Method not allowed", "/staff/wnmp/workouts");
+    exit;
 }
 
 
@@ -15,6 +16,7 @@ $confirmation_workout = htmlspecialchars($_POST['confirmation_workout']);
 
 if (empty($confirmation_workout)) {
     redirect_with_error_alert("No Workout is chosen for confirmation", "/staff/wnmp/workouts/requests/view?id=" . $id);
+    exit;
 }
 
 $workoutRequest = new WorkoutRequest();
@@ -23,6 +25,7 @@ try {
     $workoutRequest->confirm_request();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to confirm workout request due to an error: " . $e->getMessage(), "/staff/wnmp/workouts/requests?filter=1");
+    exit;
 }
 
 require_once "../../../../../notifications/functions.php";
@@ -30,8 +33,10 @@ try {
     notify_trainer($workoutRequest->trainerId, "Workout Request Aknowledged", "The Workout you have requested has been created : " . $confirmation_workout, "wnmp manager" );
 } catch (\Throwable $th) {
     redirect_with_info_alert("Confirmation successful, but failed to send notification: " . $th->getMessage(), "/staff/wnmp/workouts/requests?filter=1");
+    exit;
 }
 
 
 redirect_with_success_alert("Workout request confirmed successfully", "/staff/wnmp/workouts/requests?filter=1");
+exit;
 ?>

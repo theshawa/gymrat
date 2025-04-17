@@ -160,4 +160,14 @@ class Customer extends Model
             'password' => $this->password
         ]);
     }
+
+    public function get_username_by_id(int $id): ?string
+    {
+        $sql = "SELECT CONCAT(fname, ' ', lname) AS username FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $data = $stmt->fetch();
+
+        return $data['username'] ?? null; 
+    }
 }

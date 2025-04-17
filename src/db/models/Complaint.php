@@ -16,6 +16,7 @@ class Complaint extends Model
     public DateTime $created_at;
     public ?string $review_message;
     public ?DateTime $reviewed_at;
+    public ?string $user_name; // For api use only
 
     public function fill(array $data)
     {
@@ -27,11 +28,23 @@ class Complaint extends Model
         $this->created_at = new DateTime($data['created_at'] ?? '');
         $this->review_message = $data['review_message'] ?? null;
         $this->reviewed_at = isset($data['reviewed_at']) ? new DateTime($data['reviewed_at']) : null;
+        $this->user_name = $data['user_name'] ?? null; 
     }
 
-    public function get_all(): array
+    public function get_all(int $sort = -1, int $notReviewed = 0): array
     {
-        $sql = "SELECT * FROM $this->table ORDER BY created_at DESC";
+        // sort: 0 = no sort, 1 = ascending, -1 = descending
+        // notReviewed: 0 = all, 1 = only unreviewed
+        $sql = "SELECT * FROM $this->table";
+        if ($notReviewed === 1) {
+            $sql .= " WHERE review_message IS NULL";
+        }
+        if ($sort === 1) {
+            $sql .= " ORDER BY created_at ASC"; 
+        } elseif ($sort === -1) {
+            $sql .= " ORDER BY created_at DESC"; 
+        }
+        // $sql = "SELECT * FROM $this->table ORDER BY created_at DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $items = $stmt->fetchAll();
@@ -52,6 +65,19 @@ class Complaint extends Model
             die("Complaint not found");
         }
         $this->fill($item);
+    }
+
+    public function get_username()
+    {
+        if ($this->user_type === "trainer") {
+            $trainerModel = new Trainer();
+            $this->user_name = $trainerModel->get_username_by_id($this->user_id);
+        } 
+        
+        if ($this->user_type === "rat") {
+            $customerModel = new Customer();
+            $this->user_name = $customerModel->get_username_by_id($this->user_id);
+        }
     }
 
     public function create()

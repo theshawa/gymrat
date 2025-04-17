@@ -90,6 +90,7 @@ try {
 } catch (PDOException $e) {
     if ($e->errorInfo[1] == 1062) {
         redirect_with_error_alert("Failed to edit exercise due to an error: Exercise with the same name already exists", "/staff/wnmp/exercises/edit?id=" . $id);
+        exit;
     }
     redirect_with_error_alert("Failed to update exercise due to an error: " . $e->getMessage(), "/staff/wnmp/exercises/edit?id=" . $id);
     exit;

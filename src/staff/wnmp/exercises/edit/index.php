@@ -17,6 +17,7 @@ if (!isset($_SESSION['exercise'])) {
         $_SESSION['exercise'] = serialize($exercise);
     } catch (Exception $e) {
         redirect_with_error_alert("Failed to fetch exercise: " . $e->getMessage(), "/staff/wnmp");
+        exit;
     }
 } else {
     // $exercise = &$_SESSION['exercise'];

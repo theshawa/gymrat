@@ -19,6 +19,19 @@ class Meal extends Model
     public function __construct()
     {
         parent::__construct();
+        if (!empty($data)) {
+            $this->fill($data);
+        }
+    }
+
+    public function __sleep()
+    {
+        return ['id', 'name', 'description', 'created_at', 'updated_at', 'image', 'calories', 'proteins', 'fats'];
+    }
+
+    public function __wakeup()
+    {
+        $this->conn = Database::get_conn();
     }
 
     public function fill(array $data)

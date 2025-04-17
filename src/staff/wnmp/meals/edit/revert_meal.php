@@ -12,9 +12,10 @@ try {
     $originalMeal->get_by_id($id);
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch meal: " . $e->getMessage(), "/staff/wnmp");
+    exit;
 }
 
-$_SESSION['meal'] = $originalMeal;
+$_SESSION['meal'] = serialize($originalMeal);
 
-header("Location: /staff/wnmp/meals/edit/index.php?id=$id");
-exit();
+redirect_with_success_alert("Meal reverted successfully", "/staff/wnmp/meals/edit/?id=" . $id);
+exit;

@@ -6,18 +6,34 @@ auth_required_guard("wnmp", "/staff/login");
 
 $pageTitle = "Workouts";
 $sidebarActive = 3;
+
+require_once "../../../db/models/WorkoutRequest.php";
+require_once "../../../db/models/Workout.php";
+require_once "../../../alerts/functions.php";
+
+
+$workoutRequestModel = new WorkoutRequest();
+try {
+    $hasUnreviewedRequests = $workoutRequestModel->has_unreviewed_requests();
+    // throw new Exception("test");
+} catch (Exception $e) {
+    $_SESSION['error'] = "Failed to access workout requests: " . $e->getMessage();
+}
+
 $menuBarConfig = [
     "title" => $pageTitle,
     "useLink" => true,
     "options" => [
-        ["title" => "Workout Requests", "href" => "/staff/wnmp/workouts/requests/index.php", "type" => "primary"],
+        [
+            "title" => "Workout Requests", 
+            "href" => "/staff/wnmp/workouts/requests/index.php?filter=1",
+            "type" => "primary",
+            "setAttentionDot" => $hasUnreviewedRequests
+        ],
         ["title" => "Create Workout", "href" => "/staff/wnmp/workouts/create/index.php", "type" => "secondary"]
     ]
 ];
 
-require_once "../../../db/models/Workout.php";
-
-require_once "../../../alerts/functions.php";
 
 $workout = [];
 $workoutModel = new Workout();

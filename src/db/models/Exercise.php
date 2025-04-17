@@ -21,7 +21,21 @@ class Exercise extends Model
     public function __construct()
     {
         parent::__construct();
+        if (!empty($data)) {
+            $this->fill($data);
+        }
     }
+
+    public function __sleep()
+    {
+        return ['id', 'name', 'description', 'video_link', 'created_at', 'updated_at', 'image', 'muscle_group', 'difficulty_level', 'type', 'equipment_needed'];
+    }
+
+    public function __wakeup()
+    {
+        $this->conn = Database::get_conn();
+    }
+
 
     public function fill(array $data)
     {

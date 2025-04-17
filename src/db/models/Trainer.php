@@ -140,4 +140,14 @@ class Trainer extends Model
         $stmt->execute(['id' => $this->id]);
         return $stmt->fetchColumn() ? true : false;
     }
+
+    public function get_username_by_id(int $id): ?string
+    {
+        $sql = "SELECT username FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $data = $stmt->fetch();
+
+        return $data['username'] ?? null; 
+    }
 }

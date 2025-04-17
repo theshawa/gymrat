@@ -165,4 +165,17 @@ class MealPlan extends Model
             return $mealPlan;
         }, $items);
     }
+
+    public function get_all_titles(): array
+    {
+        $sql = "SELECT id, name FROM $this->table";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        $titles = [];
+        foreach ($items as $item) {
+            $titles[$item['id']] = $item['name'];
+        }
+        return $titles;
+    }
 }

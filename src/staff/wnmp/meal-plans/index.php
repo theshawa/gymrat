@@ -3,18 +3,34 @@
 require_once "../../../auth-guards.php";
 auth_required_guard("wnmp", "/staff/login");
 
+require_once "../../../db/models/MealPlan.php";
+require_once "../../../db/models/MealPlanRequest.php";
+require_once "../../../alerts/functions.php";
+
+
+$mealPlanRequestModel = new MealPlanRequest();
+try {
+    $hasUnreviewedRequests = $mealPlanRequestModel->has_unreviewed_requests();
+} catch (Exception $e) {
+    $_SESSION['error'] = "Failed to access meal plan requests: " . $e->getMessage();
+}
+
 $pageTitle = "Manage Meal Plans";
 $sidebarActive = 5;
 $menuBarConfig = [
     "title" => $pageTitle,
     "useLink" => true,
     "options" => [
+        [
+            "title" => "Meal Plan Requests", 
+            "href" => "/staff/wnmp/meal-plans/requests/index.php?filter=1",
+            "type" => "primary",
+            "setAttentionDot" => $hasUnreviewedRequests
+        ],
         ["title" => "Create Meal Plan", "href" => "/staff/wnmp/meal-plans/create/index.php", "type" => "secondary"]
     ]
 ];
 
-require_once "../../../db/models/MealPlan.php";
-require_once "../../../alerts/functions.php";
 
 $mealPlans = [];
 $mealPlanModel = new MealPlan();

@@ -14,11 +14,13 @@ $exercise = new Exercise();
 if (!isset($_SESSION['exercise'])) {
     try {
         $exercise->get_by_id($id);
+        $_SESSION['exercise'] = serialize($exercise);
     } catch (Exception $e) {
         redirect_with_error_alert("Failed to fetch exercise: " . $e->getMessage(), "/staff/wnmp");
     }
 } else {
-    $exercise = &$_SESSION['exercise'];
+    // $exercise = &$_SESSION['exercise'];
+    $exercise = unserialize($_SESSION['exercise']);
 }
 
 $menuBarConfig = [
@@ -46,7 +48,7 @@ auth_required_guard("wnmp", "/staff/login");
 <main>
     <div class="staff-base-container">
         <div class="form">
-            <form action="edit_exercise.php" method="POST">
+            <form action="edit_exercise.php" method="POST" enctype="multipart/form-data">
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
                     <input type="hidden" name="exercise_id" value="<?= $exercise->id ?>">
@@ -63,8 +65,11 @@ auth_required_guard("wnmp", "/staff/login");
                     </div>
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-difficulty-level">Difficulty Level</label></h2>
-                        <input type="text" id="edit-difficulty-level" name="exercise_difficulty_level"
-                            class="staff-input-primary staff-input-long" value="<?= $exercise->difficulty_level ?>">
+                        <select name="exercise_difficulty_level" id="edit-difficulty-level" class="staff-input-primary staff-input-long">
+                            <option value="Beginner" <?= $exercise->difficulty_level == 'Beginner' ? 'selected' : '' ?>>Beginner</option>
+                            <option value="Intermediate" <?= $exercise->difficulty_level == 'Intermediate' ? 'selected' : '' ?>>Intermediate</option>
+                            <option value="Advanced" <?= $exercise->difficulty_level == 'Advanced' ? 'selected' : '' ?>>Advanced</option>
+                        </select>
                     </div>
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-type">Type</label></h2>
@@ -81,6 +86,11 @@ auth_required_guard("wnmp", "/staff/login");
                         <textarea id="edit-description" name="exercise_description"
                             class="staff-textarea-primary staff-textarea-large"
                             placeholder="Enter a exercise description"><?= $exercise->description ?></textarea>
+                    </div>
+                    <div style="margin: 10px 0">
+                        <h2><label for="edit-image">Image</label></h2>
+                        <input type="file" id="edit-image" name="exercise_image" accept="image/*"
+                            class="staff-input-primary staff-input-long">
                     </div>
                     <div style="margin: 10px 0">
                         <h2><label for="edit-video_link">Video Link (Embeded link)</label></h2>

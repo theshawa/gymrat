@@ -13,13 +13,6 @@ if ($_POST['workout_id'] !== $_SESSION['workout_id']) {
 
 $id = htmlspecialchars($_POST['workout_id']);
 
-require_once "../../../../db/models/Workout.php";
-
-$workout = unserialize($_SESSION['workout']);
-
-if (!$workout) {
-    redirect_with_error_alert("Failed to load workout from session", "/staff/wnmp/workouts");
-}
 
 try {
     $workout->delete();

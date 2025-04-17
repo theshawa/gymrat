@@ -3,6 +3,9 @@
 session_start();
 
 require_once "../../../../alerts/functions.php";
+require_once "../../../../db/models/Exercise.php";
+require_once "../../../../uploads.php";
+
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirect_with_error_alert("Method not allowed", "/staff/wnmp/exercises");
@@ -12,10 +15,6 @@ if ($_POST['exercise_id'] !== $_SESSION['exercise_id']) {
     redirect_with_error_alert("ID mismatch occurred", "/staff/wnmp/exercises/edit?id=" . $_SESSION['exercise_id']);
     exit;
 }
-
-
-require_once "../../../../db/models/Exercise.php";
-require_once "../../../../uploads.php";
 
 
 $id = $_POST['exercise_id'];
@@ -39,11 +38,6 @@ if (empty($difficulty_level)) $errors[] = "Difficulty level is required.";
 if (empty($type)) $errors[] = "Type is required.";
 if (empty($equipment_needed)) $errors[] = "Equipment needed is required.";
 
-if (!empty($errors)) {
-    $error_message = implode(" ", $errors);
-    redirect_with_error_alert($error_message, "/staff/wnmp/exercises/edit?id=" . $id);
-    exit;
-}
 
 // image upload
 // echo '<pre>';
@@ -80,9 +74,16 @@ $exercise->muscle_group = $muscle_group;
 $exercise->difficulty_level = $difficulty_level;
 $exercise->type = $type;
 $exercise->equipment_needed = $equipment_needed;
+$exercise->image = $image ?? $exercise->image;
 
 
 $_SESSION['exercise'] = serialize($exercise);
+
+if (!empty($errors)) {
+    $error_message = implode(" ", $errors);
+    redirect_with_error_alert($error_message, "/staff/wnmp/exercises/edit?id=" . $id);
+    exit;
+}
 
 try {
     $exercise->save($image);

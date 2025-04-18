@@ -3,7 +3,7 @@
 $setFilter = $_GET['filter'] ?? 0;
 
 $pageTitle = "Manage Complaints";
-$sidebarActive = 4;
+$sidebarActive = 6;
 $menuBarConfig = [
     "title" => $pageTitle,
     "useLink" => true,

@@ -132,4 +132,13 @@ class Complaint extends Model
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
     }
+
+    public function has_unreviewed_complaints(): bool
+    {
+        $sql = "SELECT COUNT(*) FROM $this->table WHERE review_message IS NULL";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 $id = $_GET['id'] ?? null;
 
-$sidebarActive = 4;
+$sidebarActive = 6;
 
 require_once "../../../../db/models/Complaint.php";
 require_once "../../../../alerts/functions.php";
@@ -41,6 +41,14 @@ auth_required_guard("admin", "/staff/login");
                     Description
                 </h2>
                 <p><?= $complaint->description ?></p>
+                <h2 style="margin: 10px 0;">
+                    Type
+                </h2>
+                <p><?= $complaint->type ?></p>
+                <h2 style="margin: 10px 0;">
+                    Created On
+                </h2>
+                <p><?= $complaint->created_at->format('F j, Y, g:i A'); ?></p>
                 <div style="display: flex; flex-direction: row; margin-top: 20px; align-items: center; ">
                     <?php if($complaint->user_type === "trainer"): ?>
                         <h2>

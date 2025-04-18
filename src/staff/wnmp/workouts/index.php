@@ -44,7 +44,7 @@ try {
 }
 
 $infoCardConfig = [
-    "showImage" => true,
+    "showImage" => false,
     "showExtend" => true,
     "extendTo" => "/staff/wnmp/workouts/view/index.php",
     "cards" => $workout,

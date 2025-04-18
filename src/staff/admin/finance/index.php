@@ -2,7 +2,7 @@
 
 $pageTitle = "Finance Overview";
 $pageStyles = ["./finance.css"];
-$sidebarActive = 5;
+$sidebarActive = 7;
 $menuBarConfig = [
     "title" => $pageTitle
 ];

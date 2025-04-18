@@ -1,7 +1,7 @@
 <?php
 
 $pageTitle = "Manage Staff Credentials";
-$sidebarActive = 3;
+$sidebarActive = 8;
 $menuBarConfig = [
     "title" => $pageTitle
 ];

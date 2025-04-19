@@ -2,7 +2,7 @@
 
 session_start();
 
-$id = &$_SESSION['equipment_id'];
+$id = $_SESSION['equipment_id'];
 
 require_once "../../../../db/models/Equipment.php";
 require_once "../../../../alerts/functions.php";
@@ -15,6 +15,8 @@ try {
     redirect_with_error_alert("Failed to fetch equipment: " . $e->getMessage(), "/staff/eq");
 }
 
-$_SESSION['equipment'] = $originalEquipment;
+$_SESSION['equipment'] = serialize($originalEquipment);
 
-redirect_with_success_alert("Revert Successful", "/staff/eq/equipments/edit?id=$id");
+header("Location: /staff/eq/equipments/edit/index.php?id=$id");
+exit();
+?>

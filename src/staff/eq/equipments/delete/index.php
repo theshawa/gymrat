@@ -16,7 +16,7 @@ $menuBarConfig = [
 
 require_once "../../pageconfig.php";
 
-$pageConfig['styles'][] = "../equipments.css";
+$pageConfig['styles'][] = "../equipment.css";
 
 require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
@@ -33,7 +33,7 @@ auth_required_guard("eq", "/staff/login");
                 <input type="hidden" name="equipment_id" value="<?= $id ?>">
                 <div class="staff-record-delete-div">
                     <h2>Are you sure you want to delete this equipment?</h2>
-                    <p>This action cannot be undone.</p>
+                    <p>This action can't be undone.</p>
                     <button type="submit">Delete</button>
                 </div>
             </form>

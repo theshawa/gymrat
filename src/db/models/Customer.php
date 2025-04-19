@@ -192,4 +192,24 @@ class Customer extends Model
         }, $data);
         return $users;
     }
+
+    public function count_customers_by_trainer(int $trainer_id): int
+    {
+        $sql = "SELECT COUNT(*) AS customer_count FROM $this->table WHERE trainer = :trainer_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['trainer_id' => $trainer_id]);
+        $data = $stmt->fetch();
+
+        return $data['customer_count'] ?? 0;
+    }
+
+    public function __sleep()
+    {
+        return ['id', 'fname', 'lname', 'email', 'password', 'phone', 'avatar', 'created_at', 'updated_at', 'onboarded', 'membership_plan', 'membership_plan_activated_at', 'trainer', 'workout', 'meal_plan'];
+    }
+
+    public function __wakeup()
+    {
+        $this->conn = Database::get_conn();
+    }
 }

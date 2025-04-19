@@ -52,7 +52,7 @@ $setComplaintsNotification = $complaintModel->has_unreviewed_complaints();
                     <h1>Complaints</h1>
                 </a>
                 <div class="dashboard-tab-small dashboard-layout-primary">
-                    <h1>Customer Support</h1>
+                    <h1>Staff Credentials</h1>
                 </div>
                 <a href="/staff/admin/rats/index.php" class="dashboard-tab-small dashboard-layout-primary">
                     <h1>Rats</h1>

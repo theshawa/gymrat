@@ -3,11 +3,18 @@
 session_start();
 
 require_once "../../../../db/models/Equipment.php";
-require_once "../../../../alerts/functions.php";
 
-$originalEquipment = new Equipment();
-$originalEquipment->fill([]);
+$newEquipment=new Equipment();
 
-$_SESSION['equipment'] = $originalEquipment;
+try {
+    $newEquipment->fill([]);
+} catch (Exception $e) {
+    redirect_with_error_alert("Failed to fetch equipment: " . $e->getMessage(), "/staff/eq");
+    exit;
+}
 
-redirect_with_success_alert("Revert Successful", "/staff/eq/equipments/create");
+$_SESSION['equipment'] = serialize($newEquipment);
+
+redirect_with_success_alert("Equipment Reverted Successfully", "/staff/eq/equipments/create");
+exit;
+?>

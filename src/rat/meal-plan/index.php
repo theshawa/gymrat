@@ -42,11 +42,7 @@ foreach ($mealPlan->meals as $meal_ref) {
     try {
         $meal = new Meal();
         $meal->get_by_id($meal_ref['meal_id']);
-        $total_calories += $meal->calories * $meal_ref['amount'];
-        $meal = [
-            'meal' => $meal,
-            'amount' => $meal_ref['amount'],
-        ];
+        $total_calories += $meal->calories;
         if (array_key_exists($meal_ref['day'], $meals)) {
             $current_day_meals = $meals[$meal_ref['day']];
             if (array_key_exists($meal_ref['time'], $current_day_meals)) {
@@ -96,8 +92,8 @@ require_once "../includes/titlebar.php";
             <?php
             $total_day_calories = 0;
             foreach ($day_meals as $time => $meal_items) {
-                foreach ($meal_items as $item) {
-                    $total_day_calories += $item['meal']->calories * $item['amount'];
+                foreach ($meal_items as $meal) {
+                    $total_day_calories += $meal->calories;
                 }
             }
             ?>
@@ -117,17 +113,23 @@ require_once "../includes/titlebar.php";
                             <div class="meal-time">
                                 <h4><?= $time ?></h4>
                                 <div class="meal-items-list">
-                                    <?php foreach ($meals as $item): ?>
-                                        <?php $meal = $item['meal'] ?>
-                                        <?php $amount = $item['amount'] ?>
+                                    <?php foreach ($meals as $meal): ?>
                                         <div class="meal-item">
-                                            <img src="<?= empty($meal->image) ? get_file_url("default-images/default-meal.png") :  get_file_url($meal->image)
-                                                        ?>" alt="Image of meal item <?= $meal->name ?>" class="featured-image">
-                                            <div class="right">
-                                                <h4><?= $meal->name ?></h4>
-                                                <span class="amount"><?= $amount ?> <?= $amount === 1 ? $meal->get_measure_unit_single() : $meal->get_measure_unit_plural() ?></span>
-                                                <span class="calories"><?= $meal->calories ?> calories in <?= $meal->get_default_amount() ?> <?= $meal->get_default_amount() === 1 ? $meal->get_measure_unit_single() : $meal->get_measure_unit_plural() ?></span>
+                                            <div class="top">
+                                                <img src="<?= empty($meal->image) ? get_file_url("default-images/default-meal.png") :  get_file_url($meal->image)
+                                                            ?>" alt="Image of meal item <?= $meal->name ?>" class="featured-image">
+                                                <div class="right">
+                                                    <h4><?= $meal->name ?></h4>
+                                                    <div class="facts">
+                                                        <span class="fact"><?= $meal->calories ?> calories</span>
+                                                        <span class="fact"><?= $meal->proteins ?> proteins</span>
+                                                        <span class="fact"><?= $meal->fats ?> fat</span>
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <p class="paragraph small description">
+                                                <?= $meal->description ?>
+                                            </p>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
@@ -138,7 +140,7 @@ require_once "../includes/titlebar.php";
             </div>
         <?php endforeach; ?>
     </div>
-    <div class="description">
+    <div class="info">
         <h3>Notes for Customization</h3>
         <p class="paragraph">Adjust portion sizes to fit your activity level or calorie goals, space meals to match your schedule, and drink 2-3 liters of water daily. Swap ingredients of similar calories for variety while keeping the nutritional balance.</p>
     </div>

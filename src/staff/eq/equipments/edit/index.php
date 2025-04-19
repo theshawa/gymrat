@@ -15,14 +15,17 @@ if (!isset($_SESSION['equipment'])) {
     try {
         $equipment->get_by_id($id);
         $_SESSION['equipment'] = serialize($equipment);
+        $_SESSION['equipment'] = serialize($equipment);
     } catch (Exception $e) {
         redirect_with_error_alert("Failed to fetch equipment: " . $e->getMessage(), "/staff/eq");
     }
 } else {
     $equipment = unserialize($_SESSION['equipment']);
+    $equipment = unserialize($_SESSION['equipment']);
 }
 
 $menuBarConfig = [
+    "title" => "Edit " . htmlspecialchars($equipment->name),
     "title" => "Edit " . htmlspecialchars($equipment->name),
     "showBack" => true,
     "goBackTo" => "/staff/eq/equipments/view/index.php?id=$id",
@@ -36,6 +39,7 @@ $menuBarConfig = [
 require_once "../../pageconfig.php";
 
 $pageConfig['styles'][] = "../equipment.css";
+$pageConfig['styles'][] = "../equipment.css";
 
 require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
@@ -48,9 +52,11 @@ auth_required_guard("eq", "/staff/login");
     <div class="staff-base-container">
         <div class="form">
             <form action="edit_equipment.php" method="POST" enctype="multipart/form-data">
+            <form action="edit_equipment.php" method="POST" enctype="multipart/form-data">
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
                     <input type="hidden" name="equipment_id" value="<?= $equipment->id ?>">
+
 
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-title">Equipment Name</label></h2>
@@ -62,15 +68,34 @@ auth_required_guard("eq", "/staff/login");
                         <h2><label for="edit-category">Category</label></h2>
                         <input type="text" id="edit-category" name="equipment_category"
                             class="staff-input-primary staff-input-long" value="<?= htmlspecialchars($equipment->category) ?>">
+                            class="staff-input-primary staff-input-long" value="<?= htmlspecialchars($equipment->name) ?>">
                     </div>
+
+                    <div style="margin-bottom: 10px">
+                        <h2><label for="edit-category">Category</label></h2>
+                        <input type="text" id="edit-category" name="equipment_category"
+                            class="staff-input-primary staff-input-long" value="<?= htmlspecialchars($equipment->category) ?>">
+                    </div>
+
 
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-quantity">Quantity</label></h2>
                         <input type="number" id="edit-quantity" name="equipment_quantity"
                             class="staff-input-primary staff-input-long" value="<?= htmlspecialchars($equipment->quantity) ?>">
+                        <h2><label for="edit-quantity">Quantity</label></h2>
+                        <input type="number" id="edit-quantity" name="equipment_quantity"
+                            class="staff-input-primary staff-input-long" value="<?= htmlspecialchars($equipment->quantity) ?>">
                     </div>
 
+
                     <div style="margin-bottom: 10px">
+                        <h2><label for="edit-status">Status</label></h2>
+                        <select name="equipment_status" id="edit-status" class="staff-input-primary staff-input-long">
+                            <option value="Available" <?= $equipment->status == 'Available' ? 'selected' : '' ?>>Available</option>
+                            <option value="In Use" <?= $equipment->status == 'In Use' ? 'selected' : '' ?>>In Use</option>
+                            <option value="Maintenance" <?= $equipment->status == 'Maintenance' ? 'selected' : '' ?>>Maintenance</option>
+                            <option value="Out of Order" <?= $equipment->status == 'Out of Order' ? 'selected' : '' ?>>Out of Order</option>
+                        </select>
                         <h2><label for="edit-status">Status</label></h2>
                         <select name="equipment_status" id="edit-status" class="staff-input-primary staff-input-long">
                             <option value="Available" <?= $equipment->status == 'Available' ? 'selected' : '' ?>>Available</option>
@@ -81,9 +106,12 @@ auth_required_guard("eq", "/staff/login");
                     </div>
 
                     <div style="margin: 10px 0">
+
+                    <div style="margin: 10px 0">
                         <h2><label for="edit-description">Description</label></h2>
                         <textarea id="edit-description" name="equipment_description"
                             class="staff-textarea-primary staff-textarea-large"
+                            placeholder="Enter equipment description"><?= htmlspecialchars($equipment->description) ?></textarea>
                             placeholder="Enter equipment description"><?= htmlspecialchars($equipment->description) ?></textarea>
                     </div>
 
@@ -91,7 +119,13 @@ auth_required_guard("eq", "/staff/login");
                         <h2><label for="edit-image">Image</label></h2>
                         <input type="file" id="edit-image" name="equipment_image" accept="image/*"
                             class="staff-input-primary staff-input-long">
+
+                    <div style="margin: 10px 0">
+                        <h2><label for="edit-image">Image</label></h2>
+                        <input type="file" id="edit-image" name="equipment_image" accept="image/*"
+                            class="staff-input-primary staff-input-long">
                     </div>
+
 
                 </div>
             </form>
@@ -100,3 +134,4 @@ auth_required_guard("eq", "/staff/login");
 </main>
 
 <?php require_once "../../../includes/footer.php"; ?>
+

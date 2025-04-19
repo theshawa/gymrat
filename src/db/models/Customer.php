@@ -170,4 +170,18 @@ class Customer extends Model
 
         return $data['username'] ?? null; 
     }
+
+    public function get_all()
+    {
+        $sql = "SELECT * FROM $this->table";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll();
+        $users = array_map(function ($user) {
+            $new_user = new Customer();
+            $new_user->fill($user);
+            return $new_user;
+        }, $data);
+        return $users;
+    }
 }

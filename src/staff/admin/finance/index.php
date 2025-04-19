@@ -51,6 +51,7 @@ $membershipPlans = [
 ];
 
 require_once "../pageconfig.php";
+require_once "../../../alerts/functions.php";
 require_once "../../includes/header.php";
 require_once "../../includes/sidebar.php";
 require_once "../../../auth-guards.php";

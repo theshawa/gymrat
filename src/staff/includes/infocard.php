@@ -1,7 +1,9 @@
 <?php
 
 $defaultName = "";
+$concatName = false;
 $showImage = false;
+$useAvatar = false;
 $showExtend = false;
 $showCreatedAt = true;
 $extendTo = null;
@@ -12,30 +14,16 @@ $uploadsPath = "../../../uploads/";
 $defaultImage = "default-images/infoCardDefault.png";
 
 if (isset($infoCardConfig)) {
-    if (isset($infoCardConfig['defaultName'])) {
-        $defaultName = $infoCardConfig['defaultName'];
-    }
-    if (isset($infoCardConfig['showImage'])) {
-        $showImage = $infoCardConfig['showImage'];
-    }
-    if (isset($infoCardConfig['showExtend'])) {
-        $showExtend = $infoCardConfig['showExtend'];
-    }
-    if (isset($infoCardConfig['extendTo'])) {
-        $extendTo = $infoCardConfig['extendTo'];
-    }
-    if (isset($infoCardConfig['cards'])) {
-        $cards = $infoCardConfig['cards'];
-    }
-    if (isset($infoCardConfig['gridColumns'])) {
-        $gridColumns = $infoCardConfig['gridColumns'];
-    }
-    if (isset($infoCardConfig['isCardInList'])) {
-        $isCardInList = $infoCardConfig['isCardInList'];
-    }
-    if (isset($infoCardConfig['showCreatedAt'])) {
-        $showCreatedAt = $infoCardConfig['showCreatedAt'];
-    }
+    $defaultName = $infoCardConfig['defaultName'] ?? $defaultName;
+    $showImage = $infoCardConfig['showImage'] ?? $showImage;
+    $showExtend = $infoCardConfig['showExtend'] ?? $showExtend;
+    $extendTo = $infoCardConfig['extendTo'] ?? $extendTo;
+    $cards = $infoCardConfig['cards'] ?? $cards;
+    $gridColumns = $infoCardConfig['gridColumns'] ?? $gridColumns;
+    $isCardInList = $infoCardConfig['isCardInList'] ?? $isCardInList;
+    $showCreatedAt = $infoCardConfig['showCreatedAt'] ?? $showCreatedAt;
+    $concatName = $infoCardConfig['concatName'] ?? $concatName;
+    $useAvatar = $infoCardConfig['useAvatar'] ?? $useAvatar;
 }
 
 if (!$isCardInList) {
@@ -52,9 +40,11 @@ if (!$isCardInList) {
 
         $newCards[] = [
             "id" => $card->id,
-            "title" => $card->name ?? $defaultName . " #" . $card->id,
+            "title" => ($concatName) ?
+                $card->fname . " " . $card->lname : 
+                $card->name ?? $defaultName . " #" . $card->id,
             "description" => $card->description ?? "",
-            "image" => $card->image ?? null,
+            "image" => ($useAvatar) ? $card->avatar : ( $card->image ?? null ),
             "created_at" => $card->created_at ? $card->created_at->format('Y-m-d H:i:s') : null
         ];
     }
@@ -65,11 +55,11 @@ if (!$isCardInList) {
 
 <div class="info-card-grid">
     <?php foreach ($cards as $card): ?>
-        <div class="info-card">
+        <a class="info-card" href="<?= $extendTo ?>?id=<?= $card['id'] ?>">
             <?php if ($showImage): ?>
                 <div>
-                    <?php if ($card['image']): ?>
-                        <img src="<?= $uploadsPath . $card['image'] ?>" alt="<?= $card['title'] ?>" class="info-card-img">
+                    <?php if ($showImage && $card["image"]): ?>
+                        <img src="<?= $uploadsPath . $card["image"] ?>" alt="<?= $card['title'] ?>" class="info-card-img">
                     <?php else: ?>
                         <img src="<?= $uploadsPath . $defaultImage ?>" alt="Default" class="info-card-img">
                     <?php endif; ?>
@@ -79,14 +69,14 @@ if (!$isCardInList) {
                 <h2><?= ($card['title'] ?? $card['name']) ?></h2>
                 <p><?= (isset($card['created_at']) && ($showCreatedAt)) ? "[ " . $card['created_at'] . " ] " : "" ?><?= $card['description'] ?></p>
                 <?php if ($showExtend): ?>
-                    <div class="info-card-ext">
+                    <!-- <div class="info-card-ext">
                         <a href="<?= $extendTo ?>?id=<?= $card['id'] ?>">
                             View More
                         </a>
-                    </div>
+                    </div> -->
                 <?php endif; ?>
             </div>
-        </div>
+        </a>
     <?php endforeach; ?>
 </div>
 

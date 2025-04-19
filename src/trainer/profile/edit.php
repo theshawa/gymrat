@@ -3,13 +3,20 @@
 require_once "../../auth-guards.php";
 if (auth_required_guard("trainer", "/trainer/login")) exit;
 
+require_once "../../db/models/Trainer.php";
+
+$trainer = new Trainer();
+$trainer->fill([
+    "id" => $_SESSION['auth']['id']
+]);
+try {
+    $trainer->get_by_id();
+    $trainer = (array)$trainer;
+} catch (PDOException $e) {
+    die("Failed to get trainer data due to error: " . $e->getMessage());
+}
+
 // Initialize trainer data with default values
-$trainer = array_merge([
-    'name' => '',
-    'username' => '',
-    'bio' => '',
-    'avatar' => null
-], $_SESSION['auth'] ?? []);
 
 $pageConfig = [
     "title" => "Edit Profile",
@@ -52,6 +59,11 @@ require_once "../includes/titlebar.php";
         <div class="form-field">
             <label for="bio">Bio</label>
             <textarea id="bio" name="bio" rows="4"><?= htmlspecialchars($trainer['bio']) ?></textarea>
+        </div>
+
+        <div class="form-field">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" pattern="(\+94|0)[0-9]{9}" value="<?= htmlspecialchars($trainer['phone']) ?>" placeholder="+94XXXXXXXXX" required>
         </div>
 
         <button type="submit" class="external-link btn">SAVE</button>

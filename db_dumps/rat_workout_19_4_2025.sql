@@ -490,26 +490,8 @@ CREATE TABLE `trainer_ratings` (
 --
 
 INSERT INTO `trainer_ratings` (`id`, `trainer_id`, `customer_id`, `rating`, `review`, `created_at`) VALUES
-(1, 1, 1, 5, 'Excellent trainer! Really helped me achieve my fitness goals.Excellent trainer! Really helped me achieve my fitness goals.Excellent trainer! Really helped me achieve my fitness goals.Excellent trainer! Really helped me achieve my fitness goals.Excellent trainer! Really helped me achieve my fitness goals.Excellent trainer! Really helped me achieve my fitness goals.', '2025-03-16 05:35:56'),
-(2, 1, 4, 5, 'The best trainer I have ever had! Very knowledgeable and motivating.', '2025-03-31 05:35:56'),
-(3, 1, 6, 5, 'Helped me transform my fitness level completely. I can\'t thank them enough.', '2025-04-10 05:35:56'),
-(4, 1, 3, 5, 'Very professional and knowledgeable about proper form and technique.', '2025-03-26 05:35:56'),
-(5, 1, 11, 5, 'Amazing trainer! Tailored workouts to my specific needs and goals.', '2025-02-14 05:35:56'),
-(6, 1, 14, 5, 'Always punctual and prepared for our sessions. Highly recommended!', '2025-03-01 05:35:56'),
-(7, 1, 16, 5, 'I\'ve seen incredible results since working with this trainer.', '2025-02-22 05:35:56'),
-(8, 1, 18, 5, 'Extremely knowledgeable about nutrition alongside fitness training.', '2025-03-08 05:35:56'),
-(9, 1, 19, 5, 'Changed my perspective on fitness entirely. So grateful!', '2025-03-24 05:35:56'),
-(10, 1, 21, 5, 'Outstanding approach to balancing strength and flexibility training.', '2025-04-03 05:35:56'),
-(11, 1, 2, 4, 'Good knowledge and motivating sessions. Could improve on scheduling flexibility.', '2025-03-21 05:35:56'),
-(12, 1, 5, 4, 'Great sessions and helpful advice on nutrition. Sometimes runs a bit over time.', '2025-04-05 05:35:56'),
-(13, 1, 8, 4, 'Very effective workouts but occasionally late to sessions.', '2025-03-13 05:35:56'),
-(14, 1, 10, 4, 'Really knows their stuff! Just wish the gym had better equipment.', '2025-03-19 05:35:56'),
-(15, 1, 13, 4, 'Excellent training program, though sometimes communication could be better.', '2025-03-06 05:35:56'),
-(16, 1, 7, 3, 'Decent trainer but seems distracted at times during our sessions.', '2025-03-11 05:35:56'),
-(17, 1, 15, 3, 'Knowledgeable but sometimes doesn\'t listen to my concerns about certain exercises.', '2025-02-26 05:35:56'),
-(18, 1, 9, 2, 'Often reschedules at the last minute. When we do train, it\'s good though.', '2025-02-19 05:35:56'),
-(19, 1, 17, 1, 'Frequently late to sessions and doesn\'t seem prepared with a workout plan.', '2025-03-03 05:35:56'),
-(20, 1, 20, 1, 'Not attentive to form corrections which led to minor injury. Disappointed.', '2025-03-28 05:35:56');
+(1, 1, 44, 4, 'sdf', '2025-04-19 19:16:47'),
+(2, 1, 44, 3, 'sdsdf sdf ds', '2025-04-19 19:16:56');
 
 -- --------------------------------------------------------
 
@@ -629,48 +611,6 @@ CREATE TABLE `workout_session_keys` (
 
 INSERT INTO `workout_session_keys` (`session_key`, `created_at`) VALUES
 ('gymrat_wsk_1bf2a3f5b41ae0ba569f88d9cb86ecdf970fb6399ae63dfb500341d695d1f4d4', '2025-04-19 19:11:31');
-
-
---
--- Table structure for table `customer_progress`
---
-
-CREATE TABLE `customer_progress` (
-  `id` int NOT NULL,
-  `customer_id` int NOT NULL,
-  `trainer_id` int NOT NULL,
-  `message` text NOT NULL,
-  `performance_type` enum('well_done','try_harder') NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `customer_progress`
---
-
-INSERT INTO `customer_progress` (`id`, `customer_id`, `trainer_id`, `message`, `performance_type`, `created_at`) VALUES
-(1, 1, 1, 'You need to focus more on your diet.', 'try_harder', '2024-11-14 10:00:00'),
-(2, 1, 1, 'Great job on your flexibility exercises.', 'well_done', '2024-11-15 10:00:00'),
-(3, 1, 1, 'You missed your workout today.', 'try_harder', '2024-11-16 10:00:00'),
-(4, 1, 1, 'Your stamina is improving.', 'well_done', '2024-11-17 10:00:00'),
-(5, 1, 1, 'Try to maintain a consistent workout schedule.', 'try_harder', '2024-11-18 10:00:00'),
-(6, 1, 1, 'Excellent performance in today\'s session.', 'well_done', '2024-11-19 10:00:00'),
-(7, 1, 1, 'You need to work on your balance.', 'try_harder', '2024-11-20 10:00:00'),
-(8, 1, 1, 'Great improvement in your strength training.', 'well_done', '2024-11-21 10:00:00'),
-(9, 1, 1, 'You skipped your warm-up exercises.', 'try_harder', '2024-11-22 10:00:00'),
-(10, 2, 1, 'Good progress with your weight lifting routine.', 'well_done', '2024-11-14 11:00:00'),
-(11, 2, 1, 'Need to increase your water intake.', 'try_harder', '2024-11-16 11:00:00'),
-(12, 2, 1, 'Excellent form on your squats today.', 'well_done', '2024-11-18 11:00:00'),
-(13, 3, 1, 'Great progress with your cardio endurance.', 'well_done', '2024-11-15 09:00:00'),
-(14, 3, 1, 'You need to work on your stretching routine.', 'try_harder', '2024-11-17 09:00:00'),
-(15, 3, 1, 'Impressive improvement in your push-ups.', 'well_done', '2024-11-19 09:00:00'),
-(16, 2, 1, 'Your V shape is now getting sharpened. Keep going champ!', 'well_done', '2025-04-13 14:13:18'),
-(17, 6, 1, 'Ubawa hadanna bah matto!', 'try_harder', '2025-04-13 14:14:13'),
-(18, 6, 1, 'Dhamya ekata enna kollo!', 'well_done', '2025-04-13 14:14:27'),
-(19, 6, 1, 'Maru bn!', 'well_done', '2025-04-13 14:29:26'),
-(20, 1, 1, 'ANe shoi!', 'well_done', '2025-04-15 06:54:52');
-
--- --------------------------------------------------------
 
 --
 -- Indexes for dumped tables
@@ -1008,21 +948,6 @@ ALTER TABLE `workout_sessions`
   ADD CONSTRAINT `WorkoutSession_User` FOREIGN KEY (`user`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `WorkoutSession_Workout` FOREIGN KEY (`workout`) REFERENCES `workouts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
-
-
---
--- Indexes for table `customer_progress`
---
-ALTER TABLE `customer_progress`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_progress_customer_id` (`customer_id`),
-  ADD KEY `customer_progress_trainer_id` (`trainer_id`);
-
---
--- AUTO_INCREMENT for table `customer_progress`
---
-ALTER TABLE `customer_progress`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

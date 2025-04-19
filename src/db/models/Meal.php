@@ -10,9 +10,10 @@ class Meal extends Model
     public string $name;
     public string $description;
     public string $image;
-    public int $calories;
-    public int $proteins;
-    public int $fats;
+    public float $calories;
+    public float $proteins;
+    public float $fats;
+    public string $measure_unit;
     public DateTime $created_at;
     public DateTime $updated_at;
 
@@ -30,6 +31,7 @@ class Meal extends Model
         $this->calories = $data['calories'] ?? 0;
         $this->proteins = $data['proteins'] ?? 0;
         $this->fats = $data['fats'] ?? 0;
+        $this->measure_unit = $data['measure_unit'] ?? "g";
         $this->created_at = new DateTime($data['created_at'] ?? '');
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
     }
@@ -61,7 +63,7 @@ class Meal extends Model
 
     public function create()
     {
-        $sql = "INSERT INTO $this->table (name, description, image, calories, proteins, fats, created_at) VALUES (:name, :description, :image, :calories, :proteins, :fats, CURRENT_TIMESTAMP)";
+        $sql = "INSERT INTO $this->table (name, description, image, calories, proteins, fats, measure_unit, created_at) VALUES (:name, :description, :image, :calories, :proteins, :fats,:measure_unit, CURRENT_TIMESTAMP)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'name' => $this->name,
@@ -70,12 +72,14 @@ class Meal extends Model
             'calories' => $this->calories,
             'proteins' => $this->proteins,
             'fats' => $this->fats,
+            'measure_unit' => $this->measure_unit,
         ]);
+        $this->id = $this->conn->lastInsertId();
     }
 
     public function update()
     {
-        $sql = "UPDATE $this->table SET name = :name, description = :description, image = :image, calories = :calories, proteins = :proteins, fats = :fats, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
+        $sql = "UPDATE $this->table SET name=:name, description=:description, image=:image, calories=:calories, proteins=:proteins, fats=:fats, measure_unit=:measure_unit, updated_at=CURRENT_TIMESTAMP WHERE id=:id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'id' => $this->id,
@@ -85,6 +89,7 @@ class Meal extends Model
             'calories' => $this->calories,
             'proteins' => $this->proteins,
             'fats' => $this->fats,
+            'measure_unit' => $this->measure_unit,
         ]);
     }
 
@@ -129,5 +134,78 @@ class Meal extends Model
         }
 
         return $meals;
+    }
+
+    function get_measure_unit_single(): string
+    {
+        $titles = [
+            'g' => 'gram',
+            'kg' => 'kilogram',
+            'oz' => 'ounce',
+            'lb' => 'pound',
+            'ml' => 'milliliter',
+            'l' => 'liter',
+            'fl oz' => 'fluid ounce',
+            'cup' => 'cup',
+            'tbsp' => 'tablespoon',
+            'tsp' => 'teaspoon',
+            'piece' => 'piece',
+            'slice' => 'slice',
+            'can' => 'can',
+            'scoop' => 'scoop',
+            'serving' => 'serving',
+            'pack' => 'pack',
+            'bottle' => 'bottle'
+
+        ];
+        return $titles[$this->measure_unit] ?? $this->measure_unit;
+    }
+
+    function get_measure_unit_plural(): string
+    {
+        $titles = [
+            'g' => 'grams',
+            'kg' => 'kilograms',
+            'oz' => 'ounces',
+            'lb' => 'pounds',
+            'ml' => 'milliliters',
+            'l' => 'liters',
+            'fl oz' => 'fluid ounces',
+            'cup' => 'cups',
+            'tbsp' => 'tablespoons',
+            'tsp' => 'teaspoons',
+            'piece' => 'pieces',
+            'slice' => 'slices',
+            'can' => 'cans',
+            'scoop' => 'scoops',
+            'serving' => 'servings',
+            'pack' => 'packs',
+            'bottle' => 'bottles'
+        ];
+        return $titles[$this->measure_unit] ?? $this->measure_unit;
+    }
+
+    function get_default_amount()
+    {
+        $default_amounts = [
+            'g' => 100,
+            'kg' => 1,
+            'oz' => 3.5,
+            'lb' => 2.2,
+            'ml' => 100,
+            'l' => 1,
+            'fl oz' => 3.4,
+            'cup' => 1,
+            'tbsp' => 1,
+            'tsp' => 1,
+            'piece' => 1,
+            'slice' => 1,
+            'can' => 1,
+            'scoop' => 1,
+            'serving' => 1,
+            'pack' => 1,
+            'bottle' => 1
+        ];
+        return $default_amounts[$this->measure_unit] ?? 0;
     }
 }

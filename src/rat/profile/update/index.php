@@ -56,7 +56,7 @@ require_once "../../includes/titlebar.php";
             </div>
             <div class="form-field">
                 <label for="fname">Contact no.</label>
-                <input required class="input" type="tel" pattern="\d{10}" placeholder="<?= $user->phone ?>" name="phone" value="<?= $user->phone ?>">
+                <input required class="input" type="tel" pattern="(\+94|0)[0-9]{9}" placeholder="<?= $user->phone ?>" name="phone" value="<?= $user->phone ?>">
             </div>
             <button class="btn">Save</button>
         </form>

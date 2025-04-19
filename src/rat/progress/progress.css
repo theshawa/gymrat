@@ -141,12 +141,12 @@
   font-size: 10px;
 }
 
-.log-record .bottom .status.good {
+.log-record .bottom .status.well_done {
   color: var(--color-green-light);
   background-color: rgba(66, 179, 77, 0.1);
 }
 
-.log-record .bottom .status.bad {
+.log-record .bottom .status.try_harder {
   color: var(--color-red-light);
   background-color: rgba(240, 80, 80, 0.1);
 }

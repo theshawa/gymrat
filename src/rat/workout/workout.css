@@ -1,58 +1,13 @@
-.category {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.category .category-title {
-  display: flex;
-  align-items: center;
-  background-color: var(--color-zinc-900);
-  border-radius: 10px;
-  padding: 10px 16px;
-  text-align: start;
-}
-
-.category .category-title h3 {
-  flex: 1;
-  color: var(--color-zinc-300);
-}
-
-.category .category-title .right {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.category.hidden .cavet {
-  transform: rotate(180deg);
-}
-
-.category .category-title .time {
-  font-size: 13px;
-  color: var(--color-zinc-400);
-  font-weight: 500;
-}
-
-.exercises-wrapper {
-  overflow: hidden;
-}
-
-.category.hidden .exercises-wrapper {
-  height: 0;
-}
-
 .exercises {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding-bottom: 10px;
+  margin-top: 20px;
 }
 
 .exercise {
   display: flex;
-  align-items: center;
+  align-items: start;
   gap: 20px;
   border: 1px solid var(--color-zinc-900);
   border-radius: 10px;
@@ -71,18 +26,25 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
-.exercise .right h4 {
+.exercise h4 {
   font-size: 16px;
   font-weight: 500;
 }
 
-.exercise .right .bottom {
-  display: flex;
-  gap: 10px;
-  color: var(--color-zinc-500);
+.exercise .right .count {
+  font-size: 16px;
+  color: var(--color-zinc-400);
+  padding: 3px 7px;
+  background-color: var(--color-zinc-900);
+  border-radius: 20px;
+}
+
+.exercise .right .equipment {
+  font-size: 13px;
+  color: var(--color-zinc-400);
 }
 
 .btn {
@@ -107,4 +69,14 @@
 
 .btn.success {
   background-color: var(--color-green);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 30px;
+  padding: 16px;
+  border: 1px solid var(--color-zinc-900);
+  border-radius: 10px;
 }

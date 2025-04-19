@@ -1,0 +1,30 @@
+.support {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid var(--color-zinc-900);
+  border-radius: 16px;
+  margin-bottom: 20px;
+  align-items: start;
+}
+
+.support h2 {
+  margin-bottom: 5px;
+}
+
+.support-link {
+  color: var(--color-violet-50);
+  background-color: var(--color-violet-600);
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.support .inline {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}

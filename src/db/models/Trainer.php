@@ -15,8 +15,7 @@ class Trainer extends Model
     public string $password = "";
     public null|array|string $avatar = null;
     public string $bio = "";
-    public float $rating = 0;
-    public int $review_count = 0;
+    public string $phone = "";
 
     public function fill(array $data)
     {
@@ -27,8 +26,7 @@ class Trainer extends Model
         $this->password = $data['password'] ?? "";
         $this->avatar = $data['avatar'] ?? null;
         $this->bio = $data['bio'] ?? "";
-        $this->rating = isset($data['rating']) ? (float) $data['rating'] : 0.0;
-        $this->review_count = isset($data['review_count']) ? (int) $data['review_count'] : 0;
+        $this->phone = $data['phone'] ?? "";
     }
 
     public function save()
@@ -43,9 +41,9 @@ class Trainer extends Model
     protected function create()
     {
         $sql = "INSERT INTO $this->table (
-            fname,lname, username, password, bio, avatar, rating, review_count
+            fname,lname, username, password, bio, avatar, phone
         ) VALUES (
-            :fname, :lname, :username, :password, :bio, :avatar, :rating, :review_count
+            :fname, :lname, :username, :password, :bio, :avatar, :phone
         )";
 
         $stmt = $this->conn->prepare($sql);
@@ -56,8 +54,7 @@ class Trainer extends Model
             'password' => password_hash($this->password, PASSWORD_DEFAULT),
             'bio' => $this->bio,
             'avatar' => $this->avatar,
-            'rating' => $this->rating,
-            'review_count' => $this->review_count
+            'phone' => $this->phone
         ]);
 
         $this->id = $this->conn->lastInsertId(); // Set ID for future updates
@@ -92,7 +89,8 @@ class Trainer extends Model
         fname = :fname,
         lname = :lname,
         bio = :bio,
-        avatar = :avatar
+        avatar = :avatar,
+        phone = :phone
     WHERE id = :id";
 
         $stmt = $this->conn->prepare($sql);
@@ -101,7 +99,8 @@ class Trainer extends Model
             'fname' => $this->fname,
             'lname' => $this->lname,
             'bio' => $this->bio,
-            'avatar' => $this->avatar
+            'avatar' => $this->avatar,
+            'phone' => $this->phone
         ]);
     }
 
@@ -148,6 +147,6 @@ class Trainer extends Model
         $stmt->execute(['id' => $id]);
         $data = $stmt->fetch();
 
-        return $data['username'] ?? null; 
+        return $data['username'] ?? null;
     }
 }

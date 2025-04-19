@@ -2,8 +2,6 @@
 require_once "../../auth-guards.php";
 if (auth_required_guard("rat", "/rat/login")) exit;
 
-
-
 require_once "../../db/models/Customer.php";
 $customer = new Customer();
 $customer->fill([
@@ -70,7 +68,7 @@ require_once "../includes/titlebar.php";
         <p class="paragraph small">RATING</p>
         <h2><?= number_format($rating['avg_rating'], 1) ?></h2>
         <div class="stars" style="--rating: <?= $rating['avg_rating'] ?>;" title="Rating of this trainer is <?= $rating['avg_rating'] ?> out of 5."></div>
-        <p class="paragraph small"><?= $rating['review_count'] === 0 ? "No" : $rating['review_count'] ?> reviews</p>
+        <!-- <p class="paragraph small"><?= $rating['review_count'] === 0 ? "No" : $rating['review_count'] ?> reviews</p> -->
     </div>
     <a href="./rate" class="btn">Rate Trainer</a>
 </main>

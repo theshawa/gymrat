@@ -32,10 +32,10 @@ if (empty($mealPlan->meals)) {
 
 $total_calories = 0;
 
-$meals = [];
 
 require_once "../../db/models/Meal.php";
 
+$meals = [];
 $total_calories = 0;
 
 foreach ($mealPlan->meals as $meal_ref) {

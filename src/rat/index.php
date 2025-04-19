@@ -155,7 +155,7 @@ require_once "./includes/titlebar.php";
             <?php if ($remaining_days < 8): ?>
                 <span class="sub-text">Your plan will expire wihtin <?= $remaining_days ?> days!</span>
             <?php else: ?>
-                <span class="sub-text"><?= $remaining_days ?> days remaning</span>
+                <span class="sub-text"><?= $remaining_days ?> days remaining</span>
             <?php endif; ?>
             <span>
                 My<br />
@@ -164,8 +164,8 @@ require_once "./includes/titlebar.php";
         </a>
         <a href="/rat/support/index.php" class="tile">
             <span>
-                Support<br />
-                Contact
+                Contact<br />
+                Support
             </span>
         </a>
     </div>

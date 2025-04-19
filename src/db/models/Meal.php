@@ -74,7 +74,7 @@ class Meal extends Model
 
     public function create()
     {
-        $sql = "INSERT INTO $this->table (name, description, image, calories, proteins, fats, created_at) VALUES (:name, :description, :image, :calories, :proteins, :fats, CURRENT_TIMESTAMP)";
+        $sql = "INSERT INTO $this->table (name, description, image, calories, proteins, fats, measure_unit, created_at) VALUES (:name, :description, :image, :calories, :proteins, :fats,:measure_unit, CURRENT_TIMESTAMP)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'name' => $this->name,
@@ -83,12 +83,14 @@ class Meal extends Model
             'calories' => $this->calories,
             'proteins' => $this->proteins,
             'fats' => $this->fats,
+            'measure_unit' => $this->measure_unit,
         ]);
+        $this->id = $this->conn->lastInsertId();
     }
 
     public function update()
     {
-        $sql = "UPDATE $this->table SET name = :name, description = :description, image = :image, calories = :calories, proteins = :proteins, fats = :fats, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
+        $sql = "UPDATE $this->table SET name=:name, description=:description, image=:image, calories=:calories, proteins=:proteins, fats=:fats, measure_unit=:measure_unit, updated_at=CURRENT_TIMESTAMP WHERE id=:id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'id' => $this->id,
@@ -98,6 +100,7 @@ class Meal extends Model
             'calories' => $this->calories,
             'proteins' => $this->proteins,
             'fats' => $this->fats,
+            'measure_unit' => $this->measure_unit,
         ]);
     }
 

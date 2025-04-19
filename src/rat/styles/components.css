@@ -350,6 +350,7 @@ main {
 .subnavbar {
   display: flex;
   gap: 6px;
+  overflow: auto;
 }
 
 .subnavbar-link {

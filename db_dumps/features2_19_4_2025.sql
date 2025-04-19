@@ -364,9 +364,10 @@ CREATE TABLE `meals` (
   `description` text,
   `name` varchar(255) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `calories` float DEFAULT NULL,
-  `proteins` float DEFAULT NULL,
-  `fats` float DEFAULT NULL,
+  `calories` decimal(10,0) DEFAULT NULL,
+  `proteins` decimal(10,0) DEFAULT NULL,
+  `fats` decimal(10,0) DEFAULT NULL,
+  `measure_unit` varchar(50) NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

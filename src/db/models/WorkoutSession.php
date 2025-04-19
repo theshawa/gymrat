@@ -11,6 +11,7 @@ class WorkoutSession extends Model
     public int $workout;
     public DateTime $started_at;
     public DateTime|null $ended_at;
+    public ?int $day;
 
     public function fill(array $data)
     {
@@ -19,16 +20,18 @@ class WorkoutSession extends Model
         $this->workout = $data['workout'] ?? 0;
         $this->started_at = new DateTime($data['started_at'] ?? '');
         $this->ended_at = isset($data['ended_at']) ? new DateTime($data['ended_at']) : null;
+        $this->day = $data['day'] ?? null;
     }
 
     public function create()
     {
-        $sql = "INSERT INTO $this->table (session_key, user, workout) VALUES (:session_key, :user, :workout)";
+        $sql = "INSERT INTO $this->table (session_key, user, workout, day) VALUES (:session_key, :user, :workout, :day)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'session_key' => $this->session_key,
             'user' => $this->user,
             'workout' => $this->workout,
+            'day' => $this->day,
         ]);
     }
 
@@ -127,6 +130,20 @@ class WorkoutSession extends Model
             $stmt->execute([
                 'user' => $user,
             ]);
+        }
+    }
+
+    public function get_last_session()
+    {
+        $sql = "SELECT * FROM $this->table WHERE user=:user AND workout=:workout ORDER BY started_at DESC LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'user' => $this->user,
+            'workout' => $this->workout,
+        ]);
+        $data = $stmt->fetch();
+        if ($data) {
+            $this->fill($data);
         }
     }
 }

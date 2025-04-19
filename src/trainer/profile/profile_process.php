@@ -44,12 +44,14 @@ try {
             $fname = htmlspecialchars($_POST['fname']);
             $lname = htmlspecialchars($_POST['lname']);
             $bio = htmlspecialchars($_POST['bio']);
+            $phone = htmlspecialchars($_POST['phone']);
 
             // Update trainer data
             $trainer->fname = $fname;
             $trainer->lname = $lname;
             // $trainer->username = $_POST['username'];
             $trainer->bio = $bio;
+            $trainer->phone = $phone;
 
             // Save changes to database
             $trainer->save();
@@ -58,6 +60,7 @@ try {
             $_SESSION['auth']['fname'] = $fname;
             $_SESSION['auth']['lname'] = $lname;
             $_SESSION['auth']['bio'] = $bio;
+            $_SESSION['auth']['phone'] = $phone;
 
             $_SESSION['message'] = "Profile updated successfully";
             break;
@@ -79,7 +82,6 @@ try {
 
     header('Location: index.php');
     exit();
-
 } catch (Exception $e) {
     $_SESSION['error'] = $e->getMessage();
     header('Location: index.php');

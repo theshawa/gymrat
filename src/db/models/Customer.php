@@ -19,6 +19,8 @@ class Customer extends Model
     public ?int $membership_plan;
     public DateTime|null $membership_plan_activated_at;
     public ?int $trainer;
+    public ?int $workout;
+    public ?int $meal_plan;
 
     public function fill(array $data)
     {
@@ -35,6 +37,8 @@ class Customer extends Model
         $this->onboarded = $data['onboarded'] ?? 0;
         $this->membership_plan = $data['membership_plan'] ?? null;
         $this->trainer = $data['trainer'] ?? null;
+        $this->workout = $data['workout'] ?? null;
+        $this->meal_plan = $data['meal_plan'] ?? null;
     }
 
     public function create()
@@ -69,7 +73,9 @@ class Customer extends Model
         membership_plan=:membership_plan, 
         updated_at=:updated_at,
         membership_plan_activated_at=:membership_plan_activated_at, 
-        trainer=:trainer
+        trainer=:trainer,
+        workout=:workout,
+        meal_plan=:meal_plan
         WHERE id=:id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
@@ -84,7 +90,9 @@ class Customer extends Model
             'membership_plan' => $this->membership_plan,
             'updated_at' => $this->updated_at->format("Y-m-d H:i:s"),
             'membership_plan_activated_at' => $this->membership_plan_activated_at ? $this->membership_plan_activated_at->format("Y-m-d H:i:s") : null,
-            'trainer' => $this->trainer
+            'trainer' => $this->trainer,
+            'workout' => $this->workout,
+            'meal_plan' => $this->meal_plan
         ]);
     }
 

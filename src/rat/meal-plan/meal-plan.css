@@ -34,17 +34,17 @@
   font-weight: 500;
 }
 
-.description {
+.info {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  padding: 12px 20px;
+  gap: 10px;
+  padding: 18px 20px;
   border-radius: 10px;
   border: 1px solid var(--color-zinc-900);
   margin-top: 20px;
 }
 
-.description h3 {
+.info h3 {
   font-size: 12px;
   font-weight: 500;
 }
@@ -112,11 +112,16 @@
 
 .meal-item {
   display: flex;
-  align-items: center;
-  gap: 20px;
+  flex-direction: column;
   border: 1px solid var(--color-zinc-900);
   border-radius: 10px;
   padding: 10px 16px;
+}
+
+.meal-item .top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .meal-item .featured-image {
@@ -132,6 +137,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  align-items: start;
 }
 
 .meal-item .right h4 {
@@ -143,4 +149,46 @@
   font-size: 13px;
   font-weight: 500;
   color: var(--color-zinc-500);
+}
+
+.meal-time {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.meal-item h4 {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.meal-item .amount {
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--color-zinc-900);
+  padding: 5px 10px;
+  border-radius: 9999px;
+}
+
+.meal-item .facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.meal-item .fact {
+  font-size: 12px;
+  background-color: var(--color-zinc-900);
+  border-radius: 9999px;
+  padding: 4px 7px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-zinc-400);
+}
+
+.meal-item .description {
+  font-size: 13px;
+  color: var(--color-zinc-400);
+  margin-top: 10px;
 }

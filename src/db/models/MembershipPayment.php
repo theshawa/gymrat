@@ -38,7 +38,7 @@ class MembershipPayment extends Model
         }
     }
 
-    public function get_all_of_user(int $user): array
+    public function get_all_of_user(int $user)
     {
         $sql = "SELECT * FROM $this->table WHERE customer = :customer";
         $stmt = $this->conn->prepare($sql);
@@ -47,7 +47,7 @@ class MembershipPayment extends Model
         ]);
         $items = $stmt->fetchAll();
         return array_map(function ($item) {
-            $record = new MembershipPlan();
+            $record = new MembershipPayment();
             $record->fill($item);
             return $record;
         }, $items);

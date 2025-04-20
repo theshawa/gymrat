@@ -7,20 +7,8 @@ $setFilter = $_GET['filter'] ?? 0;
 
 $pageTitle = "Workout Requests";
 $sidebarActive = 3;
-$menuBarConfig = [
-    "title" => $pageTitle,
-    "showBack" => true,
-    "goBackTo" => "/staff/wnmp/workouts/index.php",
-    "useLink" => true,
-    "options" => [
-        ($setFilter == 1) ? 
-        ["title" => "Show All Requests", "href" => "/staff/wnmp/workouts/requests/index.php", "type" => "primary"] :
-        ["title" => "Show Pending Requests", "href" => "/staff/wnmp/workouts/requests/index.php?filter=1", "type" => "primary"],
-    ]
-];
 
 require_once "../../../../db/models/WorkoutRequest.php";
-
 require_once "../../../../alerts/functions.php";
 
 $workoutRequests = [];
@@ -31,6 +19,27 @@ try {
     redirect_with_error_alert("Failed to fetch workout requests: " . $e->getMessage(), "/staff/wnmp");
     exit;
 }
+
+$pending_requests = null;
+$workoutRequestModel = new WorkoutRequest();
+try {
+    $pending_requests = $workoutRequestModel->has_unreviewed_requests();
+} catch (Exception $e) {
+    $_SESSION['error'] = "Failed to access notification updates: " . $e->getMessage();
+}
+
+$menuBarConfig = [
+    "title" => $pageTitle,
+    "showBack" => true,
+    "goBackTo" => "/staff/wnmp/workouts/index.php",
+    "useLink" => true,
+    "options" => [
+        ($setFilter == 1) ? 
+        ["title" => "Show All Requests", "href" => "/staff/wnmp/workouts/requests/index.php", "type" => "primary"] :
+        ["title" => "Show Pending Requests", "href" => "/staff/wnmp/workouts/requests/index.php?filter=1", 
+        "type" => "primary", "setAttentionDot" => $pending_requests],
+    ]
+];
 
 $infoCardConfig = [
     "showImage" => false,

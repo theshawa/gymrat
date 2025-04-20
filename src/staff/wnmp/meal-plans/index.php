@@ -23,7 +23,7 @@ $menuBarConfig = [
     "options" => [
         [
             "title" => "Meal Plan Requests", 
-            "href" => "/staff/wnmp/meal-plans/requests/index.php?filter=1",
+            "href" => "/staff/wnmp/meal-plans/requests/index.php",
             "type" => "primary",
             "setAttentionDot" => $hasUnreviewedRequests
         ],

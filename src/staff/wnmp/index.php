@@ -2,34 +2,83 @@
 require_once "../../auth-guards.php";
 auth_required_guard("wnmp", "/staff/login");
 
+require_once "../../alerts/functions.php";
+require_once "../../db/models/WorkoutRequest.php";
+require_once "../../db/models/MealPlanRequest.php";
+
 $pageTitle = "Home";
+$pageStyles = ["./wnmp.css"];
 $sidebarActive = 1;
 $menuBarConfig = [
     "title" => $pageTitle
 ];
 
-require_once "./pageconfig.php";
 
+$setWorkoutRequestsNotification = null;
+$setMealPlanRequestsNotification = null;
+
+$workoutRequestModel = new WorkoutRequest();
+try {
+    $setWorkoutRequestsNotification = $workoutRequestModel->has_unreviewed_requests();
+} catch (Exception $e) {
+    $_SESSION['error'] = "Failed to access workout requests: " . $e->getMessage();
+}
+
+$mealPlanRequestModel = new MealPlanRequest();
+try {
+    $setMealPlanRequestsNotification = $mealPlanRequestModel->has_unreviewed_requests();
+} catch (Exception $e) {
+    $_SESSION['error'] = "Failed to access meal plan requests: " . $e->getMessage();
+}
+
+require_once "./pageconfig.php";
 require_once "../includes/header.php";
 require_once "../includes/sidebar.php";
-require_once "../../alerts/functions.php";
 ?>
 
 <main>
     <div class="staff-base-container">
         <?php require_once "../includes/menubar.php"; ?>
-        <div style="display: flex; flex-direction: column; justify-items: center; align-items: center; min-height: 100%">
-            <svg width="300" fill="#a1a1aa" viewBox="0 -8 72 72" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg">
-                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                <g id="SVGRepo_iconCarrier">
-                    <title>construction</title>
-                    <path d="M27.69,34.62l-4.85-7.84.37-.36,1.6,1.37a1.5,1.5,0,0,0,.53,1.93,1.54,1.54,0,0,0,.81.23,1.49,1.49,0,0,0,.87-.27L37,38.2a.62.62,0,0,0,.44.18.64.64,0,0,0,.47-.21.65.65,0,0,0,0-.91L27.8,28.66l5-7.88a1.49,1.49,0,0,0,0-1.62,2.26,2.26,0,0,0-.25-.29L26.74,12a1.5,1.5,0,0,0-1.24-.66h0l-7.67.07a1.22,1.22,0,0,0-1.07.69l-2.37,5.09-.63-.54a.63.63,0,0,0-.9,0,.64.64,0,0,0,0,.91l.93.8-.24.53a1.52,1.52,0,0,0,.59,2,1.42,1.42,0,0,0,.74.2,1.51,1.51,0,0,0,1.27-.7l.78.67L13.4,24.87a2.37,2.37,0,0,0-.76,1.66l-.26,8.58L10.05,45.19A2.35,2.35,0,0,0,11.81,48a2.48,2.48,0,0,0,.54.06,2.35,2.35,0,0,0,2.29-1.83l2.44-10.53.23-7.63,1.4,1,4,6.49-4.38,9.15a2.35,2.35,0,1,0,4.25,2L27.76,36A1.37,1.37,0,0,0,27.69,34.62Z"></path>
-                    <circle cx="33.46" cy="12.22" r="4.3"></circle>
-                    <path d="M61.39,45.33c-1.44-2.1-8.34-15.16-10.12-17s-3.36-2.08-4.44-1.64a6.94,6.94,0,0,0-3,2.24c-1.27,1.73-3,6.91-4.44,9.23a11.08,11.08,0,0,0-.8,1l-.08.06c-1.06.64-4,1.19-5.19,2.4a15.63,15.63,0,0,0-1.92,2.6l-.18.25a8.22,8.22,0,0,1-3.93,3.27l0,.32H60.43C60.66,48.08,63.15,47.9,61.39,45.33Z"></path>
-                </g>
-            </svg>
-            <h2 style="color: var(--color-zinc-400)">Under Construction</h2>
+        
+        <div class="dashboard-container">
+            <div class="dashboard-col-primary">
+                <div class="dashboard-tab-large dashboard-layout-primary">
+                    <h1>Welcome, WNMP Manager!</h1>
+                </div>
+                <div class="dashboard-tab-large dashboard-layout-primary">
+                    <h1>Some random info here</h1>
+                </div>
+            </div>
+            <div class="dashboard-col-secondary">
+                <a a href="/staff/wnmp/exercises/index.php" class="dashboard-tab-small dashboard-layout-primary">
+                    <h1>Exercises</h1>
+                </a>
+                <a href="/staff/wnmp/meals/index.php" class="dashboard-tab-small dashboard-layout-primary">
+                    <h1>Meals</h1>
+                </a>
+                <a href="/staff/wnmp/workouts/index.php" class="dashboard-tab-small dashboard-layout-primary">
+                    <h1>Workouts</h1>
+                </a>
+                <a href="/staff/wnmp/meal-plans/index.php" class="dashboard-tab-small dashboard-layout-primary">
+                    <h1>Meal Plans</h1>
+                </a>
+                <a href="/staff/wnmp/workouts/requests/index.php" class="dashboard-tab-small dashboard-layout-primary">
+                    <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: start;">
+                        <?php if ($setWorkoutRequestsNotification): ?>
+                            <span class="dashboard-alert-red-dot"></span>
+                        <?php endif; ?>
+                    </div>
+                    <h1>Workout Requests</h1>
+                </a>
+                <a href="/staff/wnmp/meal-plans/requests/index.php" class="dashboard-tab-small dashboard-layout-primary">
+                <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: start;">
+                        <?php if ($setMealPlanRequestsNotification): ?>
+                            <span class="dashboard-alert-red-dot"></span>
+                        <?php endif; ?>
+                    </div>
+                    <h1>Meal Plan Requests</h1>
+                </a>
+            </div>
         </div>
     </div>
 </main>

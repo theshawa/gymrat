@@ -26,7 +26,7 @@ $menuBarConfig = [
     "options" => [
         [
             "title" => "Workout Requests", 
-            "href" => "/staff/wnmp/workouts/requests/index.php?filter=1",
+            "href" => "/staff/wnmp/workouts/requests/index.php?",
             "type" => "primary",
             "setAttentionDot" => $hasUnreviewedRequests
         ],

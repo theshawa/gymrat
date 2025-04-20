@@ -1,19 +1,10 @@
-/* General body styling */
-/*body {*/
-/*    font-family: 'Arial', sans-serif;*/
-/*    background-color: #f8f9fa;*/
-/*    color: #333;*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*}*/
-
 /* Base container */
-.base-container {
-    background-color: var(--color-zinc-50);
+.staff-base-container {
+    background-color: #f8f9fa;
     margin: 10px;
     padding: 20px;
     border-radius: 10px;
-    width: 100% !important;
+    width: 100%;
 }
 
 /* Page header */
@@ -24,95 +15,116 @@ h1 {
     color: #444;
 }
 
-/* Equipment list */
-.equipment-list ul {
-    list-style-type: none;
-    padding: 0;
+/* Equipment List Table */
+.staff-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-.equipment-item {
-    padding: 10px 0;
-
+.staff-table th, .staff-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
 }
 
-.equipment-item a {
+.staff-table th {
+    background-color: #f5f5f5;
+}
+
+.staff-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Buttons */
+.staff-button-small {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
     text-decoration: none;
-    font-size: 1.2rem;
-    color: #000000; /* Primary color for links */
-    font-weight: bold;
-    transition: color 0.2s;
+    border-radius: 5px;
+    margin-right: 5px;
+    font-size: 14px;
+    display: inline-block;
 }
 
-.equipment-item a:hover {
-    color: #032d57; /* Darker color on hover */
+.staff-button-small:hover {
+    background-color: #45a049;
 }
 
+.staff-button-destructive {
+    background-color: #f44336;
+}
 
+.staff-button-destructive:hover {
+    background-color: #e53935;
+}
+
+/* Delete Equipment Modal */
+.delete-equipment-div {
+    padding: 15px;
+}
+
+.delete-equipment-div p {
+    margin: 5px 0px;
+}
+
+.delete-equipment-div button {
+    width: 30%;
+    height: 45px;
+    margin: 20px 0px;
+    background-color: #ffcccc;
+    border: 2px solid #ff4d4d;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.delete-equipment-div button:hover {
+    background-color: #ff4d4d;
+}
+
+/* Update Equipment Modal */
+.update-equipment-div {
+    padding: 15px;
+}
+
+.update-equipment-div p {
+    margin: 5px 0px;
+}
+
+.update-equipment-div button {
+    width: 30%;
+    height: 45px;
+    margin: 20px 0px;
+    background-color: #d4edda;
+    border: 2px solid #28a745;
+    color: #155724;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.update-equipment-div button:hover {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Equipment item description (optional use) */
 .description {
     margin: 10px 0 0;
     font-size: 0.9rem;
     color: #555;
 }
 
-/* Divider between items */
-hr {
-    border: none;
-    border-top: 1px solid #ddd;
-    margin: 10px 0;
-}
-
-/* css for delete model */
-.delete-workout-div {
-    padding: 15px;
-}
-
-.delete-workout-div p {
-    margin: 5px 0px;
-}
-
-.delete-workout-div button {
-    width: 30%;
-    height: 45px;
-    margin: 20px 0px;
-    background-color: var(--color-red-light);
-    border: 2px solid var(--color-red);
-    color: var(--color-zinc-100);
-    border-radius: 10px;
-}
-
-/* css for delete model */
-.update-workout-div {
-    padding: 15px;
-}
-
-.update-workout-div p {
-    margin: 5px 0px;
-}
-
-.update-workout-div button {
-    width: 30%;
-    height: 45px;
-    margin: 20px 0px;
-    cursor: pointer;
-    background-color: var(--color-green-light);
-    border: 2px solid var(--color-green);
-    color: var(--color-zinc-100);
-    border-radius: 10px;
-}
-
-.update-workout-div button :hover{
-    background-color: red;
-}
-
-
-/* Responsive design */
+/* Responsive Design */
 @media (max-width: 768px) {
     h1 {
         font-size: 1.5rem;
     }
 
-    .equipment-item a {
-        font-size: 1rem;
+    .staff-button-small {
+        font-size: 12px;
+        padding: 5px 8px;
     }
 
     .description {

@@ -23,6 +23,6 @@ try {
     exit;
 }
 
-redirect_with_success_alert("Trainer succefully assigned", "/staff/admin/rats/view/index.php?id=$customer->id");
+redirect_with_success_alert("Trainer successfully assigned", "/staff/admin/rats/view/index.php?id=$customer->id");
 exit;
 ?>

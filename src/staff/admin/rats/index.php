@@ -1,20 +1,37 @@
 <?php
 
+$setFilter = $_GET['filter'] ?? 0;
 $pageTitle = "Manage Rats";
 $sidebarActive = 3;
-$menuBarConfig = [
-    "title" => $pageTitle,
-];
 
 require_once "../../../db/models/Customer.php";
 
 $customerModel = new Customer();
 try {
-    $customers = $customerModel->get_all();
+    $customers = $customerModel->get_all($setFilter);
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch customers: " . $e->getMessage(), "/staff/admin");
     exit;
 }
+
+$hasUnassignedRats = false;
+$customerModel = new Customer();
+try {
+    $hasUnassignedRats = $customerModel->has_trainer_unassigned();
+} catch (Exception $e) {
+    $_SESSION['error'] = "Failed to access unassigned rats: " . $e->getMessage();
+}
+
+$menuBarConfig = [
+    "title" => $pageTitle,
+    "useLink" => true,
+    "options" => [
+        ($setFilter == 1) ? 
+        ["title" => "Show All Rats", "href" => "/staff/admin/rats/index.php", "type" => "primary"] :
+        ["title" => "Show Unassigned Rats", "href" => "/staff/admin/rats/index.php?filter=1", 
+        "type" => "primary", "setAttentionDot" => $hasUnassignedRats]
+    ]
+];
 
 
 $infoCardConfig = [

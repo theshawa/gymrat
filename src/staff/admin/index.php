@@ -17,10 +17,17 @@ require_once "../../alerts/functions.php";
 
 require_once "../../auth-guards.php";
 require_once "../../db/models/Complaint.php"; 
+require_once "../../db/models/Complaint.php"; 
 auth_required_guard("admin", "/staff/login");
 
 $complaintModel = new Complaint();
-$setComplaintsNotification = $complaintModel->has_unreviewed_complaints();
+$customerModel = new Customer();
+try {
+    $setComplaintsNotification = $complaintModel->has_unreviewed_complaints();
+    $setRatsNotification = $customerModel->has_trainer_unassigned();
+} catch (Exception $e) {
+    $_SESSION['error'] = "Failed to access notification updates: " . $e->getMessage();
+}
 ?>
 
 <main>
@@ -55,6 +62,11 @@ $setComplaintsNotification = $complaintModel->has_unreviewed_complaints();
                     <h1>Staff Credentials</h1>
                 </div>
                 <a href="/staff/admin/rats/index.php" class="dashboard-tab-small dashboard-layout-primary">
+                <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: start;">
+                        <?php if ($setRatsNotification): ?>
+                            <span class="dashboard-alert-red-dot"></span>
+                        <?php endif; ?>
+                    </div>
                     <h1>Rats</h1>
                 </a>
                 <a href="/staff/admin/trainers/index.php" class="dashboard-tab-small dashboard-layout-primary">

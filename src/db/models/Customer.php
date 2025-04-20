@@ -179,9 +179,12 @@ class Customer extends Model
         return $data['username'] ?? null; 
     }
 
-    public function get_all()
+    public function get_all(int $noTrainer = 0)
     {
         $sql = "SELECT * FROM $this->table";
+        if ($noTrainer === 1) {
+            $sql .= " WHERE trainer IS NULL";
+        }
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $data = $stmt->fetchAll();
@@ -201,6 +204,16 @@ class Customer extends Model
         $data = $stmt->fetch();
 
         return $data['customer_count'] ?? 0;
+    }
+
+    public function has_trainer_unassigned(): bool
+    {
+        $sql = "SELECT COUNT(*) AS unassigned_count FROM $this->table WHERE trainer IS NULL";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetch();
+
+        return $data['unassigned_count'] > 0;
     }
 
     public function __sleep()

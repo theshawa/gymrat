@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql_db:3306
--- Generation Time: Apr 20, 2025 at 01:10 PM
+-- Generation Time: Apr 19, 2025 at 10:53 PM
 -- Server version: 9.2.0
 -- PHP Version: 8.2.27
 
@@ -452,26 +452,6 @@ CREATE TABLE `notifications` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `settings`
---
-
-CREATE TABLE `settings` (
-  `id` int NOT NULL,
-  `contact_email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `contact_phone` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  `workout_session_expiry` int NOT NULL COMMENT 'In hours'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `settings`
---
-
-INSERT INTO `settings` (`id`, `contact_email`, `contact_phone`, `workout_session_expiry`) VALUES
-(1, 'support@gymrat.com', '1234567890', 24);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `staff`
 --
 
@@ -791,12 +771,6 @@ ALTER TABLE `notifications`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `settings`
---
-ALTER TABLE `settings`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `staff`
 --
 ALTER TABLE `staff`
@@ -933,12 +907,6 @@ ALTER TABLE `membership_plans`
 --
 ALTER TABLE `notifications`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
-
---
--- AUTO_INCREMENT for table `settings`
---
-ALTER TABLE `settings`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `trainers`

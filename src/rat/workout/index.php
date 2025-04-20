@@ -32,11 +32,20 @@ if (isset($_SESSION['workout_session'])) {
     $workoutSession->fill([
         'session_key' => $_SESSION['workout_session']
     ]);
+
+    require_once "../../db/models/Settings.php";
+    $settings = new Settings();
+    try {
+        $settings->get_all();
+    } catch (\Throwable $th) {
+        die("Failed to get settings: " . $th->getMessage());
+    }
+    $hrs = empty($settings->workout_session_expiry)  ? 4 : $settings->workout_session_expiry;
     try {
         $workoutSession->get_by_session_key();
 
         // automatically end workout if it has been more than 4 hrs
-        if ($workoutSession->get_duration_in_hours() > 4) {
+        if ($workoutSession->get_duration_in_hours() > $hrs) {
             $ended_at = (clone $workoutSession->started_at)->modify('+4 hours');
             $workoutSession->mark_ended($ended_at);
             unset($_SESSION['workout_session']);

@@ -152,3 +152,11 @@
     align-self: end;
     justify-self: start;
 } */
+
+.settings-list-item {
+    border-radius: 10px; 
+    background-color:  var(--color-zinc-100); 
+    padding: 20px;
+    margin: 10px 0;
+    border: 2px solid var(--color-zinc-200);
+}

@@ -1,5 +1,6 @@
 <?php
-
+require_once "../../auth-guards.php";
+auth_required_guard("admin", "/staff/login");
 
 $pageTitle = "Home";
 $pageStyles = ["./admin.css"];
@@ -9,16 +10,9 @@ $menuBarConfig = [
 ];
 
 
-require_once "./pageconfig.php";
-
-require_once "../includes/header.php";
-require_once "../includes/sidebar.php";
 require_once "../../alerts/functions.php";
-
-require_once "../../auth-guards.php";
 require_once "../../db/models/Complaint.php"; 
 require_once "../../db/models/Complaint.php"; 
-auth_required_guard("admin", "/staff/login");
 
 $complaintModel = new Complaint();
 $customerModel = new Customer();
@@ -31,6 +25,10 @@ try {
 } catch (Exception $e) {
     $_SESSION['error'] = "Failed to access notification updates: " . $e->getMessage();
 }
+
+require_once "./pageconfig.php";
+require_once "../includes/header.php";
+require_once "../includes/sidebar.php";
 ?>
 
 <main>
@@ -47,9 +45,9 @@ try {
                 </div>
             </div>
             <div class="dashboard-col-secondary">
-                <div class="dashboard-tab-small dashboard-layout-primary">
+                <a a href="/staff/admin/settings/index.php" class="dashboard-tab-small dashboard-layout-primary">
                     <h1>Settings</h1>
-                </div>
+                </a>
                 <div class="dashboard-tab-small dashboard-layout-primary">
                     <h1>Announcments</h1>
                 </div>

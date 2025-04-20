@@ -154,7 +154,7 @@
 } */
 
 .settings-list-item {
-    border-radius: 10px; 
+    border-radius: 20px; 
     background-color:  var(--color-zinc-100); 
     padding: 20px;
     margin: 10px 0;

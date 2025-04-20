@@ -4,7 +4,6 @@ if (auth_required_guard("rat", "/rat/login")) exit;
 
 
 require_once "../../db/models/Customer.php";
-require_once "../../db/models/MembershipPlan.php";
 
 $user = new Customer();
 $user->fill([
@@ -16,26 +15,6 @@ try {
 } catch (PDOException $e) {
     die("Failed to get user due to error: " . $e->getMessage());
 }
-
-$plan = new MembershipPlan();
-$plan->fill([
-    "id" => $user->membership_plan
-]);
-
-try {
-    $plan->get_by_id();
-} catch (PDOException $e) {
-    die("Failed to get plan due to error: " . $e->getMessage());
-}
-
-$plan_expiry = null;
-if ($user->membership_plan_activated_at) {
-    $plan_expiry_date = $user->membership_plan_activated_at->add(new DateInterval("P" . $plan->duration . "D"));
-    $now = new DateTime();
-    $diff = $plan_expiry_date->diff($now);
-    $plan_expiry = $diff->days;
-}
-
 
 $avatar = $user->avatar ? "/uploads/" . $user->avatar : "/uploads/default-images/default-avatar.png";
 
@@ -71,17 +50,6 @@ require_once "../includes/titlebar.php";
                 <p class="content"><?= $user->updated_at->format("M d, Y, h:i A") ?></p>
             </div>
         <?php endif; ?>
-        <div class="line">
-            <span class="title">Current Subscription Plan</span>
-            <p class="content">
-                <?= $plan->name ?>
-                <?php if ($plan_expiry): ?>
-                    <span class="paragraph small">(<?= $plan_expiry ?> day<?= $plan_expiry == 1 ? "" : "s" ?>
-                        remaining)</span>
-                <?php endif; ?>
-            </p>
-        </div>
-
     </div>
     <a href="./update" class="btn">Update Profile</a>
     <button onclick="logout()" class="btn secondary">Logout</button>

@@ -2,6 +2,7 @@
 
 $title = isset($pageTitle) ? $pageTitle : null;
 $sidebarActive = isset($sidebarActive) ? $sidebarActive : null;
+$styles = isset($pageStyles) ? $pageStyles : [];
 
 $pageConfig = [
     "title" => ($title ? $title . " | "  : "") . "Workout & Meal Plan Manager",
@@ -16,4 +17,5 @@ $pageConfig = [
         ],
         "active" => $sidebarActive
     ],
+    "styles" => $styles
 ];

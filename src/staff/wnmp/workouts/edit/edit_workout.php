@@ -9,9 +9,11 @@ require_once "../../../../db/models/Exercise.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirect_with_error_alert("Method not allowed", "/staff/wnmp/workouts");
+    exit;
 }
 if (!isset($_SESSION['workout'])) {
     redirect_with_error_alert("Session variables not set", "/staff/wnmp/workouts");
+    exit;
 }
 
 $workout_id = $_SESSION['workout_id']; 
@@ -146,6 +148,7 @@ if (!empty($errors)) {
     $error_message = implode(" ", $errors);
     $_SESSION['workout'] = serialize($workout);
     redirect_with_error_alert($error_message, "/staff/wnmp/workouts/edit?id=" . $workout_id );
+    exit;
 }
 
 
@@ -158,6 +161,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'edit') {
             $exerciseId = array_search($exercise['title'], $exerciseTitles);
             if ($exerciseId === false) {
                 redirect_with_error_alert("Exercise name not found: " . $exercise['title'], "/staff/wnmp/workouts/edit?id=" . $workout_id );
+                exit;
             }
             $exercise['exercise_id'] = $exerciseId;
         }
@@ -168,14 +172,17 @@ if (isset($_POST['action']) && $_POST['action'] === 'edit') {
     } catch (PDOException $e) {
         if ($e->errorInfo[1] == 1062) {
             redirect_with_error_alert("Failed to edit workout due to an error: Workout with the same name already exists", "/staff/wnmp/workouts/edit?id=" . $workout_id );
+            exit;
         }
         redirect_with_error_alert("Failed to update workout due to an error: " . $e->getMessage(), "/staff/wnmp/workouts/edit?id=" . $workout_id );
+        exit;
     }    
     
     unset($_SESSION['workout']);
     unset($_SESSION['workout_id']);
 
     redirect_with_success_alert("Workout updated successfully", "/staff/wnmp/workouts/view?id=" . $workout_id );
+    exit;
 }
 
 // echo '<pre>';
@@ -184,4 +191,5 @@ if (isset($_POST['action']) && $_POST['action'] === 'edit') {
 
 
 redirect_with_success_alert("Action successful (Press Save Changes to complete)", "/staff/wnmp/workouts/edit?id=" . $workout_id );
+exit;
 ?>

@@ -23,7 +23,7 @@ $menuBarConfig = [
     "options" => [
         [
             "title" => "Meal Plan Requests", 
-            "href" => "/staff/wnmp/meal-plans/requests/index.php?filter=1",
+            "href" => "/staff/wnmp/meal-plans/requests/index.php",
             "type" => "primary",
             "setAttentionDot" => $hasUnreviewedRequests
         ],
@@ -38,6 +38,7 @@ try {
     $mealPlans = $mealPlanModel->get_all();
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch meal plans: " . $e->getMessage(), "/staff/wnmp");
+    exit;
 }
 
 $infoCardConfig = [

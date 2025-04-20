@@ -45,7 +45,7 @@ if (!$isCardInList) {
                 $card->name ?? $defaultName . " #" . $card->id,
             "description" => $card->description ?? "",
             "image" => ($useAvatar) ? $card->avatar : ( $card->image ?? null ),
-            "created_at" => $card->created_at ? $card->created_at->format('Y-m-d H:i:s') : null
+            "created_at" => ($showCreatedAt && isset($card->created_at)) ? $card->created_at->format('Y-m-d H:i:s') : null
         ];
     }
     $cards = $newCards;
@@ -90,7 +90,7 @@ if (!$isCardInList) {
         background-color: var(--color-zinc-100);
         border: 2px solid var(--color-zinc-200);
         width: 100%;
-        border-radius: 10px;
+        border-radius: 20px;
         padding: 20px;
         display: flex;
         flex-direction: row;
@@ -102,7 +102,7 @@ if (!$isCardInList) {
         height: 100px; 
         object-fit: cover;
         margin-right: 20px;
-        border-radius: 10px;
+        border-radius: 20px;
     }
     .info-card-desc {
         display: flex;

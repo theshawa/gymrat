@@ -1,8 +1,9 @@
 <?php
 // session_start();
+require_once "../../../../../auth-guards.php";
+auth_required_guard("wnmp", "/staff/login");
 
 $id = $_GET['id'] ?? null;
-
 $sidebarActive = 5;
 
 require_once "../../../../../alerts/functions.php";
@@ -17,6 +18,7 @@ try {
     $mealPlanRequest->trainer = $trainerModel->get_username_by_id($mealPlanRequest->trainerId);
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch meal plan request: " . $e->getMessage(), "/staff/wnmp/meal-plans/requests");
+    exit;
 }
 
 $mealPlanTitles = [];
@@ -34,12 +36,8 @@ $menuBarConfig = [
 ];
 
 require_once "../../../pageconfig.php";
-
 require_once "../../../../includes/header.php";
 require_once "../../../../includes/sidebar.php";
-
-require_once "../../../../../auth-guards.php";
-auth_required_guard("wnmp", "/staff/login");
 ?>
 
 <main>

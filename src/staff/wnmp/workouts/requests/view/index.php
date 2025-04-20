@@ -1,8 +1,10 @@
 <?php
 // session_start();
 
-$id = $_GET['id'] ?? null;
+require_once "../../../../../auth-guards.php";
+auth_required_guard("wnmp", "/staff/login");
 
+$id = $_GET['id'] ?? null;
 $sidebarActive = 3;
 
 require_once "../../../../../alerts/functions.php";
@@ -40,9 +42,6 @@ require_once "../../../pageconfig.php";
 
 require_once "../../../../includes/header.php";
 require_once "../../../../includes/sidebar.php";
-
-require_once "../../../../../auth-guards.php";
-auth_required_guard("wnmp", "/staff/login");
 ?>
 
 <main>

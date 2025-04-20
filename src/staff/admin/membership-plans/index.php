@@ -1,4 +1,9 @@
 <?php
+require_once "../../../auth-guards.php";
+auth_required_guard("admin", "/staff/login");
+
+require_once "../../../db/models/MembershipPlan.php";
+require_once "../../../alerts/functions.php";
 
 $pageTitle = "Membership Plans";
 $sidebarActive = 2;
@@ -11,18 +16,6 @@ $menuBarConfig = [
     ]
 ];
 
-require_once "../pageconfig.php";
-
-require_once "../../includes/header.php";
-require_once "../../includes/sidebar.php";
-
-require_once "../../../auth-guards.php";
-auth_required_guard("admin", "/staff/login");
-
-require_once "../../../db/models/MembershipPlan.php";
-
-require_once "../../../alerts/functions.php";
-
 $membershipPlans = [];
 $membershipPlanModel = new MembershipPlan();
 try {
@@ -31,6 +24,9 @@ try {
     redirect_with_error_alert("Failed to fetch membership plans: " . $e->getMessage(), "/staff/admin");
 }
 
+require_once "../pageconfig.php";
+require_once "../../includes/header.php";
+require_once "../../includes/sidebar.php";
 ?>
 
 <main>

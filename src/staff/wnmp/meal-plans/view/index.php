@@ -1,5 +1,8 @@
 <?php
 
+require_once "../../../../auth-guards.php";
+auth_required_guard("wnmp", "/staff/login");
+
 $id = htmlspecialchars($_GET['id'] ?? null);
 
 require_once "../../../../db/models/MealPlan.php";
@@ -14,6 +17,7 @@ try {
     $_SESSION['mealPlan'] = serialize($mealPlan);
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch meal plan: " . $e->getMessage(), "/staff/wnmp/meal-plans");
+    exit;
 }
 
 $sidebarActive = 5;
@@ -34,9 +38,6 @@ $pageConfig['styles'][] = "../meal-plans.css";
 
 require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
-
-require_once "../../../../auth-guards.php";
-auth_required_guard("wnmp", "/staff/login");
 ?>
 
 <main>

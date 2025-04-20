@@ -40,10 +40,20 @@ class Settings extends Model
         WHERE id = 1";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
-            'id' => $this->id,
             'contact_email' => $this->contact_email,
             'contact_phone' => $this->contact_phone,
             'workout_session_expiry' => $this->workout_session_expiry
         ]);
+    }
+
+    public function __sleep()
+    {
+        return ['id', 'contact_email', 'contact_phone', 'workout_session_expiry'];
+    }
+
+    public function __wakeup()
+    {
+        // Reinitialize the database connection if necessary
+        $this->conn = Database::get_conn();
     }
 }

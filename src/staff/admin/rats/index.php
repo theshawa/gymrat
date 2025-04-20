@@ -1,10 +1,14 @@
 <?php
+require_once "../../../auth-guards.php";
+auth_required_guard("admin", "/staff/login");
+
 
 $setFilter = $_GET['filter'] ?? 0;
 $pageTitle = "Manage Rats";
 $sidebarActive = 3;
 
 require_once "../../../db/models/Customer.php";
+require_once "../../../alerts/functions.php";
 
 $customerModel = new Customer();
 try {
@@ -48,14 +52,8 @@ $infoCardConfig = [
 
 
 require_once "../pageconfig.php";
-
-require_once "../../../alerts/functions.php";
 require_once "../../includes/header.php";
 require_once "../../includes/sidebar.php";
-
-require_once "../../../auth-guards.php";
-auth_required_guard("admin", "/staff/login");
-
 ?>
 
 <main>

@@ -1,9 +1,11 @@
 <?php
 session_start();
 
+require_once "../../../../auth-guards.php";
+auth_required_guard("wnmp", "/staff/login");
+
 $id = $_GET['id'] ?? null;
 $_SESSION['meal_id'] = $id;
-
 $sidebarActive = 4;
 
 require_once "../../../../db/models/Meal.php";
@@ -39,9 +41,6 @@ $pageConfig['styles'][] = "../meal.css";
 
 require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
-
-require_once "../../../../auth-guards.php";
-auth_required_guard("wnmp", "/staff/login");
 ?>
 
 <main>

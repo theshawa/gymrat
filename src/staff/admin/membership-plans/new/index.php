@@ -1,5 +1,9 @@
 <?php
 
+require_once "../../../../auth-guards.php";
+auth_required_guard("admin", "/staff/login");
+
+
 $pageTitle = "Create Membership Plan";
 $pageStyles = ["../membership-plans.css"];
 $menuBarConfig = [
@@ -13,13 +17,8 @@ $menuBarConfig = [
 ];
 
 require_once "../../pageconfig.php";
-
 require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
-
-require_once "../../../../auth-guards.php";
-auth_required_guard("admin", "/staff/login");
-
 ?>
 
 <main>

@@ -1,13 +1,13 @@
 <?php
+require_once "../../../auth-guards.php";
+auth_required_guard("admin", "/staff/login");
 
 $setFilter = $_GET['filter'] ?? 0;
-
 $pageTitle = "Manage Complaints";
 $sidebarActive = 6;
 
 
 require_once "../../../db/models/Complaint.php";
-
 require_once "../../../alerts/functions.php";
 
 $complaints = [];
@@ -48,12 +48,8 @@ $infoCardConfig = [
 ];
 
 require_once "../pageconfig.php";
-
 require_once "../../includes/header.php";
 require_once "../../includes/sidebar.php";
-
-require_once "../../../auth-guards.php";
-auth_required_guard("admin", "/staff/login");
 ?>
 
 <main>

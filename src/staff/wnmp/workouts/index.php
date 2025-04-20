@@ -26,7 +26,7 @@ $menuBarConfig = [
     "options" => [
         [
             "title" => "Workout Requests", 
-            "href" => "/staff/wnmp/workouts/requests/index.php?filter=1",
+            "href" => "/staff/wnmp/workouts/requests/index.php?",
             "type" => "primary",
             "setAttentionDot" => $hasUnreviewedRequests
         ],
@@ -41,6 +41,7 @@ try {
     $workout = $workoutModel->get_all();
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch workouts: " . $e->getMessage(), "/staff/wnmp");
+    exit;
 }
 
 $infoCardConfig = [

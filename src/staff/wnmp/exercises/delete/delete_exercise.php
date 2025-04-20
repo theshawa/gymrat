@@ -7,6 +7,7 @@ require_once "../../../../uploads.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirect_with_error_alert("Method not allowed", "/staff/wnmp/exercises");
+    exit;
 }
 
 $id = $_POST['exercise_id'];
@@ -40,3 +41,4 @@ unset($_SESSION['exercise']);
 unset($_SESSION['exercise_id']);
 
 redirect_with_success_alert("Exercise deleted successfully", "/staff/wnmp/exercises");
+exit;

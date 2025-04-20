@@ -7,10 +7,12 @@ require_once "../../../../db/models/Workout.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirect_with_error_alert("Method not allowed", "/staff/wnmp/workouts");
+    exit;
 }
 
 if (!isset($_SESSION['workout'])) {
     redirect_with_error_alert("Session variables not set", "/staff/wnmp/workouts");
+    exit;
 }
 
 $workout = unserialize($_SESSION['workout']);
@@ -142,6 +144,7 @@ if (!empty($errors)) {
     $error_message = implode(" ", $errors);
     $_SESSION['workout'] = serialize($workout);
     redirect_with_error_alert($error_message, "/staff/wnmp/workouts/create");
+    exit;
 }
 
 $_SESSION['workout'] = serialize($workout);
@@ -153,8 +156,10 @@ if (isset($_POST['action']) && $_POST['action'] === 'create'){
     } catch (PDOException $e) {
         if ($e->errorInfo[1] == 1062) {
             redirect_with_error_alert("Failed to create workout due to an error: Workout with the same name already exists", "/staff/wnmp/workouts/create");
+            exit;
         }
         redirect_with_error_alert("Failed to create workout due to an error: " . $e->getMessage(), "/staff/wnmp/workouts/create");
+        exit;
     }
     
     foreach ($workout->exercises as &$exercise) {
@@ -162,6 +167,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'create'){
             $exerciseId = array_search($exercise['title'], $exerciseTitles);
             if ($exerciseId === false) {
                 redirect_with_error_alert("Exercise name not found: " . $exercise['title'], "/staff/wnmp/workouts/create");
+                exit;
             }
             $exercise['exercise_id'] = $exerciseId;
             $exercise['workout_id'] = $workout->id;
@@ -172,12 +178,15 @@ if (isset($_POST['action']) && $_POST['action'] === 'create'){
         $workout->save();
     } catch (PDOException $e) {
         redirect_with_error_alert("Failed to update exercises due to an error: " . $e->getMessage(), "/staff/wnmp/workouts/create");
+        exit;
     }
 
     
     redirect_with_success_alert("Workout created successfully", "/staff/wnmp/workouts/view?id=" . $workout->id);
+    exit;
 }
 
 redirect_with_success_alert("Action successful (Press Save Changes to complete)", "/staff/wnmp/workouts/create");
+exit;
 ?>
 

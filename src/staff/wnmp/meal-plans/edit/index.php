@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+require_once "../../../../auth-guards.php";
+auth_required_guard("wnmp", "/staff/login");
+
 require_once "../../../../alerts/functions.php";
 require_once "../../../../db/models/MealPlan.php";
 require_once "../../../../db/models/Meal.php";
@@ -16,6 +19,7 @@ if (!isset($_SESSION['mealPlan'])) {
         $mealPlan->meals = $mealModel->addMealTitles($mealPlan->meals);
     } catch (Exception $e) {
         redirect_with_error_alert("Failed to fetch meal plan: " . $e->getMessage(), "/staff/wnmp/meal-plans");
+        exit;
     }
     $_SESSION['mealPlan'] = serialize($mealPlan);
 } else {
@@ -50,9 +54,6 @@ $pageConfig['styles'][] = "../meal-plans.css";
 
 require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
-
-require_once "../../../../auth-guards.php";
-auth_required_guard("wnmp", "/staff/login");
 ?>
 
 <main>

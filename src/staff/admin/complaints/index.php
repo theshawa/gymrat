@@ -4,15 +4,7 @@ $setFilter = $_GET['filter'] ?? 0;
 
 $pageTitle = "Manage Complaints";
 $sidebarActive = 6;
-$menuBarConfig = [
-    "title" => $pageTitle,
-    "useLink" => true,
-    "options" => [
-        ($setFilter == 1) ? 
-        ["title" => "Show All", "href" => "/staff/admin/complaints/index.php", "type" => "primary"] :
-        ["title" => "Show Unreviewed", "href" => "/staff/admin/complaints/index.php?filter=1", "type" => "primary"],
-    ]
-];
+
 
 require_once "../../../db/models/Complaint.php";
 
@@ -25,6 +17,26 @@ try {
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch complaints: " . $e->getMessage(), "/staff/admin");
 }
+
+$unreviewed_complaints = null;
+try {
+    $unreviewed_complaints = $complaintModel->has_unreviewed_complaints();
+} catch (Exception $e) {
+    $_SESSION['error'] = "Failed to access notification updates: " . $e->getMessage();
+}
+
+
+$menuBarConfig = [
+    "title" => $pageTitle,
+    "useLink" => true,
+    "options" => [
+        ($setFilter == 1) ? 
+        ["title" => "Show All", "href" => "/staff/admin/complaints/index.php", "type" => "primary"] :
+        ["title" => "Show Unreviewed", "href" => "/staff/admin/complaints/index.php?filter=1", 
+        "type" => "primary", "setAttentionDot" => $unreviewed_complaints],
+    ]
+];
+
 
 $infoCardConfig = [
     "defaultName" => "Complaint",

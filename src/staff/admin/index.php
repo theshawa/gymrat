@@ -22,6 +22,9 @@ auth_required_guard("admin", "/staff/login");
 
 $complaintModel = new Complaint();
 $customerModel = new Customer();
+
+$setComplaintsNotification = null;
+$setRatsNotification = null;
 try {
     $setComplaintsNotification = $complaintModel->has_unreviewed_complaints();
     $setRatsNotification = $customerModel->has_trainer_unassigned();

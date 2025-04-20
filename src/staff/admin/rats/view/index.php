@@ -125,7 +125,7 @@ require_once "../../../includes/sidebar.php";
         <!-- Deafult Right Layout -->
         <div style="margin: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
             <div class="rat-view-profile">
-                <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: end; text-align: left;">
+                <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: start; text-align: left; padding: 15px;">
                 <?php if (!empty($customer->avatar)): ?>
                     <img src="../../../../uploads/<?= $customer->avatar ?>" alt="Customer Avatar"  class="rat-view-avatar">
                 <?php else: ?>
@@ -133,7 +133,7 @@ require_once "../../../includes/sidebar.php";
                 <?php endif; ?>
                 </div>
                 <div style="grid-row: 2; grid-column: 1; align-self: end; justify-self: start; text-align: left;">
-                    <h1 style="margin: 10px;"><?= $customer->fname . " " . $customer->lname ?></h1>
+                    <h1 style="margin: 10px; font-size: 28px;"><?= $customer->fname . " " . $customer->lname ?></h1>
                     <h1 style="margin: 10px;"><?= $customer->email ?></h1>
                     <h1 style="margin: 10px;"><?= $customer->phone ?></h1>
                     <h3 style="margin: 10px;">Created on <?= $customer->created_at ? $customer->created_at->format('Y-m-d') : 'N/A' ?></h3>

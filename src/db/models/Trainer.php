@@ -162,4 +162,28 @@ class Trainer extends Model
         }
         return $trainers;
     }
+
+    public function get_all()
+    {
+        $sql = "SELECT * FROM $this->table";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll();
+        $trainers = array_map(function ($trainer) {
+            $new_trainer = new Trainer();
+            $new_trainer->fill($trainer);
+            return $new_trainer;
+        }, $data);
+        return $trainers;
+    }
+
+    public function __sleep()
+    {
+        return ['id', 'fname', 'lname', 'username', 'password', 'avatar', 'bio', 'phone'];
+    }
+
+    public function __wakeup()
+    {
+        $this->conn = Database::get_conn();
+    }
 }

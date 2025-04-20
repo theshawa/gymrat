@@ -1,79 +1,63 @@
 <?php
-
-$pageTitle = "Manage Equipments";
-$sidebarActive = 2;
-
-$menuBarConfig = [
-    "title" => "Manage Equipments",
-    "useLink" => true,
-    "options" => [
-        ["title" => "New Equipment", "href" => "/staff/eq/equipments/create/index.php", "type" => "secondary"],
-        // ["title" => "Delete Equipment", "href" => "/staff/eq/equipments/delete/index.php?id=$id", "type" => "destructive"]
-    ]
-];
-
-
-
-
-
-require_once "../../../db/models/Equipment.php";
+session_start();
 
 require_once "../../../alerts/functions.php";
+require_once "../../../db/models/Equipment.php";
 
-
-// All equipment items in a single list
-$equipmentModel = new Equipment();
-
-try {
-    $equipmentList = $equipmentModel->get_all();
-} catch (Exception $e) {
-    redirect_with_error_alert("Failed to fetch equipment: " . $e->getMessage(), "../");
-}
-
-
-
-$infoCardConfig = [
-    "gridColumns" => 1,
-    "showExtend" => true,
-    "extendTo" => "/staff/eq/equipments/view/index.php",
-    "cards" => $equipmentList,
-];
+$sidebarActive = 2;
 
 require_once "../pageconfig.php";
-$pageConfig['styles'][] = "./equipment.css";
+$pageConfig['styles'][] = "../equipments/equipment.css";
 
 require_once "../../includes/header.php";
 require_once "../../includes/sidebar.php";
 
-
 require_once "../../../auth-guards.php";
 auth_required_guard("eq", "/staff/login");
+
+// Fetch all equipment records
+$equipmentModel = new Equipment();
+$equipments = $equipmentModel->get_all();
 ?>
 
 <main>
     <div class="staff-base-container">
-        <?php require_once "../../includes/menubar.php"; ?>
-        <!--        <h1>Manage Equipments | Equipment Manager</h1>-->
-        <!--        <div class="equipment-list mt-4">-->
-        <!--            <ul>-->
-        <!--                --><?php //foreach ($equipmentList as $equipment): 
-                                ?>
-        <!--                    <li class="equipment-item">-->
-        <!--                        <a href="/staff/eq/equipments/view/index.php?id=--><?php //echo htmlspecialchars($equipment['id']); 
-                                                                                        ?><!--">-->
-        <!--                            <strong>--><?php //echo htmlspecialchars($equipment['name']); 
-                                                    ?><!--</strong>-->
-        <!--                        </a>-->
-        <!--                        <p class="description">--><?php //echo htmlspecialchars($equipment['description']); 
-                                                                ?><!--</p>-->
-        <!--                    </li>-->
-        <!--                    <hr />-->
-        <!--                --><?php //endforeach; 
-                                ?>
-        <!--            </ul>-->
-        <!--        </div>-->
-        <div>
-            <?php require_once "../../includes/infocard.php"; ?>
+        <div class="staff-page-header">
+            <h1>Manage Equipments</h1>
+            <a href="./create/index.php" class="staff-button-primary">Create New Equipment</a>
+        </div>
+
+        <div class="staff-records-container">
+            <?php if (empty($equipments)): ?>
+                <p>No equipments available.</p>
+            <?php else: ?>
+                <table class="staff-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($equipments as $equipment): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($equipment->name) ?></td>
+                                <td><?= htmlspecialchars($equipment->category ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($equipment->quantity ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($equipment->status ?? 'N/A') ?></td>
+                                <td>
+                                    <a href="./view/index.php?id=<?= $equipment->id ?>" class="staff-button-small">View</a>
+                                    <a href="./edit/index.php?id=<?= $equipment->id ?>" class="staff-button-small">Edit</a>
+                                    <a href="./delete/index.php?id=<?= $equipment->id ?>" class="staff-button-small staff-button-destructive">Delete</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
         </div>
     </div>
 </main>

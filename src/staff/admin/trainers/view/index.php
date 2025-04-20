@@ -9,11 +9,13 @@ $id = $_GET['id'] ?? null;
 
 require_once "../../../../alerts/functions.php";
 require_once "../../../../db/models/Trainer.php";
+require_once "../../../../db/models/Customer.php";
 require_once "../../../../db/models/TrainerRating.php";
 
 
 $sidebarActive = 4;
 $pageStyles = ["../../admin.css"];
+
 
 $trainer = new Trainer();
 try {
@@ -25,6 +27,7 @@ try {
 }
 $_SESSION['trainer'] = serialize($trainer);
 
+
 $trainer_ratings = null;
 $trainerRatingModel = new TrainerRating();
 try {
@@ -32,6 +35,16 @@ try {
 } catch (Exception $e) {
     $_SESSION['error'] = "Failed to fetch trainer ratings: " . $e->getMessage();
 }
+
+
+$customers_assigned = null;
+$customerModel = new Customer();
+try {
+    $customers_assigned = $customerModel->count_customers_by_trainer($trainer->id);
+} catch (Exception $e) {
+    $_SESSION['error'] = "Failed to fetch customers assigned: " . $e->getMessage();
+}
+
 
 // Do necessary calculations on trianer ratings data
 $rating_counts = [
@@ -78,7 +91,7 @@ require_once "../../../includes/sidebar.php";
                 <?php if (!empty($trainer->avatar)): ?>
                     <img src="../../../../uploads/<?= $trainer->avatar ?>" alt="Trainer Avatar"  class="trainer-view-avatar">
                 <?php else: ?>
-                    <img src="../../../../uploads/default-images/default-avatar.png" alt="Default Avatar" class="trainer-view-avatar">
+                    <img src="../../../../uploads/default-images/infoCardDefault.png" alt="Default Avatar" class="trainer-view-avatar">
                 <?php endif; ?>
                 </div>
                 <div style="grid-row: 2; grid-column: 1; align-self: end; justify-self: start; text-align: left;">
@@ -101,7 +114,12 @@ require_once "../../../includes/sidebar.php";
                     <div style="grid-row: 2; align-self: end; justify-self: end; text-align: right;
                     display: grid; grid-template-rows: 1fr ; grid-template-columns: 1fr 1fr; width: 100%;">
                         <div style="grid-row: 1; grid-column: 2; align-self: end; justify-self: end; text-align: right; width: 100%; height: 100%;">
-                            <h1 style="margin: 2px 10px; font-size: 26px;">10 Rats</h1>
+                            <h1 style="margin: 2px 10px; font-size: 26px;"> 
+                                <?= ($customers_assigned === 1) ? 
+                                    $customers_assigned . " Rat" :
+                                    (($customers_assigned) ? $customers_assigned . " Rats" : "0 Rats")
+                                ?>
+                            </h1>
                             <p style="margin: 0 10px;">currently assigned to</p>
                         </div>
                         <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: end; text-align: left; width: 100%; height: 100%;">

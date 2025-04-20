@@ -129,7 +129,7 @@ require_once "../../../includes/sidebar.php";
                 <?php if (!empty($customer->avatar)): ?>
                     <img src="../../../../uploads/<?= $customer->avatar ?>" alt="Customer Avatar"  class="rat-view-avatar">
                 <?php else: ?>
-                    <img src="../../../../uploads/default-images/default-avatar.png" alt="Default Avatar" class="rat-view-avatar">
+                    <img src="../../../../uploads/default-images/infoCardDefault.png" alt="Default Avatar" class="rat-view-avatar">
                 <?php endif; ?>
                 </div>
                 <div style="grid-row: 2; grid-column: 1; align-self: end; justify-self: start; text-align: left;">

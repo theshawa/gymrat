@@ -206,3 +206,19 @@
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
 }
+
+.trainer-assignment-list-item {
+    border-radius: 20px; 
+    background-color:  var(--color-zinc-100); 
+    padding: 20px;
+    margin: 10px 0; 
+    border: 2px solid var(--color-zinc-200);
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.trainer-assignment-list-remove{
+    margin: 0px 15px;
+    color: var(--color-red);
+}

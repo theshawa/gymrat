@@ -1,10 +1,11 @@
 <?php
-
 session_start();
+
+require_once "../../../../auth-guards.php";
+auth_required_guard("admin", "/staff/login");
 
 $id = $_GET['id'] ?? null;
 $confirmMembership = $_GET['confirm'] ?? 0;
-
 $sidebarActive = 3;
 $pageStyles = ["../../admin.css"];
 
@@ -81,13 +82,9 @@ $menuBarConfig = [
     "goBackTo" => "/staff/admin/rats/view/index.php?id=$id"
 ];
 
-
-
 require_once "../../pageconfig.php";
 require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
-require_once "../../../../auth-guards.php";
-auth_required_guard("admin", "/staff/login");
 ?>
 
 <main>

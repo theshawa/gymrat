@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $id = $_GET['id'] ?? null;
 
 require_once "../../../../db/models/Equipment.php";
@@ -8,14 +10,14 @@ $equipment = new Equipment();
 try {
     $equipment->get_by_id($id);
 } catch (Exception $e) {
-    redirect_with_error_alert("Failed to fetch exercise: " . $e->getMessage(), "/staff/wnmp/exercises");
+    redirect_with_error_alert("Failed to fetch equipment: " . $e->getMessage(), "/staff/eq/equipments");
 }
-$_SESSION['equipment'] = $equipment;
+$_SESSION['equipment'] = serialize($equipment);
 
 $sidebarActive = 2;
 
 $menuBarConfig = [
-    "title" => $equipment->name,
+    "title" => htmlspecialchars($equipment->name),
     "showBack" => true,
     "goBackTo" => "/staff/eq/equipments/index.php",
     "useLink" => true,
@@ -26,117 +28,71 @@ $menuBarConfig = [
 ];
 
 require_once "../../pageconfig.php";
-$pageConfig['styles'][] = "./equipmentView.css";
+$pageConfig['styles'][] = "../equipmentView.css";
+$pageConfig['styles'][] = "../equipment.css";
 
 require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
-
 
 require_once "../../../../auth-guards.php";
 auth_required_guard("eq", "/staff/login");
 ?>
 
 <main>
-    <div class="base-container">
-
+    <div class="staff-base-container">
         <?php require_once "../../../includes/menubar.php"; ?>
 
-        <div class="view-equipment-container">
+        <div class="equipment-view-container">
             <div>
                 <h2 style="margin-bottom: 20px;">
                     Equipment Details
                 </h2>
-                <div>
-                    <div class="view-equipment-details">
-                        <p>ID</p>
-                        <p class="alt"><?= $equipment->id ?></p>
-                    </div>
-                    <hr>
-                    <div class="view-equipment-details">
-                        <p>Type</p>
-                        <p class="alt"><?= $equipment->type ?></p>
-                    </div>
-                    <hr>
-                    <div class="view-equipment-details">
-                        <p>Manufacturer</p>
-                        <p class="alt"><?= $equipment->manufacturer ?></p>
-                    </div>
-                    <hr>
-                    <div class="view-equipment-details">
-                        <p>Purchase Date</p>
-                        <p class="alt"><?= $equipment->purchase_date->format('Y-m-d H:i:s') ?></p>
-                    </div>
-                    <hr>
-                    <div class="view-equipment-details">
-                        <p>Last Maintenance</p>
-                        <p class="alt"><?= $equipment->last_maintenance->format('Y-m-d H:i:s') ?></p>
-                    </div>
+
+                <div class="equipment-view-details">
+                    <p><strong>Name:</strong></p>
+                    <p class="alt"><?= htmlspecialchars($equipment->name) ?></p>
+                </div>
+                <hr>
+
+                <div class="equipment-view-details">
+                    <p><strong>Category:</strong></p>
+                    <p class="alt"><?= htmlspecialchars($equipment->category??'N/A') ?></p>
+                </div>
+                <hr>
+
+                <div class="equipment-view-details">
+                    <p><strong>Quantity:</strong></p>
+                    <p class="alt"><?= htmlspecialchars($equipment->quantity??'N/A') ?></p>
+                </div>
+                <hr>
+
+                <div class="equipment-view-details">
+                    <p><strong>Status:</strong></p>
+                    <p class="alt"><?= htmlspecialchars($equipment->status??'N/A') ?></p>
+                </div>
+                <hr>
+
+                <div class="equipment-view-details">
+                    <p><strong>Description:</strong></p>
+                    <p class="alt"><?= nl2br(htmlspecialchars($equipment->description??'N/A')) ?></p>
                 </div>
             </div>
+
             <div>
-                <div style="margin: 10px" class="img">
+                <div style="margin: 10px;" class="img">
                     <h2 style="margin-bottom: 20px;">
                         Product Image
                     </h2>
                     <?php if ($equipment->image): ?>
-                        <img src="../../../../<?= $equipment->image ?>" alt="<?= $equipment->name ?>">
+                        <img src="/uploads/<?= htmlspecialchars($equipment->image) ?>" alt="<?= htmlspecialchars($equipment->name) ?>" style="width: 300px; height: 300px; object-fit: cover;">
                     <?php else: ?>
-                        <img src="./default-image.jpg" alt="default">
-                    <?php endif ?>
-
-                </div>
-                <div style="margin: 10px">
-                    <h2 style="margin-bottom: 20px;">
-                        Description
-                    </h2>
-                    <p><?= $equipment->description ?></p>
+                        <img src="/staff/eq/equipments/view/default-image.jpg" alt="Default Image" style="width: 300px; height: 300px; object-fit: cover;">
+                    <?php endif; ?>
                 </div>
             </div>
-            <!-- Equipment details container -->
-            <!--        <div class="view-equipment-container">-->
-            <!---->
-            <!--            <div>-->
-            <!--                 Equipment Image-->
-            <!--                --><?php //if ($equipment['img']): 
-                                    ?>
-            <!--                    <img src="--><?php //= htmlspecialchars($equipment['img']) 
-                                                    ?><!--" alt="--><?php //= htmlspecialchars($equipment['name']) 
-                                                                    ?><!--" style="width: 100%; max-width: 400px; margin-bottom: 20px;">-->
-            <!--                --><?php //else: 
-                                    ?>
-            <!--                    <p>No image available</p>-->
-            <!--                --><?php //endif; 
-                                    ?>
-            <!---->
-            <!--                Equipment Details-->
-            <!--                 <div class="equipment">-->
-            <!--                     <h2 style="margin-bottom: 20px;">Equipment Details</h2>-->
-            <!--                     <ul>-->
-            <!--                         <li><strong>ID:</strong> --><?php //= htmlspecialchars($equipment['id']) 
-                                                                        ?><!--</li>-->
-            <!--                         <li><strong>Name:</strong> --><?php //= htmlspecialchars($equipment['name']) 
-                                                                        ?><!--</li>-->
-            <!--                         <li><strong>Type:</strong> --><?php //= htmlspecialchars($equipment['type']) 
-                                                                        ?><!--</li>-->
-            <!--                         <li><strong>Last Maintenance:</strong> --><?php //= htmlspecialchars($equipment['last_maintenance']) 
-                                                                                    ?><!--</li>-->
-            <!--                         <li><strong>Purchase Date:</strong> --><?php //= htmlspecialchars($equipment['purchase_date']) 
-                                                                                ?><!--</li>-->
-            <!--                         <li><strong>Manufacturer:</strong> --><?php //= htmlspecialchars($equipment['manufacturer']) 
-                                                                                ?><!--</li>-->
-            <!--                     </ul>-->
-            <!---->
-            <!--                 </div>-->
-            <!--            </div>-->
-            <!---->
-            <!--            Equipment Description-->
-            <!--            <div class="description">-->
-            <!--                <h2 style="margin-bottom: 20px;">Description</h2>-->
-            <!--                <p>--><?php //= htmlspecialchars($equipment['description']) 
-                                        ?><!--</p>-->
-            <!--            </div>-->
-            <!--        </div>-->
+
         </div>
+    </div>
 </main>
 
 <?php require_once "../../../includes/footer.php"; ?>

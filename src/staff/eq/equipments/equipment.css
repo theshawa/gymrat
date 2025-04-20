@@ -60,7 +60,7 @@ h1 {
     background-color: #e53935;
 }
 
-/* Delete Equipment Modal */
+/* Delete equipment model */
 .delete-equipment-div {
     padding: 15px;
 }
@@ -84,7 +84,7 @@ h1 {
     background-color: #ff4d4d;
 }
 
-/* Update Equipment Modal */
+/* Update equipment model */
 .update-equipment-div {
     padding: 15px;
 }
@@ -109,14 +109,14 @@ h1 {
     color: white;
 }
 
-/* Equipment item description (optional use) */
+/* Equipment item optional description */
 .description {
     margin: 10px 0 0;
     font-size: 0.9rem;
     color: #555;
 }
 
-/* Responsive Design */
+/* Responsive design */
 @media (max-width: 768px) {
     h1 {
         font-size: 1.5rem;

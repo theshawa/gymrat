@@ -168,4 +168,61 @@ class Customer extends Model
             'password' => $this->password
         ]);
     }
+
+    public function get_username_by_id(int $id): ?string
+    {
+        $sql = "SELECT CONCAT(fname, ' ', lname) AS username FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $data = $stmt->fetch();
+
+        return $data['username'] ?? null; 
+    }
+
+    public function get_all(int $noTrainer = 0)
+    {
+        $sql = "SELECT * FROM $this->table";
+        if ($noTrainer === 1) {
+            $sql .= " WHERE trainer IS NULL";
+        }
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll();
+        $users = array_map(function ($user) {
+            $new_user = new Customer();
+            $new_user->fill($user);
+            return $new_user;
+        }, $data);
+        return $users;
+    }
+
+    public function count_customers_by_trainer(int $trainer_id): int
+    {
+        $sql = "SELECT COUNT(*) AS customer_count FROM $this->table WHERE trainer = :trainer_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['trainer_id' => $trainer_id]);
+        $data = $stmt->fetch();
+
+        return $data['customer_count'] ?? 0;
+    }
+
+    public function has_trainer_unassigned(): bool
+    {
+        $sql = "SELECT COUNT(*) AS unassigned_count FROM $this->table WHERE trainer IS NULL";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetch();
+
+        return $data['unassigned_count'] > 0;
+    }
+
+    public function __sleep()
+    {
+        return ['id', 'fname', 'lname', 'email', 'password', 'phone', 'avatar', 'created_at', 'updated_at', 'onboarded', 'membership_plan', 'membership_plan_activated_at', 'trainer', 'workout', 'meal_plan'];
+    }
+
+    public function __wakeup()
+    {
+        $this->conn = Database::get_conn();
+    }
 }

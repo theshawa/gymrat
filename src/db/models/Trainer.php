@@ -149,4 +149,17 @@ class Trainer extends Model
 
         return $data['username'] ?? null;
     }
+
+    public function get_all_trainers(): array
+    {
+        $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name FROM $this->table";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        $trainers = [];
+        foreach ($items as $item) {
+            $trainers[$item['id']] = $item['name'];
+        }
+        return $trainers;
+    }
 }

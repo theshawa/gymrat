@@ -14,6 +14,7 @@
 ## Logins
 
 RATS:
+mrclocktd@gmail.com
 emily.carter@example.com
 liam.johnson@example.co.uk
 

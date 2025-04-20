@@ -47,6 +47,14 @@ auth_required_guard("wnmp", "/staff/login");
                     </h2>
                     <p><?= $meal->description ?></p>
                 </div>
+                <div class="view-meal-details">
+                    <?php if ($meal->image): ?>
+                        <h2>
+                            Image
+                        </h2>
+                        <img src="../../../../uploads/<?= $meal->image ?>" alt="Meal Image" style="width: 300px; height: 300px; object-fit: cover;">
+                    <?php endif; ?>
+                </div>
             </div>
             <div>
                 <div class="view-meal-details">

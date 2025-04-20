@@ -12,9 +12,10 @@ try {
     $originalExercise->get_by_id($id);
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch exercise: " . $e->getMessage(), "/staff/wnmp");
+    exit;
 }
 
-$_SESSION['exercise'] = $originalExercise;
+$_SESSION['exercise'] = serialize($originalExercise);
 
-header("Location: /staff/wnmp/exercises/edit/index.php?id=$id");
-exit();
+redirect_with_success_alert("Exercise reverted successfully", "/staff/wnmp/exercises/edit?id=" . $id);
+exit;

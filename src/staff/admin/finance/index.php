@@ -2,7 +2,7 @@
 
 $pageTitle = "Finance Overview";
 $pageStyles = ["./finance.css"];
-$sidebarActive = 5;
+$sidebarActive = 7;
 $menuBarConfig = [
     "title" => $pageTitle
 ];
@@ -51,6 +51,7 @@ $membershipPlans = [
 ];
 
 require_once "../pageconfig.php";
+require_once "../../../alerts/functions.php";
 require_once "../../includes/header.php";
 require_once "../../includes/sidebar.php";
 require_once "../../../auth-guards.php";

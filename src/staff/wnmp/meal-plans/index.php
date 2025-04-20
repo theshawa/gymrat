@@ -41,7 +41,7 @@ try {
 }
 
 $infoCardConfig = [
-    "showImage" => true,
+    "showImage" => false,
     "showExtend" => true,
     "extendTo" => "/staff/wnmp/meal-plans/view/index.php",
     "cards" => $mealPlans,

@@ -13,13 +13,25 @@ class Meal extends Model
     public float $calories;
     public float $proteins;
     public float $fats;
-    public string $measure_unit;
     public DateTime $created_at;
     public DateTime $updated_at;
 
     public function __construct()
     {
         parent::__construct();
+        if (!empty($data)) {
+            $this->fill($data);
+        }
+    }
+
+    public function __sleep()
+    {
+        return ['id', 'name', 'description', 'created_at', 'updated_at', 'image', 'calories', 'proteins', 'fats'];
+    }
+
+    public function __wakeup()
+    {
+        $this->conn = Database::get_conn();
     }
 
     public function fill(array $data)
@@ -28,10 +40,9 @@ class Meal extends Model
         $this->name = $data['name'] ?? "";
         $this->description = $data['description'] ?? "";
         $this->image = $data['image'] ?? "";
-        $this->calories = $data['calories'] ?? 0;
-        $this->proteins = $data['proteins'] ?? 0;
-        $this->fats = $data['fats'] ?? 0;
-        $this->measure_unit = $data['measure_unit'] ?? "g";
+        $this->calories = isset($data['calories']) ? (float)$data['calories'] : 0.0; 
+        $this->proteins = isset($data['proteins']) ? (float)$data['proteins'] : 0.0; 
+        $this->fats = isset($data['fats']) ? (float)$data['fats'] : 0.0;
         $this->created_at = new DateTime($data['created_at'] ?? '');
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
     }

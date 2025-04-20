@@ -362,6 +362,11 @@ select:has(option:checked:not([value=""])) option {
   margin-right: 5px;
 }
 
+
+/* Dashboard */
+
+
+
  /*Alert*/
 .alert-wrapper {
   display: flex;

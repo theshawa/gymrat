@@ -101,4 +101,14 @@ class MembershipPlan extends Model
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['id' => $this->id]);
     }
+
+    public function __sleep()
+    {
+        return ['id', 'name', 'description', 'price', 'duration', 'is_locked', 'created_at', 'updated_at'];
+    }
+
+    public function __wakeup()
+    {
+        $this->conn = Database::get_conn();
+    }
 }

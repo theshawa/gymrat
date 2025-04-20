@@ -128,7 +128,7 @@ auth_required_guard("admin", "/staff/login");
             <div class="rat-view-profile">
                 <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: end; text-align: left;">
                 <?php if (!empty($customer->avatar)): ?>
-                    <img src="../../../../<?= htmlspecialchars($customer->avatar) ?>" alt="Customer Avatar"  class="rat-view-avatar">
+                    <img src="../../../../uploads/<?= $customer->avatar ?>" alt="Customer Avatar"  class="rat-view-avatar">
                 <?php else: ?>
                     <img src="../../../../uploads/default-images/default-avatar.png" alt="Default Avatar" class="rat-view-avatar">
                 <?php endif; ?>
@@ -140,7 +140,8 @@ auth_required_guard("admin", "/staff/login");
                     <h3 style="margin: 10px;">Created on <?= $customer->created_at ? $customer->created_at->format('Y-m-d') : 'N/A' ?></h3>
                 </div>
                 <div style="grid-row: 2; grid-column: 2; align-self: end; justify-self: end; text-align: right;">
-                    <a href="" style="margin: 10px 0px; width: 150px; height: 40px;" class="staff-button secondary">Edit Profile</a>
+                    <a href="/staff/admin/rats/profile/index.php?id=<?= $customer->id ?>" style="margin: 10px 0px; width: 150px; height: 40px;" 
+                    class="staff-button secondary">Edit Profile</a>
                 </div>
             </div>
 
@@ -168,7 +169,8 @@ auth_required_guard("admin", "/staff/login");
                             </a>
                         </div>
                     </div>
-
+                    
+                    <?php if ($customer->membership_plan): ?>
                     <div class="rat-view-membership">
                         <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: start; text-align: left;">
                             <?php if ($membership_plan_expiration): ?>
@@ -177,7 +179,8 @@ auth_required_guard("admin", "/staff/login");
                             <?php endif; ?>
                         </div>
                         <div style="grid-row: 2; grid-column: 1; align-self: end; justify-self: start; text-align: left;">
-                            <a href="" style="margin: 10px 0px; width: 120px; height: 40px;" class="staff-button primary">
+                            <a href="/staff/admin/rats/membership/index.php?id=<?= $customer->id ?>" 
+                            style="margin: 10px 0px; width: 120px; height: 40px;" class="staff-button primary">
                                 Edit Plan
                             </a>
                         </div>
@@ -186,6 +189,7 @@ auth_required_guard("admin", "/staff/login");
                             <h1 style="margin: 10px; font-size: 28px;"><?= $membership_plan->name ?? $customer->membership_plan ?></h1>
                         </div>
                     </div>
+                    <?php endif; ?>
 
                 </div>
             <?php endif; ?>

@@ -39,7 +39,7 @@ $menuBarConfig = [
     "options" => [
         ["title" => "Save Changes", "buttonType" => "submit", 
             "buttonName" => "action", "buttonValue" => "edit", "type" => "secondary"],
-        ["title" => "Revert Changes", "buttonType" => "submit", "formAction" => "revert_exercise.php", "type" => "destructive"]
+        ["title" => "Revert Changes", "buttonType" => "submit", "formAction" => "revert_workout.php", "type" => "destructive"]
     ]
 ];
 

@@ -86,7 +86,7 @@ if (!empty($errors)) {
 }
 
 try {
-    $exercise->save($image);
+    $exercise->save();
 } catch (PDOException $e) {
     if ($e->errorInfo[1] == 1062) {
         redirect_with_error_alert("Failed to edit exercise due to an error: Exercise with the same name already exists", "/staff/wnmp/exercises/edit?id=" . $id);
@@ -100,6 +100,6 @@ unset($_SESSION['exercise']);
 unset($_SESSION['exercise_id']);
 
 redirect_with_success_alert("Exercise updated successfully", "/staff/wnmp/exercises/view?id=" . $id);
-
+exit;
 
 

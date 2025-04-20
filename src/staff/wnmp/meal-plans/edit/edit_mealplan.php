@@ -8,15 +8,18 @@ require_once "../../../../db/models/Meal.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirect_with_error_alert("Method not allowed", "/staff/wnmp/meal-plans");
+    exit;
 }
 if ($_POST['mealplan_id'] !== $_SESSION['mealplan_id']) {
     redirect_with_error_alert("ID mismatch occurred", "/staff/wnmp/meal-plans/edit?id=" . $_SESSION['mealplan_id']);
+    exit;
 }
 
 $mealPlan_id = htmlspecialchars($_POST['mealplan_id']);
 $mealPlan = unserialize($_SESSION['mealPlan']);
 if (!$mealPlan) {
     redirect_with_error_alert("Failed to load meal plan from session", "/staff/wnmp/meal-plans");
+    exit;
 }
 $errors = [];
 
@@ -116,6 +119,7 @@ if (!empty($mealPlan->meals)) {
 if (!empty($errors)) {
     $error_message = implode(" ", $errors);
     redirect_with_error_alert($error_message, "/staff/wnmp/meal-plans/edit?id=" . $mealPlan_id);
+    exit;
 }
 
 
@@ -128,6 +132,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'revert') {
         $mealPlan->meals = $mealModel->addMealTitles($mealPlan->meals);
     } catch (Exception $e) {
         redirect_with_error_alert("Failed to fetch meal: " . $e->getMessage(), "/staff/wnmp");
+        exit;
     }
 }
 
@@ -150,6 +155,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'edit'){
             $mealId = array_search($meal['title'], $mealTitles);
             if ($mealId === false) {
                 redirect_with_error_alert("Meal name not found: " . $meal['title'], "/staff/wnmp/meal-plans/edit?id=" . $mealPlan_id);
+                exit;
             }
             $meal['meal_id'] = $mealId;
         }
@@ -159,15 +165,18 @@ if (isset($_POST['action']) && $_POST['action'] === 'edit'){
         $mealPlan->save();
     } catch (PDOException $e) {
         redirect_with_error_alert("Failed to update meal plan due to an error: " . $e->getMessage(), "/staff/wnmp/meal-plans/edit?id=" . $mealPlan_id);
+        exit;
     }
 
     unset($_SESSION['mealPlan']);
     unset($_SESSION['mealplan_id']);
     
     redirect_with_success_alert("Meal plan created successfully", "/staff/wnmp/meal-plans/view?id=" . $mealPlan->id);
+    exit;
 }
 
 
 redirect_with_success_alert("Action successful (Press Save Changes to complete)", "/staff/wnmp/meal-plans/edit?id=" . $mealPlan->id);
+exit;
 
 ?>

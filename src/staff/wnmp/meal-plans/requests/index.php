@@ -1,5 +1,4 @@
 <?php
-
 require_once "../../../../auth-guards.php";
 auth_required_guard("wnmp", "/staff/login");
 
@@ -20,7 +19,6 @@ $menuBarConfig = [
 ];
 
 require_once "../../../../db/models/MealPlanRequest.php";
-
 require_once "../../../../alerts/functions.php";
 
 $mealPlanRequests = [];
@@ -29,6 +27,7 @@ try {
     $mealPlanRequests = $mealPlanRequestModel->get_all(-1, $setFilter);
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch meal plan requests: " . $e->getMessage(), "/staff/wnmp");
+    exit;
 }
 
 $infoCardConfig = [

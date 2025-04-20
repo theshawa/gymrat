@@ -41,6 +41,7 @@ try {
     $workout = $workoutModel->get_all();
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch workouts: " . $e->getMessage(), "/staff/wnmp");
+    exit;
 }
 
 $infoCardConfig = [

@@ -1,5 +1,8 @@
 <?php
 
+require_once "../../../../auth-guards.php";
+auth_required_guard("wnmp", "/staff/login");
+
 $id = htmlspecialchars($_GET['id'] ?? null);
 
 require_once "../../../../db/models/Workout.php";
@@ -14,6 +17,7 @@ try {
     $_SESSION['workout'] = serialize($workout);
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch workout: " . $e->getMessage(), "/staff/wnmp/workouts");
+    exit;
 }
 
 $sidebarActive = 3;
@@ -35,9 +39,6 @@ $pageConfig['styles'][] = "../workouts.css";
 
 require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
-
-require_once "../../../../auth-guards.php";
-auth_required_guard("wnmp", "/staff/login");
 ?>
 
 <main>

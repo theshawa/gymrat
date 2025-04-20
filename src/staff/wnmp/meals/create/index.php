@@ -1,6 +1,8 @@
 <?php
-
 session_start();
+
+require_once "../../../../auth-guards.php";
+auth_required_guard("wnmp", "/staff/login");
 
 $sidebarActive = 4;
 
@@ -32,9 +34,6 @@ $pageConfig['styles'][] = "../meal.css";
 
 require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
-
-require_once "../../../../auth-guards.php";
-auth_required_guard("wnmp", "/staff/login");
 ?>
 
 <main>

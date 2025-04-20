@@ -38,6 +38,7 @@ try {
     $mealPlans = $mealPlanModel->get_all();
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch meal plans: " . $e->getMessage(), "/staff/wnmp");
+    exit;
 }
 
 $infoCardConfig = [

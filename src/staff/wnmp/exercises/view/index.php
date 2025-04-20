@@ -1,6 +1,8 @@
 <?php
-$id = $_GET['id'] ?? null;
+require_once "../../../../auth-guards.php";
+auth_required_guard("wnmp", "/staff/login");
 
+$id = $_GET['id'] ?? null;
 $sidebarActive = 2;
 
 require_once "../../../../db/models/Exercise.php";
@@ -32,9 +34,6 @@ $pageConfig['styles'][] = "../exercises.css";
 
 require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";
-
-require_once "../../../../auth-guards.php";
-auth_required_guard("wnmp", "/staff/login");
 ?>
 
 <main>

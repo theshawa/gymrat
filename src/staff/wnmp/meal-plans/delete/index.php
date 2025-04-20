@@ -1,6 +1,8 @@
 <?php
-
 session_start();
+
+require_once "../../../../auth-guards.php";
+auth_required_guard("wnmp", "/staff/login");
 
 require_once "../../../../alerts/functions.php";
 require_once "../../../../db/models/MealPlan.php";

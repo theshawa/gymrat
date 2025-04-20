@@ -1,7 +1,6 @@
 <?php
-
-header("Location: ./exercises");
-exit;
+require_once "../../auth-guards.php";
+auth_required_guard("wnmp", "/staff/login");
 
 $pageTitle = "Home";
 $sidebarActive = 1;
@@ -14,9 +13,6 @@ require_once "./pageconfig.php";
 require_once "../includes/header.php";
 require_once "../includes/sidebar.php";
 require_once "../../alerts/functions.php";
-
-require_once "../../auth-guards.php";
-auth_required_guard("wnmp", "/staff/login");
 ?>
 
 <main>

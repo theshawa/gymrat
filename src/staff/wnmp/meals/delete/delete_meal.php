@@ -6,6 +6,7 @@ require_once "../../../../alerts/functions.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirect_with_error_alert("Method not allowed", "/staff/wnmp/meals");
+    exit;
 }
 
 $id = $_POST['meal_id'];
@@ -19,9 +20,11 @@ try {
     $meal->delete();
 } catch (PDOException $e) {
     redirect_with_error_alert("Failed to delete meal due to an error: " . $e->getMessage(), "/staff/wnmp/meals/view?id=" . $id);
+    exit;
 }
 
 unset($_SESSION['meal']);
 unset($_SESSION['meal_id']);
 
 redirect_with_success_alert("Meal deleted successfully", "/staff/wnmp/meals");
+exit;

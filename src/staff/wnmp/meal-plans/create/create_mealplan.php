@@ -7,6 +7,7 @@ require_once "../../../../db/models/MealPlan.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirect_with_error_alert("Method not allowed", "/staff/wnmp/meal-plans");
+    exit;
 }
 
 
@@ -134,8 +135,10 @@ if (isset($_POST['action']) && $_POST['action'] === 'create'){
     } catch (PDOException $e) {
         if ($e->errorInfo[1] == 1062) {
             redirect_with_error_alert("Failed to create meal plan due to an error: Meal plan with the same name already exists", "/staff/wnmp/meal-plans/create");
+            exit;
         }
         redirect_with_error_alert("Failed to create meal plan due to an error: " . $e->getMessage(), "/staff/wnmp/meal-plans/create");
+        exit;
     }
     
     if (!isset($_SESSION['mealTitles'])){    
@@ -150,6 +153,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'create'){
             $mealId = array_search($meal['title'], $mealTitles);
             if ($mealId === false) {
                 redirect_with_error_alert("Meal name not found: " . $meal['title'], "/staff/wnmp/meal-plans/create");
+                exit;
             }
             $meal['meal_id'] = $mealId;
             $meal['mealplan_id'] = $mealPlan->id;
@@ -160,11 +164,14 @@ if (isset($_POST['action']) && $_POST['action'] === 'create'){
         $mealPlan->save();
     } catch (PDOException $e) {
         redirect_with_error_alert("Failed to update meals due to an error: " . $e->getMessage(), "/staff/wnmp/meal-plans/create");
+        exit;
     }
     
     redirect_with_success_alert("Meal plan created successfully", "/staff/wnmp/meal-plans/view?id=" . $mealPlan->id);
+    exit;
 }
 
 redirect_with_success_alert("Action successful (Press Save Changes to complete)", "/staff/wnmp/meal-plans/create");
+exit;
 
 ?>

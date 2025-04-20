@@ -17,6 +17,18 @@ try {
 
 $avatar = $trainer->avatar ? "/uploads/" . $trainer->avatar : "/uploads/default-images/default-avatar.png";
 
+require_once "../../db/models/TrainerRating.php";
+$trainerRating = new TrainerRating();
+$rating = [
+    'avg_rating' => 0,
+    'review_count' => 0
+];
+try {
+    $rating = $trainerRating->get_rating_of_trainer($trainer->id);
+} catch (Exception $th) {
+    die("Failed to get trainer rating: " . $th->getMessage());
+}
+
 $pageConfig = [
     "title" => "My Profile",
     "navbar_active" => 3,
@@ -37,11 +49,11 @@ require_once "../includes/titlebar.php";
         <p class="profile-bio"><?= $trainer->bio ?></p>
 
         <div class="rating-section">
-            <span class="rating-number"><?= $trainer->rating ?></span>
+            <span class="rating-number"><?= number_format($rating['avg_rating'], 1) ?></span>
             <div class="rating-stars">
                 ★★★★★
             </div>
-            <span class="review-count">Out of <?= $trainer->review_count ?> Reviews</span>
+            <span class="review-count">Out of <?= $rating['review_count'] ?> Reviews</span>
         </div>
 
         <a href="edit.php" class="btn full-width">EDIT PROFILE</a>

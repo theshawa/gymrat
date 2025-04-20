@@ -3,16 +3,42 @@ main {
 }
 
 h1 {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
-span {
-  font-size: 15px;
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   color: var(--color-zinc-400);
+  margin-bottom: 30px;
 }
 
-p {
-  margin: 15px 0 20px 0;
+.fact {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 16px;
+  border: 1px solid var(--color-zinc-800);
+  border-radius: 10px;
+  margin: 5px;
+  gap: 3px;
+}
+
+.fact .title {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--color-zinc-400);
+  letter-spacing: 0.3px;
+}
+
+.fact .value {
+  color: var(--color-zinc-300);
+}
+
+p.description {
+  margin-bottom: 20px;
+  color: var(--color-zinc-300);
 }
 
 iframe {
@@ -27,6 +53,7 @@ iframe {
   aspect-ratio: 16/9;
   border-radius: 10px;
   background-color: var(--color-zinc-900);
+  object-fit: contain;
 }
 
 .tutorial {

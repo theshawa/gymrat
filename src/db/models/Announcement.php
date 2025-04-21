@@ -106,6 +106,24 @@ class Announcement extends Model
         $this->fill($item);
     }
 
+    public function get_all(int $isValid = 0)
+    {
+        $sql = "SELECT * FROM $this->table";
+        if ($isValid === 1) {
+            $sql .= " WHERE valid_till >= NOW()";
+        }
+        $sql .= " ORDER BY created_at DESC";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        return array_map(function ($item) {
+            $announcement = new Announcement();
+            $announcement->fill($item);
+            return $announcement;
+        }, $items);
+    }
+
     public function delete()
     {
         $sql = "DELETE FROM $this->table WHERE id = :id";

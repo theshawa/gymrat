@@ -20,7 +20,7 @@ $menuBarConfig = [
     "options" => []
 ];
 
-// Simulated log data (20 records now)
+// Simulated log data
 $logRecords = [
     ["id" => 1, "equipment" => "Leg Press Machine", "action" => "Maintenance Completed", "date" => "2024-10-10", "status" => "Completed"],
     ["id" => 2, "equipment" => "Squat Rack", "action" => "Scheduled Maintenance", "date" => "2024-11-15", "status" => "Pending"],

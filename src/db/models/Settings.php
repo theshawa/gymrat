@@ -10,6 +10,7 @@ class Settings extends Model
     public string $contact_email;
     public int $contact_phone;
     public int $workout_session_expiry;
+    public int $rat_seats;
 
     public function fill(array $data)
     {
@@ -17,6 +18,7 @@ class Settings extends Model
         $this->contact_email = $data['contact_email'] ?? "";
         $this->contact_phone = $data['contact_phone'] ?? 0;
         $this->workout_session_expiry = $data['workout_session_expiry'] ?? 0;
+        $this->rat_seats = $data['rat_seats'] ?? 0;
     }
 
     public function get_all()
@@ -36,13 +38,15 @@ class Settings extends Model
         $sql = "UPDATE $this->table SET 
         contact_email = :contact_email, 
         contact_phone = :contact_phone, 
-        workout_session_expiry = :workout_session_expiry 
+        workout_session_expiry = :workout_session_expiry,
+        rat_seats = :rat_seats
         WHERE id = 1";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'contact_email' => $this->contact_email,
             'contact_phone' => $this->contact_phone,
-            'workout_session_expiry' => $this->workout_session_expiry
+            'workout_session_expiry' => $this->workout_session_expiry,
+            'rat_seats' => $this->rat_seats,
         ]);
     }
 

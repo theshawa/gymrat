@@ -1,6 +1,6 @@
 const meter = document.querySelector(".meter");
 const arrow = document.querySelector(".meter .arrow");
-const textIncrementer = document.querySelector("h2");
+const textIncrementer = document.querySelector(".traffic-value");
 
 const animateMeter = (targetValue = 0) => {
   let currentValue = 0;

@@ -36,6 +36,15 @@ class Equipment extends Model
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
     }
 
+    public function __sleep()
+    {
+        return array_diff(array_keys(get_object_vars($this)), ['conn']);
+    }
+
+    public function __wakeup()
+    {
+        $this->conn = Database::get_conn();
+    }
 
     public function get_all(): array
     {

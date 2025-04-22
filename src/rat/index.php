@@ -82,8 +82,27 @@ require_once "./includes/titlebar.php";
     const $WORKOUT_STARTED_AT = <?= json_encode($workoutSession ? $workoutSession->started_at->format("Y-m-d H:i:s") : null) ?>;
 </script>
 
+<?php
+$now = new DateTime();
+$expire_date =  $customer->membership_plan_activated_at;
+$expire_date->modify('+30 days');
+
+$interval = $now->diff($expire_date);
+$plan_remaining_days = $interval->days;
+?>
+
 <main>
     <div class="grid">
+        <?php require_once "../uploads.php"; ?>
+        <div class="gym-banner" style="background-image: linear-gradient(rgba(9, 9, 11,0) ,rgba(9, 9, 11,0.6),rgba(9, 9, 11,1)) , url(<?= get_file_url("default-images/default-gym-banner.png") ?>);">
+            <h1 class="gym-name">
+                Dhamya Fitness Centre
+            </h1>
+            <p class="paragraph">
+                Your fitness journey starts here!
+            </p>
+            <!-- <a href="/rat/subscription/index.php" class="gym-membership <?= $plan_remaining_days <= 7 ? 'danger' : '' ?>">Your <?= $plan->name ?> plan will expire in <?= $plan_remaining_days ?> days</a> -->
+        </div>
         <?php if ($customer->workout): ?>
             <div class="tile with-sub-link <?php echo $workoutSession ? 'red' : 'green' ?>">
                 <a href="/rat/workout/index.php" class="sub-link">
@@ -151,19 +170,12 @@ require_once "./includes/titlebar.php";
                 Make Complaint
             </span>
         </a>
-        <?php
-        $now = new DateTime();
-        $expire_date =  $customer->membership_plan_activated_at;
-        $expire_date->modify('+30 days');
 
-        $interval = $now->diff($expire_date);
-        $remaining_days = $interval->days;
-        ?>
-        <a href="/rat/subscription/index.php" class="tile <?php echo $remaining_days < 8 ? 'red' : '' ?>">
-            <?php if ($remaining_days < 8): ?>
-                <span class="sub-text">Your plan will expire wihtin <?= $remaining_days ?> days!</span>
+        <a href="/rat/subscription/index.php" class="tile <?php echo $plan_remaining_days < 8 ? 'red' : '' ?>">
+            <?php if ($plan_remaining_days < 8): ?>
+                <span class="sub-text">Your plan will expire wihtin <?= $plan_remaining_days ?> days!</span>
             <?php else: ?>
-                <span class="sub-text"><?= $remaining_days ?> days remaining</span>
+                <span class="sub-text"><?= $plan_remaining_days ?> days remaining</span>
             <?php endif; ?>
             <span>
                 My<br />

@@ -62,4 +62,12 @@ try {
     exit;
 }
 
+$_SESSION['auth'] = [
+    ...$_SESSION['auth'],
+    'fname' => $user->fname,
+    'lname' => $user->lname,
+    'phone' => $user->phone,
+    'avatar' => $user->avatar
+];
+
 redirect_with_success_alert("Profile updated successfully", "../");

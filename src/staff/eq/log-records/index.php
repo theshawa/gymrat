@@ -5,7 +5,7 @@ $pageTitle = "Equipment Log Records";
 $sidebarActive = 3;
 
 require_once "../pageconfig.php";
-$pageConfig['styles'][] = "./log-records.css";
+$pageConfig['styles'][] = "../log-records/log-records.css";
 
 require_once "../../includes/header.php";
 require_once "../../includes/sidebar.php";
@@ -20,7 +20,7 @@ $menuBarConfig = [
     "options" => []
 ];
 
-// Corrected simulated log data (based on ERD: id, created_at, description)
+// Simulated log data
 $logRecords = [
     ["id" => 1, "created_at" => "2024-10-10", "description" => "Maintenance completed for Leg Press Machine"],
     ["id" => 2, "created_at" => "2024-11-15", "description" => "Scheduled maintenance for Squat Rack"],
@@ -49,26 +49,30 @@ $logRecords = [
     <div class="staff-base-container">
         <?php require_once "../../includes/menubar.php"; ?>
 
-        <div class="log-table-container">
-            <h1>Equipment Log Records</h1>
-            <table class="log-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Created At</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($logRecords as $log): ?>
+        <div class="log-records-card">
+            <h1 class="log-title">Equipment Log Records</h1>
+
+            <div class="log-table-wrapper">
+                <table class="log-table">
+                    <thead>
                         <tr>
-                            <td><?= htmlspecialchars($log['id']) ?></td>
-                            <td><?= htmlspecialchars($log['created_at']) ?></td>
-                            <td><?= htmlspecialchars($log['description']) ?></td>
+                            <th>ID</th>
+                            <th>Created At</th>
+                            <th>Description</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($logRecords as $log): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($log['id']) ?></td>
+                                <td><?= htmlspecialchars($log['created_at']) ?></td>
+                                <td><?= htmlspecialchars($log['description']) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 </main>

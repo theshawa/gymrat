@@ -83,7 +83,6 @@ class Meal extends Model
             'calories' => $this->calories,
             'proteins' => $this->proteins,
             'fats' => $this->fats,
-            'measure_unit' => $this->measure_unit,
         ]);
         $this->id = $this->conn->lastInsertId();
     }
@@ -100,7 +99,6 @@ class Meal extends Model
             'calories' => $this->calories,
             'proteins' => $this->proteins,
             'fats' => $this->fats,
-            'measure_unit' => $this->measure_unit,
         ]);
     }
 

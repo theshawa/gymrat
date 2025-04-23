@@ -3,6 +3,8 @@ require_once "../../../auth-guards.php";
 auth_required_guard("admin", "/staff/login");
 
 require_once "../../../alerts/functions.php";
+require_once "../../../db/models/MembershipPayment.php";
+
 
 $pageTitle = "Finance Overview";
 $pageStyles = ["./finance.css"];
@@ -11,48 +13,34 @@ $menuBarConfig = [
     "title" => $pageTitle
 ];
 
-// Data for income overview
-$incomeOverview = [
-    [
-        "month" => "November",
-        "income" => "Rs. 125,000",
-        "plansSold" => 68
-    ],
-    [
-        "month" => "October",
-        "income" => "Rs. 94,000",
-        "plansSold" => 63
-    ],
-    [
-        "month" => "September",
-        "income" => "Rs. 132,000",
-        "plansSold" => 69
-    ]
-];
+$membershipPaymentModel = new MembershipPayment();
+$currentYear = (int)date("Y");
+$currentMonth = (int)date("m");
+$total_revenues = [];
+$total_counts = [];
+try {
+    for ($i = 0; $i < 3; $i++) {
+        $month = $currentMonth - $i;
+        $year = $currentYear;
+        if ($month <= 0) {
+            $month += 12;
+            $year -= 1;
+        }
+        $total_revenues[] = $membershipPaymentModel->get_total_revenue_for_month($year, $month);
+        $total_counts[] = $membershipPaymentModel->get_total_count_for_month($year, $month);
+    }
+} catch (Exception $e) {
+    $_SESSION['error'] = "Failed to calculate revenues: " . $e->getMessage();
+}
 
-// Data for membership plans
-$membershipPlans = [
-    [
-        "name" => "Basic Plan",
-        "sales" => 120,
-        "income" => "Rs. 45,600"
-    ],
-    [
-        "name" => "Standard Plan",
-        "sales" => 80,
-        "income" => "Rs. 32,000"
-    ],
-    [
-        "name" => "Premium Plan",
-        "sales" => 50,
-        "income" => "Rs. 25,000"
-    ],
-    [
-        "name" => "VIP Plan",
-        "sales" => 30,
-        "income" => "Rs. 67,000"
-    ]
-];
+$currentMonthPayments = new MembershipPayment();
+try {
+    $currentMonthPayments = $currentMonthPayments->get_all_sales_grouped_by_plan_for_month($currentYear, $currentMonth);
+} catch (Exception $e) {
+    redirect_with_error_alert("Failed to fetch sales: " . $e->getMessage(), "/staff/admin");
+    exit;
+}
+
 
 require_once "../pageconfig.php";
 require_once "../../includes/header.php";
@@ -63,46 +51,48 @@ require_once "../../includes/sidebar.php";
     <div class="staff-base-container">
         <?php require_once "../../includes/menubar.php"; ?>
         <div style="display: flex; flex-direction: column">
-            <div style="display: flex; flex-direction: row">
-                <div class="overview-small-box" style="padding: 20px; display: flex; flex-direction: column; align-items: center">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="overview-small-box" style="grid-column: 1; padding: 20px; display: flex; flex-direction: column; align-items: center;">
                     <h1>Income Overview</h1>
                     <div class="tab">
-                        <?php foreach ($incomeOverview as $index => $data): ?>
-                            <button class="tablinks" onclick="openTab(event, 'Month<?= $index ?>')"><?= $data['month'] ?></button>
-                        <?php endforeach; ?>
+                        <?php for ($i = 0; $i < 3; $i++): ?>
+                            <?php 
+                                $month = $currentMonth - $i;
+                                $year = $currentYear;
+                                if ($month <= 0) {
+                                    $month += 12;
+                                    $year -= 1;
+                                }
+                                $monthName = date("F", mktime(0, 0, 0, $month, 1));
+                            ?>
+                            <button class="tablinks" onclick="openTab(event, 'Month<?= $i ?>')"><?= $monthName ?> <?= $year ?></button>
+                        <?php endfor; ?>
                     </div>
 
-                    <?php foreach ($incomeOverview as $index => $data): ?>
-                        <div id="Month<?= $index ?>" class="tabcontent">
-                            <h3><?= $data['month'] ?></h3>
-                            <h1 style="font-size: 64px; margin: 50px"><?= $data['income'] ?></h1>
-                            <p>Number of membership plans sold: <?= $data['plansSold'] ?></p>
+                    <?php for ($i = 0; $i < 3; $i++): ?>
+                        <?php 
+                            $month = $currentMonth - $i;
+                            $year = $currentYear;
+                            if ($month <= 0) {
+                                $month += 12;
+                                $year -= 1;
+                            }
+                            $monthName = date("F", mktime(0, 0, 0, $month, 1));
+                        ?>
+                        <div id="Month<?= $i ?>" class="tabcontent">
+                            <h3><?= $monthName ?> <?= $year ?></h3>
+                            <h1 style="font-size: 52px; margin: 50px">Rs. <?= number_format($total_revenues[$i], 2) ?></h1>
+                            <p>Number of membership plans sold: <?= $total_counts[$i] ?></p>
                         </div>
-                    <?php endforeach; ?>
+                    <?php endfor; ?>
                 </div>
-                <div class="overview-small-box" style="padding: 20px; display: flex; flex-direction: column; align-items: center">
+                <div style="grid-column: 2; padding: 20px;">
                     <h1>Income Growth Analysis</h1>
                     
                 </div>
             </div>
-            <div class="overview-small-box" style="padding: 20px; width: 98%">
-                <div class="container">
-                    <h2>Membership Plan Sales</h2>
-                    <ul class="responsive-table">
-                        <li class="table-header">
-                            <div class="col col-1">Membership Name</div>
-                            <div class="col col-2">Number of Sales</div>
-                            <div class="col col-3">Total Income</div>
-                        </li>
-                        <?php foreach ($membershipPlans as $plan): ?>
-                            <li class="table-row">
-                                <div class="col col-1" data-label="Membership Name"><?= $plan['name'] ?></div>
-                                <div class="col col-2" data-label="Number of Sales"><?= $plan['sales'] ?></div>
-                                <div class="col col-3" data-label="Total Income"><?= $plan['income'] ?></div>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
+            <div class="overview-large-box">
+                
             </div>
         </div>
     </div>

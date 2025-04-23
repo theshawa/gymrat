@@ -362,6 +362,10 @@ select:has(option:checked:not([value=""])) option {
   margin-right: 5px;
 }
 
+.font-color-red {
+  color: var(--color-red);
+}
+
 
 /* Dashboard */
 

@@ -107,4 +107,84 @@ class MembershipPayment extends Model
             'id' => $this->id,
         ]);
     }
+
+    public function get_total_revenue_for_month(int $year, int $month, int $membership_plan = 0): float
+    {
+        $sql = "SELECT SUM(amount) as total_revenue FROM $this->table 
+                WHERE YEAR(created_at) = :year AND MONTH(created_at) = :month";
+        $params = [
+            'year' => $year,
+            'month' => $month
+        ];
+
+        if ($membership_plan !== 0) {
+            $sql .= " AND membership_plan = :membership_plan";
+            $params['membership_plan'] = $membership_plan;
+        }
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute($params);
+        $result = $stmt->fetch();
+        return $result['total_revenue'] ?? 0.0;
+    }
+
+    public function get_total_count_for_month(int $year, int $month, int $membership_plan = 0): float
+    {
+        $sql = "SELECT COUNT(id) as total_revenue FROM $this->table 
+                WHERE YEAR(created_at) = :year AND MONTH(created_at) = :month";
+        $params = [
+            'year' => $year,
+            'month' => $month
+        ];
+
+        if ($membership_plan !== 0) {
+            $sql .= " AND membership_plan = :membership_plan";
+            $params['membership_plan'] = $membership_plan;
+        }
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute($params);
+        $result = $stmt->fetch();
+        return $result['total_revenue'] ?? 0.0;
+    }
+
+    public function get_all_sales_for_month(int $year, int $month): array
+    {
+        $sql = "SELECT * FROM $this->table WHERE YEAR(created_at) = :year AND MONTH(created_at) = :month";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'year' => $year,
+            'month' => $month
+        ]);
+        $items = $stmt->fetchAll();
+        return array_map(function ($item) {
+            $record = new MembershipPayment();
+            $record->fill($item);
+            return $record;
+        }, $items);
+    }
+
+    public function get_all_sales_grouped_by_plan_for_month(int $year, int $month): array
+    {
+        $sql = "SELECT membership_plan, SUM(amount) as total_amount, COUNT(id) as total_count 
+                FROM $this->table 
+                WHERE YEAR(created_at) = :year AND MONTH(created_at) = :month 
+                GROUP BY membership_plan";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'year' => $year,
+            'month' => $month
+        ]);
+        return $stmt->fetchAll();
+    }
+
+    public function __sleep()
+    {
+        return ['id', 'customer', 'membership_plan', 'amount', 'completed_at', 'created_at'];
+    }
+
+    public function __wakeup()
+    {
+        $this->conn = Database::get_conn();
+    }
 }

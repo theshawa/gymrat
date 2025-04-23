@@ -33,7 +33,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.dashboard-tab-large > * {
+.font-zinc-200 {
     color: var(--color-zinc-200);
 }
 
@@ -83,7 +83,17 @@
     background-color: var(--color-red);
     border-radius: 50%;
     margin-right: 5px;
-  }
+}
+
+.background-color-zinc-100 {
+    background-color: var(--color-zinc-100);
+}
+
+.background-color-zinc-200 {
+    background-color: var(--color-zinc-200);
+}
+
+
 
 
 .rat-view-row {

@@ -1,8 +1,10 @@
 <?php
 require_once "../../auth-guards.php";
-if (auth_required_guard("trainer", "/trainer/login")) exit;
+if (auth_required_guard("trainer", "/trainer/login"))
+    exit;
 
 require_once "../../db/models/Trainer.php";
+require_once "../../uploads.php"; // Include the uploads helper
 
 $trainer = new Trainer();
 $trainer->fill([
@@ -15,7 +17,16 @@ try {
     die("Failed to get trainer data due to error: " . $e->getMessage());
 }
 
-$avatar = $trainer->avatar ? "/uploads/" . $trainer->avatar : "/uploads/default-images/default-avatar.png";
+// Debug output to check what's stored in the database
+error_log("Trainer avatar from database: " . $trainer->avatar);
+
+// Use the get_file_url helper function if avatar exists
+$avatar = $trainer->avatar
+    ? get_file_url($trainer->avatar)
+    : "/uploads/default-images/default-avatar.png";
+
+// Debug the constructed path
+error_log("Constructed avatar path: " . $avatar);
 
 require_once "../../db/models/TrainerRating.php";
 $trainerRating = new TrainerRating();
@@ -41,7 +52,8 @@ require_once "../includes/titlebar.php";
 
 <main>
     <div class="profile-content">
-        <img src="<?= $avatar ?>" alt="" class="profile-avatar">
+        <!-- Force browser to refresh the image by adding timestamp -->
+        <img src="<?= $avatar ?>?t=<?= time() ?>" alt="Profile Avatar" class="profile-avatar">
 
         <h1><?= $trainer->fname ?> <?= $trainer->lname ?></h1>
 

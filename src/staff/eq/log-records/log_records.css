@@ -1,0 +1,39 @@
+.log-records-card {
+    background: white;
+    padding: 30px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.log-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.log-table-wrapper {
+    overflow-x: auto;
+}
+
+.log-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+}
+
+.log-table th, .log-table td {
+    padding: 12px 18px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.log-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.log-table th {
+    background-color: #f0f0f0;
+    color: #555;
+}

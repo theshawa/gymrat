@@ -5,7 +5,7 @@ $pageTitle = "Equipment Log Records";
 $sidebarActive = 3;
 
 require_once "../pageconfig.php";
-$pageConfig['styles'][] = "./log-records.css";
+$pageConfig['styles'][] = "../log-records/log-records.css";
 
 require_once "../../includes/header.php";
 require_once "../../includes/sidebar.php";
@@ -22,26 +22,26 @@ $menuBarConfig = [
 
 // Simulated log data
 $logRecords = [
-    ["id" => 1, "equipment" => "Leg Press Machine", "action" => "Maintenance Completed", "date" => "2024-10-10", "status" => "Completed"],
-    ["id" => 2, "equipment" => "Squat Rack", "action" => "Scheduled Maintenance", "date" => "2024-11-15", "status" => "Pending"],
-    ["id" => 3, "equipment" => "Bench Press", "action" => "Repaired", "date" => "2024-09-20", "status" => "Completed"],
-    ["id" => 4, "equipment" => "Dumbbells", "action" => "Usage Logged", "date" => "2024-11-18", "status" => "Completed"],
-    ["id" => 5, "equipment" => "Lat Pulldown Machine", "action" => "Replaced Cable", "date" => "2024-10-25", "status" => "Completed"],
-    ["id" => 6, "equipment" => "Chest Fly Machine", "action" => "Scheduled Maintenance", "date" => "2024-12-01", "status" => "Pending"],
-    ["id" => 7, "equipment" => "Treadmill", "action" => "Lubrication", "date" => "2024-10-05", "status" => "Completed"],
-    ["id" => 8, "equipment" => "Rowing Machine", "action" => "Replaced Handle", "date" => "2024-11-10", "status" => "Completed"],
-    ["id" => 9, "equipment" => "Elliptical", "action" => "Scheduled Maintenance", "date" => "2024-11-25", "status" => "Pending"],
-    ["id" => 10, "equipment" => "Calf Raise Machine", "action" => "Repaired Foot Pedal", "date" => "2024-10-30", "status" => "Completed"],
-    ["id" => 11, "equipment" => "Smith Machine", "action" => "Inspected", "date" => "2024-09-15", "status" => "Completed"],
-    ["id" => 12, "equipment" => "Seated Row Machine", "action" => "Cable Adjustment", "date" => "2024-10-05", "status" => "Completed"],
-    ["id" => 13, "equipment" => "Leg Curl Machine", "action" => "Scheduled Maintenance", "date" => "2024-12-15", "status" => "Pending"],
-    ["id" => 14, "equipment" => "Leg Extension Machine", "action" => "Seat Cushion Replacement", "date" => "2024-10-20", "status" => "Completed"],
-    ["id" => 15, "equipment" => "Hack Squat Machine", "action" => "Lubricated Joints", "date" => "2024-11-01", "status" => "Completed"],
-    ["id" => 16, "equipment" => "Pull-up Bar", "action" => "Grip Replaced", "date" => "2024-09-28", "status" => "Completed"],
-    ["id" => 17, "equipment" => "Pec Deck Machine", "action" => "Maintenance Completed", "date" => "2024-10-12", "status" => "Completed"],
-    ["id" => 18, "equipment" => "Cable Crossover Machine", "action" => "Cable Tightened", "date" => "2024-11-08", "status" => "Completed"],
-    ["id" => 19, "equipment" => "Incline Bench Press", "action" => "Frame Inspected", "date" => "2024-09-18", "status" => "Completed"],
-    ["id" => 20, "equipment" => "Stepper Machine", "action" => "Motor Serviced", "date" => "2024-12-05", "status" => "Pending"],
+    ["id" => 1, "created_at" => "2024-10-10", "description" => "Maintenance completed for Leg Press Machine"],
+    ["id" => 2, "created_at" => "2024-11-15", "description" => "Scheduled maintenance for Squat Rack"],
+    ["id" => 3, "created_at" => "2024-09-20", "description" => "Bench Press repaired successfully"],
+    ["id" => 4, "created_at" => "2024-11-18", "description" => "Dumbbells usage logged"],
+    ["id" => 5, "created_at" => "2024-10-25", "description" => "Cable replaced for Lat Pulldown Machine"],
+    ["id" => 6, "created_at" => "2024-12-01", "description" => "Scheduled maintenance for Chest Fly Machine"],
+    ["id" => 7, "created_at" => "2024-10-05", "description" => "Treadmill lubrication completed"],
+    ["id" => 8, "created_at" => "2024-11-10", "description" => "Handle replaced for Rowing Machine"],
+    ["id" => 9, "created_at" => "2024-11-25", "description" => "Scheduled maintenance for Elliptical"],
+    ["id" => 10, "created_at" => "2024-10-30", "description" => "Calf Raise Machine foot pedal repaired"],
+    ["id" => 11, "created_at" => "2024-09-15", "description" => "Smith Machine inspected"],
+    ["id" => 12, "created_at" => "2024-10-05", "description" => "Cable adjustment done for Seated Row Machine"],
+    ["id" => 13, "created_at" => "2024-12-15", "description" => "Leg Curl Machine scheduled for maintenance"],
+    ["id" => 14, "created_at" => "2024-10-20", "description" => "Seat cushion replaced for Leg Extension Machine"],
+    ["id" => 15, "created_at" => "2024-11-01", "description" => "Hack Squat Machine joints lubricated"],
+    ["id" => 16, "created_at" => "2024-09-28", "description" => "Pull-up Bar grips replaced"],
+    ["id" => 17, "created_at" => "2024-10-12", "description" => "Pec Deck Machine maintenance completed"],
+    ["id" => 18, "created_at" => "2024-11-08", "description" => "Cable tightened for Cable Crossover Machine"],
+    ["id" => 19, "created_at" => "2024-09-18", "description" => "Frame inspected for Incline Bench Press"],
+    ["id" => 20, "created_at" => "2024-12-05", "description" => "Stepper Machine motor serviced"],
 ];
 ?>
 
@@ -49,31 +49,30 @@ $logRecords = [
     <div class="staff-base-container">
         <?php require_once "../../includes/menubar.php"; ?>
 
-        <div class="log-table-container">
-            <table class="log-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Equipment</th>
-                        <th>Action</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($logRecords as $log): ?>
+        <div class="log-records-card">
+            <h1 class="log-title">Equipment Log Records</h1>
+
+            <div class="log-table-wrapper">
+                <table class="log-table">
+                    <thead>
                         <tr>
-                            <td><?= htmlspecialchars($log['id']) ?></td>
-                            <td><?= htmlspecialchars($log['equipment']) ?></td>
-                            <td><?= htmlspecialchars($log['action']) ?></td>
-                            <td><?= htmlspecialchars($log['date']) ?></td>
-                            <td class="<?= strtolower(htmlspecialchars($log['status'])) ?>">
-                                <?= htmlspecialchars($log['status']) ?>
-                            </td>
+                            <th>ID</th>
+                            <th>Created At</th>
+                            <th>Description</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($logRecords as $log): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($log['id']) ?></td>
+                                <td><?= htmlspecialchars($log['created_at']) ?></td>
+                                <td><?= htmlspecialchars($log['description']) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 </main>

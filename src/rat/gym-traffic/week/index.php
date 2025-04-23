@@ -65,7 +65,7 @@ require_once "../../includes/titlebar.php";
     $subnavbarConfig = [
         'links' => [
             [
-                'title' => 'Live',
+                'title' => 'Current',
                 'href' => '../'
             ],
             [

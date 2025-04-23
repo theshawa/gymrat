@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql_db:3306
--- Generation Time: Apr 20, 2025 at 01:10 PM
--- Server version: 9.2.0
+-- Generation Time: Apr 23, 2025 at 10:40 AM
+-- Server version: 9.3.0
 -- PHP Version: 8.2.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -76,7 +76,8 @@ CREATE TABLE `complaints` (
 INSERT INTO `complaints` (`id`, `type`, `description`, `user_id`, `user_type`, `review_message`, `reviewed_at`, `created_at`) VALUES
 (16, 'Facility Issues', 'asdasd', 44, 'rat', 'A gym trainer, often referred to as a personal trainer or fitness coach, is an individual who\nspecializes in guiding and instructing clients in their fitness journeys.', '2025-04-30 15:05:23', '2025-04-15 09:35:07'),
 (20, 'Membership Issues', 'asda ad sad asd as das das dasd', 44, 'rat', NULL, NULL, '2025-04-15 10:18:18'),
-(21, 'Equipment Misuse', 'asd', 44, 'rat', NULL, NULL, '2025-04-15 18:26:07');
+(21, 'Equipment Misuse', 'asd', 44, 'rat', NULL, NULL, '2025-04-15 18:26:07'),
+(22, 'Hygiene Concern', '{\"type\":\"CUSTOMER REPORT\",\"customer_id\":44,\"severity\":\"medium\",\"description\":\"He doesnt bring towel all the time.\"}', 1, 'trainer', NULL, NULL, '2025-04-22 06:23:47');
 
 -- --------------------------------------------------------
 
@@ -107,7 +108,8 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `fname`, `lname`, `email`, `phone`, `password`, `avatar`, `onboarded`, `trainer`, `membership_plan`, `membership_plan_activated_at`, `workout`, `meal_plan`, `created_at`, `updated_at`) VALUES
-(44, 'Theshawa', 'Nimantha', 'mrclocktd@gmail.com', '0766743755', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 15, '2025-04-15 07:27:46', 1, 2, '2025-04-15 07:27:26', '2025-04-15 07:27:26');
+(44, 'Theshawa', 'Nimantha', 'mrclocktd@gmail.com', '0766743755', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 15, '2025-04-15 07:27:46', 5, 3, '2025-04-15 07:27:26', '2025-04-15 07:27:26'),
+(45, 'Luka', 'Johnson', 'wadroneth@gmail.com', '+94716060662', '$2y$12$6Ekl5IFW1gZz7vxmsTkKYe4QALJKZAJJ4Q2vpl2XxICbGy0KhUwPS', NULL, 1, 1, 15, '2025-04-15 07:27:46', 1, 3, '2025-04-22 10:26:05', '2025-04-22 10:26:05');
 
 -- --------------------------------------------------------
 
@@ -201,7 +203,8 @@ INSERT INTO `customer_progress` (`id`, `customer_id`, `trainer_id`, `message`, `
 (17, 44, 1, 'Ubawa hadanna bah matto!', 'try_harder', '2025-04-13 14:14:13'),
 (18, 44, 1, 'Dhamya ekata enna kollo!', 'well_done', '2025-04-13 14:14:27'),
 (19, 44, 1, 'Maru bn!', 'well_done', '2025-04-13 14:29:26'),
-(20, 44, 1, 'ANe shoi!', 'well_done', '2025-04-15 06:54:52');
+(20, 44, 1, 'ANe shoi!', 'well_done', '2025-04-15 06:54:52'),
+(21, 44, 1, 'Workout more!', 'try_harder', '2025-04-22 06:22:44');
 
 -- --------------------------------------------------------
 
@@ -337,6 +340,7 @@ INSERT INTO `mealplan_meals` (`id`, `mealplan_id`, `meal_id`, `day`, `time`, `am
 CREATE TABLE `mealplan_requests` (
   `id` int NOT NULL,
   `trainer_id` int NOT NULL,
+  `customer_id` int NOT NULL,
   `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -347,11 +351,10 @@ CREATE TABLE `mealplan_requests` (
 -- Dumping data for table `mealplan_requests`
 --
 
-INSERT INTO `mealplan_requests` (`id`, `trainer_id`, `description`, `created_at`, `updated_at`, `reviewed`) VALUES
-(1, 1, 'I need a high-protein meal plan to support muscle growth. Include lean meats, legumes, and protein shakes. Also need a shopping list and prep instructions.', '2025-04-10 08:00:00', '2025-04-10 08:00:00', 0),
-(2, 1, 'I’m looking for a vegetarian meal plan that helps with weight loss and keeps energy levels high. Include balanced macros, snacks, and hydration tips.', '2025-04-11 13:15:00', '2025-04-11 13:15:00', 0),
-(3, 1, 'Please create a diabetic-friendly meal plan that controls blood sugar. Include portion guidance and low-glycemic foods with recipes.', '2025-04-12 11:00:00', '2025-04-12 11:00:00', 0),
-(4, 1, 'I want a meal plan tailored for intermittent fasting. Include suitable meals for eating windows and hydration strategies.', '2025-04-13 16:30:00', '2025-04-13 16:30:00', 0);
+INSERT INTO `mealplan_requests` (`id`, `trainer_id`, `customer_id`, `description`, `created_at`, `updated_at`, `reviewed`) VALUES
+(29, 1, 45, 'Goal: Muscle gain\nPriority: Normal\n\nAdd High-Strength Omega 3 Tablets Pack', '2025-04-23 09:16:00', '2025-04-23 10:37:06', 1),
+(30, 1, 45, 'Goal: Performance\nPriority: Normal\n\nAiyoo1', '2025-04-23 09:23:13', '2025-04-23 09:24:33', 1),
+(31, 1, 44, 'Goal: Performance\nPriority: Normal\n\nRavindu, trainer gen meal plan req ekak awada balanna.', '2025-04-23 10:34:37', '2025-04-23 10:36:56', 1);
 
 -- --------------------------------------------------------
 
@@ -402,7 +405,9 @@ CREATE TABLE `membership_payments` (
 
 INSERT INTO `membership_payments` (`id`, `customer`, `membership_plan`, `amount`, `completed_at`, `created_at`) VALUES
 (19, 44, 15, 15000, '2025-04-15 07:27:46', '2025-04-15 07:27:35'),
-(20, 44, 18, 60000, '2025-04-08 22:15:43', '2025-04-19 16:46:10');
+(20, 44, 18, 60000, '2025-04-08 22:15:43', '2025-04-19 16:46:10'),
+(21, 45, 18, 300000, NULL, '2025-04-22 10:26:30'),
+(22, 45, 18, 300000, NULL, '2025-04-22 10:26:42');
 
 -- --------------------------------------------------------
 
@@ -449,6 +454,15 @@ CREATE TABLE `notifications` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `title`, `message`, `receiver_id`, `receiver_type`, `source`, `is_read`, `valid_till`, `created_at`) VALUES
+(52, 'Welcome to GYMRAT', 'Thank you for registering with us. We hope you have a great experience!', 45, 'rat', 'system', 0, NULL, '2025-04-22 15:56:05'),
+(54, 'Meal Plan Request Acknowledged', 'The Meal Plan you have requested has been created: Muscle Building', 1, 'trainer', 'wnmp manager', 0, NULL, '2025-04-23 10:36:56'),
+(55, 'Meal Plan Request Acknowledged', 'The Meal Plan you have requested has been created: Vegetarian Essentials', 1, 'trainer', 'wnmp manager', 0, NULL, '2025-04-23 10:37:06');
+
 -- --------------------------------------------------------
 
 --
@@ -457,8 +471,8 @@ CREATE TABLE `notifications` (
 
 CREATE TABLE `settings` (
   `id` int NOT NULL,
-  `contact_email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `contact_phone` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `contact_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `contact_phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `workout_session_expiry` int NOT NULL COMMENT 'In hours'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -519,7 +533,7 @@ CREATE TABLE `trainers` (
 --
 
 INSERT INTO `trainers` (`id`, `fname`, `lname`, `username`, `password`, `avatar`, `bio`, `phone`) VALUES
-(1, 'Cos', 'Mama', 'john', '$2y$12$DqWWm8SbOhtT2.P0NEUkoO6YEou.4fKDxUnLSDX4X8Xqv1tzGBUXW', NULL, 'Default trainer account with expertise in strength training and cardio.', '0766743751');
+(1, 'Kos', 'Mama', 'john', '$2y$12$DqWWm8SbOhtT2.P0NEUkoO6YEou.4fKDxUnLSDX4X8Xqv1tzGBUXW', NULL, 'Default trainer account with expertise in strength training and cardio.', '0766743751');
 
 -- --------------------------------------------------------
 
@@ -574,7 +588,9 @@ CREATE TABLE `workouts` (
 INSERT INTO `workouts` (`id`, `name`, `description`, `duration`, `created_at`, `updated_at`) VALUES
 (1, 'Strength Training', 'Squats, Deadlifts, Bench Press, Pull-Ups, Overhead Press, Lunges, Quads, Dumbbell Rows', 30, '2024-11-15 06:13:10', '2024-11-15 06:13:10'),
 (2, 'Cardio', 'Running, Cycling, Swimming, Rowing, Jump Rope, Stair Climbing, Hiking, Elliptical', 30, '2024-11-15 06:13:10', '2024-11-15 06:13:10'),
-(3, 'Flexibility', 'Stretching, Yoga, Pilates, Tai Chi, Foam Rolling, Dynamic Stretching, Static Stretching', 30, '2024-11-15 06:13:10', '2024-11-15 06:13:10');
+(3, 'Flexibility', 'Stretching, Yoga, Pilates, Tai Chi, Foam Rolling, Dynamic Stretching, Static Stretching', 30, '2024-11-15 06:13:10', '2024-11-15 06:13:10'),
+(4, 'Default Workout', 'Custom workout for customer #44', 30, '2025-04-22 10:19:51', '2025-04-22 10:19:51'),
+(5, 'ABS Focused', 'I think it\'s better to have a custom workout for this client, since he is asking all the time, when I can get abs.', 30, '2025-04-23 02:11:35', '2025-04-23 02:11:35');
 
 -- --------------------------------------------------------
 
@@ -603,7 +619,10 @@ INSERT INTO `workout_exercises` (`id`, `workout_id`, `exercise_id`, `day`, `sets
 (5, 1, 5, 3, 4, 8),
 (6, 1, 6, 3, 3, 12),
 (7, 1, 7, 4, 4, 10),
-(8, 1, 8, 4, 3, 12);
+(8, 1, 8, 4, 3, 12),
+(9, 5, 6, 7, 4, 15),
+(10, 5, 4, 4, 4, 10),
+(11, 5, 2, 3, 3, 12);
 
 -- --------------------------------------------------------
 
@@ -628,7 +647,9 @@ INSERT INTO `workout_requests` (`id`, `trainer_id`, `description`, `created_at`,
 (1, 1, 'I want a strength training program to build muscle and improve strength. It should include compound and isolation exercises, proper form guidance, and a weekly schedule with progressive overload. Warm-up and cool-down routines are also needed for safety and recovery.', '2025-04-10 10:00:00', '2025-04-10 10:00:00', 0),
 (2, 1, 'I need a cardio workout plan for weight loss with running, cycling, and HIIT. Tips on consistency, progress tracking, and combining cardio with a healthy diet are appreciated. A balanced plan with rest days and low-impact options for sustainability is ideal.', '2025-04-11 12:30:00', '2025-04-11 12:30:00', 0),
 (3, 1, 'I want a flexibility and mobility program with stretches, yoga, and drills for range of motion. Exercises for hips, shoulders, and hamstrings are needed. Gradual progression and tips for daily routine integration are essential for long-term benefits.', '2025-04-12 15:45:00', '2025-04-12 15:45:00', 0),
-(4, 1, 'I need a beginner-friendly workout routine with simple exercises for cardio, strength, and flexibility. Clear instructions on form, gradual intensity increase, and a weekly schedule with rest days are essential for building a fitness foundation.', '2025-04-13 09:00:00', '2025-04-13 09:00:00', 0);
+(4, 1, 'I need a beginner-friendly workout routine with simple exercises for cardio, strength, and flexibility. Clear instructions on form, gradual intensity increase, and a weekly schedule with rest days are essential for building a fitness foundation.', '2025-04-13 09:00:00', '2025-04-13 09:00:00', 0),
+(5, 1, 'Type: Strength\nDuration: 30 days\n\nMuscle building while fat loss', '2025-04-22 11:35:05', '2025-04-22 11:35:05', 0),
+(6, 1, 'Type: Flexibility\nDuration: 30 days\n\nBla Bla', '2025-04-22 11:35:21', '2025-04-22 17:06:58', 1);
 
 -- --------------------------------------------------------
 
@@ -761,7 +782,8 @@ ALTER TABLE `mealplan_meals`
 --
 ALTER TABLE `mealplan_requests`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `trainer_id` (`trainer_id`);
+  ADD KEY `trainer_id` (`trainer_id`),
+  ADD KEY `fk_customer_mpreq` (`customer_id`);
 
 --
 -- Indexes for table `meals`
@@ -866,19 +888,19 @@ ALTER TABLE `announcements`
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `customer_progress`
 --
 ALTER TABLE `customer_progress`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `equipments`
@@ -908,7 +930,7 @@ ALTER TABLE `mealplan_meals`
 -- AUTO_INCREMENT for table `mealplan_requests`
 --
 ALTER TABLE `mealplan_requests`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `meals`
@@ -920,7 +942,7 @@ ALTER TABLE `meals`
 -- AUTO_INCREMENT for table `membership_payments`
 --
 ALTER TABLE `membership_payments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `membership_plans`
@@ -932,7 +954,7 @@ ALTER TABLE `membership_plans`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -956,19 +978,19 @@ ALTER TABLE `trainer_ratings`
 -- AUTO_INCREMENT for table `workouts`
 --
 ALTER TABLE `workouts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `workout_exercises`
 --
 ALTER TABLE `workout_exercises`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `workout_requests`
 --
 ALTER TABLE `workout_requests`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -1013,6 +1035,7 @@ ALTER TABLE `mealplan_meals`
 -- Constraints for table `mealplan_requests`
 --
 ALTER TABLE `mealplan_requests`
+  ADD CONSTRAINT `fk_customer_mpreq` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `mealplan_requests_ibfk_1` FOREIGN KEY (`trainer_id`) REFERENCES `trainers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

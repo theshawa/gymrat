@@ -1,0 +1,273 @@
+/* CSS for Workout Assignment Page */
+.assignment-page {
+    padding: 15px;
+}
+
+.customer-header {
+    margin-bottom: 20px;
+}
+
+.customer-header h2 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.plans-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.plan-card {
+    background-color: var(--color-zinc-900);
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.plan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.plan-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.duration {
+    background-color: var(--color-zinc-800);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.plan-description {
+    font-size: 14px;
+    color: var(--color-zinc-300);
+    margin-bottom: 15px;
+}
+
+.exercise-count {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.count-label {
+    color: var(--color-zinc-400);
+}
+
+.plan-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    text-align: center;
+}
+
+.assign-btn {
+    background-color: var(--color-violet-600);
+    color: white;
+    flex: 1;
+}
+
+.preview-btn {
+    background-color: var(--color-zinc-700);
+    color: white;
+}
+
+.request-container {
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--color-zinc-900);
+    border-radius: 12px;
+}
+
+.request-btn {
+    background-color: var(--color-violet-600);
+    color: white;
+    margin-top: 10px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 30px 15px;
+    background-color: var(--color-zinc-900);
+    border-radius: 12px;
+}
+
+.empty-state p {
+    margin-bottom: 15px;
+    color: var(--color-zinc-400);
+}
+
+/* Tabs for choosing workout type */
+.tabs {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--color-zinc-800);
+}
+
+.tab {
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    position: relative;
+    color: var(--color-zinc-400);
+    background: transparent;
+    border: none;
+}
+
+.tab.active {
+    color: var(--color-zinc-100);
+}
+
+.tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-violet-600);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Exercise list style */
+.exercises-container {
+    margin-top: 15px;
+}
+
+.exercise-item {
+    background-color: var(--color-zinc-800);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.exercise-icon {
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-zinc-700);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.exercise-details {
+    flex: 1;
+}
+
+.exercise-name {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 3px;
+}
+
+.exercise-stats {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--color-zinc-400);
+}
+
+/* Form controls for custom workout */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: var(--color-zinc-400);
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+    width: 100%;
+    background-color: var(--color-zinc-800);
+    border: 1px solid var(--color-zinc-700);
+    border-radius: 6px;
+    padding: 10px;
+    color: var(--color-zinc-200);
+    font-size: 14px;
+}
+
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.form-col {
+    flex: 1;
+}
+
+.form-col.small {
+    flex: 0 0 80px;
+}
+
+.add-exercise-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: transparent;
+    border: 1px dashed var(--color-zinc-700);
+    color: var(--color-zinc-400);
+    padding: 8px;
+    border-radius: 6px;
+    width: 100%;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.add-exercise-btn:hover {
+    background-color: var(--color-zinc-800);
+    color: var(--color-zinc-300);
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: var(--color-zinc-500);
+    cursor: pointer;
+    padding: 5px;
+    margin-left: auto;
+}
+
+.remove-btn:hover {
+    color: var(--color-red);
+}

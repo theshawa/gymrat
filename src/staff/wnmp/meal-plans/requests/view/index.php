@@ -1,5 +1,4 @@
 <?php
-// session_start();
 require_once "../../../../../auth-guards.php";
 auth_required_guard("wnmp", "/staff/login");
 
@@ -41,7 +40,7 @@ require_once "../../../../includes/sidebar.php";
 ?>
 
 <main>
-<div class="staff-base-container">
+    <div class="staff-base-container">
         <?php require_once "../../../../includes/menubar.php"; ?>
         <div class="staff-base-sub-container-alt">
             <div>
@@ -51,29 +50,30 @@ require_once "../../../../includes/sidebar.php";
                 <p><?= $mealPlanRequest->description ?></p>
                 <div style="display: flex; flex-direction: row; margin-top: 20px; align-items: center; ">
                     <h2>
-                        Trainer : 
+                        Trainer :
                     </h2>
                     <p>&emsp;<?= $mealPlanRequest->trainer ?></p>
                 </div>
             </div>
             <?php if ($mealPlanRequest->reviewed == 0): ?>
-            <form action="confirm_request.php" method="POST" style="display: flex; flex-direction: column; gap: 20px;">
-                <input type="hidden" name="id" value="<?= $mealPlanRequest->id ?>">
-                <h2>
-                    Acknowledge Request
-                </h2>
-                <p>Select relevant meal plan to confirm the successful creation of the requested meal plan</p>
-                <div style = "display: flex; flex-direction: row; gap: 20px; align-items: center;">
-                <select name="confirmation_meal_plan" class="staff-input-primary staff-input-long">
-                    <?php foreach ($mealPlanTitles as $title): ?>
-                        <option value="<?= $title ?>">
-                            <?= $title ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>    
-                <button type="submit" class="staff-button secondary" style="min-height: 38px; min-width:120px; margin-top: 5px;">Confirm</button>
-                </div>
-            <?php endif; ?>
+                <form action="confirm_request.php" method="POST" style="display: flex; flex-direction: column; gap: 20px;">
+                    <input type="hidden" name="id" value="<?= $mealPlanRequest->id ?>">
+                    <h2>
+                        Acknowledge Request
+                    </h2>
+                    <p>Select relevant meal plan to confirm the successful creation of the requested meal plan</p>
+                    <div style="display: flex; flex-direction: row; gap: 20px; align-items: center;">
+                        <select name="confirmation_meal_plan" class="staff-input-primary staff-input-long">
+                            <?php foreach ($mealPlanTitles as $title): ?>
+                                <option value="<?= $title ?>">
+                                    <?= $title ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <button type="submit" class="staff-button secondary"
+                            style="min-height: 38px; min-width:120px; margin-top: 5px;">Confirm</button>
+                    </div>
+                <?php endif; ?>
         </div>
     </div>
 </main>

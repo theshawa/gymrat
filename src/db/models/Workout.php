@@ -7,10 +7,10 @@ class Workout extends Model
 {
     protected $table = "workouts";
 
-    public int $id;
-    public string $name;
-    public string $description;
-    public int $duration;
+    public int $id = 0; // Initialize with default value to avoid the error
+    public string $name = "";
+    public string $description = "";
+    public int $duration = 0;
 
     public DateTime $created_at;
     public DateTime $updated_at;
@@ -49,7 +49,7 @@ class Workout extends Model
             'description' => $this->description,
             'duration' => $this->duration,
         ]);
-        $this->id = $this->conn->lastInsertId();
+        $this->id = (int) $this->conn->lastInsertId();
     }
 
     public function __sleep()
@@ -114,6 +114,7 @@ class Workout extends Model
         if (!empty($this->exercises)) {
             foreach ($this->exercises as $exerciseData) {
                 $exercise = new WorkoutExercise($exerciseData);
+                $exercise->workout_id = $this->id; // Ensure workout_id is set correctly
                 $exercise->save();
             }
         }
@@ -122,14 +123,23 @@ class Workout extends Model
     public function save()
     {
         if ($this->id === 0) {
-            // Exercises in workout_exercise is not updated
+            // Create new workout record
             $this->create();
+
+            // Now update exercise relations with the new workout ID
+            if (!empty($this->exercises)) {
+                foreach ($this->exercises as &$exerciseData) {
+                    $exerciseData['workout_id'] = $this->id;
+                    $exercise = new WorkoutExercise($exerciseData);
+                    $exercise->save();
+                }
+            }
         } else {
             $this->update();
         }
     }
 
-    
+
     public function delete()
     {
         if (!empty($this->exercises)) {
@@ -146,9 +156,9 @@ class Workout extends Model
     }
 
 
-    public function get_by_id(int $id)
+    public function get_by_id(int $id = 0)
     {
-        $id = $id ?? $this->id;
+        $id = $id > 0 ? $id : $this->id;
         $sql = "SELECT * FROM $this->table WHERE id = :id LIMIT 1";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['id' => $id]);
@@ -163,7 +173,7 @@ class Workout extends Model
     {
         $workoutExercise = new WorkoutExercise();
         $exercises = $workoutExercise->get_by_workout_id($workout_id);
-        return array_map(function($exercise) {
+        return array_map(function ($exercise) {
             return [
                 'id' => $exercise->id,
                 'edit_id' => $exercise->id,

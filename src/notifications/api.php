@@ -7,6 +7,9 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+
+require_once "../config.php";
+
 function get(int $user_id, string $user_type): array
 {
     $notification = new Notification();
@@ -14,6 +17,15 @@ function get(int $user_id, string $user_type): array
     try {
         $notifications =  $notification->get_all_of_user($user_id, $user_type);
         $announcements =  $announcement->get_all_of_user($user_type, $user_id);
+
+        // 5 mins buffer time check
+        $announcements = array_filter($announcements, function ($announcement) {
+            $now = new DateTime();
+            $created_at = $announcement->created_at;
+            $duration = $created_at->diff($now);
+            $mins = $duration->days * 24 * 60 + $duration->h * 60 + $duration->i;
+            return $mins > ANNOUNCEMENT_INVISIBLE_FROM_CREATION_UPTO;
+        },);
 
         $data_1 = array_map(function ($notification) {
             return [

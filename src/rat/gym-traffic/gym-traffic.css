@@ -58,11 +58,12 @@ main {
 }
 
 .label {
-  font-size: 11px;
+  font-size: 14px;
   text-transform: uppercase;
-  margin-top: 30px;
-  margin-bottom: 3px;
   color: var(--color-zinc-500);
+  max-width: 200px;
+  text-align: center;
+  margin: 30px auto 3px auto;
 }
 
 h2 {

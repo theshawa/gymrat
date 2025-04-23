@@ -1,7 +1,10 @@
 <?php
 
-function format_time(DateTime $time): string
+function format_time(DateTime $time, $relative_time = false): string
 {
+    if (!$relative_time) {
+        return $time->format("F j, Y g:i A");
+    }
     $now = new DateTime();
     $diff = $time->diff($now);
 
@@ -10,15 +13,31 @@ function format_time(DateTime $time): string
             if ($diff->i == 0) {
                 return "just now";
             }
-            return $diff->i . " minutes ago";
+            return $diff->i . " minute" . ($diff->i === 1 ? '' : 's') . " ago";
         }
-        return $diff->h . " hours ago";
+        return $diff->h . " hour" . ($diff->h === 1 ? '' : 's') . " ago";
     }
     if ($diff->days == 1) {
         return "yesterday";
     }
+    $count = $diff->days;
+    $item = "day";
+
     if ($diff->days < 7) {
-        return $diff->days . " days ago";
+        $count = $diff->days;
+        $item = "day";
+    } else if ($diff->days < 30) {
+        $count = floor($diff->days / 7);
+        $item = "week";
+    } else if ($diff->days < 365) {
+        $count = floor($diff->days / 30);
+        $item = "month";
+    } else {
+        $count = floor($diff->days / 365);
+        $item = "year";
     }
-    return $time->format("F j, Y g:i A");
+    if ($count > 1) {
+        $item .= "s";
+    }
+    return "$count $item ago";
 }

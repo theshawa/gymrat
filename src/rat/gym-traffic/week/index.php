@@ -45,7 +45,7 @@ $pageConfig = [
         "./week.js"
     ],
     "titlebar" => [
-        "title" => "Weekly Gym Traffic",
+        "title" => "Traffic At the Gym",
         "back_url" => "../../",
     ],
     "navbar_active" => 1
@@ -65,12 +65,12 @@ require_once "../../includes/titlebar.php";
     $subnavbarConfig = [
         'links' => [
             [
-                'title' => 'Current',
+                'title' => 'Traffic Now',
                 'href' => '../'
             ],
             [
-                'title' => 'Weekly Flow',
-                'href' => './week'
+                'title' => 'Week\'s Traffic',
+                'href' => './'
             ]
         ],
         "active" => 2

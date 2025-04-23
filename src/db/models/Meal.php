@@ -40,8 +40,8 @@ class Meal extends Model
         $this->name = $data['name'] ?? "";
         $this->description = $data['description'] ?? "";
         $this->image = $data['image'] ?? "";
-        $this->calories = isset($data['calories']) ? (float)$data['calories'] : 0.0; 
-        $this->proteins = isset($data['proteins']) ? (float)$data['proteins'] : 0.0; 
+        $this->calories = isset($data['calories']) ? (float)$data['calories'] : 0.0;
+        $this->proteins = isset($data['proteins']) ? (float)$data['proteins'] : 0.0;
         $this->fats = isset($data['fats']) ? (float)$data['fats'] : 0.0;
         $this->created_at = new DateTime($data['created_at'] ?? '');
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
@@ -83,7 +83,6 @@ class Meal extends Model
             'calories' => $this->calories,
             'proteins' => $this->proteins,
             'fats' => $this->fats,
-            'measure_unit' => $this->measure_unit,
         ]);
         $this->id = $this->conn->lastInsertId();
     }
@@ -100,7 +99,6 @@ class Meal extends Model
             'calories' => $this->calories,
             'proteins' => $this->proteins,
             'fats' => $this->fats,
-            'measure_unit' => $this->measure_unit,
         ]);
     }
 

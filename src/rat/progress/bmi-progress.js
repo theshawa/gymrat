@@ -19,6 +19,7 @@ Chart.defaults.font.size = Config.fontSize;
 Chart.defaults.font.family = `"DM Sans", sans-serif`;
 
 const loadChart = (labels, data) => {
+  if (!ctx) return;
   new Chart(ctx, {
     type: "line",
     lineAtIndex: [24],
@@ -171,9 +172,13 @@ loadChart(
   $VALUES
 );
 
-document.querySelector(".filter select").addEventListener("change", (e) => {
-  e.currentTarget.parentElement.submit();
-});
+const select = document.querySelector(".filter select");
+
+if (select) {
+  select.addEventListener("change", (e) => {
+    e.currentTarget.parentElement.submit();
+  });
+}
 
 document.querySelectorAll(".list .item form").forEach((item) => {
   item.addEventListener("submit", (e) => {

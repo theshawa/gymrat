@@ -40,6 +40,15 @@
   aspect-ratio: 1;
 }
 
+.grid-tile.disabled {
+  background: radial-gradient(
+    at top right,
+    rgba(250, 250, 250, 0.2),
+    rgba(250, 250, 250, 0.1)
+  );
+  border: 1px solid rgba(250, 250, 250, 0.1);
+}
+
 .grid-tile .top {
   padding: 8px;
   display: flex;
@@ -54,7 +63,7 @@
 .grid-tile .top p {
   margin-top: 5px;
   font-size: 14px;
-  color: rgba(250, 250, 250, 0.8);
+  color: rgba(250, 250, 250, 0.7);
   width: 80%;
 }
 

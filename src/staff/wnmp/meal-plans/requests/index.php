@@ -13,7 +13,7 @@ require_once "../../../../alerts/functions.php";
 $mealPlanRequests = [];
 $mealPlanRequestModel = new MealPlanRequest();
 try {
-    $mealPlanRequests = $mealPlanRequestModel->get_all(-1, $setFilter);
+    $mealPlanRequests = $mealPlanRequestModel->get_all(-1, $setFilter) ?? [];
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch meal plan requests: " . $e->getMessage(), "/staff/wnmp");
     exit;
@@ -22,7 +22,7 @@ try {
 $pending_requests = null;
 $mealPlanRequestModel = new MealPlanRequest();
 try {
-    $pending_requests =  $mealPlanRequestModel->has_unreviewed_requests();
+    $pending_requests = $mealPlanRequestModel->has_unreviewed_requests();
 } catch (Exception $e) {
     $_SESSION['error'] = "Failed to access notification updates: " . $e->getMessage();
 }
@@ -34,10 +34,14 @@ $menuBarConfig = [
     "goBackTo" => "/staff/wnmp/meal-plans/index.php",
     "useLink" => true,
     "options" => [
-        ($setFilter == 1) ? 
+        ($setFilter == 1) ?
         ["title" => "Show All Requests", "href" => "/staff/wnmp/meal-plans/requests/index.php", "type" => "primary"] :
-        ["title" => "Show Pending Requests", "href" => "/staff/wnmp/meal-plans/requests/index.php?filter=1", 
-        "type" => "primary", "setAttentionDot" => $pending_requests],
+        [
+            "title" => "Show Pending Requests",
+            "href" => "/staff/wnmp/meal-plans/requests/index.php?filter=1",
+            "type" => "primary",
+            "setAttentionDot" => $pending_requests
+        ],
     ]
 ];
 

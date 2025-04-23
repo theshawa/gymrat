@@ -1,9 +1,5 @@
 /* trainer/profile/edit.css */
 
-.hidden {
-    display: none;
-}
-
 .form-field {
     display: flex;
     flex-direction: column;
@@ -38,4 +34,55 @@ form {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.avatar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 2px solid var(--color-zinc-800);
+}
+
+.avatar-upload-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.avatar-upload-button {
+    background-color: var(--color-violet-600);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+}
+
+.avatar-upload-button:hover {
+    background-color: var(--color-violet-700);
+}
+
+.clear-avatar-button {
+    background-color: transparent;
+    color: var(--color-zinc-400);
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.hidden {
+    display: none;
 }

@@ -11,7 +11,7 @@ class WorkoutRequest extends Model
     public string $description;
     public DateTime $created_at;
     public DateTime $updated_at;
-    public int $reviewed; 
+    public int $reviewed;
     public ?string $trainer; // Only for api
 
     public function __construct()
@@ -19,8 +19,8 @@ class WorkoutRequest extends Model
         parent::__construct();
         $this->created_at = new DateTime();
         $this->updated_at = new DateTime();
-        $this->reviewed = 0; 
-        $this->trainer = null; 
+        $this->reviewed = 0;
+        $this->trainer = null;
     }
 
     public function fill(array $data)
@@ -30,20 +30,20 @@ class WorkoutRequest extends Model
         $this->description = $data['description'] ?? "";
         $this->created_at = new DateTime($data['created_at'] ?? '');
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
-        $this->reviewed = $data['reviewed'] ?? 0; 
-        $this->trainer = null; 
+        $this->reviewed = $data['reviewed'] ?? 0;
+        $this->trainer = null;
     }
 
-    public function get_all(int $sort = 0, int $notReviewed = 0) 
+    public function get_all(int $sort = 0, int $notReviewed = 0)
     {
         $sql = "SELECT * FROM $this->table";
         if ($notReviewed === 1) {
             $sql .= " WHERE reviewed = 0";
         }
         if ($sort === 1) {
-            $sql .= " ORDER BY created_at ASC"; 
+            $sql .= " ORDER BY created_at ASC";
         } elseif ($sort === -1) {
-            $sql .= " ORDER BY created_at DESC"; 
+            $sql .= " ORDER BY created_at DESC";
         }
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
@@ -81,5 +81,37 @@ class WorkoutRequest extends Model
         $stmt->execute();
         $count = $stmt->fetchColumn();
         return $count > 0;
+    }
+
+    public function save()
+    {
+        if ($this->id > 0) {
+            // Update existing record
+            $sql = "UPDATE $this->table SET trainer_id = :trainerId, description = :description, 
+                    created_at = :created_at, updated_at = :updated_at, reviewed = :reviewed 
+                    WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                'trainerId' => $this->trainerId,
+                'description' => $this->description,
+                'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+                'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
+                'reviewed' => $this->reviewed,
+                'id' => $this->id
+            ]);
+        } else {
+            // Insert new record
+            $sql = "INSERT INTO $this->table (trainer_id, description, created_at, updated_at, reviewed) 
+                    VALUES (:trainerId, :description, :created_at, :updated_at, :reviewed)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                'trainerId' => $this->trainerId,
+                'description' => $this->description,
+                'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+                'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
+                'reviewed' => $this->reviewed
+            ]);
+            $this->id = $this->conn->lastInsertId();
+        }
     }
 }

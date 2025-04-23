@@ -13,7 +13,7 @@ class Trainer extends Model
     public string $lname = "";
     public string $username = "";
     public string $password = "";
-    public null|array|string $avatar = null;
+    public ?string $avatar = null; // Changed to proper string type
     public string $bio = "";
     public string $phone = "";
 
@@ -60,48 +60,38 @@ class Trainer extends Model
         $this->id = $this->conn->lastInsertId(); // Set ID for future updates
     }
 
-    // protected function update()
-    // {
-    //     $sql = "UPDATE $this->table SET 
-    //         fname = :fname,
-    //         lname = :lname,
-    //         bio = :bio,
-    //         avatar = :avatar,
-    //         rating = :rating,
-    //         review_count = :review_count
-    //     WHERE id = :id";
-
-    //     $stmt = $this->conn->prepare($sql);
-    //     $stmt->execute([
-    //         'id' => $this->id,
-    //         'fname' => $this->fname,
-    //         'lname' => $this->lname,
-    //         'bio' => $this->bio,
-    //         'avatar' => $this->avatar,
-    //         'rating' => $this->rating,
-    //         'review_count' => $this->review_count
-    //     ]);
-    // }
-
     protected function update()
     {
+        // Add debug log to see what we're trying to update
+        error_log("Updating trainer with ID: {$this->id}, avatar: " . var_export($this->avatar, true));
+
         $sql = "UPDATE $this->table SET 
-        fname = :fname,
-        lname = :lname,
-        bio = :bio,
-        avatar = :avatar,
-        phone = :phone
-    WHERE id = :id";
+            fname = :fname,
+            lname = :lname,
+            bio = :bio,
+            avatar = :avatar,
+            phone = :phone
+        WHERE id = :id";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([
+
+        $params = [
             'id' => $this->id,
             'fname' => $this->fname,
             'lname' => $this->lname,
-            'bio' => $this->bio,
             'avatar' => $this->avatar,
+            'bio' => $this->bio,
             'phone' => $this->phone
-        ]);
+        ];
+
+        error_log("UPDATE params: " . json_encode($params));
+        $result = $stmt->execute($params);
+
+        if (!$result) {
+            error_log("Database update failed: " . json_encode($stmt->errorInfo()));
+        } else {
+            error_log("Database update successful, rows affected: " . $stmt->rowCount());
+        }
     }
 
     public function get_by_id()
@@ -113,6 +103,7 @@ class Trainer extends Model
 
         if ($data) {
             $this->fill($data);
+            error_log("Retrieved trainer data: " . json_encode($data));
             return true; // Return true when a record is found
         }
         return false; // Return false if no record is found

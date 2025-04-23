@@ -13,7 +13,7 @@
 }
 
 .banner h1 {
-  font-size: 28px;
+  font-size: 24px;
   margin-bottom: 5px;
 }
 
@@ -31,9 +31,9 @@
 
 .grid-tile {
   border-radius: 30px;
-  padding: 10px;
+  padding: 12px;
   background: radial-gradient(at top right, #5000b3, rgba(81, 0, 179, 0.6));
-  border: 2px solid #5000b3;
+  border: 1px solid #5000b3;
   backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
@@ -47,32 +47,39 @@
 }
 
 .grid-tile .top h2 {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 500;
 }
 
 .grid-tile .top p {
   margin-top: 5px;
   font-size: 14px;
-  color: rgba(250, 250, 250, 0.7);
+  color: rgba(250, 250, 250, 0.8);
   width: 80%;
 }
 
 .grid-tile.workout-in-progress {
   background: radial-gradient(at top right, #ef4444, rgba(239, 68, 68, 0.6));
-  border: 2px solid #ef4444;
+  border: 1px solid #ef4444;
 }
 
 .workout-cmd {
   margin-top: auto;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--color-zinc-50);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: rgb(22, 163, 74);
-  border: 2px solid #22c55e;
+  /* background-color: rgba(250, 250, 250, 0.2);
+  border: 1px solid rgba(250, 250, 250, 0.2); */
+  /* green */
+  background: radial-gradient(
+    at top right,
+    rgba(22, 163, 74, 0.9),
+    rgba(22, 163, 74, 0.7)
+  );
+  border: 1px solid rgba(22, 163, 74, 0.9);
   padding: 8px 12px;
   border-radius: 20px;
 }
@@ -87,6 +94,7 @@
 .traffic svg {
   flex-shrink: 0;
   margin-right: 8px;
+  color: rgba(250, 250, 250, 0.8);
 }
 
 .traffic .bar {
@@ -107,6 +115,7 @@
   margin-top: auto;
   transform-origin: bottom;
   animation: traffic-fill 2s cubic-bezier(0.83, 0, 0.17, 1) forwards;
+  background-color: rgba(250, 250, 250, 0.1);
 }
 
 @keyframes traffic-fill {
@@ -120,47 +129,7 @@
 
 .traffic span {
   font-size: 14px;
-  color: rgba(250, 250, 250, 0.7);
-  font-weight: 600;
-}
-
-.traffic.bad .bar {
-  background-color: rgba(239, 68, 68, 0.4);
-  border-color: rgba(239, 68, 68, 1);
-}
-
-.traffic.bad .fill {
-  background-color: rgba(239, 68, 68, 1);
-}
-
-.traffic.bad span {
-  color: rgba(239, 68, 68, 1);
-}
-
-.traffic.good .bar {
-  background-color: rgba(34, 197, 94, 0.4);
-  border-color: rgba(34, 197, 94, 1);
-}
-
-.traffic.good .fill {
-  background-color: rgba(34, 197, 94, 1);
-}
-
-.traffic.good span {
-  color: rgba(34, 197, 94, 1);
-}
-
-.traffic.average .bar {
-  background-color: rgba(249, 168, 37, 0.4);
-  border-color: rgba(249, 168, 37, 1);
-}
-
-.traffic.average .fill {
-  background-color: rgba(249, 168, 37, 1);
-}
-
-.traffic.average span {
-  color: rgba(249, 168, 37, 1);
+  color: rgba(250, 250, 250, 0.8);
 }
 
 .bottom-text {
@@ -207,15 +176,6 @@
 .progress span {
   font-size: 14px;
   color: rgba(250, 250, 250, 0.8);
-  font-weight: 600;
-}
-
-.progress.well_done span {
-  color: rgba(34, 197, 94, 1);
-}
-
-.progress.try_harder span {
-  color: rgba(249, 168, 37, 1);
 }
 
 .gray-full-tile {
@@ -228,12 +188,13 @@
     rgba(250, 250, 250, 0.2),
     rgba(250, 250, 250, 0.1)
   );
-  border: 2px solid rgba(250, 250, 250, 0.1);
+  border: 1px solid rgba(250, 250, 250, 0.1);
   backdrop-filter: blur(20px);
   display: flex;
   align-items: center;
 }
 
 .gray-full-tile h2 {
+  font-weight: 500;
   margin-left: 10px;
 }

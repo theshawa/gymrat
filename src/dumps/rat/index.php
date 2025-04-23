@@ -59,7 +59,7 @@ try {
 $pageConfig = [
     "title" => "Home",
     "styles" => [
-        "./home.css"
+        "./home copy.css"
     ],
     "scripts" => [
         "./workout/workout-timer.js"

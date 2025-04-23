@@ -1,0 +1,25 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "db",
+      "path": "src/db"
+    },
+    {
+      "name": "rat",
+      "path": "src/rat"
+    },
+    {
+      "name": "trainer",
+      "path": "src/trainer"
+    },
+    {
+      "name": "staff",
+      "path": "src/staff"
+    }
+  ],
+  "settings": {}
+}

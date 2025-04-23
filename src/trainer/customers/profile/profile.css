@@ -119,15 +119,15 @@
 }
 
 .action-tile.purple {
-  background-color: #6700e6;
-  border: 1px solid #7200ff;
+  background: radial-gradient(at top right, #5000b3, rgba(81, 0, 179, 0.6));
+  border: 2px solid #5000b3;
   flex: 1;
   height: 174px;
 }
 
 .action-tile.red {
-  background-color: #d53a3a;
-  border: 1px solid #f05050;
+  background: radial-gradient(at top right, #ef4444, rgba(239, 68, 68, 0.6));
+  border: 2px solid #ef4444;
 }
 
 .action-tile.full-width {

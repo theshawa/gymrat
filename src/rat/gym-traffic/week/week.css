@@ -8,14 +8,18 @@
 
 .day-selector .day-button {
   padding: 5px 10px;
-  background-color: var(--color-zinc-900);
+  background: radial-gradient(
+    at top right,
+    rgba(250, 250, 250, 0.2),
+    rgba(250, 250, 250, 0.1)
+  );
   color: var(--color-zinc-400);
   font-weight: 500;
   border-radius: 9999px;
 }
 
 .day-selector .day-button.active {
-  background-color: var(--color-violet-600);
+  background: radial-gradient(at top right, #5000b3, rgba(81, 0, 179, 0.6));
   color: var(--color-zinc-50);
 }
 

@@ -19,6 +19,7 @@ require_once "../includes/titlebar.php";
 <main>
 </main>
 
+
 <script>
     const container = document.querySelector("main")
     notification_listeners.add_listener((items) => {

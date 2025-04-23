@@ -73,13 +73,14 @@
   justify-content: space-between;
   /* background-color: rgba(250, 250, 250, 0.2);
   border: 1px solid rgba(250, 250, 250, 0.2); */
-  /* green */
+  /* light green */
   background: radial-gradient(
     at top right,
-    rgba(22, 163, 74, 0.9),
-    rgba(22, 163, 74, 0.7)
+    rgba(66, 179, 77, 1),
+    rgba(66, 179, 77, 0.8)
   );
-  border: 1px solid rgba(22, 163, 74, 0.9);
+  border: 1px solid rgba(66, 179, 77, 1);
+
   padding: 8px 12px;
   border-radius: 20px;
 }

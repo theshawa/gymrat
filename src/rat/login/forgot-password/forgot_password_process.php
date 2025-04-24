@@ -26,7 +26,10 @@ try {
 }
 
 if ($request->code) {
-    redirect_with_error_alert("Password reset request already sent. Please check your email.", "./");
+    $_SESSION['customer_password_reset'] = [
+        'email' => $email,
+    ];
+    redirect_with_error_alert("Password reset request already sent. Please check your email.", "./email-verification");
     exit;
 }
 
@@ -64,4 +67,4 @@ $_SESSION['customer_password_reset'] = [
     'email' => $email,
 ];
 
-redirect_with_info_alert("Password reset request sent. Please check your email", "./email-verification");
+redirect_with_success_alert("Password reset request sent. Please check your email", "./email-verification");

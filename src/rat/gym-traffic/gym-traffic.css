@@ -51,14 +51,14 @@ main {
 .data {
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
+  margin-top: 20px;
   align-items: center;
   opacity: 0;
   transition: opacity 1s;
 }
 
 .label {
-  font-size: 14px;
+  font-size: 13px;
   text-transform: uppercase;
   color: var(--color-zinc-500);
   max-width: 200px;

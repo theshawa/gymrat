@@ -104,7 +104,7 @@ require_once "../../../../includes/sidebar.php";
             <?php if (!$payment_id) : ?>
                 <div>
                     <h1 style="text-align: right; margin-bottom: 20px;">Payment History</h1>
-                    <div class="payment-list-item background-color-zinc-100">
+                    <div class="payment-list-item background-color-zinc-100" style="font-weight: bold;">
                         <div style="grid-column: 1; align-self: center; justify-self: start; text-align: left">
                             Membership Plan
                         </div>

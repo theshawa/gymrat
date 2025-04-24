@@ -111,7 +111,7 @@ class MembershipPayment extends Model
     public function get_total_revenue_for_month(int $year, int $month, int $membership_plan = 0): float
     {
         $sql = "SELECT SUM(amount) as total_revenue FROM $this->table 
-                WHERE YEAR(created_at) = :year AND MONTH(created_at) = :month";
+                WHERE YEAR(created_at) = :year AND MONTH(created_at) = :month AND completed_at IS NOT NULL";
         $params = [
             'year' => $year,
             'month' => $month
@@ -131,7 +131,7 @@ class MembershipPayment extends Model
     public function get_total_count_for_month(int $year, int $month, int $membership_plan = 0): float
     {
         $sql = "SELECT COUNT(id) as total_revenue FROM $this->table 
-                WHERE YEAR(created_at) = :year AND MONTH(created_at) = :month";
+                WHERE YEAR(created_at) = :year AND MONTH(created_at) = :month AND completed_at IS NOT NULL";
         $params = [
             'year' => $year,
             'month' => $month
@@ -150,7 +150,7 @@ class MembershipPayment extends Model
 
     public function get_all_sales_for_month(int $year, int $month): array
     {
-        $sql = "SELECT * FROM $this->table WHERE YEAR(created_at) = :year AND MONTH(created_at) = :month";
+        $sql = "SELECT * FROM $this->table WHERE YEAR(created_at) = :year AND MONTH(created_at) = :month AND completed_at IS NOT NULL";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'year' => $year,
@@ -164,11 +164,26 @@ class MembershipPayment extends Model
         }, $items);
     }
 
+    public function get_all_sales_for_year(int $year): array
+    {
+        $sql = "SELECT * FROM $this->table WHERE YEAR(created_at) = :year AND completed_at IS NOT NULL";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'year' => $year
+        ]);
+        $items = $stmt->fetchAll();
+        return array_map(function ($item) {
+            $record = new MembershipPayment();
+            $record->fill($item);
+            return $record;
+        }, $items);
+    }
+
     public function get_all_sales_grouped_by_plan_for_month(int $year, int $month): array
     {
         $sql = "SELECT membership_plan, SUM(amount) as total_amount, COUNT(id) as total_count 
                 FROM $this->table 
-                WHERE YEAR(created_at) = :year AND MONTH(created_at) = :month 
+                WHERE YEAR(created_at) = :year AND MONTH(created_at) = :month AND completed_at IS NOT NULL
                 GROUP BY membership_plan";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
@@ -176,6 +191,19 @@ class MembershipPayment extends Model
             'month' => $month
         ]);
         return $stmt->fetchAll();
+    }
+
+    public function get_all(): array
+    {
+        $sql = "SELECT * FROM $this->table";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        return array_map(function ($item) {
+            $record = new MembershipPayment();
+            $record->fill($item);
+            return $record;
+        }, $items);
     }
 
     public function __sleep()

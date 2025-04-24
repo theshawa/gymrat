@@ -125,6 +125,18 @@
     border-radius: 20px;
 }
 
+.payment-link-tab{
+    background-color: var(--color-zinc-200);
+    width: 100%; 
+    height: auto; 
+    border: 1px solid var(--color-zinc-300);
+    border-radius: 20px;
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+    padding: 12px;
+    text-align: center;
+}
+
+
 .background-color-zinc-200 {
     background-color: var(--color-zinc-200);
 }

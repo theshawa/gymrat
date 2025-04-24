@@ -42,7 +42,7 @@ if (!$isCardInList) {
             "id" => $card->id,
             "title" => ($concatName) ?
                 $card->fname . " " . $card->lname : 
-                $card->name ?? $defaultName . " #" . $card->id,
+                $card->name ?? $defaultName . " No. " . $card->id,
             "description" => $card->description ?? "",
             "image" => ($useAvatar) ? $card->avatar : ( $card->image ?? null ),
             "created_at" => ($showCreatedAt && isset($card->created_at)) ? $card->created_at->format('Y-m-d H:i:s') : null

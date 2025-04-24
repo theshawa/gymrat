@@ -292,6 +292,11 @@ select:has(option:checked:not([value=""])) option {
   margin: 5px 0px;
 }
 
+.staff-input-short-alt{
+  width: 10%;
+  margin: 5px 0px;
+}
+
 .staff-btn-secondary-black {
   background-color: transparent;
   border: 2px solid var(--color-zinc-500);

@@ -11,7 +11,11 @@ class Logger
         $time = date("Y-m-d H:i:s");
         ob_start();
         foreach ($items as $item) {
-            var_dump($item);
+            if (is_array($item) || is_object($item)) {
+                var_dump($item);
+            } else {
+                echo $item . " ";
+            }
         }
         $msg = ob_get_clean();
         $msg = "[$time] $msg";

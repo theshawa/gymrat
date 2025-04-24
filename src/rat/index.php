@@ -219,7 +219,7 @@ $plan_remaining_days = $interval->days;
 <main>
     <div class="banner">
         <img src="<?= get_file_url("default-images/default-gym-banner.png") ?>" alt="">
-        <h1>හොරිමීයා Fitness Centre</h1>
+        <h1>Fitness Centre</h1>
         <p class="paragraph">Your fitness journey starts here!</p>
     </div>
     <div class="grid">
@@ -310,7 +310,7 @@ $plan_remaining_days = $interval->days;
             </a>
             <a href="<?= $customer->trainer ? "/rat/progress/logs" : "/rat/progress" ?>" class="grid-tile">
                 <div class="top">
-                    <h2>My Progess</h2>
+                    <h2>My Progress</h2>
                 </div>
                 <?php if ($customer->trainer): ?>
                     <div class="progress <?= $progress['status'] ?>">

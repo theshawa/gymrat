@@ -4,16 +4,22 @@ auth_required_guard("admin", "/staff/login");
 
 require_once "../../../alerts/functions.php";
 require_once "../../../db/models/MembershipPayment.php";
+require_once "../../../db/models/MembershipPlan.php";
 
 
-$pageTitle = "Finance Overview";
+$pageTitle = "Finance";
 $pageStyles = ["./finance.css"];
 $sidebarActive = 7;
 $menuBarConfig = [
     "title" => $pageTitle
 ];
 
+
+$membershipPlanModel = new MembershipPlan();
 $membershipPaymentModel = new MembershipPayment();
+$currentMonthPayments = new MembershipPayment();
+
+$membershipPlans = null;
 $currentYear = (int)date("Y");
 $currentMonth = (int)date("m");
 $total_revenues = [];
@@ -33,11 +39,12 @@ try {
     $_SESSION['error'] = "Failed to calculate revenues: " . $e->getMessage();
 }
 
-$currentMonthPayments = new MembershipPayment();
+
 try {
+    $membershipPlans = $membershipPlanModel->get_all();
     $currentMonthPayments = $currentMonthPayments->get_all_sales_grouped_by_plan_for_month($currentYear, $currentMonth);
 } catch (Exception $e) {
-    redirect_with_error_alert("Failed to fetch sales: " . $e->getMessage(), "/staff/admin");
+    redirect_with_error_alert("Failed to fetch sales details: " . $e->getMessage(), "/staff/admin");
     exit;
 }
 
@@ -86,13 +93,48 @@ require_once "../../includes/sidebar.php";
                         </div>
                     <?php endfor; ?>
                 </div>
-                <div style="grid-column: 2; padding: 20px;">
-                    <h1>Income Growth Analysis</h1>
-                    
+                <div style="grid-column: 2; padding: 20px; 
+                display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <h1>Hi</h1>
+                    </div>
+                    <div>
+                        <h1>Hi</h1>
+                    </div>
+                    <div>
+                        <h1>Hi</h1>
+                    </div>
+                    <div>
+                        <h1>Hi</h1>
+                    </div>
                 </div>
             </div>
-            <div class="overview-large-box">
-                
+            <div class="overview-large-box" style="">
+                <div style="padding: 20px; justify-self: center; width:100%; text-align: center;">
+                    <h1 >Sales Overview for Current Month</h1>
+                </div>
+                <?php foreach ($currentMonthPayments as $payment): ?>
+                    <?php 
+                        $membershipName = "Unknown Plan";
+                        foreach ($membershipPlans as $plan) {
+                            if ($plan->id == $payment['membership_plan']) {
+                                $membershipName = $plan->name;
+                                break;
+                            }
+                        }
+                    ?>
+                    <div class="overview-list-item">
+                        <div style="grid-column: 1; align-self: center;">
+                            <h3><?= htmlspecialchars($membershipName) ?></h3>
+                        </div>
+                        <div style="grid-column: 2; align-self: center; justify-self:center; text-align: center;">
+                            <p">Total Count: <strong><?= $payment['total_count'] ?></strong></p>
+                        </div>
+                        <div style="grid-column: 3; align-self: center; justify-self: end; text-align: right;">
+                            <p">Total Amount: <strong>Rs. <?= number_format($payment['total_amount'], 2) ?></strong></p>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>

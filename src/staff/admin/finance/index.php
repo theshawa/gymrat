@@ -104,7 +104,7 @@ require_once "../../includes/sidebar.php";
                     <a href="" class="finance-link-tab">
                         <h1 class="font-color-zinc-200">Reports</h1>
                     </a>
-                    <a href="" class="finance-link-tab">
+                    <a href="/staff/admin/finance/graphs" class="finance-link-tab">
                         <h1 class="font-color-zinc-200">Visualize</h1>
                     </a>
                 </div>

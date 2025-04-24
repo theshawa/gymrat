@@ -2,9 +2,9 @@
 -- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: gymrat_db:3306
--- Generation Time: Apr 24, 2025 at 07:59 PM
--- Server version: 9.2.0
+-- Host: mysql_db:3306
+-- Generation Time: Apr 24, 2025 at 02:05 AM
+-- Server version: 9.3.0
 -- PHP Version: 8.2.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -109,16 +109,7 @@ CREATE TABLE `customers` (
 
 INSERT INTO `customers` (`id`, `fname`, `lname`, `email`, `phone`, `password`, `avatar`, `onboarded`, `trainer`, `membership_plan`, `membership_plan_activated_at`, `workout`, `meal_plan`, `created_at`, `updated_at`) VALUES
 (44, 'Theshawa', 'Nimantha', 'mrclocktd@gmail.com', '0766743755', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 15, '2025-04-15 07:27:46', 5, 3, '2025-04-15 07:27:26', '2025-04-15 07:27:26'),
-(45, 'Luka', 'Johnson', 'wadroneth@gmail.com', '+94716060662', '$2y$12$6Ekl5IFW1gZz7vxmsTkKYe4QALJKZAJJ4Q2vpl2XxICbGy0KhUwPS', NULL, 1, 1, 15, '2025-04-15 07:27:46', 1, 3, '2025-04-22 10:26:05', '2025-04-22 10:26:05'),
-(46, 'Nadeesha', 'Fernando', 'nadeesha.f@gmail.com', '0761000002', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 18, '2024-12-01 14:50:55', 1, 2, '2024-12-01 14:50:20', '2024-12-01 14:50:20'),
-(47, 'Ravindu', 'Jayasinghe', 'ravindu.j@gmail.com', '0761000003', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 17, '2025-01-03 07:45:22', 1, 2, '2025-01-03 07:44:50', '2025-01-03 07:44:50'),
-(48, 'Sajani', 'Kariyawasam', 'sajani.k@gmail.com', '0761000004', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 15, '2025-01-05 10:20:00', 1, 2, '2024-11-05 10:15:00', '2024-11-05 10:15:00'),
-(49, 'Dineth', 'Lakshan', 'dineth.l@gmail.com', '0761000005', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 17, '2024-11-20 15:10:10', 1, 2, '2024-11-20 15:09:40', '2024-11-20 15:09:40'),
-(50, 'Nimasha', 'Madushani', 'nimasha.m@gmail.com', '0761000006', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, NULL, '2024-12-01 06:15:00', 1, 2, '2024-12-01 06:14:30', '2024-12-01 06:14:30'),
-(51, 'Kalindu', 'Ranasinghe', 'kalindu.r@gmail.com', '0761000007', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 17, '2025-03-12 09:00:30', 1, 2, '2025-02-12 09:00:00', '2025-02-12 09:00:00'),
-(52, 'Thisara', 'Senanayake', 'thisara.s@gmail.com', '0761000008', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 18, '2025-01-01 12:10:10', 1, 2, '2025-01-01 12:09:50', '2025-01-01 12:09:50'),
-(53, 'Amaya', 'Disanayaka', 'amaya.d@gmail.com', '0761000009', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 15, '2025-03-15 17:00:00', 1, 2, '2025-03-15 16:59:30', '2025-03-15 16:59:30'),
-(54, 'Yasitha', 'Abeysekera', 'yasitha.a@gmail.com', '0761000010', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, NULL, 17, '2025-04-10 13:35:30', 1, 2, '2024-12-10 13:32:50', '2024-12-10 13:32:50');
+(45, 'Luka', 'Johnson', 'wadroneth@gmail.com', '+94716060662', '$2y$12$6Ekl5IFW1gZz7vxmsTkKYe4QALJKZAJJ4Q2vpl2XxICbGy0KhUwPS', NULL, 1, 1, 15, '2025-04-15 07:27:46', 1, 3, '2025-04-22 10:26:05', '2025-04-22 10:26:05');
 
 -- --------------------------------------------------------
 
@@ -418,35 +409,7 @@ INSERT INTO `membership_payments` (`id`, `customer`, `membership_plan`, `amount`
 (19, 44, 15, 15000, '2025-04-15 07:27:46', '2025-04-15 07:27:35'),
 (20, 44, 18, 60000, '2025-04-08 22:15:43', '2025-04-19 16:46:10'),
 (21, 45, 18, 300000, NULL, '2025-04-22 10:26:30'),
-(22, 45, 18, 300000, NULL, '2025-04-22 10:26:42'),
-(23, 45, 15, 15000, '2025-01-10 10:20:45', '2025-01-10 10:20:20'),
-(24, 45, 15, 15000, '2025-02-10 11:30:10', '2025-02-10 11:29:40'),
-(25, 45, 15, 15000, '2025-03-10 12:41:30', '2025-03-10 12:41:00'),
-(26, 46, 18, 300000, '2024-12-01 14:50:55', '2024-12-01 14:50:20'),
-(27, 47, 17, 30000, '2025-01-03 07:45:22', '2025-01-03 07:44:50'),
-(28, 47, 17, 30000, '2025-02-03 07:47:10', '2025-02-03 07:46:45'),
-(29, 47, 17, 30000, '2025-03-03 07:48:35', '2025-03-03 07:48:10'),
-(30, 48, 14, 6000, '2024-11-05 10:15:25', '2024-11-05 10:15:00'),
-(31, 48, 14, 6000, '2024-12-05 10:17:00', '2024-12-05 10:16:30'),
-(32, 48, 15, 15000, '2025-01-05 10:20:00', '2025-01-05 10:19:40'),
-(33, 48, 15, 15000, '2025-02-05 10:22:10', '2025-02-05 10:21:40'),
-(34, 49, 17, 30000, '2024-11-20 15:10:10', '2024-11-20 15:09:40'),
-(35, 49, 17, 30000, '2025-01-20 15:11:25', '2025-01-20 15:10:55'),
-(36, 49, 17, 30000, '2025-03-20 15:12:40', '2025-03-20 15:12:10'),
-(37, 50, 14, 6000, '2024-12-01 06:15:00', '2024-12-01 06:14:30'),
-(38, 50, 14, 6000, '2025-01-01 06:15:00', '2025-01-01 06:14:30'),
-(39, 50, 14, 6000, '2025-02-01 06:15:00', '2025-02-01 06:14:30'),
-(40, 50, 14, 6000, '2025-03-01 06:15:00', '2025-03-01 06:14:30'),
-(41, 50, 14, 6000, '2025-04-01 06:15:00', '2025-04-01 06:14:30'),
-(42, 51, 15, 15000, '2025-02-12 09:00:10', '2025-02-12 09:00:00'),
-(43, 51, 17, 30000, '2025-03-12 09:00:30', '2025-03-12 09:00:10'),
-(44, 51, 17, 30000, '2025-04-12 09:00:45', '2025-04-12 09:00:20'),
-(45, 52, 18, 300000, '2025-01-01 12:10:10', '2025-01-01 12:09:50'),
-(46, 53, 15, 15000, '2025-03-15 17:00:00', '2025-03-15 16:59:30'),
-(47, 53, 15, 15000, '2025-04-15 17:00:30', '2025-04-15 17:00:00'),
-(48, 54, 17, 30000, '2024-12-10 13:33:10', '2024-12-10 13:32:50'),
-(49, 54, 17, 30000, '2025-02-10 13:34:15', '2025-02-10 13:33:50'),
-(50, 54, 17, 30000, '2025-04-10 13:35:30', '2025-04-10 13:35:00');
+(22, 45, 18, 300000, NULL, '2025-04-22 10:26:42');
 
 -- --------------------------------------------------------
 
@@ -514,22 +477,15 @@ CREATE TABLE `settings` (
   `id` int NOT NULL,
   `contact_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `contact_phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `workout_session_expiry` int NOT NULL COMMENT 'In hours',
-  `max_capacity` int NOT NULL,
-  `min_workout_time` int NOT NULL COMMENT 'In hours',
-  `gym_banner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `gym_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `gym_desc` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
-  `gym_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `show_widgets` tinyint(1) NOT NULL DEFAULT '1'
+  `workout_session_expiry` int NOT NULL COMMENT 'In hours'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `settings`
 --
 
-INSERT INTO `settings` (`id`, `contact_email`, `contact_phone`, `workout_session_expiry`, `max_capacity`, `min_workout_time`, `gym_banner`, `gym_name`, `gym_desc`, `gym_address`, `show_widgets`) VALUES
-(1, 'support@gymrat.com', '1234567890', 24, 100, 1, NULL, 'PRAN FITNESS', 'Top-tier training facility with premium equipment.', '123 Muscle St, Fit City', 1);
+INSERT INTO `settings` (`id`, `contact_email`, `contact_phone`, `workout_session_expiry`) VALUES
+(1, 'support@gymrat.com', '1234567890', 24);
 
 -- --------------------------------------------------------
 
@@ -865,6 +821,12 @@ ALTER TABLE `notifications`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `staff`
 --
 ALTER TABLE `staff`
@@ -940,7 +902,7 @@ ALTER TABLE `complaints`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `customer_progress`
@@ -988,7 +950,7 @@ ALTER TABLE `meals`
 -- AUTO_INCREMENT for table `membership_payments`
 --
 ALTER TABLE `membership_payments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `membership_plans`
@@ -1001,6 +963,12 @@ ALTER TABLE `membership_plans`
 --
 ALTER TABLE `notifications`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `trainers`

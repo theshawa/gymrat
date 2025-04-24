@@ -105,7 +105,8 @@ require_once "../includes/titlebar.php";
     </p>
 
     <?php if (count($records) === 0): ?>
-        <p class="info">No records found</p>
+        <p class="info">No records found. Measure your BMI
+            and see how it progresses over time.</p>
     <?php else: ?>
         <form class="filter" action=".">
             <select class="input" name="range" required>

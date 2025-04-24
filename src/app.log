@@ -1,0 +1,33 @@
+[2025-04-24 23:09:29] string(45) "Payment success page requested with session: "
+array(1) {
+  ["subscribing"]=>
+  int(46)
+}
+
+[2025-04-24 23:09:34] string(45) "Payment success page requested with session: "
+array(2) {
+  ["auth"]=>
+  array(6) {
+    ["id"]=>
+    int(46)
+    ["email"]=>
+    string(28) "2022cs136@stu.ucsc.cmb.ac.lk"
+    ["fname"]=>
+    string(8) "Theshawa"
+    ["lname"]=>
+    string(8) "Nimantha"
+    ["session_started_at"]=>
+    int(1745516369)
+    ["role"]=>
+    string(3) "rat"
+  }
+  ["success"]=>
+  string(40) "Subscription Plan activated successfully"
+}
+
+[2025-04-24 23:11:44] string(45) "Payment success page requested with session: "
+array(1) {
+  ["subscribing"]=>
+  int(46)
+}
+

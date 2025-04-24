@@ -1,30 +1,33 @@
 services:
-  mysql_db:
+  gymrat_db:
     image: mysql
     restart: always
+    container_name: gymrat_db
     environment:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: gymrat
     volumes:
       - db_data:/var/lib/mysql
-  phpmyadmin:
-    depends_on:
-      - mysql_db
+  gymrat_phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    depends_on:
+      - gymrat_db
+    container_name: gymrat_phpmyadmin
     restart: always
     ports:
       - 5000:80
     environment:
-      PMA_HOST: mysql_db
+      PMA_HOST: gymrat_db
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: 123456
-  php-server:
+  gymrat_php:
+    container_name: gymrat_php
     build: .
     ports:
       - 80:80
     volumes:
       - ../src:/var/www/html
-      - ./my-php.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ./php-settings.ini:/usr/local/etc/php/conf.d/custom.ini
   
 volumes:
   db_data:

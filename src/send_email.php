@@ -1,15 +1,10 @@
 <?php
 
-require __DIR__ . '/lib/src/PHPMailer.php';
-require __DIR__ . '/lib/src/SMTP.php';
-require __DIR__ . '/lib/src/Exception.php';
+require_once __DIR__ . "/vendor/autoload.php";
 
 use PHPMailer\PHPMailer\PHPMailer;
 
-/**
- * @throws \PHPMailer\PHPMailer\Exception
- */
-function send_mail(array $to, string $subject, string $body)
+function send_email(array $to, string $subject, string $body)
 {
     $mail = new PHPMailer(true);
 

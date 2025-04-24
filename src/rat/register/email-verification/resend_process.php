@@ -59,12 +59,12 @@ try {
     exit;
 }
 
-require_once "../../../phpmailer/send-mail.php";
+require_once "../../../send_email.php";
 
 use PHPMailer\PHPMailer\Exception;
 
 try {
-    send_mail(
+    send_email(
         [
             'email' => $request->email,
             'name' => $request->email

@@ -87,10 +87,10 @@ try {
     exit;
 }
 
-require_once "../../../phpmailer/send-mail.php";
+require_once "../../../send_email.php";
 
 try {
-    send_mail(
+    send_email(
         [
             'email' => $user->email,
             'name' => $user->fname . " " . $user->lname

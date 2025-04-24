@@ -1,133 +1,134 @@
 /* Base container */
 .staff-base-container {
-    background-color: #f8f9fa;
-    margin: 10px;
-    padding: 20px;
-    border-radius: 10px;
-    width: 100%;
+  background-color: #f8f9fa;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
 }
 
 /* Page header */
 h1 {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #444;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #444;
 }
 
 /* Equipment List Table */
 .staff-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-.staff-table th, .staff-table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
+.staff-table th,
+.staff-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
 }
 
 .staff-table th {
-    background-color: #f5f5f5;
+  background-color: #f5f5f5;
 }
 
 .staff-table tr:hover {
-    background-color: #f1f1f1;
+  background-color: #f1f1f1;
 }
 
 /* Buttons */
 .staff-button-small {
-    padding: 5px 10px;
-    background-color: #4CAF50;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-right: 5px;
-    font-size: 14px;
-    display: inline-block;
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-right: 5px;
+  font-size: 14px;
+  display: inline-block;
 }
 
 .staff-button-small:hover {
-    background-color: #45a049;
+  background-color: #45a049;
 }
 
 .staff-button-destructive {
-    background-color: #f44336;
+  background-color: #f44336;
 }
 
 .staff-button-destructive:hover {
-    background-color: #e53935;
+  background-color: #e53935;
 }
 
 /* Delete equipment model */
 .delete-equipment-div {
-    padding: 15px;
+  padding: 15px;
 }
 
 .delete-equipment-div p {
-    margin: 5px 0px;
+  margin: 5px 0px;
 }
 
 .delete-equipment-div button {
-    width: 30%;
-    height: 45px;
-    margin: 20px 0px;
-    background-color: #ffcccc;
-    border: 2px solid #ff4d4d;
-    color: white;
-    border-radius: 10px;
-    cursor: pointer;
+  width: 30%;
+  height: 45px;
+  margin: 20px 0px;
+  background-color: #ffcccc;
+  border: 1px solid #ff4d4d;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .delete-equipment-div button:hover {
-    background-color: #ff4d4d;
+  background-color: #ff4d4d;
 }
 
 /* Update equipment model */
 .update-equipment-div {
-    padding: 15px;
+  padding: 15px;
 }
 
 .update-equipment-div p {
-    margin: 5px 0px;
+  margin: 5px 0px;
 }
 
 .update-equipment-div button {
-    width: 30%;
-    height: 45px;
-    margin: 20px 0px;
-    background-color: #d4edda;
-    border: 2px solid #28a745;
-    color: #155724;
-    border-radius: 10px;
-    cursor: pointer;
+  width: 30%;
+  height: 45px;
+  margin: 20px 0px;
+  background-color: #d4edda;
+  border: 1px solid #28a745;
+  color: #155724;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .update-equipment-div button:hover {
-    background-color: #28a745;
-    color: white;
+  background-color: #28a745;
+  color: white;
 }
 
 /* Equipment item optional description */
 .description {
-    margin: 10px 0 0;
-    font-size: 0.9rem;
-    color: #555;
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+  color: #555;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-    h1 {
-        font-size: 1.5rem;
-    }
+  h1 {
+    font-size: 1.5rem;
+  }
 
-    .staff-button-small {
-        font-size: 12px;
-        padding: 5px 8px;
-    }
+  .staff-button-small {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
 
-    .description {
-        font-size: 0.85rem;
-    }
+  .description {
+    font-size: 0.85rem;
+  }
 }

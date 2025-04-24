@@ -16,13 +16,7 @@ $fname = htmlspecialchars($_POST['fname']);
 $lname = htmlspecialchars($_POST['lname']);
 $email = htmlspecialchars($_POST['email']);
 $password = htmlspecialchars($_POST['password']);
-$cpassword = htmlspecialchars($_POST['cpassword']);
 $phone = htmlspecialchars($_POST['phone']);
-
-if ($password !== $cpassword) {
-    redirect_with_error_alert("Passwords do not match", "/rat/register");
-    exit;
-}
 
 // check if email is already registered
 require_once "../../db/models/Customer.php";
@@ -96,12 +90,12 @@ try {
     exit;
 }
 
-require_once "../../phpmailer/send-mail.php";
+require_once "../../send_email.php";
 
 use PHPMailer\PHPMailer\Exception;
 
 try {
-    send_mail(
+    send_email(
         [
             'email' => $request->email,
             'name' => $request->email

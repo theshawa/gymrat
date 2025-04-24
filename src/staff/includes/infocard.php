@@ -29,14 +29,14 @@ if (isset($infoCardConfig)) {
 if (!$isCardInList) {
     $newCards = [];
     foreach ($cards as $card) {
-       if (isset($card->description)) {
-           $description = $card->description;
-           $wordLimit = 15;
+        if (isset($card->description)) {
+            $description = $card->description;
+            $wordLimit = 15;
 
-           $descriptionWordsArray = explode(' ', $description);
-           $descriptionFirstSegment = array_slice($descriptionWordsArray, 0, $wordLimit);
-           $card->description = implode(' ', $descriptionFirstSegment) . (count($descriptionWordsArray) > $wordLimit ? '...' : '');
-       }
+            $descriptionWordsArray = explode(' ', $description);
+            $descriptionFirstSegment = array_slice($descriptionWordsArray, 0, $wordLimit);
+            $card->description = implode(' ', $descriptionFirstSegment) . (count($descriptionWordsArray) > $wordLimit ? '...' : '');
+        }
 
         $newCards[] = [
             "id" => $card->id,
@@ -44,7 +44,7 @@ if (!$isCardInList) {
                 $card->fname . " " . $card->lname : 
                 $card->name ?? $defaultName . " No. " . $card->id,
             "description" => $card->description ?? "",
-            "image" => ($useAvatar) ? $card->avatar : ( $card->image ?? null ),
+            "image" => ($useAvatar) ? $card->avatar : ($card->image ?? null),
             "created_at" => ($showCreatedAt && isset($card->created_at)) ? $card->created_at->format('Y-m-d H:i:s') : null
         ];
     }
@@ -86,9 +86,10 @@ if (!$isCardInList) {
         grid-template-columns: repeat(<?= $gridColumns ?>, 1fr);
         gap: 20px;
     }
+
     .info-card {
         background-color: var(--color-zinc-100);
-        border: 2px solid var(--color-zinc-200);
+        border: 1px solid var(--color-zinc-200);
         width: 100%;
         border-radius: 20px;
         padding: 20px;
@@ -97,22 +98,24 @@ if (!$isCardInList) {
         /*justify-content: space-between;*/
         align-items: center;
     }
+
     .info-card-img {
-        width: 100px; 
-        height: 100px; 
+        width: 100px;
+        height: 100px;
         object-fit: cover;
         margin-right: 20px;
         border-radius: 20px;
     }
+
     .info-card-desc {
         display: flex;
         flex-direction: column;
         width: 100%;
     }
+
     .info-card-ext {
         margin-top: 20px;
         display: flex;
         justify-content: flex-end;
     }
-
 </style>

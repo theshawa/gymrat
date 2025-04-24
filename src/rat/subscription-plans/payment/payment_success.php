@@ -4,6 +4,15 @@ session_start();
 
 require_once "../../../alerts/functions.php";
 
+require_once "../../../logger.php";
+Logger::log("Payment success page requested with session: ", $_SESSION);
+
+if ($_SESSION['membership_plan_activated']) {
+    header("Location: /rat");
+    exit;
+}
+
+
 if (!isset($_SESSION['subscribing'])) {
     die("You are not in the process of subscribing to a plan.");
     exit;
@@ -87,10 +96,12 @@ try {
     exit;
 }
 
-require_once "../../../phpmailer/send-mail.php";
+$_SESSION['membership_plan_activated'] = true;
+
+require_once "../../../send_email.php";
 
 try {
-    send_mail(
+    send_email(
         [
             'email' => $user->email,
             'name' => $user->fname . " " . $user->lname
@@ -104,3 +115,5 @@ try {
 }
 
 redirect_with_success_alert("Subscription Plan activated successfully", $user->onboarded ? "/rat" : "/rat/onboarding/facts");
+var_dump($_SESSION);
+sleep(10);

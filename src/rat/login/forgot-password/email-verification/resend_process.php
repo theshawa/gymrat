@@ -29,7 +29,7 @@ if (!$request->code) {
 $period_from_creation = (new DateTime())->format("U") - (int)$request->created_at->format("U");
 
 
-require_once "../../../../constants.php";
+require_once "../../../../config.php";
 if (
     $request->creation_attempt >= CUSTOMER_EMAIL_VERIFICATION_REQUEST_MAXIMUM_ATTEMPTS
     && $period_from_creation < CUSTOMER_EMAIL_VERIFICATION_REQUEST_TIMEOUT

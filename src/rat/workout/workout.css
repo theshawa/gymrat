@@ -9,7 +9,7 @@
   display: flex;
   align-items: start;
   gap: 20px;
-  border: 1px solid var(--color-zinc-900);
+  border: 1px solid var(--color-zinc-800);
   border-radius: 10px;
   padding: 10px 16px;
 }
@@ -64,11 +64,17 @@
 }
 
 .btn.danger {
-  background-color: var(--color-red);
+  background: radial-gradient(at top right, #ef4444, rgba(239, 68, 68, 0.6));
+  border: 1px solid #ef4444;
 }
 
 .btn.success {
-  background-color: var(--color-green);
+  border: 1px solid rgba(22, 163, 74, 1);
+  background: radial-gradient(
+    at top right,
+    rgba(22, 163, 74, 1),
+    rgba(22, 163, 74, 0.6)
+  );
 }
 
 .info {

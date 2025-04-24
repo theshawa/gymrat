@@ -219,7 +219,7 @@ select:has(option:checked:not([value=""])) option {
   min-height: 98%;
 }
 
-.staff-base-sub-container{
+.staff-base-sub-container {
   margin: 0px 10px;
 }
 
@@ -232,7 +232,7 @@ select:has(option:checked:not([value=""])) option {
 }
 
 .staff-base-sub-container-alt > * {
-  flex: 1 1 calc(50% - 15px); 
+  flex: 1 1 calc(50% - 15px);
 }
 
 .staff-card-container {
@@ -252,7 +252,7 @@ select:has(option:checked:not([value=""])) option {
 .staff-textarea-primary {
   color: var(--color-zinc-600);
   background-color: var(--color-zinc-100);
-  border: 2px solid var(--color-zinc-400);
+  border: 1px solid var(--color-zinc-400);
   border-radius: 10px;
   padding: 10px;
   text-align: justify;
@@ -268,19 +268,17 @@ select:has(option:checked:not([value=""])) option {
 .staff-input-primary {
   color: var(--color-zinc-600);
   background-color: var(--color-zinc-100);
-  border: 2px solid var(--color-zinc-400);
+  border: 1px solid var(--color-zinc-400);
   border-radius: 10px;
   text-align: justify;
   min-height: 20px;
   padding: 10px;
 }
 
-
 .staff-input-base {
   width: 100%;
   margin: 5px 0px;
 }
-
 
 .staff-input-long {
   width: 30%;
@@ -299,7 +297,7 @@ select:has(option:checked:not([value=""])) option {
 
 .staff-btn-secondary-black {
   background-color: transparent;
-  border: 2px solid var(--color-zinc-500);
+  border: 1px solid var(--color-zinc-500);
   border-radius: 10px;
 }
 
@@ -321,7 +319,7 @@ select:has(option:checked:not([value=""])) option {
   height: 45px;
   margin: 20px 0px;
   background-color: var(--color-red-light);
-  border: 2px solid var(--color-red);
+  border: 1px solid var(--color-red);
   color: var(--color-zinc-100);
   border-radius: 10px;
 }
@@ -334,7 +332,7 @@ select:has(option:checked:not([value=""])) option {
   margin-bottom: 6px;
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   text-align: center;
   cursor: pointer;
   transition: background-color 0.6s;
@@ -374,9 +372,7 @@ select:has(option:checked:not([value=""])) option {
 
 /* Dashboard */
 
-
-
- /*Alert*/
+/*Alert*/
 .alert-wrapper {
   display: flex;
   flex-direction: column;

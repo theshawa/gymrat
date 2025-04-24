@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once __DIR__ . "/alerts/functions.php";
-require_once __DIR__ . "/constants.php";
+require_once __DIR__ . "/config.php";
 
 function is_auth_valid(string $role): bool
 {

@@ -87,21 +87,26 @@ require_once "../includes/titlebar.php";
     $subnavbarConfig = [
         'links' => [
             [
-                'title' => 'BMI',
-                'href' => './'
-            ],
-            [
                 'title' => 'Trainer Logs',
                 'href' => './logs'
-            ]
+            ],
+            [
+                'title' => 'BMI Progress',
+                'href' => './'
+            ],
         ],
-        "active" => 1
+        "active" => 2
     ];
 
     require_once "../includes/subnavbar.php"; ?>
+    <h1>BMI Progress Chart</h1>
+    <p class="info">
+        View your BMI history in the chart below. <strong>For a healthy weight, keep your BMI between the green lines</strong>. This will help you track your fitness progress over time.
+    </p>
 
     <?php if (count($records) === 0): ?>
-        <p class="info">No records found</p>
+        <p class="info">No records found. Measure your BMI
+            and see how it progresses over time.</p>
     <?php else: ?>
         <form class="filter" action=".">
             <select class="input" name="range" required>
@@ -113,16 +118,13 @@ require_once "../includes/titlebar.php";
             </select>
         </form>
         <canvas id="progress-chart"></canvas>
-        <p class="info">
-            *Your BMI progress is displayed in the chart above. To maintain a healthy BMI, ensure that your values fall between the two green lines.
-        </p>
     <?php endif; ?>
 
 
     <form action="delete_all_bmi_records.php" class="delete_form" method="post" style="margin-top: 40px;width: 100%;display: flex;flex-direction: column;">
-        <a href="../bmi" class="btn" style="margin-bottom: 20px;">Add new record</a>
+        <a href="../bmi" class="btn" style="margin-bottom: 10px;">Add new record</a>
         <?php if (count($records) > 0): ?>
-            <button class="btn outlined">Clear Current records</button>
+            <button class="btn secondary">Clear Current records</button>
         <?php endif; ?>
     </form>
 </main>

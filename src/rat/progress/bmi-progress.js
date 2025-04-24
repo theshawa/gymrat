@@ -19,6 +19,7 @@ Chart.defaults.font.size = Config.fontSize;
 Chart.defaults.font.family = `"DM Sans", sans-serif`;
 
 const loadChart = (labels, data) => {
+  if (!ctx) return;
   new Chart(ctx, {
     type: "line",
     lineAtIndex: [24],
@@ -37,7 +38,13 @@ const loadChart = (labels, data) => {
             gradientFill.addColorStop(1, "rgba(103, 0, 230, 0.1)");
             return gradientFill;
           },
-          pointBackgroundColor: Config.colors.background,
+          pointBackgroundColor: function (context) {
+            const value = context.parsed.y; // y-value for line chart
+            if (value < 18.5) return "#ffcc00"; // yellow for underweight
+            if (value < 25) return "#42b34d"; // green for normal
+            if (value < 30) return "#ff9900"; // orange for overweight
+            return "#ff3300"; // red for obese
+          },
           pointBorderWidth: Config.dotSize,
           pointHoverRadius: Config.dotSize,
         },
@@ -46,8 +53,30 @@ const loadChart = (labels, data) => {
     options: {
       scales: {
         x: {
+          title: {
+            display: true,
+            text: "Saved Date",
+            color: Config.colors.text,
+            font: {
+              size: 13,
+              weight: "500",
+              family: '"DM Sans", sans-serif',
+            },
+          },
           ticks: {
             display: false,
+          },
+        },
+        y: {
+          title: {
+            display: true,
+            text: "BMI Value",
+            color: Config.colors.text,
+            font: {
+              size: 13,
+              weight: "500",
+              family: '"DM Sans", sans-serif',
+            },
           },
         },
       },
@@ -56,8 +85,17 @@ const loadChart = (labels, data) => {
           display: false,
         },
         tooltip: {
+          enabled: true,
           backgroundColor: Config.colors.border,
-          titleColor: Config.colors.textLight,
+          titleColor: function (context) {
+            // For line charts, context.tooltip.dataPoints[0] gives the hovered point
+            const point = context.tooltip.dataPoints[0];
+            const bmi = point.parsed.y;
+            if (bmi < 18.5) return "#ffcc00"; // Underweight (yellow)
+            if (bmi < 25) return "#42b34d"; // Normal (green)
+            if (bmi < 30) return "#ff9900"; // Overweight (orange)
+            return "#ff3300"; // Obese (red)
+          },
           bodyColor: Config.colors.text,
           displayColors: false,
           padding: 10,
@@ -65,21 +103,39 @@ const loadChart = (labels, data) => {
           bodyAlign: "center",
           titleMarginBottom: 2,
           titleFont: {
-            size: 14,
-            weight: 500,
+            size: 15,
+            weight: 600,
           },
           bodyFont: {
             size: Config.fontSize,
           },
           callbacks: {
             label: function (context) {
-              return Intl.DateTimeFormat("en-US", {
-                dateStyle: "medium",
-                timeStyle: "short",
-              }).format(new Date(context.label));
+              return (
+                "Saved at " +
+                Intl.DateTimeFormat("en-US", {
+                  dateStyle: "medium",
+                  timeStyle: "short",
+                }).format(new Date(context.label))
+              );
             },
             title: function (context) {
-              return "BMI: " + parseFloat(context[0].raw).toFixed(2);
+              const bmi = context[0].parsed.y;
+              let bmiClass = "";
+              if (bmi < 18.5) {
+                bmiClass = "Underweight";
+              } else if (bmi < 25) {
+                bmiClass = "Normal";
+              } else if (bmi < 30) {
+                bmiClass = "Overweight";
+              } else {
+                bmiClass = "Obese";
+              }
+              return (
+                "BMI: " +
+                parseFloat(context[0].raw).toFixed(2) +
+                ` (${bmiClass})`
+              );
             },
           },
         },
@@ -106,11 +162,23 @@ const loadChart = (labels, data) => {
   });
 };
 
-loadChart($LABELS, $VALUES);
+loadChart(
+  $LABELS.map((dobj) =>
+    Intl.DateTimeFormat("en-US", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(new Date(dobj.date))
+  ),
+  $VALUES
+);
 
-document.querySelector(".filter select").addEventListener("change", (e) => {
-  e.currentTarget.parentElement.submit();
-});
+const select = document.querySelector(".filter select");
+
+if (select) {
+  select.addEventListener("change", (e) => {
+    e.currentTarget.parentElement.submit();
+  });
+}
 
 document.querySelectorAll(".list .item form").forEach((item) => {
   item.addEventListener("submit", (e) => {

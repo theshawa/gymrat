@@ -12,6 +12,8 @@ class Equipment extends Model
     public string $manufacturer;
     public string $description;
     public string $image;
+    public string $status;
+    public int $quantity;
     public DateTime $purchase_date;
     public DateTime $last_maintenance;
     public DateTime $created_at;
@@ -30,6 +32,8 @@ class Equipment extends Model
         $this->manufacturer = $data['manufacturer'] ?? "";
         $this->description = $data['description'] ?? "";
         $this->image = $data['image'] ?? "";
+        $this->status = $data['status'] ?? "available";
+        $this->quantity = $data['quantity'] ?? 0;
         $this->purchase_date = new DateTime($data['purchase_date'] ?? '');
         $this->last_maintenance = new DateTime($data['last_maintenance'] ?? '');
         $this->created_at = new DateTime($data['created_at'] ?? '');

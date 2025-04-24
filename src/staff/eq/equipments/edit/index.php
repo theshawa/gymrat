@@ -61,7 +61,7 @@ auth_required_guard("eq", "/staff/login");
                         <h2><label for="edit-category">Category</label></h2>
                         <input type="text" id="edit-category" name="equipment_category"
                             class="staff-input-primary staff-input-long"
-                            value="<?= htmlspecialchars($equipment->category) ?>">
+                            value="<?= htmlspecialchars($equipment->type) ?>">
                     </div>
 
                     <div style="margin-bottom: 10px">
@@ -74,10 +74,8 @@ auth_required_guard("eq", "/staff/login");
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-status">Status</label></h2>
                         <select name="equipment_status" id="edit-status" class="staff-input-primary staff-input-long">
-                            <option value="Available" <?= $equipment->status == 'Available' ? 'selected' : '' ?>>Available</option>
-                            <option value="In Use" <?= $equipment->status == 'In Use' ? 'selected' : '' ?>>In Use</option>
-                            <option value="Maintenance" <?= $equipment->status == 'Maintenance' ? 'selected' : '' ?>>Maintenance</option>
-                            <option value="Out of Order" <?= $equipment->status == 'Out of Order' ? 'selected' : '' ?>>Out of Order</option>
+                            <option value="available" >Available</option>
+                            <option value="not available" <?= $equipment->status == 'In Use' ? 'selected' : '' ?>>Not Available</option>
                         </select>
                     </div>
 

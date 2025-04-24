@@ -24,7 +24,7 @@ $equipments = $equipmentModel->get_all();
     <div class="staff-base-container">
         <div class="staff-page-header">
             <h1>Manage Equipments</h1>
-            <a href="./create/index.php" class="staff-button-primary">Create New Equipment</a>
+            <a href="./create/index.php" class="staff-button-small">Create New Equipment</a>
         </div>
 
         <div class="staff-records-container">
@@ -45,12 +45,22 @@ $equipments = $equipmentModel->get_all();
                         <?php foreach ($equipments as $equipment): ?>
                             <tr>
                                 <td><?= htmlspecialchars($equipment->name) ?></td>
-                                <td><?= htmlspecialchars($equipment->category ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($equipment->type ?? 'N/A') ?></td>
                                 <td><?= htmlspecialchars($equipment->quantity ?? 'N/A') ?></td>
                                 <td><?= htmlspecialchars($equipment->status ?? 'N/A') ?></td>
                                 <td>
-                                    <a href="./view/index.php?id=<?= $equipment->id ?>" class="staff-button-small">View</a>
+                                    <a href="./view/index.php?id=<?= $equipment->id ?>" class="staff-button-view">View</a>
                                     <a href="./edit/index.php?id=<?= $equipment->id ?>" class="staff-button-small">Edit</a>
+
+                                    <?php if (strtolower($equipment->status) === 'not available'): ?>
+                                        <a href="#" class="staff-button-small staff-button-disabled"
+                                           onclick="alert('Equipment is not available. Cannot add log record.')">
+                                           Add Log
+                                        </a>
+                                    <?php else: ?>
+                                        <a href="../log-records/create/index.php?id=<?= $equipment->id ?>" class="staff-button-small">Add Log</a>
+                                    <?php endif; ?>
+
                                     <a href="./delete/index.php?id=<?= $equipment->id ?>" class="staff-button-small staff-button-destructive">Delete</a>
                                 </td>
                             </tr>

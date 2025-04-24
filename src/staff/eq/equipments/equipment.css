@@ -12,7 +12,13 @@ h1 {
     text-align: center;
     font-size: 2rem;
     margin-bottom: 20px;
-    color: #444;
+    color: #262626;
+}
+.staff-page-header {
+    display: flex;
+    justify-content: space-between; /* Push children to left & right */
+    align-items: center; /* Align them to bottom */
+    padding: 10px;
 }
 
 /* Equipment List Table */
@@ -37,9 +43,10 @@ h1 {
 }
 
 /* Buttons */
-.staff-button-small {
+
+.staff-button-primary {
     padding: 5px 10px;
-    background-color: #4CAF50;
+    background-color: #262626;
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -48,8 +55,34 @@ h1 {
     display: inline-block;
 }
 
+.staff-button-small {
+    padding: 5px 10px;
+    background-color: #262626;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.staff-button-view {
+    padding: 5px 10px;
+    background-color: #262626;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.staff-button-view:hover {
+    background-color: #333;
+}
+
 .staff-button-small:hover {
-    background-color: #45a049;
+    background-color: #333;
 }
 
 .staff-button-destructive {

@@ -14,6 +14,7 @@ $menuBarConfig = [
     "options" => [
         ["title" => "Save Changes", "buttonType" => "submit", "type" => "secondary"],
         ["title" => "Revert Changes", "buttonType" => "submit", "formAction" => "revert_equipment.php", "type" => "destructive"]
+        
     ]
 ];
 
@@ -42,7 +43,6 @@ auth_required_guard("eq", "/staff/login");
             <form action="create_equipment.php" method="POST" enctype="multipart/form-data">
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
-                    
                     <!-- Equipment Name -->
                     <div style="margin-bottom: 10px;">
                         <h2><label for="equipment_name">Equipment Name</label></h2>
@@ -60,7 +60,7 @@ auth_required_guard("eq", "/staff/login");
                     <!-- Quantity -->
                     <div style="margin-bottom: 10px;">
                         <h2><label for="equipment_quantity">Quantity</label></h2>
-                        <input type="number" id="equipment_quantity" name="equipment_quantity"
+                        <input type="text" id="equipment_quantity" name="equipment_quantity"
                             class="staff-input-primary staff-input-long" value="<?= htmlspecialchars($equipment->quantity ?? '') ?>" min="0">
                     </div>
 

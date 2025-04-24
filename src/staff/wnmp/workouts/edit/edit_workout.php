@@ -49,7 +49,6 @@ if (!empty($workout->exercises)) {
     foreach ($workout->exercises as $key => $exercise) {
         $edit_id = $exercise['edit_id'];
 
-       
         $title_key = "exercise_title_$edit_id";
         $reps_key = "exercise_reps_$edit_id";
         $sets_key = "exercise_sets_$edit_id";

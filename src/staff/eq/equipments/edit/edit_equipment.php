@@ -10,16 +10,16 @@ if($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirect_with_error_alert("Method not allowed", "/staff/eq/equipments");
     exit;
 }
-if($_POST['equipment_id'] !== $_SESSION['equipment_id']) {
-    redirect_with_error_alert("ID mismatch occurred", "/staff/eq/equipments/edit?id=" . $_SESSION['equipment_id']);
+if (!isset($_SESSION['equipment'])) {
+    redirect_with_error_alert("Session variables not set", "/staff/eq/equipments");
     exit;
 }
 
-$id = $_POST['equipment_id'];
+$equipment_id = $_POST['equipment_id'];
 $name = $_POST['equipment_name'];
 $description = $_POST['equipment_description'];
-$category = $_POST['equipment_category'];
-$quantity = $_POST['equipment_quantity'];
+$type = $_POST['equipment_category'];
+$quantity = isset($_POST['equipment_quantity']) ? (int) $_POST['equipment_quantity'] : null;
 $status = $_POST['equipment_status'];
 
 // Validation
@@ -27,8 +27,13 @@ $errors = [];
 
 if (empty($name)) $errors[] = "Name is required.";
 if (empty($description)) $errors[] = "Description is required.";
-if (empty($category)) $errors[] = "Category is required.";
-if (empty($quantity)) $errors[] = "Quantity is required.";
+if (empty($type)) $errors[] = "Category is required.";
+
+
+if ($quantity === null || !is_numeric($quantity)) {
+    $errors[] = "Quantity is required and must be a number.";
+}
+
 if (empty($status)) $errors[] = "Status is required.";
 
 // image upload
@@ -57,7 +62,7 @@ if ($equipment->image && $image) {
 
 $equipment->name = $name;
 $equipment->description = $description;
-$equipment->category = $category;
+$equipment->type = $type;
 $equipment->quantity = $quantity;
 $equipment->status = $status;
 $equipment->image = $image ?? $equipment->image;
@@ -83,5 +88,5 @@ try {
 unset($_SESSION['equipment']);
 unset($_SESSION['equipment_id']);
 
-redirect_with_success_alert("Equipment updated successfully", "/staff/eq/equipments/view?id=" . $id);
+redirect_with_success_alert("Equipment updated successfully", "/staff/eq/equipments/view?id=" . $equipment_id);
 ?>

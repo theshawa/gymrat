@@ -11,20 +11,25 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
+if (!isset($_SESSION['equipment'])) {
+    redirect_with_error_alert("Session variables not set", "/staff/wnmp/workouts");
+    exit;
+}
+
 $name = $_POST['equipment_name'];
 $description = $_POST['equipment_description'];
-$category = $_POST['equipment_category'];
-$quantity = $_POST['equipment_quantity'];
+$type = $_POST['equipment_category'];
+$quantity    = isset($_POST['equipment_quantity']) ? (int) $_POST['equipment_quantity'] : 0;
 $status = $_POST['equipment_status'];
 
 //For Validation
 $errors=[];
 
 if (empty($name)) $errors[] = "Name is required.";
-if (empty($description)) $errors[] = "Description is required.";
-if (empty($category)) $errors[] = "Category is required.";
-if (empty($quantity)) $errors[] = "Quantity is required.";
-if (empty($status)) $errors[] = "Status is required.";
+else if (empty($type)) $errors[] = "Category is required.";
+else if (empty($quantity)) $errors[] = "Quantity is required.";
+else if (empty($status)) $errors[] = "Status is required.";
+else if (empty($description)) $errors[] = "Description is required.";
 
 //Image Uploading
 $image = $_FILES['equipment_image']['name'] ? $_FILES['equipment_image'] : null;
@@ -37,7 +42,7 @@ if ($image) {
     }
 }
 
-$equipment=unserialize($_SESSION['equipment']);
+$equipment = unserialize($_SESSION['equipment']);
 
 //Existing image and delete if find
 if ($equipment->image && $image) {
@@ -52,7 +57,7 @@ if ($equipment->image && $image) {
 
 $equipment->name = $name;
 $equipment->description = $description;
-$equipment->category = $category;
+$equipment->type = $type;
 $equipment->quantity = $quantity;
 $equipment->status = $status;
 $equipment->image = $image ?? $equipment->image;

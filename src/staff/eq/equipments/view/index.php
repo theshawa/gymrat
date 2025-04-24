@@ -56,7 +56,7 @@ auth_required_guard("eq", "/staff/login");
 
                 <div class="equipment-view-details">
                     <p><strong>Category:</strong></p>
-                    <p class="alt"><?= htmlspecialchars($equipment->category??'N/A') ?></p>
+                    <p class="alt"><?= htmlspecialchars($equipment->type??'N/A') ?></p>
                 </div>
                 <hr>
 

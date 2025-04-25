@@ -29,7 +29,7 @@ function get_traffic()
     });
 
     $active_sessions_count = count($active_sessions);
-    $max_sessions = $settings->max_workout_sessions ?? 50;
+    $max_sessions = $settings->max_capacity ?? 50;
     $traffic = $active_sessions_count / $max_sessions;
     $rat_count_text = "";
     if ($active_sessions_count === 0) {

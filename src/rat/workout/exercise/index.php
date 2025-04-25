@@ -50,7 +50,13 @@ require_once "../../includes/titlebar.php";
         </div>
     </div>
     <?php require_once "../../../uploads.php";  ?>
-    <img src="<?= $exercise->image ? get_file_url($exercise->image) : get_file_url("default-images/default_exercise.jpg") ?>" alt="Image of Bench Press" class="featured-image">
+    <?php
+    $image = $exercise->image ? get_file_url($exercise->image) : get_file_url("default-images/default_exercise.jpg");
+    if (!$image) {
+        $image = get_file_url("default-images/default_exercise.jpg");
+    }
+    ?>
+    <img src="<?= $image ?>" alt="Image of Bench Press" class="featured-image">
     <?php if ($exercise->video_link): ?>
         <div class="tutorial">
             <h3>TUTORIAL</h3>

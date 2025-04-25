@@ -51,3 +51,15 @@
 .btn {
   margin-top: 10px;
 }
+
+.phone {
+  padding: 6px 12px;
+  border-radius: 20px;
+  margin: 20px auto;
+  background: radial-gradient(at top right, #5000b3, rgba(81, 0, 179, 0.6));
+  border: 1px solid #5000b3;
+  color: var(--color-zinc-50);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

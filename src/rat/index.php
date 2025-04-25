@@ -4,19 +4,22 @@ require_once "../auth-guards.php";
 if (auth_required_guard("rat", "/rat/login")) exit;
 
 $workoutSession =  null;
+
+require_once "../db/models/Settings.php";
+$settings = new Settings();
+try {
+    $settings->get_all();
+} catch (\Throwable $th) {
+    die("Failed to get settings: " . $th->getMessage());
+}
+
 if (isset($_SESSION['workout_session'])) {
     require_once "../db/models/WorkoutSession.php";
     $workoutSession = new WorkoutSession();
     $workoutSession->fill([
         'session_key' => $_SESSION['workout_session']
     ]);
-    require_once "../db/models/Settings.php";
-    $settings = new Settings();
-    try {
-        $settings->get_all();
-    } catch (\Throwable $th) {
-        die("Failed to get settings: " . $th->getMessage());
-    }
+
     $hrs = empty($settings->workout_session_expiry)  ? 4 : $settings->workout_session_expiry;
     try {
         $workoutSession->get_by_session_key();
@@ -138,9 +141,8 @@ if ($customer->trainer) {
     require_once "../db/models/TrainerLogRecord.php";
     $log_record_model = new TrainerLogRecord();
     try {
-        $log_records = $log_record_model->get_all_of_user_with_trainer(
+        $log_records = $log_record_model->get_all_of_user(
             $customer->id,
-            $customer->trainer
         );
     } catch (\Throwable $th) {
         die("Failed to get trainer log records: " . $th->getMessage());
@@ -210,10 +212,15 @@ $expire_date->modify('+30 days');
 
 $interval = $now->diff($expire_date);
 $plan_remaining_days = $interval->days;
+
+$banner_image = $settings->gym_banner ? get_file_url($settings->gym_banner) : get_file_url("default-images/default-gym-banner.png");
+if (!$banner_image) {
+    $banner_image = get_file_url("default-images/default-gym-banner.png");
+}
 ?>
 
 <main class="no-padding">
-    <img class="banner-image" src="<?= get_file_url("default-images/default-gym-banner.png") ?>" />
+    <img class="banner-image" src="<?= $banner_image ?>" />
     <div class="grid">
         <div class="banner-content">
             <h1>Hello <?= $fname ?></h1>
@@ -369,7 +376,7 @@ $plan_remaining_days = $interval->days;
             <div class="top">
                 <h2>My Gym</h2>
             </div>
-            <p class="bottom-text"><?= "Dhamya Fitness Centre" ?></p>
+            <p class="bottom-text"><?= $settings->gym_name ?? "It's your gym!" ?></p>
         </a>
         <a href="/rat/complaint" class="gray-full-tile">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">

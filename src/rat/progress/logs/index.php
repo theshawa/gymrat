@@ -15,10 +15,10 @@ try {
     die("Failed to get user: " . $th->getMessage());
 }
 
-if (!$user->trainer) {
-    redirect_with_error_alert("You don't have a trainer. Please contact support to get one.", "../");
-    exit;
-}
+// if (!$user->trainer) {
+//     redirect_with_error_alert("You don't have a trainer yet. Please contact manager to get one.", "../");
+//     exit;
+// }
 
 require_once "../../../db/models/Trainer.php";
 $trainer_model = new Trainer();
@@ -44,7 +44,7 @@ require_once "../../../db/models/TrainerLogRecord.php";
 $logRecord = new TrainerLogRecord();
 $records = [];
 try {
-    $records = $logRecord->get_all_of_user_with_trainer($user->id, $user->trainer);
+    $records = $logRecord->get_all_of_user($user->id);
 } catch (\Throwable $th) {
     die("Failed to get log records: " . $th->getMessage());
 }

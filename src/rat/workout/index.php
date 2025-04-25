@@ -46,7 +46,7 @@ if (isset($_SESSION['workout_session'])) {
 
         // automatically end workout if it has been more than 4 hrs
         if ($workoutSession->get_duration_in_hours() > $hrs) {
-            $ended_at = (clone $workoutSession->started_at)->modify('+4 hours');
+            $ended_at = (clone $workoutSession->started_at)->modify('+' . $settings->workout_session_expiry . ' hours');
             $workoutSession->mark_ended($ended_at);
             unset($_SESSION['workout_session']);
             $workoutSession = null;
@@ -108,6 +108,13 @@ if ($day == null) {
         // no session yet
         $day = $days[0];
     }
+    $subnavbar_active = $day;
+} else {
+    $selected_day_index = array_search($day, $days);
+    if ($selected_day_index === false) {
+        die("Invalid day selected. Please select a valid day.");
+    }
+    $subnavbar_active = $selected_day_index + 1;
 }
 
 $subnavbar_links = array_map(function ($item) use ($days) {
@@ -119,7 +126,7 @@ $subnavbar_links = array_map(function ($item) use ($days) {
 
 
 
-$subnavbar_active = $day;
+
 
 $exercises = [];
 require_once "../../db/models/Exercise.php";
@@ -161,10 +168,10 @@ require_once "../includes/titlebar.php";
 
 <script>
     const $WORKOUT_STARTED_AT = <?= json_encode($workoutSession ? $workoutSession->started_at->format("Y-m-d H:i:s") : null) ?>;
+    const $MIN_WORKOUT_DURATION = <?= $settings->min_workout_time ?? 60 ?>; // in hours
 </script>
 
 <main>
-
     <?php if ($workoutSession): ?>
         <button class="btn danger" onclick="endWorkout()">
             <span>End Workout</span>
@@ -179,9 +186,9 @@ require_once "../includes/titlebar.php";
                 const minutes = Math.floor(diffInSeconds / 60) % 60;
                 const hours = Math.floor(diffInSeconds / 3600) % 24;
 
-                if (hours >= 1 || confirm("Are you sure you want to end the workout? You have been working out for " +
+                if (hours >= $MIN_WORKOUT_DURATION || confirm("Are you sure you want to end the workout? You have been working out for " +
                         (minutes > 0 ? minutes + " minutes" : seconds + " seconds") +
-                        ". It's recommended to workout for at least one hour for best results.")) {
+                        `. It's recommended to workout for at least ${$MIN_WORKOUT_DURATION} hour${$MIN_WORKOUT_DURATION===1 ? "" : "s"} for best results.`)) {
                     window.location.href = "./end_workout_process.php";
                 }
             }
@@ -203,8 +210,14 @@ require_once "../includes/titlebar.php";
     <div class="exercises">
         <?php require_once "../../uploads.php";  ?>
         <?php foreach ($exercises as $exercise): ?>
+            <?php
+            $image = $exercise->image ? get_file_url($exercise->image) : get_file_url("default-images/default_exercise.jpg");
+            if (!$image) {
+                $image = get_file_url("default-images/default_exercise.jpg");
+            }
+            ?>
             <a href="./exercise?id=<?= $exercise->id ?>" class="exercise">
-                <img src="<?= $exercise->image ? get_file_url($exercise->image) : get_file_url("default-images/default_exercise.jpg") ?>" alt="Workout image" class="featured-image">
+                <img src="<?= $image ?>" alt="Workout image" class="featured-image">
                 <div class="right">
                     <h4><?= $exercise->name ?> <span class="count"><?= $exercise->reps ?> x <?= $exercise->sets ?></span></h4>
                     <p class="equipment"><?= $exercise->equipment_needed ?> required</p>

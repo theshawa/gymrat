@@ -2,7 +2,7 @@
 require_once "../../auth-guards.php";
 if (auth_required_guard("rat", "/rat/login")) exit;
 
-$range = (int)htmlspecialchars($_GET['range'] ?? "30");
+// $range = (int)htmlspecialchars($_GET['range'] ?? "30");
 
 $records = [];
 
@@ -16,11 +16,44 @@ try {
     die("Failed to get records due to error: " . $e->getMessage());
 }
 
+$range = 30;
+
 $records = array_filter($records, function (BmiRecord $item) use ($range) {
     $now = new DateTime();
     $diff = $now->diff($item->created_at);
     return $diff->days <= ($range < 0 ? 99999 : $range);
 });
+
+// get insights
+
+if (!empty($records)) {
+    $oldest_record = $records[count($records) - 1];
+    $latest_record = $records[0];
+
+    $weight_increase = $latest_record->weight - $oldest_record->weight;
+    $bmi_increase = $latest_record->bmi - $oldest_record->bmi;
+    $weight_increase_percentage = ($weight_increase / $oldest_record->weight) * 100;
+    $bmi_increase_percentage = ($bmi_increase / $oldest_record->bmi) * 100;
+
+    $category_counts = [
+        'underweight' => 0,
+        'normal' => 0,
+        'overweight' => 0,
+        'obese' => 0
+    ];
+    foreach ($records as $record) {
+        if ($record->bmi < 18.5) {
+            $category_counts['underweight']++;
+        } elseif ($record->bmi < 24.9) {
+            $category_counts['normal']++;
+        } elseif ($record->bmi < 29.9) {
+            $category_counts['overweight']++;
+        } else {
+            $category_counts['obese']++;
+        }
+    }
+}
+
 
 $records_as_arrays = array_map(function (BmiRecord $item) {
     return (array) $item;
@@ -35,30 +68,6 @@ usort($records_as_arrays, function ($a, $b) {
     if ($at == $bt) return 0;
     return $at < $bt ? 1 : -1;
 });
-
-$rangeOptions = [
-    [
-        'title' => 'Records of past month',
-        'value' => 30
-    ],
-    [
-        'title' => 'Records of past 2 months',
-        'value' => 60
-    ],
-    [
-        'title' => 'Records of past 6 months',
-        'value' => 180
-    ],
-    [
-        'title' => 'Records of past year',
-        'value' => 365
-    ],
-    [
-        'title' => 'Records from the start',
-        'value' => -1
-    ]
-];
-
 
 $pageConfig = [
     "title" => "My Progress",
@@ -106,9 +115,10 @@ require_once "../includes/titlebar.php";
 
     <?php if (count($records) === 0): ?>
         <p class="no-records">Hey there! Looks like you haven't recorded your BMI yet.
-            Let's start tracking your fitness journey together - add your first measurement!</p>
+            Let's start tracking your fitness journey together - add your first measurement!
+        </p>
     <?php else: ?>
-        <form class="filter" action=".">
+        <!-- <form class="filter" action=".">
             <select class="input" name="range" required>
                 <?php foreach ($rangeOptions as $option): ?>
                     <option value="<?= $option['value'] ?>" <?= $option['value'] == $range ? 'selected' : '' ?>>
@@ -116,8 +126,21 @@ require_once "../includes/titlebar.php";
                     </option>
                 <?php endforeach; ?>
             </select>
-        </form>
+        </form> -->
         <canvas id="progress-chart"></canvas>
+        <div class="insights">
+            <h3>Insights</h3>
+            <div class="insight-list">
+                <div class="insight">
+                    <span class="title">Weight Change</span>
+                    <p class="value"><?= number_format($weight_increase, 2) ?> kg (<?= number_format($weight_increase_percentage, 2) ?>%)</p>
+                </div>
+                <div class="insight">
+                    <span class="title">BMI Change</span>
+                    <p class="value"><?= number_format($bmi_increase, 2) ?> (<?= number_format($bmi_increase_percentage, 2) ?>%)</p>
+                </div>
+            </div>
+        </div>
     <?php endif; ?>
 
 

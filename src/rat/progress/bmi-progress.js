@@ -55,7 +55,7 @@ const loadChart = (labels, data) => {
         x: {
           title: {
             display: true,
-            text: "Saved Date",
+            text: "BMI Records of the last 30 days",
             color: Config.colors.text,
             font: {
               size: 13,

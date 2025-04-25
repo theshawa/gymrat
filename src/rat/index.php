@@ -264,6 +264,23 @@ if (!$banner_image) {
                 <p class="bottom-text">Your personal workout program is coming soon!</p>
             </div>
         <?php endif; ?>
+
+        <?php if ($customer->meal_plan): ?>
+            <a href="/rat/meal-plan" class="grid-tile">
+                <div class="top">
+                    <h2>Meal Plan</h2>
+                </div>
+                <p class="bottom-text"><?= $meal_text ?></p>
+            </a>
+        <?php else: ?>
+            <div class="grid-tile disabled">
+                <div class="top">
+                    <h2>Meal Plan</h2>
+                    <p>Not Assigned</p>
+                </div>
+                <p class="bottom-text">Your meal plan will be assigned soon!</p>
+            </div>
+        <?php endif; ?>
         <a href="/rat/gym-traffic" class="grid-tile traffic-tile">
             <div class="top">
                 <h2>Gym Traffic</h2>
@@ -286,22 +303,6 @@ if (!$banner_image) {
                 <span><?= $traffic['status_text'] ?></span>
             </div>
         </a>
-        <?php if ($customer->meal_plan): ?>
-            <a href="/rat/meal-plan" class="grid-tile">
-                <div class="top">
-                    <h2>Meal Plan</h2>
-                </div>
-                <p class="bottom-text"><?= $meal_text ?></p>
-            </a>
-        <?php else: ?>
-            <div class="grid-tile disabled">
-                <div class="top">
-                    <h2>Meal Plan</h2>
-                    <p>Not Assigned</p>
-                </div>
-                <p class="bottom-text">Your meal plan will be assigned soon!</p>
-            </div>
-        <?php endif; ?>
         <a href="<?= $customer->trainer ? "/rat/progress/logs" : "/rat/progress" ?>" class="grid-tile">
             <div class="top">
                 <h2>My Progress</h2>
@@ -330,16 +331,15 @@ if (!$banner_image) {
                     Measure your BMI<br />and see how it progresses over time
                 </p>
             <?php endif; ?>
-
         </a>
-        <a href="/rat/bmi" class="grid-tile">
+        <a href="/rat/bmi" class="grid-tile full-width">
             <div class="top">
                 <h2>BMI Calculator</h2>
             </div>
             <div class="bottom-text"><?= $bmi_text ?></div>
         </a>
         <?php if ($customer->trainer): ?>
-            <a href="/rat/trainer" class="grid-tile">
+            <a href="/rat/trainer" class="grid-tile full-width">
                 <div class="top">
                     <h2>Trainer</h2>
                 </div>
@@ -349,7 +349,7 @@ if (!$banner_image) {
                 </div>
             </a>
         <?php else: ?>
-            <div class="grid-tile disabled">
+            <div class="grid-tile disabled  full-width">
                 <div class="top">
                     <h2>My Trainer</h2>
                     <p>Not Assigned</p>
@@ -357,7 +357,7 @@ if (!$banner_image) {
                 <p class="bottom-text">Please contact the gym admin to assign a trainer for you.</p>
             </div>
         <?php endif; ?>
-        <a href="/rat/subscription/index.php" class="grid-tile <?php echo $plan_remaining_days < 8 ? 'red' : '' ?>">
+        <a href="/rat/subscription/index.php" class="grid-tile full-width <?php echo $plan_remaining_days < 8 ? 'red' : '' ?>">
             <div class="top">
                 <h2>
                     Subscription
@@ -372,11 +372,11 @@ if (!$banner_image) {
                 <?php endif; ?>
             </p>
         </a>
-        <a href="/rat/gym/index.php" class="grid-tile">
+        <a href="/rat/gym/index.php" class="grid-tile full-width">
             <div class="top">
-                <h2>My Gym</h2>
+                <h2><?= $settings->gym_name ?? "Gym Details" ?></h2>
             </div>
-            <p class="bottom-text"><?= $settings->gym_name ?? "It's your gym!" ?></p>
+            <p class="bottom-text">It's where you workout</p>
         </a>
         <a href="/rat/complaint" class="gray-full-tile">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">

@@ -119,8 +119,8 @@
 }
 
 .action-tile.purple {
-  background: radial-gradient(at top right, #5000b3, rgba(81, 0, 179, 0.6));
-  border: 1px solid #5000b3;
+  background: radial-gradient(at top right, #5b00cc, rgba(91, 0, 204, 0.6));
+  border: 1px solid #5b00cc;
   flex: 1;
   height: 174px;
 }

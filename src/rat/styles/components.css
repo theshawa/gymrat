@@ -114,8 +114,8 @@ main {
 /* button */
 .btn {
   background-color: var(--color-violet-600);
-  background: radial-gradient(at top right, #5000b3, rgba(81, 0, 179, 0.6));
-  border: 1px solid #5000b3;
+  background: radial-gradient(at top right, #5b00cc, rgba(91, 0, 204, 0.6));
+  border: 1px solid #5b00cc;
   color: var(--color-violet-50);
   border-radius: 999999px;
   padding: 0 20px;
@@ -231,13 +231,13 @@ main {
 }
 
 .navbar a:hover:not(.active) {
-  background: radial-gradient(at top right, #5000b3, rgba(81, 0, 179, 0.6));
+  background: radial-gradient(at top right, #5b00cc, rgba(91, 0, 204, 0.6));
 }
 
 .navbar a.active {
   color: var(--color-zinc-50);
-  background: radial-gradient(at top right, #5000b3, rgba(81, 0, 179, 0.6));
-  border-color: #5000b3;
+  background: radial-gradient(at top right, #5b00cc, rgba(91, 0, 204, 0.6));
+  border-color: #5b00cc;
 }
 
 .navbar a span.count {
@@ -384,5 +384,5 @@ main {
 
 .subnavbar-link.active {
   color: var(--color-zinc-50);
-  background: radial-gradient(at top right, #5000b3, rgba(81, 0, 179, 0.6));
+  background: radial-gradient(at top right, #5b00cc, rgba(91, 0, 204, 0.6));
 }

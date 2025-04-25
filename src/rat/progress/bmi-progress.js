@@ -2,7 +2,7 @@ const ctx = document.getElementById("progress-chart");
 
 const Config = {
   colors: {
-    primary: "#6700e6",
+    primary: "#5b00cc",
     text: "#a1a1aa",
     textLight: "#f4f4f5",
     border: "#18181b",
@@ -34,8 +34,8 @@ const loadChart = (labels, data) => {
           backgroundColor: () => {
             const c = ctx.getContext("2d");
             var gradientFill = c.createLinearGradient(500, 0, 100, 0);
-            gradientFill.addColorStop(0, "rgb(103, 0, 230)");
-            gradientFill.addColorStop(1, "rgba(103, 0, 230, 0.1)");
+            gradientFill.addColorStop(0, "rgb(91, 0, 204)");
+            gradientFill.addColorStop(1, "rgba(91, 0, 204, 0.1)");
             return gradientFill;
           },
           pointBackgroundColor: function (context) {

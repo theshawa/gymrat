@@ -199,7 +199,7 @@
 .feature-card-icon {
   width: 40px;
   height: 40px;
-  background-color: rgba(103, 0, 230, 0.1);
+  background-color: rgba(91, 0, 204, 0.1);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -344,7 +344,7 @@
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background-color: rgba(103, 0, 230, 0.1);
+  background-color: rgba(91, 0, 204, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -386,7 +386,6 @@
 
 /* Responsive adjustments */
 @media (max-width: 430px) {
-
   .stats-container,
   .cards-grid {
     grid-template-columns: 1fr;

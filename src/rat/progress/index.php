@@ -128,19 +128,22 @@ require_once "../includes/titlebar.php";
             </select>
         </form> -->
         <canvas id="progress-chart"></canvas>
-        <div class="insights">
-            <h3>Insights</h3>
-            <div class="insight-list">
-                <div class="insight">
-                    <span class="title">Weight Change</span>
-                    <p class="value"><?= number_format($weight_increase, 2) ?> kg (<?= number_format($weight_increase_percentage, 2) ?>%)</p>
-                </div>
-                <div class="insight">
-                    <span class="title">BMI Change</span>
-                    <p class="value"><?= number_format($bmi_increase, 2) ?> (<?= number_format($bmi_increase_percentage, 2) ?>%)</p>
+        <?php if (count($records) > 1): ?>
+
+            <div class="insights">
+                <h3>Insights</h3>
+                <div class="insight-list">
+                    <div class="insight">
+                        <span class="title">Weight Change</span>
+                        <p class="value"><?= number_format($weight_increase, 2) ?> kg (<?= number_format($weight_increase_percentage, 2) ?>%)</p>
+                    </div>
+                    <div class="insight">
+                        <span class="title">BMI Change</span>
+                        <p class="value"><?= number_format($bmi_increase, 2) ?> (<?= number_format($bmi_increase_percentage, 2) ?>%)</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
     <?php endif; ?>
 
 

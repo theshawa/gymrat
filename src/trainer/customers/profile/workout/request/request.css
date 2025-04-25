@@ -1,0 +1,288 @@
+/* request.css */
+main {
+    padding: 15px 15px 40px 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Customer info section */
+.customer-info {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--color-zinc-800);
+}
+
+.customer-info h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 10px 0;
+}
+
+.customer-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: var(--color-zinc-900);
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+.stat .label {
+    color: var(--color-zinc-400);
+    font-size: 12px;
+}
+
+.stat .value {
+    color: white;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+/* Form styling */
+.form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label,
+.form-col label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--color-zinc-400);
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+    width: 100%;
+    background-color: var(--color-zinc-800);
+    border: 1px solid var(--color-zinc-700);
+    border-radius: 8px;
+    padding: 12px 15px;
+    color: white;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23A1A1AA' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+}
+
+.form-select option {
+    background-color: var(--color-zinc-800);
+    color: white;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+    outline: none;
+    border-color: var(--color-violet-600);
+}
+
+/* Form rows and columns */
+.form-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.form-col {
+    flex: 1;
+}
+
+.form-col.small {
+    flex: 0 0 auto;
+    width: 100px;
+}
+
+/* Exercise recommendations section */
+.section-title {
+    margin: 25px 0 15px 0;
+}
+
+.section-title h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+}
+
+.section-description {
+    color: var(--color-zinc-400);
+    font-size: 14px;
+    margin: 0;
+}
+
+.exercise-recommendations {
+    margin-bottom: 25px;
+}
+
+.exercise-item {
+    background-color: var(--color-zinc-900);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.add-exercise-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: transparent;
+    border: 1px dashed var(--color-zinc-700);
+    color: var(--color-zinc-300);
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.add-exercise-btn:hover {
+    background-color: var(--color-zinc-900);
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: var(--color-zinc-500);
+    cursor: pointer;
+    font-size: 18px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.remove-btn:hover {
+    background-color: var(--color-zinc-800);
+    color: var(--color-red);
+}
+
+/* Priority section */
+.priority-section {
+    margin-bottom: 25px;
+}
+
+.priority-section label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--color-zinc-400);
+}
+
+.priority-options {
+    display: flex;
+    gap: 10px;
+}
+
+.priority-option {
+    flex: 1;
+    text-align: center;
+}
+
+.priority-option input {
+    position: absolute;
+    opacity: 0;
+}
+
+.priority-option span {
+    display: block;
+    padding: 8px 15px;
+    background-color: var(--color-zinc-800);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.priority-option input:checked+span {
+    background-color: var(--color-violet-600);
+    color: white;
+}
+
+/* Submit button */
+.submit-btn {
+    background-color: var(--color-violet-600);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.submit-btn:hover {
+    background-color: var(--color-violet-700);
+}
+
+/* Info box */
+.info-box {
+    background-color: var(--color-zinc-900);
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.info-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: var(--color-zinc-300);
+    font-weight: 500;
+}
+
+.info-box p {
+    margin: 0;
+    color: var(--color-zinc-400);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    main {
+        padding: 10px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-col.small {
+        width: 100%;
+    }
+}

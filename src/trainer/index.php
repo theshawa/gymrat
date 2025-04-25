@@ -65,11 +65,11 @@ $trainerName = $_SESSION['auth']['fname'] ?? 'Trainer';
 
 // Get time-based greeting
 $hour = date('H');
-$timeGreeting = "Good morning";
+$timeGreeting = "Good Morning";
 if ($hour >= 12 && $hour < 17) {
-    $timeGreeting = "Good afternoon";
+    $timeGreeting = "Good Afternoon";
 } elseif ($hour >= 17) {
-    $timeGreeting = "Good evening";
+    $timeGreeting = "Good Evening";
 }
 ?>
 

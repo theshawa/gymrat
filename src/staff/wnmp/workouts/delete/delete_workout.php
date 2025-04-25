@@ -3,6 +3,7 @@
 session_start();
 
 require_once "../../../../alerts/functions.php";
+require_once "../../../../db/models/Workout.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirect_with_error_alert("Method not allowed", "/staff/wnmp/workouts");
@@ -13,8 +14,9 @@ if ($_POST['workout_id'] !== $_SESSION['workout_id']) {
     exit;
 }
 
-$id = htmlspecialchars($_POST['workout_id']);
-
+$id = (int) htmlspecialchars($_POST['workout_id']);
+$workout = new Workout();
+$workout->id = $id;
 
 try {
     $workout->delete();

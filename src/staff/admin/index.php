@@ -13,8 +13,9 @@ $menuBarConfig = [
 require_once "../../alerts/functions.php";
 require_once "../../db/models/Complaint.php"; 
 require_once "../../db/models/Customer.php"; 
-
 require_once "../../db/models/MembershipPayment.php";
+require_once "../../db/models/Settings.php";
+
 
 $complaintModel = new Complaint();
 $customerModel = new Customer();
@@ -23,9 +24,11 @@ $membershipPaymentModel = new MembershipPayment();
 
 $setComplaintsNotification = null;
 $setRatsNotification = null;
+$settings = new Settings();
 try {
     $setComplaintsNotification = $complaintModel->has_unreviewed_complaints();
     $setRatsNotification = $customerModel->has_trainer_unassigned();
+    $settings->get_all();
 } catch (Exception $e) {
     $_SESSION['error'] = "Failed to access notification updates: " . $e->getMessage();
 }
@@ -57,15 +60,21 @@ require_once "../includes/sidebar.php";
             <div class="dashboard-col-primary">
                 <div class="dashboard-tab-large" 
                 style="display: grid; grid-template-rows: 1fr 1fr; grid-template-columns: 1fr 1fr; place-items: center;">
+
+                    <?php if ($settings->show_widgets): ?>
                     <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: start; text-align: left;">
-                        <h1 class="font-zinc-200" style="font-size: 28px;">PRAN FITNESS</h1>
+                        <h1 class="font-zinc-200" style="font-size: 28px;"><?= $settings->gym_name ?></h1>
                     </div>
+                    <?php endif; ?>
+
                     <div style="grid-row: 2; grid-column: 2; align-self: end; justify-self: end; text-align: right;">
                         <h1 class="font-zinc-200">Welcome Back, Admin!</h1>
                     </div>
                 </div>
                 <a href="/staff/admin/finance/index.php" class="dashboard-tab-large" 
                 style="display: grid; grid-template-rows: 1fr 1fr; grid-template-columns: 1fr 1fr; place-items: center;">
+
+                    <?php if ($settings->show_widgets): ?>
                     <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: start; 
                     text-align: left; padding: 25px; border-radius: 20px; box-shadow: 0px 0px 4px rgb(255, 255, 255); width: 75%; height: 90%;"
                     class="background-color-zinc-100">
@@ -76,6 +85,8 @@ require_once "../includes/sidebar.php";
                         <p class="font-zinc-200" style="margin-bottom: 5px;">Current revenue for the month</p>
                         <h1 class="font-zinc-200" style="font-size: 36px;">Rs. <?=  $total_revenues ?></h1>
                     </div>
+                    <?php endif; ?>
+
                     <div style="grid-row: 2; grid-column: 2; align-self: end; justify-self: end; text-align: right;">
                         <h1 class="font-zinc-200">Finance</h1>
                     </div>

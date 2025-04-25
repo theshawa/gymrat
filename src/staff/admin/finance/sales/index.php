@@ -50,12 +50,16 @@ if (!empty($completed_dates)) {
 
 $record_count = 0;
 $total_revenue = 0;
+$report_description = "";
 
 if (!empty($sales)) {
     $completed_sales = array_filter($sales, fn($sale) => $sale->completed_at !== null);
     $record_count = count($completed_sales);
     $total_revenue = array_sum(array_map(fn($sale) => $sale->amount, $completed_sales));
 }
+$report_description = (($get_plan) ? $membership_titles[$get_plan] : "All") . " Membership Plan Purchases " . (($earliest_payment_month_year && $latest_payment_month_year) ? "from " . $earliest_payment_month_year . " to " . $latest_payment_month_year : "");
+
+$_SESSION['sales_data'] = serialize($sales);
 
 $menuBarConfig = [
     "title" => $pageTitle,
@@ -80,10 +84,7 @@ require_once "../../../includes/sidebar.php";
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 10px;">
             <div style="grid-column: 1; align-self: start; justify-self: start; text-align: left;">
                 <h1 style="margin: 10px 0;">Currently displaying : </h1>
-                <p>
-                    <?= ($get_plan) ? $membership_titles[$get_plan] : "All" ?> Membership Plan Purchases <?=
-                     ($earliest_payment_month_year && $latest_payment_month_year) ? "from " . $earliest_payment_month_year . " to " . $latest_payment_month_year : "" ?>
-                </p>
+                <p><?= $report_description ?></p>
             </div>
             <div style="grid-column: 2; align-self: center; justify-self: end; text-align: left;">
                 <h3>Records Count&emsp;&nbsp;&nbsp;: <?= $record_count ?></h3>
@@ -92,10 +93,10 @@ require_once "../../../includes/sidebar.php";
         </div>
 
 
-        <div style="margin: 20px 10px;">
-            <form method="get" action="/staff/admin/finance/sales/index.php" style="display: flex; gap: 10px; align-items: center; margin: 20px 0;">
+        <div style="margin: 30px 10px; display: grid; grid-template-columns: 3fr 1fr; gap: 20px;">
+            <form method="get" action="/staff/admin/finance/sales/index.php" style="display: flex; gap: 10px; align-items: center;">
                 <label for="plan" style="margin-right: 5px;">Plan:</label>
-                <select name="plan" id="plan" class="staff-input-primary staff-input-short-alt" required>
+                <select name="plan" id="plan" class="staff-input-primary staff-input-long" required>
                     <option value="0">All Plans</option>
                     <?php foreach ($membership_titles as $id => $name): ?>
                         <option value="<?= $id ?>" <?= $get_plan == $id ? 'selected' : '' ?>>
@@ -103,14 +104,23 @@ require_once "../../../includes/sidebar.php";
                         </option>
                     <?php endforeach; ?>
                 </select>
-
                 <button type="submit" class="staff-button secondary" style="margin: 0 10px; height: 40px; border-radius: 10px">Filter</button>
+            </form>
+            <form method="post" action="/staff/admin/finance/sales/report/index.php"
+            target="_blank" style="display: flex; gap: 10px; align-items: center; justify-self: end;">
+                <input type="hidden" name="report_title" value="Membership Plan Sales Report">
+                <input type="hidden" name="record_count" value="<?= htmlspecialchars($record_count) ?>">
+                <input type="hidden" name="total_revenue" value="<?= htmlspecialchars($total_revenue) ?>">
+                <input type="hidden" name="report_description" value="<?= htmlspecialchars($report_description) ?>">
+                <?php if ($sales): ?>
+                    <button type="submit" class="staff-button secondary" style="margin: 0 10px; height: 40px; border-radius: 10px">Generate Report</button>
+                <?php endif; ?>
             </form>
         </div>
 
 
         <div style="margin: 10px;">
-            <div class="payment-list-item background-color-zinc-200" style="display: grid; grid-template-columns: repeat(5, 1fr); font-weight: bold; text-align: center;">
+            <div class="payment-list-item background-color-zinc-300" style="display: grid; grid-template-columns: repeat(5, 1fr); font-weight: bold; text-align: center;">
                 <div style="text-align: left;">ID</div>
                 <div>Customer ID</div>
                 <div>Membership Plan</div>
@@ -119,7 +129,7 @@ require_once "../../../includes/sidebar.php";
             </div>
             <?php foreach ($sales as $sale): ?>
                 <a href="/staff/admin/finance/sales/view/index.php?id=<?= $sale->id ?>">
-                    <div class="payment-list-item background-color-zinc-100" style="display: grid; grid-template-columns: repeat(5, 1fr); text-align: center;">
+                    <div class="payment-list-item background-color-zinc-200" style="display: grid; grid-template-columns: repeat(5, 1fr); text-align: center;">
                         <div style="text-align: left;"><?= htmlspecialchars($sale->id) ?></div>
                         <div><?= htmlspecialchars($sale->customer) ?></div>
                         <div><?= htmlspecialchars($sale->membership_plan) ?></div>

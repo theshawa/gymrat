@@ -1,3 +1,3 @@
 <form action="./seeder.php" method="post">
-    <button>Fill Data</button>
+    <button>Seed</button>
 </form>

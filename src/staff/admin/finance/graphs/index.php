@@ -97,6 +97,10 @@ $menuBarConfig = [
     "title" => $pageTitle,
     "showBack" => true,
     "goBackTo" => "/staff/admin/finance",
+    "useLink" => true,
+    "options" => [
+        ["title" => "Plan Purchase History", "href" => "/staff/admin/finance/graphs/plans/index.php", "type" => "secondary"],
+    ]
 ];
 
 

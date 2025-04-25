@@ -35,12 +35,8 @@ if ($get_year > $current_year) {
     $get_year = $current_year;
     $_SESSION['error'] = "Invalid year selected. Defaulting to current year.";
 }
-if ($get_plan != 0 && !array_key_exists($get_plan, $membership_titles)) {
-    $get_plan = 0;
-    $_SESSION['error'] = "Invalid membership plan selected. Defaulting to all plans.";
-}
 
-// Sort if get_plan given
+
 if ($get_plan != 0) {
     $sales = array_filter($sales, fn($sale) => $sale->membership_plan == $get_plan);
 }

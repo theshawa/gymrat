@@ -41,6 +41,20 @@ class Announcement extends Model
         $this->id = $this->conn->lastInsertId();
     }
 
+    public function update()
+    {
+        $sql = "UPDATE $this->table SET title = :title, message = :message, to_all = :to_all, source = :source, valid_till = :valid_till WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'title' => $this->title,
+            'message' => $this->message,
+            'to_all' => $this->to_all,
+            'source' => $this->source,
+            'valid_till' => $this->valid_till->format('Y-m-d H:i:s'),
+            'id' => $this->id,
+        ]);
+    }
+
     public function get_all_of_source(string $source)
     {
         $sql = "SELECT * FROM $this->table WHERE source = :source ORDER BY created_at DESC";
@@ -140,5 +154,15 @@ class Announcement extends Model
         $stmt->execute([
             'source' => $source,
         ]);
+    }
+
+    public function __sleep()
+    {
+        return ['id', 'title', 'message', 'to_all', 'source', 'created_at', 'valid_till'];
+    }
+
+    public function __wakeup()
+    {
+        $this->conn = Database::get_conn();
     }
 }

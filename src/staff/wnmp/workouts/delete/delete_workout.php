@@ -14,7 +14,7 @@ if ($_POST['workout_id'] !== $_SESSION['workout_id']) {
     exit;
 }
 
-$id = (int) htmlspecialchars($_POST['workout_id']);
+$id = htmlspecialchars($_POST['workout_id']);
 $workout = new Workout();
 $workout->id = $id;
 

@@ -35,4 +35,81 @@ require_once "../../../includes/header.php";
     </div>
 </main>
 
+<script>
+    const checkPasswordStrength = (password) => {
+        let strength = 0;
+        let tips = [];
+
+        if (password.length < 8) {
+            tips.push("Password should be at least 8 characters long.");
+        } else {
+            strength++;
+        }
+
+        if (/[a-z]/.test(password) && /[A-Z]/.test(password)) {
+            strength += 1;
+        } else {
+            tips.push("Use both lowercase and uppercase letters.");
+        }
+
+        if (/\d/.test(password)) {
+            strength += 1;
+        } else {
+            tips.push("Include at least one number.");
+        }
+
+
+        if (/[^a-zA-Z\d]/.test(password)) {
+            strength += 1;
+        } else {
+            tips.push("Include at least one special character.");
+        }
+
+        let level;
+        if (strength < 2) {
+            level = "Weak";
+        } else if (strength === 2) {
+            level = "Medium";
+        } else if (strength === 3) {
+            level = "Strong";
+        } else {
+            level = "Very Strong";
+        }
+
+        return {
+            level: level,
+            tips: tips
+        };
+    }
+
+
+    document.forms[0].addEventListener("submit", (e) => {
+        e.preventDefault();
+        console.log(e);
+        const pw = document.querySelector("input[name='password']").value;
+        const cpw = document.querySelector("input[name='cpassword']").value;
+        if (pw !== cpw) {
+            alert("Passwords do not match");
+            return;
+        }
+        // check password strength
+        const {
+            level,
+            tips
+        } = checkPasswordStrength(pw);
+        if (level === "Weak") {
+            alert("Password is weak. " + tips.join(" "));
+            return;
+        }
+        if (level === "Medium") {
+            const confirm = window.confirm("Password is not strong. Do you want to continue?\n" + tips.join("\n"));
+            if (!confirm) {
+                return;
+            }
+        }
+
+        e.target.submit();
+    })
+</script>
+
 <?php require_once "../../../includes/footer.php" ?>

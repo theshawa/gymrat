@@ -141,4 +141,14 @@ class Complaint extends Model
         $count = $stmt->fetchColumn();
         return $count > 0;
     }
+
+    public function __sleep()
+    {
+        return ['id', 'type', 'description', 'user_id', 'user_type', 'created_at', 'review_message', 'reviewed_at', 'user_name'];
+    }
+
+    public function __wakeup()
+    {
+        $this->conn = Database::get_conn();
+    }
 }

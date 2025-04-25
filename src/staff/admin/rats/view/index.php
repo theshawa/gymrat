@@ -122,8 +122,9 @@ require_once "../../../includes/sidebar.php";
     <div class="staff-base-container">
         <?php require_once "../../../includes/menubar.php"; ?>
 
-        <!-- Deafult Right Layout -->
         <div style="margin: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
+            <!-- Deafult Right Layout -->
             <div class="rat-view-profile">
                 <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: start; text-align: left; padding: 15px;">
                 <?php if (!empty($customer->avatar)): ?>

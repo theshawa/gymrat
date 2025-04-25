@@ -12,7 +12,7 @@ $pageConfig = [
     "scripts" => ["./gym-traffic.js"],
     "navbar_active" => 1,
     "titlebar" => [
-        "title" => "Traffic At the Gym",
+        "title" => "Current Traffic At the Gym",
         "back_url" => "../",
     ],
 ];
@@ -26,23 +26,6 @@ require_once "../includes/titlebar.php";
 </script>
 
 <main>
-    <?php
-    $subnavbarConfig = [
-        'links' => [
-            [
-                'title' => 'Traffic Now',
-                'href' => './'
-            ],
-            [
-                'title' => 'Week\'s Traffic',
-                'href' => './week'
-            ]
-        ],
-        "active" => 1
-    ];
-
-    require_once "../includes/subnavbar.php";
-    ?>
     <div class="meter">
         <div class="arrow"></div>
     </div>

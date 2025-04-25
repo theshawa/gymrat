@@ -28,8 +28,8 @@ $menuBarConfig = [
 ];
 
 require_once "../../pageconfig.php";
-$pageConfig['styles'][] = "../equipmentView.css";
-$pageConfig['styles'][] = "../equipment.css";
+$pageConfig['styles'][] = "./equipmentView.css";
+
 
 require_once "../../../includes/header.php";
 require_once "../../../includes/sidebar.php";

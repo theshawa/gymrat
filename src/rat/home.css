@@ -1,33 +1,47 @@
-.banner {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 40px;
-}
-.banner img {
-  border-radius: 20px;
-  background-color: rgba(250, 250, 250, 0.1);
-  border: 1px solid rgba(250, 250, 250, 0.1);
-  margin-bottom: 15px;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+main {
+  position: relative;
 }
 
-.banner h1 {
-  font-size: 24px;
-  margin-bottom: 5px;
+.banner-image {
+  width: 100%;
+  height: 40vh;
+  object-fit: cover;
+  position: sticky;
+  top: 0;
+  left: 0;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
+  margin-top: -60px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+
+  backdrop-filter: blur(20px);
+  border-top-left-radius: 60px;
+  border-top-right-radius: 60px;
+  padding: 30px 20px;
 }
 
+.banner-content {
+  grid-column: span 2 / span 2;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+/* 
 .grid-line {
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
+} */
 
 .grid-tile {
   border-radius: 30px;
@@ -189,7 +203,7 @@
 }
 
 .gray-full-tile {
-  margin-top: 10px;
+  grid-column: span 2 / span 2;
   width: 100%;
   border-radius: 30px;
   padding: 18px;

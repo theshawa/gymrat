@@ -6,8 +6,11 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: gymrat
+      TZ: Asia/Colombo
     volumes:
       - db_data:/var/lib/mysql
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
   gymrat_phpmyadmin:
     image: phpmyadmin/phpmyadmin
     depends_on:
@@ -28,6 +31,6 @@ services:
     volumes:
       - ../src:/var/www/html
       - ./php-settings.ini:/usr/local/etc/php/conf.d/custom.ini
-  
+
 volumes:
   db_data:

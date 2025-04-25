@@ -11,6 +11,9 @@ $pageConfig = [
     ]
 ];
 
+require_once "../../notifications/functions.php";
+notify_rat($_SESSION['auth']['id'], "Test Notification", "test");
+
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";
 
@@ -28,7 +31,7 @@ require_once "../includes/titlebar.php";
         container.innerHTML = "";
         items.forEach((item) => {
             const notification = document.createElement("a")
-            notification.classList.add("notification")
+            notification.className = "notification";
 
             if (item.is_read) {
                 notification.classList.add("read")
@@ -38,10 +41,13 @@ require_once "../includes/titlebar.php";
                 notification.href += `&type=announcement`
             }
             notification.innerHTML = `
-                <h4>${item.title}</h4>
+                <div class="top">
+                    <h4>${item.title}</h4>
+                    ${item.type === "announcement" ? `<span class="announcement-label">Announcement</span>` : ""}
+                </div>
                 <p class="paragraph truncate">${item.message}</p>
                 <div class="line">
-                    <span>${new Date(item.created_at).toLocaleString()}</span>
+                    <span>${item.created_at}</span>
                     <span>Read More</span>
                 </div>`
             container.appendChild(notification)

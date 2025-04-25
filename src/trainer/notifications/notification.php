@@ -1,11 +1,10 @@
 <?php
 require_once "../../auth-guards.php";
-if (auth_required_guard("trainer", "/trainer/login")) exit;
+if (auth_required_guard("trainer", "/trainer/login"))
+    exit;
 
 $id = htmlspecialchars($_GET["id"]);
 $type = isset($_GET['type']) ? (htmlspecialchars($_GET['type']) === "announcement" ? "announcement" : "notification") : "notification";
-
-session_start();
 
 require_once "../../alerts/functions.php";
 require_once "../../db/models/Notification.php";
@@ -19,7 +18,7 @@ if ($type === "announcement") {
 }
 try {
     $notification->fill([
-        "id" => (int)$id,
+        "id" => (int) $id,
     ]);
     $notification->get_by_id();
     if ($type === "notification") {
@@ -50,7 +49,8 @@ require_once "../includes/titlebar.php";
     <h1><?= $notification->title ?></h1>
     <?php if ($notification->source): ?>
         <p class="time">
-            From <?= $type == "announcement" ? ($notification->source != "admin" ? "trainer" : "admin") : $notification->source ?>
+            From
+            <?= $type == "announcement" ? ($notification->source != "admin" ? "trainer" : "admin") : $notification->source ?>
         </p>
     <?php endif; ?>
     <p class="time">

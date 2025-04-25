@@ -1,0 +1,238 @@
+/* progress_analytics.css */
+.progress-analytics-page {
+    padding: 15px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.client-header {
+    margin-bottom: 20px;
+}
+
+.client-header h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    color: var(--color-zinc-400);
+    font-size: 14px;
+    margin: 0;
+}
+
+/* No data message */
+.no-data-message {
+    background-color: var(--color-zinc-900);
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.no-data-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.no-data-message h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.no-data-message p {
+    color: var(--color-zinc-400);
+    margin-bottom: 20px;
+    max-width: 80%;
+}
+
+/* Progress summary card */
+.progress-summary-card {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.summary-item {
+    background-color: var(--color-zinc-900);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+}
+
+.summary-value {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.summary-label {
+    font-size: 14px;
+    color: var(--color-zinc-400);
+}
+
+.success-color {
+    color: #42b34d;
+    /* Green for positive feedback */
+}
+
+.warning-color {
+    color: #ffcc00;
+    /* Yellow for negative feedback */
+}
+
+.neutral-color {
+    color: #a1a1aa;
+    /* Neutral gray */
+}
+
+/* Trend card */
+.trend-card {
+    background-color: var(--color-zinc-900);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.trend-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.trend-header h3 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.trend-indicator {
+    font-size: 14px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.trend-indicator.improved {
+    background-color: rgba(66, 179, 77, 0.1);
+    color: #42b34d;
+}
+
+.trend-indicator.declined {
+    background-color: rgba(255, 204, 0, 0.1);
+    color: #ffcc00;
+}
+
+.trend-indicator.stable {
+    background-color: rgba(161, 161, 170, 0.1);
+    color: #a1a1aa;
+}
+
+.chart-container {
+    height: 250px;
+    position: relative;
+}
+
+/* Recent feedback section */
+.recent-feedback-section {
+    margin-bottom: 30px;
+}
+
+.recent-feedback-section h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.feedback-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.feedback-item {
+    display: flex;
+    align-items: flex-start;
+    background-color: var(--color-zinc-900);
+    border-radius: 12px;
+    padding: 12px;
+    border-left: 4px solid transparent;
+}
+
+.feedback-item.well_done {
+    border-left-color: #42b34d;
+}
+
+.feedback-item.try_harder {
+    border-left-color: #ffcc00;
+}
+
+.feedback-badge {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.well_done .feedback-badge {
+    background-color: rgba(66, 179, 77, 0.2);
+    color: #42b34d;
+}
+
+.try_harder .feedback-badge {
+    background-color: rgba(255, 204, 0, 0.2);
+    color: #ffcc00;
+}
+
+.feedback-content {
+    flex: 1;
+}
+
+.feedback-message {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+}
+
+.feedback-date {
+    font-size: 12px;
+    color: var(--color-zinc-500);
+}
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.add-progress-btn {
+    background-color: var(--color-violet-600);
+    color: white;
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .progress-summary-card {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .chart-container {
+        height: 200px;
+    }
+}

@@ -180,4 +180,18 @@ class Exercise extends Model
 
         return $exercises;
     }
+
+    public function get_title_by_id(int $id): string
+    {
+        $sql = "SELECT name FROM $this->table WHERE id = :id LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $result = $stmt->fetch();
+
+        if ($result && isset($result['name'])) {
+            return $result['name'];
+        }
+
+        return 'Title not found';
+    }
 }

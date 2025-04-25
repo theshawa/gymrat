@@ -40,6 +40,18 @@ if ($workoutId) {
         // Get exercise titles for display
         if (!empty($workout->exercises)) {
             $workout->exercises = $exerciseModel->addExerciseTitles($workout->exercises);
+
+            // Group exercises by day for better display
+            $exercisesByDay = [];
+            foreach ($workout->exercises as $exercise) {
+                $day = $exercise['day'];
+                if (!isset($exercisesByDay[$day])) {
+                    $exercisesByDay[$day] = [];
+                }
+                $exercisesByDay[$day][] = $exercise;
+            }
+            // Sort days numerically
+            ksort($exercisesByDay);
         }
     } catch (Exception $e) {
         $_SESSION['workout_error'] = "Error loading workout: " . $e->getMessage();
@@ -50,7 +62,7 @@ if ($workoutId) {
 $pageConfig = [
     "title" => "Current Workout",
     "styles" => [
-        "./work.css"
+        "./workouts.css"
     ],
     "navbar_active" => 1,
     "titlebar" => [
@@ -76,85 +88,49 @@ require_once "../../../includes/titlebar.php";
         <div class="no-workout-message">
             <p>No workout plan is currently assigned to this customer.</p>
             <div class="action-buttons">
-                <a href="./assign?id=<?= $customerId ?>" class="btn assign-btn">Assign Workout</a>
-                <a href="../../workouts/request/" class="btn request-btn">Request Custom Workout</a>
+                <a href="./assign?id=<?= $customerId ?>" class="btn primary-btn">Assign Workout</a>
+                <a href="./request/?id=<?= $customerId ?>" class="btn secondary-btn">Custom Workout</a>
             </div>
         </div>
     <?php else: ?>
         <div class="workout-info">
-            <h3><?= htmlspecialchars($workout->name) ?></h3>
+            <h2><?= htmlspecialchars($workout->name) ?></h2>
             <p class="workout-description"><?= htmlspecialchars($workout->description) ?></p>
-            <p class="workout-duration">Duration: <?= intval($workout->duration) ?> days</p>
+            <span class="workout-duration">Duration: <?= intval($workout->duration) ?> days</span>
         </div>
 
-        <div class="exercise-list">
-            <?php if (empty($workout->exercises)): ?>
-                <div class="no-exercises-message">
-                    <p>No exercises defined in this workout plan.</p>
-                </div>
-            <?php else: ?>
-                <?php foreach ($workout->exercises as $exercise): ?>
-                    <div class="exercise-item">
-                        <div class="exercise-details">
-                            <span
-                                class="exercise-name"><?= htmlspecialchars($exercise['title'] ?? $exercise['name'] ?? 'Unknown Exercise') ?></span>
-                            <span class="exercise-sets"><?= $exercise['sets'] ?> x <?= $exercise['reps'] ?></span>
+        <?php if (empty($workout->exercises)): ?>
+            <div class="no-exercises-message">
+                <p>No exercises defined in this workout plan.</p>
+            </div>
+        <?php else: ?>
+            <div class="exercise-days">
+                <?php foreach ($exercisesByDay as $day => $exercises): ?>
+                    <div class="day-section">
+                        <h3>Day <?= $day ?></h3>
+                        <div class="exercise-list">
+                            <?php foreach ($exercises as $exercise): ?>
+                                <div class="exercise-item">
+                                    <div class="exercise-details">
+                                        <span
+                                            class="exercise-name"><?= htmlspecialchars($exercise['title'] ?? $exercise['name'] ?? 'Unknown Exercise') ?></span>
+                                        <span class="exercise-data"><?= $exercise['sets'] ?> × <?= $exercise['reps'] ?></span>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php endif; ?>
 
         <!-- Action Buttons -->
         <div class="action-buttons">
-            <a href="./assign?id=<?= $customerId ?>" class="btn change-btn">Change Workout</a>
+            <a href="./assign?id=<?= $customerId ?>" class="btn secondary-btn">Change Workout</a>
+            <a href="./request/?id=<?= $customerId ?>" class="btn secondary-btn">Custom Workout</a>
         </div>
     <?php endif; ?>
 </main>
-
-<style>
-    .no-workout-message,
-    .no-exercises-message {
-        background-color: #18181B;
-        border-radius: 16px;
-        padding: 20px;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .no-workout-message p,
-    .no-exercises-message p {
-        color: #A1A1AA;
-        margin-bottom: 20px;
-    }
-
-    .action-buttons {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        margin-top: 20px;
-    }
-
-    .btn {
-        padding: 10px 16px;
-        border-radius: 8px;
-        font-size: 14px;
-        font-weight: 500;
-        text-decoration: none;
-        text-align: center;
-    }
-
-    .assign-btn,
-    .change-btn {
-        background-color: #6700e6;
-        color: white;
-    }
-
-    .request-btn {
-        background-color: #3F3F46;
-        color: white;
-    }
-</style>
 
 <?php require_once "../../../includes/navbar.php" ?>
 <?php require_once "../../../includes/footer.php" ?>

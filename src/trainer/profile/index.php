@@ -25,6 +25,9 @@ $avatar = $trainer->avatar
     ? get_file_url($trainer->avatar)
     : "/uploads/default-images/default-avatar.png";
 
+// Add cache buster from session if available
+$cache_buster = isset($_SESSION['cache_buster']) ? $_SESSION['cache_buster'] : md5(time());
+
 // Debug the constructed path
 error_log("Constructed avatar path: " . $avatar);
 
@@ -52,8 +55,8 @@ require_once "../includes/titlebar.php";
 
 <main>
     <div class="profile-content">
-        <!-- Force browser to refresh the image by adding timestamp -->
-        <img src="<?= $avatar ?>?t=<?= time() ?>" alt="Profile Avatar" class="profile-avatar">
+        <!-- Force browser to refresh the image using cache buster -->
+        <img src="<?= $avatar ?>?v=<?= $cache_buster ?>" alt="Profile Avatar" class="profile-avatar" id="profile-image">
 
         <h1><?= $trainer->fname ?> <?= $trainer->lname ?></h1>
 
@@ -63,7 +66,21 @@ require_once "../includes/titlebar.php";
         <div class="rating-section">
             <span class="rating-number"><?= number_format($rating['avg_rating'], 1) ?></span>
             <div class="rating-stars">
-                ★★★★★
+                <?php
+                $fullStars = floor($rating['avg_rating']);
+                $halfStar = ($rating['avg_rating'] - $fullStars) >= 0.5 ? 1 : 0;
+                $emptyStars = 5 - $fullStars - $halfStar;
+
+                for ($i = 0; $i < $fullStars; $i++) {
+                    echo '★';
+                }
+                if ($halfStar) {
+                    echo '⯨'; // Unicode half star (may not render in all fonts)
+                }
+                for ($i = 0; $i < $emptyStars; $i++) {
+                    echo '☆';
+                }
+                ?>
             </div>
             <span class="review-count">Out of <?= $rating['review_count'] ?> Reviews</span>
         </div>

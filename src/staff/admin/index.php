@@ -12,10 +12,14 @@ $menuBarConfig = [
 
 require_once "../../alerts/functions.php";
 require_once "../../db/models/Complaint.php"; 
-require_once "../../db/models/Complaint.php"; 
+require_once "../../db/models/Customer.php"; 
+
+require_once "../../db/models/MembershipPayment.php";
 
 $complaintModel = new Complaint();
 $customerModel = new Customer();
+$membershipPaymentModel = new MembershipPayment();
+
 
 $setComplaintsNotification = null;
 $setRatsNotification = null;
@@ -25,6 +29,20 @@ try {
 } catch (Exception $e) {
     $_SESSION['error'] = "Failed to access notification updates: " . $e->getMessage();
 }
+
+
+$currentYear = (int)date("Y");
+$currentMonth = (int)date("m");
+$total_revenues = null;
+$total_cevenues = null;
+try {
+    $total_revenues = $membershipPaymentModel->get_total_revenue_for_month($currentYear, $currentMonth);
+    $total_count = $membershipPaymentModel->get_total_count_for_month($currentYear, $currentMonth);
+} catch (Exception $e) {
+    $_SESSION['error'] = "Failed to calculate revenues: " . $e->getMessage();
+}
+
+
 
 require_once "./pageconfig.php";
 require_once "../includes/header.php";
@@ -37,20 +55,39 @@ require_once "../includes/sidebar.php";
         
         <div class="dashboard-container">
             <div class="dashboard-col-primary">
-                <div class="dashboard-tab-large dashboard-layout-primary">
-                    <h1>Welcome Back, Admin!</h1>
+                <div class="dashboard-tab-large" 
+                style="display: grid; grid-template-rows: 1fr 1fr; grid-template-columns: 1fr 1fr; place-items: center;">
+                    <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: start; text-align: left;">
+                        <h1 class="font-zinc-200" style="font-size: 28px;">PRAN FITNESS</h1>
+                    </div>
+                    <div style="grid-row: 2; grid-column: 2; align-self: end; justify-self: end; text-align: right;">
+                        <h1 class="font-zinc-200">Welcome Back, Admin!</h1>
+                    </div>
                 </div>
-                <div class="dashboard-tab-large dashboard-layout-primary">
-                    <h1>Finance Overview here</h1>
-                </div>
+                <a href="/staff/admin/finance/index.php" class="dashboard-tab-large" 
+                style="display: grid; grid-template-rows: 1fr 1fr; grid-template-columns: 1fr 1fr; place-items: center;">
+                    <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: start; 
+                    text-align: left; padding: 25px; border-radius: 20px; box-shadow: 0px 0px 4px rgb(255, 255, 255); width: 75%; height: 90%;"
+                    class="background-color-zinc-100">
+                        <h1 style="font-size: 36px;"><?=  $total_count ?></h1>
+                        <p style="margin: 5px 0;">Membership plans currently <br>activated</p>
+                    </div>
+                    <div style="grid-row: 2; grid-column: 1; align-self: end; justify-self: start; text-align: left; padding: 10px;">
+                        <p class="font-zinc-200" style="margin-bottom: 5px;">Current revenue for the month</p>
+                        <h1 class="font-zinc-200" style="font-size: 36px;">Rs. <?=  $total_revenues ?></h1>
+                    </div>
+                    <div style="grid-row: 2; grid-column: 2; align-self: end; justify-self: end; text-align: right;">
+                        <h1 class="font-zinc-200">Finance</h1>
+                    </div>
+                </a>
             </div>
             <div class="dashboard-col-secondary">
-                <a a href="/staff/admin/settings/index.php" class="dashboard-tab-small dashboard-layout-primary">
+                <a href="/staff/admin/settings/index.php" class="dashboard-tab-small dashboard-layout-primary">
                     <h1>Settings</h1>
                 </a>
-                <div class="dashboard-tab-small dashboard-layout-primary">
+                <a href="/staff/admin/announcements/index.php" class="dashboard-tab-small dashboard-layout-primary">
                     <h1>Announcments</h1>
-                </div>
+                </a>
                 <a href="/staff/admin/complaints/index.php" class="dashboard-tab-small dashboard-layout-primary">
                     <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: start;">
                         <?php if ($setComplaintsNotification): ?>
@@ -59,9 +96,9 @@ require_once "../includes/sidebar.php";
                     </div>
                     <h1>Complaints</h1>
                 </a>
-                <div class="dashboard-tab-small dashboard-layout-primary">
+                <a href="/staff/admin/credentials/index.php" class="dashboard-tab-small dashboard-layout-primary">
                     <h1>Staff Credentials</h1>
-                </div>
+                </a>
                 <a href="/staff/admin/rats/index.php" class="dashboard-tab-small dashboard-layout-primary">
                 <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: start;">
                         <?php if ($setRatsNotification): ?>

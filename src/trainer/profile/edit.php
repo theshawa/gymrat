@@ -46,7 +46,7 @@ require_once "../includes/titlebar.php";
     </div>
 
     <!-- Profile editing form -->
-    <form action="profile_process.php" method="POST" enctype="multipart/form-data">
+    <form action="profile_process.php" method="POST" enctype="multipart/form-data" id="profile-form">
         <input type="hidden" name="action" value="update_profile">
         <input type="hidden" name="updated_avatar" id="updated_avatar" value="<?= $trainer->avatar ?>">
 
@@ -81,6 +81,7 @@ require_once "../includes/titlebar.php";
             const avatarPreview = document.getElementById('avatar-preview');
             const updatedAvatarInput = document.getElementById('updated_avatar');
             const clearAvatarButton = document.getElementById('clear-avatar-button');
+            const profileForm = document.getElementById('profile-form');
 
             // Handle file selection
             avatarInput.addEventListener('change', function (e) {
@@ -106,6 +107,14 @@ require_once "../includes/titlebar.php";
                     updatedAvatarInput.value = '';
                 });
             }
+
+            // Ensure the file input is included in the form submission
+            profileForm.addEventListener('submit', function (e) {
+                if (avatarInput.files && avatarInput.files[0]) {
+                    // Nothing extra needed as the file will be submitted normally
+                    console.log('Submitting with new avatar file');
+                }
+            });
         });
     </script>
 </main>

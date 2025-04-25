@@ -16,7 +16,7 @@ if (!isset($_SESSION['workout'])) {
 }
 
 $workout = unserialize($_SESSION['workout']);
-if (!isset($_SESSION['exerciseTitles'])) {    
+if (!isset($_SESSION['exerciseTitles'])) {
     $exerciseModel = new Exercise();
     $exerciseTitles = $exerciseModel->get_all_titles();
 } else {
@@ -31,9 +31,12 @@ if (isset($_POST['workout_name'], $_POST['workout_description'], $_POST['workout
     $description = htmlspecialchars($_POST['workout_description']);
     $duration = htmlspecialchars($_POST['workout_duration']);
 
-    if (empty($name)) $errors[] = "Name is required.";
-    if (empty($description)) $errors[] = "Description is required.";
-    if (empty($duration)) $errors[] = "Duration is required.";
+    if (empty($name))
+        $errors[] = "Name is required.";
+    if (empty($description))
+        $errors[] = "Description is required.";
+    if (empty($duration))
+        $errors[] = "Duration is required.";
 
     $workout->name = $name;
     $workout->description = $description;
@@ -69,8 +72,8 @@ if (isset($_POST['delete_exercise'])) {
             // catch newly added exercises
             $workout->exercises[$key]['isDeleted'] = true;
         }
-    }   
-} 
+    }
+}
 
 
 // Add Logic
@@ -150,7 +153,7 @@ if (!empty($errors)) {
 $_SESSION['workout'] = serialize($workout);
 
 // Create Logic
-if (isset($_POST['action']) && $_POST['action'] === 'create'){
+if (isset($_POST['action']) && $_POST['action'] === 'create') {
     try {
         $workout->save();
     } catch (PDOException $e) {
@@ -161,7 +164,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'create'){
         redirect_with_error_alert("Failed to create workout due to an error: " . $e->getMessage(), "/staff/wnmp/workouts/create");
         exit;
     }
-    
+
     foreach ($workout->exercises as &$exercise) {
         if (isset($exercise['title'])) {
             $exerciseId = array_search($exercise['title'], $exerciseTitles);
@@ -173,7 +176,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'create'){
             $exercise['workout_id'] = $workout->id;
         }
     }
-    
+
     try {
         $workout->save();
     } catch (PDOException $e) {
@@ -181,7 +184,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'create'){
         exit;
     }
 
-    
+
     redirect_with_success_alert("Workout created successfully", "/staff/wnmp/workouts/view?id=" . $workout->id);
     exit;
 }
@@ -189,4 +192,3 @@ if (isset($_POST['action']) && $_POST['action'] === 'create'){
 redirect_with_success_alert("Action successful (Press Save Changes to complete)", "/staff/wnmp/workouts/create");
 exit;
 ?>
-

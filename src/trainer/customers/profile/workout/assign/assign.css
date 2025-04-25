@@ -1,4 +1,4 @@
-/* CSS for Workout Assignment Page */
+/* Updated assign.css */
 .assignment-page {
     padding: 15px;
 }
@@ -101,6 +101,7 @@
     background-color: var(--color-violet-600);
     color: white;
     margin-top: 10px;
+    display: inline-block;
 }
 
 .empty-state {
@@ -115,159 +116,17 @@
     color: var(--color-zinc-400);
 }
 
-/* Tabs for choosing workout type */
-.tabs {
-    display: flex;
-    margin-bottom: 15px;
-    border-bottom: 1px solid var(--color-zinc-800);
-}
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .assignment-page {
+        padding: 10px;
+    }
 
-.tab {
-    padding: 10px 15px;
-    font-size: 14px;
-    cursor: pointer;
-    position: relative;
-    color: var(--color-zinc-400);
-    background: transparent;
-    border: none;
-}
+    .plan-actions {
+        flex-direction: column;
+    }
 
-.tab.active {
-    color: var(--color-zinc-100);
-}
-
-.tab.active::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: var(--color-violet-600);
-}
-
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-/* Exercise list style */
-.exercises-container {
-    margin-top: 15px;
-}
-
-.exercise-item {
-    background-color: var(--color-zinc-800);
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-}
-
-.exercise-icon {
-    width: 40px;
-    height: 40px;
-    background-color: var(--color-zinc-700);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
-}
-
-.exercise-details {
-    flex: 1;
-}
-
-.exercise-name {
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 3px;
-}
-
-.exercise-stats {
-    display: flex;
-    gap: 10px;
-    font-size: 12px;
-    color: var(--color-zinc-400);
-}
-
-/* Form controls for custom workout */
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: var(--color-zinc-400);
-}
-
-.form-input,
-.form-textarea,
-.form-select {
-    width: 100%;
-    background-color: var(--color-zinc-800);
-    border: 1px solid var(--color-zinc-700);
-    border-radius: 6px;
-    padding: 10px;
-    color: var(--color-zinc-200);
-    font-size: 14px;
-}
-
-.form-textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-.form-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.form-col {
-    flex: 1;
-}
-
-.form-col.small {
-    flex: 0 0 80px;
-}
-
-.add-exercise-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    background-color: transparent;
-    border: 1px dashed var(--color-zinc-700);
-    color: var(--color-zinc-400);
-    padding: 8px;
-    border-radius: 6px;
-    width: 100%;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.add-exercise-btn:hover {
-    background-color: var(--color-zinc-800);
-    color: var(--color-zinc-300);
-}
-
-.remove-btn {
-    background: none;
-    border: none;
-    color: var(--color-zinc-500);
-    cursor: pointer;
-    padding: 5px;
-    margin-left: auto;
-}
-
-.remove-btn:hover {
-    color: var(--color-red);
+    .btn {
+        width: 100%;
+    }
 }

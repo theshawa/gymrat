@@ -1,6 +1,7 @@
 <?php
 require_once "../../../../auth-guards.php";
-if (auth_required_guard("trainer", "/trainer/login")) exit;
+if (auth_required_guard("trainer", "/trainer/login"))
+    exit;
 
 require_once "../../../../db/models/Customer.php";
 require_once "../../../../db/models/Complaint.php";
@@ -33,12 +34,33 @@ if ($customerId > 0) {
     }
 }
 
+// Get previous complaints/reports made by this trainer about this customer
+$previousReports = [];
+try {
+    $sql = "SELECT * FROM complaints 
+            WHERE user_id = :trainer_id 
+            AND user_type = 'trainer' 
+            AND description LIKE :search_pattern
+            ORDER BY created_at DESC";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':trainer_id', $trainerId);
+    $stmt->bindValue(':search_pattern', '%"customer_id":' . $customerId . '%');
+    $stmt->execute();
+
+    $previousReports = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    // Handle error silently
+    error_log("Error fetching previous reports: " . $e->getMessage());
+}
+
 $pageConfig = [
     "title" => "Report Customer",
     "titlebar" => [
         "back_url" => isset($_GET['id']) ? "../?id=" . $_GET['id'] : "../../",
         "title" => "REPORT CUSTOMER"
     ],
+    "styles" => ["/trainer/customers/profile/report/report.css", "/trainer/complaint/complaint.css"],
     "navbar_active" => 1
 ];
 
@@ -95,13 +117,55 @@ require_once "../../../includes/titlebar.php";
 
         <button class="btn">Submit Report</button>
     </form>
+
+    <!-- Previous Reports/Complaints Section -->
+    <div class="complaint-history">
+        <h3>Previous Reports on this Client</h3>
+        <?php if (empty($previousReports)): ?>
+            <p class="paragraph small">No previous reports for this client.</p>
+        <?php else: ?>
+            <ul class="complaint-list">
+                <?php foreach ($previousReports as $report):
+                    require_once "../../../../utils.php";
+                    $reportData = json_decode($report['description'], true);
+                    $reviewed = $report['reviewed_at'] !== null;
+                    ?>
+                    <li class="complaint-item">
+                        <div class="inline">
+                            <span class="paragraph small">
+                                <?= format_time(new DateTime($report['created_at'])) ?>
+                            </span>
+                        </div>
+                        <h4 class="type"><?= htmlspecialchars($report['type']) ?></h4>
+                        <?php if (isset($reportData) && is_array($reportData)): ?>
+                            <div class="report-info">
+                                <p class="paragraph"><strong>Severity:</strong>
+                                    <?= htmlspecialchars(ucfirst($reportData['severity'] ?? 'medium')) ?></p>
+                                <p class="paragraph"><?= htmlspecialchars($reportData['description'] ?? '') ?></p>
+                            </div>
+                        <?php else: ?>
+                            <p class="paragraph"><?= htmlspecialchars($report['description']) ?></p>
+                        <?php endif; ?>
+                        <div class="review-message <?= $reviewed ? "reviewed" : "pending" ?>">
+                            <div class="review-status <?= $reviewed ? "reviewed" : "pending" ?>">
+                                <?= $reviewed ? "Reviewed by admin at " . format_time(new DateTime($report['reviewed_at'])) : "To be reviewed" ?>
+                            </div>
+                            <?php if ($reviewed): ?>
+                                <p class="paragraph"><?= htmlspecialchars($report['review_message']) ?></p>
+                            <?php endif; ?>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+    </div>
 </main>
 
 <style>
     main {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 30px;
     }
 
     .customer-info {
@@ -167,6 +231,17 @@ require_once "../../../includes/titlebar.php";
     .severity-option:last-child input:checked+span {
         background-color: var(--color-violet-500);
         color: var(--color-zinc-50);
+    }
+
+    .report-info {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-top: 5px;
+    }
+
+    .complaint-history {
+        margin-top: 10px;
     }
 </style>
 

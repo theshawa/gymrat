@@ -5,7 +5,7 @@ if (auth_required_guard("trainer", "/trainer/login"))
 
 require_once "../../../../../db/models/Customer.php";
 require_once "../../../../../db/models/Workout.php";
-require_once "../../../../../db/models/Exercise.php";
+require_once "../../../../../db/models/WorkoutRequest.php";
 require_once "../../../../../alerts/functions.php";
 
 // Get customer ID from URL
@@ -35,21 +35,152 @@ try {
     $_SESSION['error'] = "Failed to fetch workout plans: " . $e->getMessage();
 }
 
-// Get all exercises for custom workout creation
-$exercises = [];
+// Get approved custom workout plans
+$customWorkouts = [];
 try {
-    $exerciseModel = new Exercise();
-    $exercises = $exerciseModel->get_all();
+    $conn = Database::get_conn();
+    $sql = "SELECT wr.id, wr.description, wr.reviewed FROM workout_requests wr 
+            WHERE wr.trainer_id = :trainer_id AND wr.reviewed = 1
+            ORDER BY wr.created_at DESC";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':trainer_id', $_SESSION['auth']['id']);
+    $stmt->execute();
+    $requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($requests as $request) {
+        // Try to extract the workout details from the JSON part of the description
+        $description = $request['description'];
+        $jsonEnd = strpos($description, "\n\n");
+        if ($jsonEnd !== false) {
+            try {
+                $jsonPart = substr($description, 0, $jsonEnd);
+                $details = json_decode($jsonPart, true);
+
+                if ($details && isset($details['name'])) {
+                    // Extract the plain text part too
+                    $textPart = substr($description, $jsonEnd + 2);
+
+                    $customWorkouts[] = [
+                        'id' => $request['id'],
+                        'name' => $details['name'],
+                        'type' => $details['type'] ?? 'custom',
+                        'duration' => $details['duration'] ?? 30,
+                        'description' => $details['description'] ?? '',
+                        'exercises' => $details['exercises'] ?? [],
+                        'full_description' => $textPart,
+                        'is_custom' => true
+                    ];
+                }
+            } catch (Exception $e) {
+                // If JSON parsing fails, just use the raw description
+                $lines = explode("\n", $description);
+                $name = '';
+
+                // Try to extract name from the first lines
+                foreach ($lines as $line) {
+                    if (strpos($line, 'Name:') === 0) {
+                        $name = trim(substr($line, 5));
+                        break;
+                    }
+                }
+
+                if (empty($name)) {
+                    $name = "Custom Workout #" . $request['id'];
+                }
+
+                $customWorkouts[] = [
+                    'id' => $request['id'],
+                    'name' => $name,
+                    'description' => $description,
+                    'is_custom' => true
+                ];
+            }
+        }
+    }
 } catch (Exception $e) {
-    $_SESSION['error'] = "Failed to fetch exercises: " . $e->getMessage();
+    $_SESSION['error'] = "Failed to fetch custom workout plans: " . $e->getMessage();
 }
 
 // Handle form submission to assign a workout plan
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_plan'])) {
     $workoutId = isset($_POST['workout_id']) ? intval($_POST['workout_id']) : 0;
+    $isCustom = isset($_POST['is_custom']) && $_POST['is_custom'] === 'true';
 
     if ($workoutId > 0) {
         try {
+            if ($isCustom) {
+                // For custom workouts, we need to first create a new workout from the request
+                // Get the custom workout request details
+                $requestModel = new WorkoutRequest();
+                $requestModel->fill(['id' => $workoutId]);
+                $requestModel->get_by_id($workoutId);
+
+                // Parse the description to get workout details
+                $description = $requestModel->description;
+                $jsonEnd = strpos($description, "\n\n");
+                $details = null;
+
+                if ($jsonEnd !== false) {
+                    try {
+                        $jsonPart = substr($description, 0, $jsonEnd);
+                        $details = json_decode($jsonPart, true);
+                    } catch (Exception $e) {
+                        // Failed to parse JSON, fallback to text parsing
+                        $details = null;
+                    }
+                }
+
+                if (!$details) {
+                    // Try to extract data from the text description
+                    $lines = explode("\n", $description);
+                    $details = [
+                        'name' => 'Custom Workout',
+                        'description' => $description,
+                        'duration' => 30,
+                        'exercises' => []
+                    ];
+
+                    foreach ($lines as $line) {
+                        if (strpos($line, 'Name:') === 0) {
+                            $details['name'] = trim(substr($line, 5));
+                        } elseif (strpos($line, 'Duration:') === 0) {
+                            $durationParts = explode(' ', trim(substr($line, 9)));
+                            if (isset($durationParts[0]) && is_numeric($durationParts[0])) {
+                                $details['duration'] = intval($durationParts[0]);
+                            }
+                        }
+                    }
+                }
+
+                // Create a new workout
+                $newWorkout = new Workout();
+                $newWorkout->name = $details['name'];
+                $newWorkout->description = $details['description'];
+                $newWorkout->duration = $details['duration'];
+
+                // Add exercises if available
+                $exercisesToAdd = [];
+                if (isset($details['exercises']) && is_array($details['exercises'])) {
+                    foreach ($details['exercises'] as $exercise) {
+                        if (isset($exercise['id'])) {
+                            $exercisesToAdd[] = [
+                                'exercise_id' => $exercise['id'],
+                                'day' => $exercise['day'] ?? 1,
+                                'sets' => $exercise['sets'] ?? 3,
+                                'reps' => $exercise['reps'] ?? 10,
+                                'isUpdated' => true
+                            ];
+                        }
+                    }
+                }
+
+                $newWorkout->exercises = $exercisesToAdd;
+                $newWorkout->save();
+
+                // Now assign the new workout to the customer
+                $workoutId = $newWorkout->id;
+            }
+
             // Update customer's workout plan ID
             $sql = "UPDATE customers SET workout = :workout_id WHERE id = :customer_id";
             $conn = Database::get_conn();
@@ -57,6 +188,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_plan'])) {
             $stmt->bindValue(':workout_id', $workoutId);
             $stmt->bindValue(':customer_id', $customerId);
             $stmt->execute();
+
+            // Send notification to the customer
+            if (function_exists('notify_rat')) {
+                notify_rat(
+                    $customerId,
+                    "New Workout Plan Assigned",
+                    "Your trainer has assigned you a new workout plan. Check it out in your workouts section!"
+                );
+            }
 
             // Redirect with success message
             redirect_with_success_alert("Workout plan assigned successfully!", "../?id=" . $customerId);
@@ -71,80 +211,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_plan'])) {
     }
 }
 
-// Handle custom workout plan creation
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_custom'])) {
-    $planName = isset($_POST['plan_name']) ? trim($_POST['plan_name']) : '';
-    $planDescription = isset($_POST['plan_description']) ? trim($_POST['plan_description']) : '';
-    $planDuration = isset($_POST['plan_duration']) ? intval($_POST['plan_duration']) : 30;
-
-    if (empty($planName) || empty($planDescription)) {
-        redirect_with_error_alert("Please provide a name and description for the workout plan.", "./assign?id=" . $customerId);
-        exit;
-    }
-
-    try {
-        // Create new workout
-        $newWorkout = new Workout();
-        $newWorkout->name = $planName;
-        $newWorkout->description = $planDescription;
-        $newWorkout->duration = $planDuration;
-
-        // Process exercises
-        $exercisesList = [];
-
-        if (isset($_POST['exercise_id']) && is_array($_POST['exercise_id'])) {
-            $exerciseIds = $_POST['exercise_id'];
-            $exerciseDays = $_POST['exercise_day'];
-            $exerciseSets = $_POST['exercise_sets'];
-            $exerciseReps = $_POST['exercise_reps'];
-
-            for ($i = 0; $i < count($exerciseIds); $i++) {
-                if (!empty($exerciseIds[$i])) {
-                    $exercisesList[] = [
-                        'id' => 0, // Will be assigned by database
-                        'exercise_id' => intval($exerciseIds[$i]),
-                        'day' => intval($exerciseDays[$i]),
-                        'sets' => intval($exerciseSets[$i]),
-                        'reps' => intval($exerciseReps[$i]),
-                        'isUpdated' => true,
-                        'isDeleted' => false
-                    ];
-                }
-            }
-        }
-
-        if (empty($exercisesList)) {
-            redirect_with_error_alert("Please add at least one exercise to the workout plan.", "./assign?id=" . $customerId);
-            exit;
-        }
-
-        $newWorkout->exercises = $exercisesList;
-        $newWorkout->save();
-
-        // Assign the workout to the customer
-        $updateSql = "UPDATE customers SET workout = :workout_id WHERE id = :customer_id";
-        $conn = Database::get_conn();
-        $updateStmt = $conn->prepare($updateSql);
-        $updateStmt->bindValue(':workout_id', $newWorkout->id);
-        $updateStmt->bindValue(':customer_id', $customerId);
-        $updateStmt->execute();
-
-        // Redirect with success message
-        redirect_with_success_alert("Custom workout plan created and assigned successfully!", "../?id=" . $customerId);
-        exit;
-    } catch (Exception $e) {
-        redirect_with_error_alert("Failed to create custom workout plan: " . $e->getMessage(), "./assign?id=" . $customerId);
-        exit;
-    }
-}
-
 $pageConfig = [
     "title" => "Assign Workout",
     "styles" => [
         "./assign.css"
-    ],
-    "scripts" => [
-        "./assign.js"
     ],
     "navbar_active" => 1,
     "titlebar" => [
@@ -158,124 +228,320 @@ require_once "../../../../includes/titlebar.php";
 ?>
 
 <main class="assignment-page">
-    <div class="customer-header">
-        <h2>Assign Workout for <?= htmlspecialchars($customer->fname . ' ' . $customer->lname) ?></h2>
-    </div>
+    <?php if (!empty($customWorkouts)): ?>
+        <div class="section-header">
+            <h3 class="section-title">Custom Workout Plans</h3>
+            <p class="section-subtitle">These custom workout plans have been approved and are ready to assign</p>
+        </div>
 
-    <div class="tabs">
-        <button type="button" class="tab active" data-tab="premade-plans">Premade Plans</button>
-        <button type="button" class="tab" data-tab="custom-plan">Custom Plan</button>
-    </div>
+        <div class="plans-list custom-plans">
+            <?php foreach ($customWorkouts as $plan): ?>
+                <div class="plan-card custom-plan">
+                    <div class="plan-header">
+                        <h3><?= htmlspecialchars($plan['name']) ?></h3>
+                        <span class="duration"><?= $plan['duration'] ?? 30 ?> days</span>
+                    </div>
 
-    <div id="premade-plans" class="tab-content active">
-        <div class="plans-list">
-            <?php if (empty($workoutPlans)): ?>
-                <div class="empty-state">
-                    <p>No workout plans available. You'll need to create a custom plan.</p>
-                </div>
-            <?php else: ?>
-                <?php foreach ($workoutPlans as $plan): ?>
-                    <div class="plan-card">
-                        <div class="plan-header">
-                            <h3><?= htmlspecialchars($plan->name) ?></h3>
-                            <span class="duration"><?= $plan->duration ?> days</span>
-                        </div>
+                    <p class="plan-description">
+                        <?= htmlspecialchars(substr($plan['description'], 0, 150)) ?>
+                        <?= strlen($plan['description']) > 150 ? '...' : '' ?>
+                    </p>
 
-                        <p class="plan-description"><?= htmlspecialchars($plan->description) ?></p>
-
+                    <?php if (isset($plan['exercises']) && is_array($plan['exercises'])): ?>
                         <div class="exercise-count">
                             <span class="count-label">Exercises:</span>
-                            <span class="count-value"><?= count($plan->exercises) ?></span>
+                            <span class="count-value"><?= count($plan['exercises']) ?></span>
                         </div>
+                    <?php endif; ?>
 
-                        <div class="plan-actions">
-                            <form method="POST" action="">
-                                <input type="hidden" name="workout_id" value="<?= $plan->id ?>">
-                                <button type="submit" name="assign_plan" class="btn assign-btn">Assign</button>
-                            </form>
+                    <div class="plan-actions">
+                        <form method="POST" action="">
+                            <input type="hidden" name="workout_id" value="<?= $plan['id'] ?>">
+                            <input type="hidden" name="is_custom" value="true">
+                            <button type="submit" name="assign_plan" class="btn secondary-btn">Assign</button>
+                        </form>
 
-                            <a href="./preview?id=<?= $plan->id ?>&customer_id=<?= $customerId ?>"
-                                class="btn preview-btn">Preview</a>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
-    </div>
-
-    <div id="custom-plan" class="tab-content">
-        <form method="POST" action="" id="custom-workout-form">
-            <input type="hidden" name="create_custom" value="1">
-
-            <div class="form-group">
-                <label class="form-label" for="plan_name">Workout Name</label>
-                <input type="text" id="plan_name" name="plan_name" class="form-input" required>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label" for="plan_description">Description</label>
-                <textarea id="plan_description" name="plan_description" class="form-textarea" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label" for="plan_duration">Duration (days)</label>
-                <input type="number" id="plan_duration" name="plan_duration" class="form-input" min="1" max="90"
-                    value="30" required>
-            </div>
-
-            <h3>Exercises</h3>
-
-            <div id="exercises-container">
-                <!-- First exercise form fields -->
-                <div class="exercise-item">
-                    <div class="form-row">
-                        <div class="form-col">
-                            <label class="form-label" for="exercise_id_0">Exercise</label>
-                            <select name="exercise_id[]" id="exercise_id_0" class="form-select" required>
-                                <option value="">Select an exercise</option>
-                                <?php foreach ($exercises as $exercise): ?>
-                                    <option value="<?= $exercise->id ?>"><?= htmlspecialchars($exercise->name) ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="form-col small">
-                            <label class="form-label" for="exercise_day_0">Day</label>
-                            <input type="number" name="exercise_day[]" id="exercise_day_0" class="form-input" min="1"
-                                max="7" value="1" required>
-                        </div>
-                        <button type="button" class="remove-btn" onclick="removeExercise(this)"
-                            title="Remove exercise">×</button>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-col small">
-                            <label class="form-label" for="exercise_sets_0">Sets</label>
-                            <input type="number" name="exercise_sets[]" id="exercise_sets_0" class="form-input" min="1"
-                                max="20" value="3" required>
-                        </div>
-                        <div class="form-col small">
-                            <label class="form-label" for="exercise_reps_0">Reps</label>
-                            <input type="number" name="exercise_reps[]" id="exercise_reps_0" class="form-input" min="1"
-                                max="100" value="10" required>
-                        </div>
+                        <!-- <button type="button" class="btn preview-btn"
+                            onclick="showCustomPlanDetails(<?= htmlspecialchars(json_encode($plan)) ?>)">
+                            Preview
+                        </button> -->
                     </div>
                 </div>
-            </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 
-            <button type="button" class="add-exercise-btn" onclick="addExercise()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
-                Add Exercise
-            </button>
+    <div class="section-header">
+        <h3 class="section-title">Standard Workout Plans</h3>
+        <p class="section-subtitle">Pre-designed workout plans for various fitness goals</p>
+    </div>
 
-            <div class="form-actions" style="margin-top: 20px;">
-                <button type="submit" class="btn assign-btn">Create & Assign</button>
+    <div class="plans-list standard-plans">
+        <?php if (empty($workoutPlans)): ?>
+            <div class="empty-state">
+                <p>No standard workout plans available. You can request a custom plan instead.</p>
             </div>
-        </form>
+        <?php else: ?>
+            <?php foreach ($workoutPlans as $plan): ?>
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <h3><?= htmlspecialchars($plan->name) ?></h3>
+                        <span class="duration"><?= $plan->duration ?> days</span>
+                    </div>
+
+                    <p class="plan-description"><?= htmlspecialchars($plan->description) ?></p>
+
+                    <div class="exercise-count">
+                        <span class="count-label">Exercises:</span>
+                        <span class="count-value"><?= count($plan->exercises) ?></span>
+                    </div>
+
+                    <div class="plan-actions">
+                        <form method="POST" action="">
+                            <input type="hidden" name="workout_id" value="<?= $plan->id ?>">
+                            <input type="hidden" name="is_custom" value="false">
+                            <button type="submit" name="assign_plan" class="btn secondary-btn">Assign</button>
+                        </form>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+
+    <!-- Request Custom Workout Section -->
+    <div class="request-container">
+        <p style="padding-bottom: 10px;">Don't see a suitable plan?</p>
+        <a href="../request?id=<?= $customerId ?>" class="btn secondary-btn">Request Custom Workout</a>
     </div>
 </main>
+
+<!-- Modal for displaying custom workout details -->
+<div id="customPlanModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">Custom Workout Plan</h2>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div id="modalDescription"></div>
+            <div id="modalExercises" class="modal-exercises"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to display custom plan details in modal
+    function showCustomPlanDetails(plan) {
+        const modal = document.getElementById('customPlanModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalExercises = document.getElementById('modalExercises');
+
+        // Set the plan details
+        modalTitle.textContent = plan.name;
+
+        // Use the full description if available
+        if (plan.full_description) {
+            modalDescription.innerHTML = plan.full_description
+                .replace(/\n/g, '<br>')
+                .replace(/^(.*?):\s*(.*?)$/gm, '<p><strong>$1:</strong> $2</p>');
+        } else {
+            modalDescription.innerHTML = `<p>${plan.description.replace(/\n/g, '<br>')}</p>`;
+        }
+
+        // Clear previous exercises
+        modalExercises.innerHTML = '';
+
+        // Add exercises if available
+        if (plan.exercises && plan.exercises.length > 0) {
+            const exercisesHeader = document.createElement('h3');
+            exercisesHeader.textContent = 'Exercises';
+            modalExercises.appendChild(exercisesHeader);
+
+            const exerciseList = document.createElement('ul');
+            exerciseList.className = 'exercise-list';
+
+            // Group exercises by day
+            const exercisesByDay = {};
+            plan.exercises.forEach(exercise => {
+                const day = exercise.day || 1;
+                if (!exercisesByDay[day]) {
+                    exercisesByDay[day] = [];
+                }
+                exercisesByDay[day].push(exercise);
+            });
+
+            // Create sections for each day
+            Object.keys(exercisesByDay).sort((a, b) => parseInt(a) - parseInt(b)).forEach(day => {
+                const daySection = document.createElement('div');
+                daySection.className = 'day-section';
+
+                const dayHeader = document.createElement('h4');
+                dayHeader.textContent = `Day ${day}`;
+                daySection.appendChild(dayHeader);
+
+                const dayExercises = document.createElement('ul');
+                exercisesByDay[day].forEach(exercise => {
+                    const exerciseItem = document.createElement('li');
+                    exerciseItem.innerHTML = `Exercise ID: ${exercise.id} - ${exercise.sets || 3} sets × ${exercise.reps || 10} reps`;
+                    dayExercises.appendChild(exerciseItem);
+                });
+
+                daySection.appendChild(dayExercises);
+                modalExercises.appendChild(daySection);
+            });
+        }
+
+        // Show the modal
+        modal.style.display = 'block';
+
+        // Close modal when clicking on the X
+        document.querySelector('.close-modal').onclick = function () {
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    }
+</script>
+
+<style>
+    /* Modal styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+        background-color: var(--color-zinc-900);
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 12px;
+        width: 85%;
+        max-width: 500px;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--color-zinc-800);
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+
+    .modal-header h2 {
+        margin: 0;
+        color: white;
+        font-size: 20px;
+    }
+
+    .close-modal {
+        color: var(--color-zinc-400);
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close-modal:hover {
+        color: white;
+    }
+
+    .modal-body {
+        color: var(--color-zinc-300);
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .modal-body p {
+        margin-bottom: 10px;
+    }
+
+    .modal-body strong {
+        color: white;
+    }
+
+    .modal-exercises {
+        margin-top: 20px;
+    }
+
+    .modal-exercises h3 {
+        color: white;
+        font-size: 18px;
+        margin-bottom: 10px;
+        border-top: 1px solid var(--color-zinc-800);
+        padding-top: 15px;
+    }
+
+    .modal-exercises h4 {
+        color: var(--color-zinc-200);
+        font-size: 16px;
+        margin: 15px 0 10px 0;
+    }
+
+    .modal-exercises ul {
+        padding-left: 20px;
+        margin: 10px 0;
+    }
+
+    .modal-exercises li {
+        margin-bottom: 5px;
+    }
+
+    /* Custom plan badge */
+    .plan-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: var(--color-violet-600);
+        color: white;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    /* Section headers */
+    .section-header {
+        margin: 5px 0 15px 0;
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0 0 5px 0;
+        color: white;
+    }
+
+    .section-subtitle {
+        color: var(--color-zinc-400);
+        font-size: 14px;
+        margin: 0;
+    }
+
+    /* Custom plans styling */
+    .custom-plans {
+        margin-bottom: 30px;
+    }
+
+    .plan-card.custom-plan {
+        border: 1px solid var(--color-violet-800);
+        position: relative;
+    }
+</style>
 
 <?php require_once "../../../../includes/navbar.php" ?>
 <?php require_once "../../../../includes/footer.php" ?>

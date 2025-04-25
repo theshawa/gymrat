@@ -11,9 +11,6 @@ $pageConfig = [
     ]
 ];
 
-require_once "../../notifications/functions.php";
-notify_rat($_SESSION['auth']['id'], "Test Notification", "test");
-
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";
 

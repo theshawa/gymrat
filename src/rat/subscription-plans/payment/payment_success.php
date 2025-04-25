@@ -7,19 +7,7 @@ require_once "../../../alerts/functions.php";
 require_once "../../../logger.php";
 Logger::log("Payment success page requested with session: ", $_SESSION);
 
-if ($_SESSION['membership_plan_activated']) {
-    header("Location: /rat");
-    exit;
-}
-
-
-if (!isset($_SESSION['subscribing'])) {
-    die("You are not in the process of subscribing to a plan.");
-    exit;
-}
-
 $order_id = htmlspecialchars($_GET['order_id']);
-
 
 if (empty($order_id)) {
     redirect_with_error_alert("Order ID is required", "../");
@@ -40,15 +28,6 @@ try {
     exit;
 }
 
-// mark completed
-try {
-    $payment->mark_completed();
-} catch (PDOException $e) {
-    redirect_with_error_alert("Subscription failed! Failed to mark payment as completed due to error: " . $e->getMessage(), "../");
-    exit;
-}
-
-// subscribe user to the plan
 require_once "../../../db/models/Customer.php";
 $user = new Customer();
 $user->fill([
@@ -62,6 +41,25 @@ try {
     exit;
 }
 
+if ($user->membership_plan) {
+    redirect_with_success_alert("Subscription Plan activated successfully", $user->onboarded ? "/rat" : "/rat/onboarding/facts");
+    exit;
+}
+
+if (!isset($_SESSION['subscribing'])) {
+    die("You are not in the process of subscribing to a plan.");
+    exit;
+}
+
+// mark completed
+try {
+    $payment->mark_completed();
+} catch (PDOException $e) {
+    redirect_with_error_alert("Subscription failed! Failed to mark payment as completed due to error: " . $e->getMessage(), "../");
+    exit;
+}
+
+// subscribe user to the plan
 $user->membership_plan = $payment->membership_plan;
 $user->membership_plan_activated_at = new DateTime();
 
@@ -96,8 +94,6 @@ try {
     exit;
 }
 
-$_SESSION['membership_plan_activated'] = true;
-
 require_once "../../../send_email.php";
 
 try {
@@ -115,5 +111,3 @@ try {
 }
 
 redirect_with_success_alert("Subscription Plan activated successfully", $user->onboarded ? "/rat" : "/rat/onboarding/facts");
-var_dump($_SESSION);
-sleep(10);

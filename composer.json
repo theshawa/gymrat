@@ -27,7 +27,8 @@
     "ext-xml": "*",
     "ext-zip": "*",
     "phpmailer/phpmailer": "dev-master",
-    "fakerphp/faker": "2.0.x-dev"
+    "fakerphp/faker": "2.0.x-dev",
+    "dompdf/dompdf": "dev-master"
   },
   "autoload": {
     "psr-4": {

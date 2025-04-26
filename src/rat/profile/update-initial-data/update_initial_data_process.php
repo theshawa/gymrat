@@ -2,10 +2,8 @@
 
 session_start();
 
-require_once "../../../alerts/functions.php";
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    redirect_with_error_alert('Method not allowed', '../');
+    die("Method not allowed");
 }
 
 $gender = htmlspecialchars($_POST['gender']);
@@ -34,6 +32,8 @@ $initial_data->fill(
         'allergies' => $allergies,
     ]
 );
+
+require_once "../../../alerts/functions.php";
 
 try {
     $initial_data->update();

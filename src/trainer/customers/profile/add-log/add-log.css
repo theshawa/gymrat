@@ -1,131 +1,220 @@
 /* add-log.css */
 .add-log-page {
-    padding: 15px;
+  padding: 15px;
 }
 
 .customer-info {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .customer-info h2 {
-    font-size: 18px;
-    margin: 0;
-    padding: 0;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
 }
 
 .notification {
-    padding: 12px 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
 }
 
 .notification p {
-    margin: 0;
+  margin: 0;
 }
 
 .notification.success {
-    background-color: rgba(16, 185, 129, 0.2);
-    border: 1px solid rgba(16, 185, 129, 0.3);
+  background-color: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .notification.error {
-    background-color: rgba(239, 68, 68, 0.2);
-    border: 1px solid rgba(239, 68, 68, 0.3);
+  background-color: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 /* Form Styling */
 .progress-form-container {
-    background-color: #18181B;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 20px;
+  background-color: #18181b;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 20px;
 }
 
 .progress-form-container h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 16px;
-    font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .progress-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .form-group label {
-    font-size: 14px;
-    color: #A1A1AA;
+  font-size: 14px;
+  color: #a1a1aa;
 }
 
 .form-control {
-    background-color: #27272A;
-    border: 1px solid #3F3F46;
-    border-radius: 6px;
-    padding: 12px 15px;
-    color: #FFFFFF;
-    font-size: 16px;
-    font-family: 'DM Sans', sans-serif;
+  background-color: #27272a;
+  border: 1px solid #3f3f46;
+  border-radius: 6px;
+  padding: 12px 15px;
+  color: #ffffff;
+  font-size: 16px;
+  font-family: "DM Sans", sans-serif;
 }
 
 .form-control:focus {
-    border-color: #6B7280;
-    outline: none;
+  border-color: #6b7280;
+  outline: none;
 }
 
 /* Radio buttons for performance type */
 .performance-type {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 .radio-buttons {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 
 .radio-option {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .radio-option input[type="radio"] {
-    appearance: none;
-    background-color: #27272A;
-    border: 1px solid #3F3F46;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    outline: none;
-    cursor: pointer;
+  appearance: none;
+  background-color: #27272a;
+  border: 1px solid #3f3f46;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
 }
 
 .radio-option input[type="radio"]:checked {
-    border: 5px solid #6700E6;
-    background-color: #27272A;
+  border: 5px solid #5b00cc;
+  background-color: #27272a;
 }
 
 .radio-option label {
-    font-size: 14px;
-    color: #FFFFFF;
-    cursor: pointer;
+  font-size: 14px;
+  color: #ffffff;
+  cursor: pointer;
 }
 
 .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
 }
 
 .submit-btn {
-    background-color: #6700E6;
+  background-color: #5b00cc;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #5a00cc;
+}
+
+/* Previous Logs Styling */
+.previous-logs {
+  margin-top: 25px;
+}
+
+.previous-logs h3 {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.logs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.log-item {
+  background-color: #18181b;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.log-message {
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.log-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.log-actions {
+    display: flex;
+    gap: 10px;
+    margin-left: 10px;
+}
+
+.btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #27272A;
+    color: #A1A1AA;
+    transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+    background-color: #3F3F46;
+}
+
+.btn-icon.edit-log {
+    color: #71717A; /* ash color for edit */
+}
+
+.btn-icon.edit-log:hover {
+    background-color: rgba(113, 113, 122, 0.2);
+}
+
+.btn-icon.delete-log {
+    color: #DC2626; /* red color for delete */
+}
+
+.btn-icon.delete-log:hover {
+    background-color: rgba(220, 38, 38, 0.2);
+}
+
+.btn.secondary {
+    background-color: #27272A;
     color: #FFFFFF;
     border: none;
     border-radius: 6px;
@@ -133,68 +222,30 @@
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-}
-
-.submit-btn:hover {
-    background-color: #5A00CC;
-}
-
-/* Previous Logs Styling */
-.previous-logs {
-    margin-top: 25px;
-}
-
-.previous-logs h3 {
-    font-size: 16px;
-    margin-bottom: 15px;
-}
-
-.logs-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.log-item {
-    background-color: #18181B;
-    border-radius: 10px;
-    padding: 15px;
-}
-
-.log-message {
-    font-size: 16px;
-    line-height: 1.4;
-    margin-bottom: 10px;
-    color: #FFFFFF;
-    font-weight: 500;
-}
-
-.log-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    text-decoration: none;
+    margin-right: 10px;
 }
 
 .log-date {
-    color: #A1A1AA;
-    font-size: 14px;
+  color: #a1a1aa;
+  font-size: 14px;
 }
 
 .performance-badge {
-    padding: 6px 12px;
-    border-radius: 30px;
-    font-size: 12px;
-    font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .performance-badge.well-done {
-    background-color: rgba(16, 185, 129, 0.2);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    color: #10B981;
+  background-color: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #10b981;
 }
 
 .performance-badge.try-harder {
-    background-color: rgba(239, 68, 68, 0.2);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    color: #EF4444;
+  background-color: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
 }

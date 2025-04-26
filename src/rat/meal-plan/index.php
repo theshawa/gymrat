@@ -122,8 +122,7 @@ require_once "../includes/titlebar.php";
                                     <?php foreach ($meals as $meal): ?>
                                         <div class="meal-item">
                                             <div class="top">
-                                                <img src="<?= empty($meal->image) ? get_file_url("default-images/default-meal.png") :  get_file_url($meal->image)
-                                                            ?>" alt="Image of meal item <?= $meal->name ?>" class="featured-image">
+                                                <img src="<?= get_file_url($meal->image, "default-images/default-meal.png") ?>" alt="Image of meal item <?= $meal->name ?>" class="featured-image">
                                                 <div class="right">
                                                     <h4><?= $meal->name ?></h4>
                                                     <div class="facts">

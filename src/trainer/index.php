@@ -38,12 +38,40 @@ try {
     // Handle error silently
 }
 
-// Get the 5 most recent clients or clients needing attention
+// Get clients needing attention (those without workout or meal plan)
 $recentClients = [];
 if (!empty($activeCustomers)) {
-    // Sort by most recent updates or some criteria
-    // Limit to 5 clients
-    $recentClients = array_slice($activeCustomers, 0, 5);
+    // Filter clients based on missing meal plan or workout
+    $clientsNeedingAttention = [];
+    foreach ($activeCustomers as $client) {
+        $needsAttention = false;
+        $attentionReason = '';
+        
+        if ($client->workout === null) {
+            $needsAttention = true;
+            $attentionReason = 'Needs Workout Plan';
+        } elseif ($client->meal_plan === null) {
+            $needsAttention = true;
+            $attentionReason = 'Needs Meal Plan';
+        }
+        
+        if ($needsAttention) {
+            $client->attention_reason = $attentionReason;
+            $clientsNeedingAttention[] = $client;
+        }
+    }
+    
+    // If no clients need attention, show the 5 most recent clients
+    if (empty($clientsNeedingAttention)) {
+        $recentClients = array_slice($activeCustomers, 0, 5);
+        // Add a default status of "On Track" for these clients
+        foreach ($recentClients as $client) {
+            $client->attention_reason = 'On Track';
+        }
+    } else {
+        // Otherwise show clients needing attention (limited to 5)
+        $recentClients = array_slice($clientsNeedingAttention, 0, 5);
+    }
 }
 
 $pageConfig = [
@@ -65,11 +93,11 @@ $trainerName = $_SESSION['auth']['fname'] ?? 'Trainer';
 
 // Get time-based greeting
 $hour = date('H');
-$timeGreeting = "Good morning";
+$timeGreeting = "Good Morning";
 if ($hour >= 12 && $hour < 17) {
-    $timeGreeting = "Good afternoon";
+    $timeGreeting = "Good Afternoon";
 } elseif ($hour >= 17) {
-    $timeGreeting = "Good evening";
+    $timeGreeting = "Good Evening";
 }
 ?>
 
@@ -167,24 +195,24 @@ if ($hour >= 12 && $hour < 17) {
                 </svg>
             </a>
 
-            <a href="/trainer/post-announcement" class="feature-card">
+            <a href="/trainer/announcements" class="feature-card">
                 <div class="feature-card-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                        class="lucide lucide-megaphone">
+                        <path d="m3 11 18-5v12L3 13"/>
+                        <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
                     </svg>
                 </div>
                 <div class="feature-card-content">
                     <div class="feature-card-title">Announcements</div>
-                    <p class="feature-card-description">Send important updates to all your clients at once</p>
+                    <p class="feature-card-description">Create and manage announcements for your clients</p>
                 </div>
                 <svg class="feature-card-decoration" xmlns="http://www.w3.org/2000/svg" width="100" height="100"
-                    viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                    viewBox="0 0 24 24" fill="currentColor" stroke="none"
+                    class="lucide lucide-megaphone">
+                    <path d="m3 11 18-5v12L3 13"/>
+                    <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
                 </svg>
             </a>
 
@@ -247,7 +275,7 @@ if ($hour >= 12 && $hour < 17) {
 
             <div class="client-list">
                 <div class="client-list-header">
-                    <div class="client-list-title">Recent Activity</div>
+                    <div class="client-list-title">Client Status</div>
                 </div>
 
                 <?php foreach ($recentClients as $client):
@@ -266,14 +294,18 @@ if ($hour >= 12 && $hour < 17) {
                         }
                     }
 
-                    // Randomly assign status for demo
-                    $statuses = ['warning', 'danger', 'success'];
-                    $statusLabels = [
-                        'warning' => 'Needs Meal Plan',
-                        'danger' => 'Missing Workout',
-                        'success' => 'On Track'
-                    ];
-                    $randomStatus = $statuses[array_rand($statuses)];
+                    // Determine status based on client attention reason
+                    $statusType = 'success';
+                    $statusReason = $client->attention_reason;
+                    
+                    // Set appropriate status class
+                    if ($statusReason === 'Needs Workout Plan') {
+                        $statusType = 'danger';
+                    } elseif ($statusReason === 'Needs Meal Plan') {
+                        $statusType = 'warning';
+                    } else {
+                        $statusType = 'success';
+                    }
 
                     // For real implementation, you would check actual client data
                     // to determine which clients need attention
@@ -283,7 +315,7 @@ if ($hour >= 12 && $hour < 17) {
                         <div class="client-info">
                             <h3 class="client-name"><?= htmlspecialchars($client->fname . ' ' . $client->lname) ?></h3>
                             <div class="client-meta">
-                                <span class="client-tag <?= $randomStatus ?>"><?= $statusLabels[$randomStatus] ?></span>
+                                <span class="client-tag <?= $statusType ?>"><?= $statusReason ?></span>
                             </div>
                         </div>
                         <div class="client-action">
@@ -298,34 +330,6 @@ if ($hour >= 12 && $hour < 17) {
         </div>
     <?php endif; ?>
 
-    <!-- Request Notifications Section -->
-    <?php if ($pendingWorkoutRequests || $pendingMealPlanRequests): ?>
-        <div class="quick-help">
-            <div class="quick-help-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
-            </div>
-            <div class="quick-help-content">
-                <h3 class="quick-help-title">Attention Needed!</h3>
-                <p class="quick-help-description">
-                    <?php if ($pendingWorkoutRequests && $pendingMealPlanRequests): ?>
-                        You have pending workout and meal plan requests that need your review.
-                    <?php elseif ($pendingWorkoutRequests): ?>
-                        You have pending workout requests that need your review.
-                    <?php else: ?>
-                        You have pending meal plan requests that need your review.
-                    <?php endif; ?>
-                </p>
-            </div>
-            <a href="/staff/wnmp/workouts/requests?filter=1" class="quick-help-action">
-                Review Requests
-            </a>
-        </div>
-    <?php endif; ?>
 </main>
 
 <?php require_once "./includes/navbar.php" ?>

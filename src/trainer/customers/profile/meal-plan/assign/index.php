@@ -87,7 +87,7 @@ require_once "../../../../includes/titlebar.php";
             <?php if (empty($mealPlans)): ?>
                 <div class="empty-state">
                     <p>No meal plans available. You'll need to request a custom plan.</p>
-                    <a href="../../meal-plans/request/" class="btn request-btn">Request Custom Plan</a>
+                    <a href="../../meal-plans/request/" class="btn secondary-btn">Request Custom Plan</a>
                 </div>
             <?php else: ?>
                 <?php foreach ($mealPlans as $plan): ?>
@@ -107,24 +107,27 @@ require_once "../../../../includes/titlebar.php";
                         <div class="plan-actions">
                             <form method="POST" action="">
                                 <input type="hidden" name="meal_plan_id" value="<?= $plan->id ?>">
-                                <button type="submit" name="assign_plan" class="btn assign-btn">Assign</button>
+                                <button type="submit" name="assign_plan" class="btn secondary-btn">Assign</button>
                             </form>
 
-                            <a href="./preview?id=<?= $plan->id ?>&customer_id=<?= $customerId ?>"
-                                class="btn preview-btn">Preview</a>
+                            <!-- <a href="./preview?id=<?= $plan->id ?>&customer_id=<?= $customerId ?>"
+                                class="btn preview-btn">Preview</a> -->
                         </div>
                     </div>
                 <?php endforeach; ?>
 
-                <div class="request-container">
-                    <p>Don't see a suitable plan?</p>
-                    <form action="../../meal-plan/request/" method="get">
-                        <input type="hidden" name="id" value="<?= $customerId ?>">
-                        <button type="submit" class="btn request-btn">Request Custom Plan</button>
-                    </form>
-                </div>
-            <?php endif; ?>
-        </div>
+            </div> <!-- End of .plans-list -->
+
+            <div class="request-container">
+                <p style="padding-bottom: 10px">Don't see a suitable plan?</p>
+                <form action="../../meal-plan/request/" method="get">
+                    <input type="hidden" name="id" value="<?= $customerId ?>">
+                    <button type="submit" class="btn secondary-btn" style="width: 100%;">Request Custom
+                        Meal Plan</button>
+                </form>
+            </div>
+        <?php endif; ?>
+    </div>
     </div>
 </main>
 

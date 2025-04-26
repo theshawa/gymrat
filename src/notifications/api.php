@@ -9,6 +9,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 
 require_once "../config.php";
+require_once "../utils.php";
 
 function get(int $user_id, string $user_type): array
 {
@@ -32,7 +33,7 @@ function get(int $user_id, string $user_type): array
                 "id" => $notification->id,
                 "title" => $notification->title,
                 "message" => $notification->message,
-                "created_at" => $notification->created_at->format("Y-m-d H:i:s"),
+                "created_at" => format_time($notification->created_at, true),
                 "valid_till" => $notification->valid_till ? $notification->valid_till->format("Y-m-d H:i:s") : null,
                 "is_read" => $notification->is_read,
                 "source" => $notification->source,
@@ -45,7 +46,7 @@ function get(int $user_id, string $user_type): array
                 "id" => $announcement->id,
                 "title" => $announcement->title,
                 "message" => $announcement->message,
-                "created_at" => $announcement->created_at->format("Y-m-d H:i:s"),
+                "created_at" => format_time($announcement->created_at, true),
                 "valid_till" => $announcement->valid_till ? $announcement->valid_till->format("Y-m-d H:i:s") : null,
                 "is_read" => false,
                 "source" => $announcement->source,

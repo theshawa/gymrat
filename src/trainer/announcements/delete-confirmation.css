@@ -1,0 +1,89 @@
+.confirmation-card {
+    background-color: #18181B;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.confirmation-card h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.confirmation-card p {
+    color: #D4D4D8;
+    margin-bottom: 20px;
+}
+
+.announcement-preview {
+    background-color: #27272A;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.announcement-preview h3 {
+    margin-top: 0;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.announcement-preview p {
+    font-size: 14px;
+    color: #D4D4D8;
+    margin-bottom: 10px;
+}
+
+.meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #A1A1AA;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+}
+
+.btn.primary {
+    background-color: #6700E6;
+    color: white;
+}
+
+.btn.secondary {
+    background-color: #27272A;
+    color: white;
+}
+
+.btn.danger {
+    background-color: #DC2626;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .meta {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .action-buttons {
+        margin-top: 15px;
+    }
+}

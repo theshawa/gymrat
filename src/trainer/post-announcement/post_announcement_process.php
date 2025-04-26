@@ -14,6 +14,11 @@ $title = htmlspecialchars($_POST['title']);
 $message = trim(htmlspecialchars($_POST['message']));
 $valid_till = trim(htmlspecialchars($_POST['valid_till']));
 
+// Set the time to end of day (23:59:59)
+$valid_till_date = new DateTime($valid_till);
+$valid_till_date->setTime(23, 59, 59);
+$valid_till = $valid_till_date->format('Y-m-d H:i:s');
+
 $announcement = new Announcement();
 
 $announcement->fill([
@@ -28,9 +33,9 @@ try {
     $announcement->create();
     // TODO: Send Email
 } catch (PDOException $e) {
-    redirect_with_error_alert("An error occurred: " . $e->getMessage(), "./");
+    redirect_with_error_alert("An error occurred: " . $e->getMessage(), "../announcements/");
 }
 
 require_once "../../notifications/functions.php";
 
-redirect_with_success_alert("Announcement posted sucessfully. Your customers will be notified.", "./");
+redirect_with_success_alert("Announcement posted successfully. Your customers will be notified.", "../announcements/");

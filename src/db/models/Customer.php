@@ -21,6 +21,7 @@ class Customer extends Model
     public ?int $trainer;
     public ?int $workout;
     public ?int $meal_plan;
+    public string $attention_reason = '';
 
     public function fill(array $data)
     {
@@ -39,6 +40,7 @@ class Customer extends Model
         $this->trainer = $data['trainer'] ?? null;
         $this->workout = $data['workout'] ?? null;
         $this->meal_plan = $data['meal_plan'] ?? null;
+        $this->attention_reason = $data['attention_reason'] ?? '';
     }
 
     public function create()
@@ -218,7 +220,7 @@ class Customer extends Model
 
     public function __sleep()
     {
-        return ['id', 'fname', 'lname', 'email', 'password', 'phone', 'avatar', 'created_at', 'updated_at', 'onboarded', 'membership_plan', 'membership_plan_activated_at', 'trainer', 'workout', 'meal_plan'];
+        return ['id', 'fname', 'lname', 'email', 'password', 'phone', 'avatar', 'created_at', 'updated_at', 'onboarded', 'membership_plan', 'membership_plan_activated_at', 'trainer', 'workout', 'meal_plan', 'attention_reason'];
     }
 
     public function __wakeup()

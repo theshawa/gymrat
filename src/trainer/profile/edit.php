@@ -29,49 +29,51 @@ require_once "../includes/titlebar.php";
 ?>
 
 <main>
-    <!-- Avatar upload section with preview -->
-    <div class="avatar-container">
-        <img src="<?= $avatar ?>" alt="Profile Picture" class="profile-avatar" id="avatar-preview">
-        <div class="avatar-upload-controls">
-            <label for="avatar" class="avatar-upload-button">
-                Change Photo
-                <input type="file" name="avatar" id="avatar" accept="image/*" class="hidden">
-            </label>
-            <?php if ($trainer->avatar): ?>
-                <button type="button" id="clear-avatar-button" class="clear-avatar-button">
-                    Remove Photo
-                </button>
-            <?php endif; ?>
-        </div>
-    </div>
-
-    <!-- Profile editing form -->
     <form action="profile_process.php" method="POST" enctype="multipart/form-data" id="profile-form">
-        <input type="hidden" name="action" value="update_profile">
-        <input type="hidden" name="updated_avatar" id="updated_avatar" value="<?= $trainer->avatar ?>">
-
-        <div class="form-field">
-            <label for="fname">First Name</label>
-            <input type="text" id="fname" name="fname" value="<?= htmlspecialchars($trainer->fname) ?>" required>
+        <!-- Avatar upload section with preview -->
+        <div class="avatar-container">
+            <img src="<?= $avatar ?>" alt="Profile Picture" class="profile-avatar" id="avatar-preview">
+            <div class="avatar-upload-controls">
+                <label for="avatar" class="avatar-upload-button">
+                    Change Photo
+                    <input type="file" name="avatar" id="avatar" accept="image/*" class="hidden">
+                </label>
+                <?php if ($trainer->avatar): ?>
+                    <button type="button" id="clear-avatar-button" class="clear-avatar-button">
+                        Remove Photo
+                    </button>
+                <?php endif; ?>
+            </div>
         </div>
 
-        <div class="form-field">
-            <label for="lname">Last Name</label>
-            <input type="text" id="lname" name="lname" value="<?= htmlspecialchars($trainer->lname) ?>" required>
-        </div>
+        <!-- Profile editing form -->
+        <div>
+            <input type="hidden" name="action" value="update_profile">
+            <input type="hidden" name="updated_avatar" id="updated_avatar" value="<?= $trainer->avatar ?>">
 
-        <div class="form-field">
-            <label for="bio">Bio</label>
-            <textarea id="bio" name="bio" rows="4"><?= htmlspecialchars($trainer->bio) ?></textarea>
-        </div>
+            <div class="form-field">
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="fname" value="<?= htmlspecialchars($trainer->fname) ?>" required>
+            </div>
 
-        <div class="form-field">
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" pattern="(\+94|0)[0-9]{9}"
-                value="<?= htmlspecialchars($trainer->phone) ?>" placeholder="+94XXXXXXXXX" required>
-        </div>
+            <div class="form-field">
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="lname" value="<?= htmlspecialchars($trainer->lname) ?>" required>
+            </div>
 
-        <button type="submit" class="btn">SAVE</button>
+            <div class="form-field">
+                <label for="bio">Bio</label>
+                <textarea id="bio" name="bio" rows="4"><?= htmlspecialchars($trainer->bio) ?></textarea>
+            </div>
+
+            <div class="form-field">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" pattern="(\+94|0)[0-9]{9}"
+                    value="<?= htmlspecialchars($trainer->phone) ?>" placeholder="+94XXXXXXXXX" required>
+            </div>
+
+            <button type="submit" class="btn">SAVE</button>
+        </div>
     </form>
 
     <!-- JavaScript for avatar preview -->

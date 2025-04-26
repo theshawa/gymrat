@@ -25,6 +25,36 @@ $pageConfig = [
 
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";
+
+// Helper function to format JSON complaint data
+function formatComplaintDescription($description) {
+    // Check if the description is a JSON string
+    $decoded = json_decode($description, true);
+    
+    // If not valid JSON or not a customer report, return the original description
+    if (!$decoded || !isset($decoded['type']) || $decoded['type'] !== 'CUSTOMER REPORT') {
+        return htmlspecialchars($description);
+    }
+    
+    // Format customer report in a readable way
+    $output = '<div class="customer-report">';
+    
+    if (isset($decoded['customer_id'])) {
+        $output .= '<div class="report-field"><span class="label">Customer ID:</span> ' . htmlspecialchars($decoded['customer_id']) . '</div>';
+    }
+    
+    if (isset($decoded['severity'])) {
+        $severityClass = 'severity-' . htmlspecialchars($decoded['severity']);
+        $output .= '<div class="report-field"><span class="label">Severity:</span> <span class="' . $severityClass . '">' . ucfirst(htmlspecialchars($decoded['severity'])) . '</span></div>';
+    }
+    
+    if (isset($decoded['description'])) {
+        $output .= '<div class="report-field"><span class="label">Details:</span> ' . htmlspecialchars($decoded['description']) . '</div>';
+    }
+    
+    $output .= '</div>';
+    return $output;
+}
 ?>
 
 <main>
@@ -32,14 +62,13 @@ require_once "../includes/titlebar.php";
     <form class="form" action="complaint_process.php" method="post">
         <div class="field">
             <select class="input" name="type" required>
-                <option value="">Choose a Complaint Type</option>
-                <option value="Not enough equipment">Not enough equipment</option>
-                <option value="Gym not clean">Gym not clean</option>
-                <option value="Broken machines">Broken machines</option>
-                <option value="Too crowded">Too crowded</option>
-                <option value="Staff not helpful">Staff not helpful</option>
-                <option value="Missing facilities">Missing facilities</option>
-                <option value="Other problem">Other problem</option>
+                <option value="">Select Complaint Type</option>
+                <option value="Inappropriate Behavior">Inappropriate Behavior</option>
+                <option value="Equipment Misuse">Equipment Misuse</option>
+                <option value="Attendance Problem">Attendance Problem</option>
+                <option value="Policy Violation">Policy Violation</option>
+                <option value="Hygiene Concern">Hygiene Concern</option>
+                <option value="Other Issue">Other Issue</option>
             </select>
         </div>
         <div class="field">
@@ -56,7 +85,7 @@ require_once "../includes/titlebar.php";
                 <?php foreach ($complaints as $complaint): ?>
                     <?php
                     require_once "../../utils.php";
-                    $reveiewed = $complaint->reviewed_at !== null; ?>
+                    $reviewed = $complaint->reviewed_at !== null; ?>
                     <li class="complaint-item">
                         <div class="inline">
                             <span class="paragraph small">
@@ -87,12 +116,14 @@ require_once "../includes/titlebar.php";
                             </script>
                         </div>
                         <h4 class="type"><?= htmlspecialchars($complaint->type) ?></h4>
-                        <p class="paragraph"><?= htmlspecialchars($complaint->description) ?></p>
-                        <div class="review-message <?= $reveiewed ? "reviewed" : "pending" ?>">
-                            <div class="review-status <?= $reveiewed ? "reviewed" : "pending" ?>">
-                                <?= $reveiewed ? "Reviewed by admin at " . format_time($complaint->reviewed_at) : "To be reviewed" ?>
+                        <div class="complaint-content">
+                            <?= formatComplaintDescription($complaint->description) ?>
+                        </div>
+                        <div class="review-message <?= $reviewed ? "reviewed" : "pending" ?>">
+                            <div class="review-status <?= $reviewed ? "reviewed" : "pending" ?>">
+                                <?= $reviewed ? "Reviewed by admin at " . format_time($complaint->reviewed_at) : "To be reviewed" ?>
                             </div>
-                            <?php if ($reveiewed): ?>
+                            <?php if ($reviewed): ?>
                                 <p class="paragraph"><?= $complaint->review_message ?></p>
                             <?php endif; ?>
                         </div>
@@ -102,6 +133,40 @@ require_once "../includes/titlebar.php";
         <?php endif; ?>
     </div>
 </main>
+
+<style>
+/* Additional styles for formatted customer reports */
+.customer-report {
+    background-color: rgba(103, 0, 230, 0.05);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 8px 0;
+}
+
+.report-field {
+    margin-bottom: 8px;
+}
+
+.report-field .label {
+    font-weight: 500;
+    color: var(--color-zinc-300);
+}
+
+.report-field .severity-high {
+    color: var(--color-red-light);
+    font-weight: 500;
+}
+
+.report-field .severity-medium {
+    color: var(--color-amber-light);
+    font-weight: 500;
+}
+
+.report-field .severity-low {
+    color: var(--color-blue-light);
+    font-weight: 500;
+}
+</style>
 
 <?php require_once "../includes/navbar.php" ?>
 <?php require_once "../includes/footer.php" ?>

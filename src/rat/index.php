@@ -216,7 +216,7 @@ $plan_remaining_days = $interval->days;
 
 
 <main class="no-padding">
-    <img class="banner-image" src="<?= get_file_url($settings->gym_banner, "default-images/default-gym-banner.png") ?>" />
+    <img class="banner-image" src="<?= get_file_url($settings->gym_banner, "default-images/default-gym-banner.webp") ?>" />
     <div class="grid">
         <div class="banner-content">
             <h1>Hello <?= $fname ?></h1>

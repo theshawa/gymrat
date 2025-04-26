@@ -274,7 +274,7 @@ $plan_remaining_days = $interval->days;
                     <h2>Meal Plan</h2>
                     <p>Not Assigned</p>
                 </div>
-                <p class="bottom-text">Your meal plan will be assigned soon!</p>
+                <p class="bottom-text">A personal meal plan is coming your way!</p>
             </div>
         <?php endif; ?>
         <a href="/rat/gym-traffic" class="grid-tile traffic-tile">

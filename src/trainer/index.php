@@ -46,7 +46,7 @@ if (!empty($activeCustomers)) {
     foreach ($activeCustomers as $client) {
         $needsAttention = false;
         $attentionReason = '';
-        
+
         if ($client->workout === null) {
             $needsAttention = true;
             $attentionReason = 'Needs Workout Plan';
@@ -54,13 +54,13 @@ if (!empty($activeCustomers)) {
             $needsAttention = true;
             $attentionReason = 'Needs Meal Plan';
         }
-        
+
         if ($needsAttention) {
             $client->attention_reason = $attentionReason;
             $clientsNeedingAttention[] = $client;
         }
     }
-    
+
     // If no clients need attention, show the 5 most recent clients
     if (empty($clientsNeedingAttention)) {
         $recentClients = array_slice($activeCustomers, 0, 5);
@@ -154,7 +154,7 @@ if ($hour >= 12 && $hour < 17) {
             <div class="stat-label">Rating</div>
             <div class="stat-value"><?= number_format($ratingData['avg_rating'], 1) ?><span
                     style="font-size: 14px;">/5</span></div>
-            
+
             <!-- Enhanced star rating visualization -->
             <div class="star-rating-small">
                 <?php
@@ -164,12 +164,12 @@ if ($hour >= 12 && $hour < 17) {
                 $partialStar = $rating - $fullStars > 0;
                 $partialStarPercentage = ($rating - $fullStars) * 100;
                 $emptyStars = 5 - $fullStars - ($partialStar ? 1 : 0);
-                
+
                 // Output full stars
                 for ($i = 0; $i < $fullStars; $i++) {
                     echo '<span class="star full">★</span>';
                 }
-                
+
                 // Output partial star if needed
                 if ($partialStar) {
                     echo '<div class="star-partial-container">';
@@ -177,14 +177,14 @@ if ($hour >= 12 && $hour < 17) {
                     echo '<span class="star-filled" style="width: ' . $partialStarPercentage . '%;">★</span>';
                     echo '</div>';
                 }
-                
+
                 // Output empty stars
                 for ($i = 0; $i < $emptyStars; $i++) {
                     echo '<span class="star empty">☆</span>';
                 }
                 ?>
             </div>
-            
+
             <div class="stat-trend positive">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -229,10 +229,10 @@ if ($hour >= 12 && $hour < 17) {
             <a href="/trainer/announcements" class="feature-card">
                 <div class="feature-card-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-megaphone">
-                        <path d="m3 11 18-5v12L3 13"/>
-                        <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
+                        <path d="m3 11 18-5v12L3 13" />
+                        <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
                     </svg>
                 </div>
                 <div class="feature-card-content">
@@ -242,8 +242,8 @@ if ($hour >= 12 && $hour < 17) {
                 <svg class="feature-card-decoration" xmlns="http://www.w3.org/2000/svg" width="100" height="100"
                     viewBox="0 0 24 24" fill="currentColor" stroke="none"
                     class="lucide lucide-megaphone">
-                    <path d="m3 11 18-5v12L3 13"/>
-                    <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
+                    <path d="m3 11 18-5v12L3 13" />
+                    <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
                 </svg>
             </a>
 
@@ -309,26 +309,15 @@ if ($hour >= 12 && $hour < 17) {
                     <div class="client-list-title">Client Status</div>
                 </div>
 
+                <?php require_once "../uploads.php"; ?>
                 <?php foreach ($recentClients as $client):
                     // Get default avatar path
-                    $avatarPath = '/
-                    
-                    
-                    uploads/default-images/default-avatar.png';
-                    if (!empty($client->avatar)) {
-                        if (strpos($client->avatar, '/uploads/') === 0) {
-                            $avatarPath = $client->avatar;
-                        } else if (strpos($client->avatar, 'uploads/') === 0) {
-                            $avatarPath = '/' . $client->avatar;
-                        } else {
-                            $avatarPath = '/uploads/' . $client->avatar;
-                        }
-                    }
+                    $avatarPath = get_file_url($client->avatar, "default-images/default-avatar.png");
 
                     // Determine status based on client attention reason
                     $statusType = 'success';
                     $statusReason = $client->attention_reason;
-                    
+
                     // Set appropriate status class
                     if ($statusReason === 'Needs Workout Plan') {
                         $statusType = 'danger';
@@ -340,7 +329,7 @@ if ($hour >= 12 && $hour < 17) {
 
                     // For real implementation, you would check actual client data
                     // to determine which clients need attention
-                    ?>
+                ?>
                     <a href="/trainer/customers/profile?id=<?= $client->id ?>" class="client-list-item">
                         <img src="<?= $avatarPath ?>" alt="<?= htmlspecialchars($client->fname) ?>" class="client-avatar">
                         <div class="client-info">
@@ -364,49 +353,49 @@ if ($hour >= 12 && $hour < 17) {
 </main>
 
 <style>
-/* Star rating with partial stars for the dashboard */
-.star-rating-small {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    margin: 3px 0;
-}
+    /* Star rating with partial stars for the dashboard */
+    .star-rating-small {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        margin: 3px 0;
+    }
 
-.star-rating-small .star {
-    font-size: 16px;
-    color: #444;
-}
+    .star-rating-small .star {
+        font-size: 16px;
+        color: #444;
+    }
 
-.star-rating-small .star.full {
-    color: #ffc107;
-}
+    .star-rating-small .star.full {
+        color: #ffc107;
+    }
 
-.star-rating-small .star.empty {
-    color: #444;
-}
+    .star-rating-small .star.empty {
+        color: #444;
+    }
 
-/* Partial star styling */
-.star-rating-small .star-partial-container {
-    position: relative;
-    display: inline-block;
-    font-size: 16px;
-    line-height: 1;
-    height: 16px;
-}
+    /* Partial star styling */
+    .star-rating-small .star-partial-container {
+        position: relative;
+        display: inline-block;
+        font-size: 16px;
+        line-height: 1;
+        height: 16px;
+    }
 
-.star-rating-small .star-empty {
-    color: #444;
-}
+    .star-rating-small .star-empty {
+        color: #444;
+    }
 
-.star-rating-small .star-filled {
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: #ffc107;
-    overflow: hidden;
-    height: 100%;
-    white-space: nowrap;
-}
+    .star-rating-small .star-filled {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #ffc107;
+        overflow: hidden;
+        height: 100%;
+        white-space: nowrap;
+    }
 </style>
 
 <?php require_once "./includes/navbar.php" ?>

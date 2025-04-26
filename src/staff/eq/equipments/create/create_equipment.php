@@ -26,7 +26,7 @@ $status = $_POST['equipment_status'];
 $errors=[];
 
 if (empty($name)) $errors[] = "Name is required.";
-else if (empty($type)) $errors[] = "Category is required.";
+else if (empty($type)) $errors[] = "Type is required.";
 else if (empty($quantity)) $errors[] = "Quantity is required.";
 else if (empty($status)) $errors[] = "Status is required.";
 else if (empty($description)) $errors[] = "Description is required.";

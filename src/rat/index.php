@@ -134,6 +134,9 @@ if ($customer->trainer) {
     }
     $trainer_data['name'] = $trainer->fname . " " . $trainer->lname;
     $trainer_data['avatar'] = $trainer->avatar ?? get_file_url("default-images/default-avatar.png");
+    if (!$trainer_data['avatar']) {
+        $trainer_data['avatar'] = get_file_url("default-images/default-avatar.png");
+    }
 }
 
 $progress = [];
@@ -339,18 +342,12 @@ if (!$banner_image) {
             <div class="bottom-text"><?= $bmi_text ?></div>
         </a>
         <?php if ($customer->trainer): ?>
-            <?php
-            $avatar = $trainer_data['avatar']  ? get_file_url($trainer_data['avatar']) : get_file_url("default-images/default-avatar.png");
-            if (!$avatar) {
-                $avatar = get_file_url("default-images/default-avatar.png");
-            }
-            ?>
             <a href="/rat/trainer" class="grid-tile">
                 <div class="top">
                     <h2>Trainer</h2>
                 </div>
                 <div class="trainer">
-                    <img src="<?= $avatar ?>" alt="Image of <?= $trainer_data['name'] ?>" class="avatar">
+                    <img src="<?= $trainer_data['avatar'] ?>" alt="Image of <?= $trainer_data['name'] ?>" class="avatar">
                     <span><?= $trainer_data['name'] ?></span>
                 </div>
             </a>

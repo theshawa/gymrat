@@ -43,7 +43,7 @@ try {
 
 require_once "../../../notifications/functions.php";
 try {
-    notify_trainer($trainerId, "New rating received from " . $customer->fname, 'You have received a new rating from your customer. <br/><br/><a class="btn" href="/trainer/ratings">See ratings.</a>.', $customer->fname . " " . $customer->lname);
+    notify_trainer($trainerId, "New rating received from " . $customer->fname, 'You have received a new rating from your customer. Please check your <a class="nav-link" href="/trainer/ratings">ratings.</a>.', $customer->fname . " " . $customer->lname);
 } catch (\Throwable $th) {
 }
 

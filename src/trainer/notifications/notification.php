@@ -1,7 +1,6 @@
 <?php
 require_once "../../auth-guards.php";
-if (auth_required_guard("trainer", "/trainer/login"))
-    exit;
+if (auth_required_guard("trainer", "/trainer/login")) exit;
 
 $id = htmlspecialchars($_GET["id"]);
 $type = isset($_GET['type']) ? (htmlspecialchars($_GET['type']) === "announcement" ? "announcement" : "notification") : "notification";
@@ -18,14 +17,14 @@ if ($type === "announcement") {
 }
 try {
     $notification->fill([
-        "id" => (int) $id,
+        "id" => (int)$id,
     ]);
     $notification->get_by_id();
     if ($type === "notification") {
         $notification->mark_as_read();
     }
 } catch (\Throwable $th) {
-    redirect_with_error_alert("Failed to get notification due to error: " . $th->getMessage(), "./");
+    die("Failed to load notification due to error: " . $th->getMessage());
 }
 
 if (!isset($id)) {
@@ -49,14 +48,13 @@ require_once "../includes/titlebar.php";
     <h1><?= $notification->title ?></h1>
     <?php if ($notification->source): ?>
         <p class="time">
-            From
-            <?= $type == "announcement" ? ($notification->source != "admin" ? "trainer" : "admin") : $notification->source ?>
+            From <?= $type == "announcement" ? ($notification->source != "admin" ? "trainer" : "admin") : $notification->source ?>
         </p>
     <?php endif; ?>
     <p class="time">
-        At <?= $notification->created_at->format("Y-m-d h:i") ?>
+        At <?= $notification->created_at->format("Y-m-d h:i a") ?>
     </p>
-    <p class="paragraph" style="margin-top: 20px;">
+    <p class="notifcation-content" style="margin-top: 10px;">
         <?= $notification->message ?>
     </p>
 </main>

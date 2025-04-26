@@ -55,3 +55,7 @@ To generate QR Codes
 ### FakerPHP
 
 To seed database
+
+### DomPDF
+
+To generate PDF reports

@@ -9,7 +9,6 @@
 
 /* Page header */
 h1 {
-<<<<<<< HEAD
     text-align: center;
     font-size: 2rem;
     margin-bottom: 20px;
@@ -20,12 +19,6 @@ h1 {
     justify-content: space-between; /* Push children to left & right */
     align-items: center; /* Align them to bottom */
     padding: 10px;
-=======
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #444;
->>>>>>> origin/main
 }
 
 /* Equipment List Table */

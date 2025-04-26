@@ -1,8 +1,3 @@
-<?php
-// This is the QR code display page for the gym check-in system
-// File: src/wsk_qr/index.php
-// This will be the direct landing page at localhost/wsk_qr
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,79 +24,20 @@
                 <path d="M89.2971 2.33143V16H86.7422V2.33143H82.0393V0.0457151H94V2.33143H89.2971Z" fill="currentColor" />
             </svg>
         </header>
-
-        <h1 style="text-align:center;" id="greeting" class="greeting"></h1>
-
         <main>
-    <div class="qr-container">
-        <h2 class="qr-heading">Scan QR to Check In</h2>
-        <div id="qrcode" class="pulse-animation"></div>
-    </div>
-</main>
+            <h1 class="greeting">
 
-<script>
-    // Dynamically set greeting message
-    const greetingElement = document.getElementById("greeting");
-    const currentHour = new Date().getHours();
-
-    let greetingMessage = "Good Morning Buddy! 👋";
-    if (currentHour >= 12 && currentHour < 18) {
-        greetingMessage = "Good Afternoon Buddy! 👋";
-    } else if (currentHour >= 18) {
-        greetingMessage = "Good EveningBuddy! 👋";
-    }
-
-    greetingElement.textContent = greetingMessage;
-</script>
-
+            </h1>
+            <p>Scan QR to Check In...</p>
+            <div id="qrcode"></div>
+        </main>
         <footer>
-            <p>&copy; <?= date('Y') ?> GYMRAT. All rights reserved.</p>
+            <p>&copy; 2025 GYMRAT. All rights reserved.</p>
         </footer>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-        var qrcode = new QRCode(document.getElementById("qrcode"), {
-            width: 240,
-            height: 240,
-            colorDark: "#18181b", 
-            colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.H
-        });
-        qrcode.clear();
-
-        const showQrCode = (key) => {
-            qrcode.clear();
-            qrcode.makeCode(key);
-        };
-
-        const evtSource = new EventSource("sse.php");
-
-        evtSource.addEventListener("connected", (event) => {
-            console.log("Connected to server");
-            if (event.data) showQrCode(event.data);
-        });
-
-        evtSource.addEventListener("qr_code_changed", (event) => {
-            console.log("QR code updated");
-            if (event.data) showQrCode(event.data);
-            
-            // Apply a brief highlight effect when code updates
-            const qrElement = document.getElementById("qrcode");
-            qrElement.classList.add("highlight");
-            setTimeout(() => {
-                qrElement.classList.remove("highlight");
-            }, 1000);
-        });
-
-        evtSource.addEventListener("error", (event) => {
-            console.error("Error event:", event.data);
-        });
-
-        evtSource.onerror = (error) => {
-            console.error("SSE connection error:", error);
-        };
-    </script>
+    <script src="./wsk_qr.js"></script>
 </body>
 
 </html>

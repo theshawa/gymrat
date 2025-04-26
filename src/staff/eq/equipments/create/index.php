@@ -68,10 +68,8 @@ auth_required_guard("eq", "/staff/login");
                     <div style="margin-bottom: 10px;">
                         <h2><label for="equipment_status">Status</label></h2>
                         <select name="equipment_status" id="equipment_status" class="staff-input-primary staff-input-long">
-                            <option value="Available" <?= (isset($equipment->status) && $equipment->status == 'Available') ? 'selected' : '' ?>>Available</option>
-                            <option value="In Use" <?= (isset($equipment->status) && $equipment->status == 'In Use') ? 'selected' : '' ?>>In Use</option>
-                            <option value="Maintenance" <?= (isset($equipment->status) && $equipment->status == 'Maintenance') ? 'selected' : '' ?>>Maintenance</option>
-                            <option value="Out of Order" <?= (isset($equipment->status) && $equipment->status == 'Out of Order') ? 'selected' : '' ?>>Out of Order</option>
+                            <option value="available" <?= (isset($equipment->status) && $equipment->status == 'Available') ? 'selected' : '' ?>>Available</option>
+                            <option value="not available" <?= (isset($equipment->status) && $equipment->status == 'In Use') ? 'selected' : '' ?>>Not Available</option>
                         </select>
                     </div>
 

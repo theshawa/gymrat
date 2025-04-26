@@ -79,9 +79,9 @@ try {
     $equipment->save($image);
 } catch (PDOException $e) {
     if ($e->errorInfo[1] == 1062) {
-        redirect_with_error_alert("Failed to edit equipment due to an error: Equipment with the same name already exists", "/staff/eq/equipments/edit?id=" . $id);
+        redirect_with_error_alert("Failed to edit equipment due to an error: Equipment with the same name already exists", "/staff/eq/equipments/edit?id=" . $equipment_id);
     }
-    redirect_with_error_alert("Failed to update equipment due to an error: " . $e->getMessage(), "/staff/eq/equipments/edit?id=" . $id);
+    redirect_with_error_alert("Failed to update equipment due to an error: " . $e->getMessage(), "/staff/eq/equipments/edit?id=" . $equipment_id);
     exit;
 }
 

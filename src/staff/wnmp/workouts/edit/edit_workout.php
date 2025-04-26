@@ -191,8 +191,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'edit') {
 
 redirect_with_success_alert("Action successful (Press Save Changes to complete)", "/staff/wnmp/workouts/edit?id=" . $workout_id );
 exit;
-=========
-<?php
+
 
 session_start();
 
@@ -386,5 +385,5 @@ if (isset($_POST['action']) && $_POST['action'] === 'edit') {
 
 redirect_with_success_alert("Action successful (Press Save Changes to complete)", "/staff/wnmp/workouts/edit?id=" . $workout_id );
 exit;
->>>>>>>>> Temporary merge branch 2
+
 ?>

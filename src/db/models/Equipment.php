@@ -92,12 +92,14 @@ class Equipment extends Model
 
     public function update()
     {
-        $sql = "UPDATE $this->table SET name = :name, type = :type, manufacturer = :manufacturer, description = :description, image = :image, purchase_date = :purchase_date, last_maintenance = :last_maintenance, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
+        $sql = "UPDATE $this->table SET name = :name, type = :type, manufacturer = :manufacturer, quantity = :quantity, status = :status, description = :description, image = :image, purchase_date = :purchase_date, last_maintenance = :last_maintenance, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'id' => $this->id,
             'name' => $this->name,
             'type' => $this->type,
+            'quantity' => $this->quantity,
+            'status' => $this->status,
             'manufacturer' => $this->manufacturer,
             'description' => $this->description,
             'image' => $this->image,

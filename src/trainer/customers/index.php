@@ -25,20 +25,25 @@ $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 // Get customers from database
 $customers = [];
 try {
+    // Get current trainer ID
+    $trainerId = $_SESSION['auth']['id'];
+    
     // Get database connection
     $conn = Database::get_conn();
 
-    // Build query based on search
-    $sql = "SELECT * FROM customers";
+    // Build query based on search and filter by trainer
+    $sql = "SELECT * FROM customers WHERE trainer = :trainer_id";
 
     // Add search functionality
     if (!empty($search)) {
-        $sql .= " WHERE fname LIKE :search OR lname LIKE :search OR email LIKE :search";
+        $sql .= " AND (fname LIKE :search OR lname LIKE :search OR email LIKE :search)";
         $stmt = $conn->prepare($sql);
         $searchParam = "%$search%";
         $stmt->bindParam(':search', $searchParam);
+        $stmt->bindParam(':trainer_id', $trainerId);
     } else {
         $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':trainer_id', $trainerId);
     }
 
     $stmt->execute();
@@ -56,7 +61,13 @@ try {
     <div class="customers-list">
         <?php if (count($customers) === 0): ?>
             <div class="no-results">
-                <p style="text-align: center; padding: 20px; color: #a1a1aa;">No customers found</p>
+                <p style="text-align: center; padding: 20px; color: #a1a1aa;">
+                    <?php if (!empty($search)): ?>
+                        No customers found matching "<?= htmlspecialchars($search) ?>"
+                    <?php else: ?>
+                        You don't have any assigned customers yet
+                    <?php endif; ?>
+                </p>
             </div>
         <?php else: ?>
             <?php foreach ($customers as $customer): ?>

@@ -46,7 +46,7 @@ if (!empty($activeCustomers)) {
     foreach ($activeCustomers as $client) {
         $needsAttention = false;
         $attentionReason = '';
-        
+
         if ($client->workout === null) {
             $needsAttention = true;
             $attentionReason = 'Needs Workout Plan';
@@ -54,13 +54,13 @@ if (!empty($activeCustomers)) {
             $needsAttention = true;
             $attentionReason = 'Needs Meal Plan';
         }
-        
+
         if ($needsAttention) {
             $client->attention_reason = $attentionReason;
             $clientsNeedingAttention[] = $client;
         }
     }
-    
+
     // If no clients need attention, show the 5 most recent clients
     if (empty($clientsNeedingAttention)) {
         $recentClients = array_slice($activeCustomers, 0, 5);
@@ -297,7 +297,7 @@ if ($hour >= 12 && $hour < 17) {
                     // Determine status based on client attention reason
                     $statusType = 'success';
                     $statusReason = $client->attention_reason;
-                    
+
                     // Set appropriate status class
                     if ($statusReason === 'Needs Workout Plan') {
                         $statusType = 'danger';
@@ -308,7 +308,7 @@ if ($hour >= 12 && $hour < 17) {
                     }
 
                     // For real implementation, you would check actual client data
-                    // to determine which clients need attention
+                    // To determine which clients need attention
                     ?>
                     <a href="/trainer/customers/profile?id=<?= $client->id ?>" class="client-list-item">
                         <img src="<?= $avatarPath ?>" alt="<?= htmlspecialchars($client->fname) ?>" class="client-avatar">

@@ -189,14 +189,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_plan'])) {
             $stmt->bindValue(':customer_id', $customerId);
             $stmt->execute();
 
-            // Send notification to the customer
-            if (function_exists('notify_rat')) {
-                notify_rat(
-                    $customerId,
-                    "New Workout Plan Assigned",
-                    "Your trainer has assigned you a new workout plan. Check it out in your workouts section!"
-                );
-            }
+            require_once "../../../../../notifications/functions.php";
+            notify_rat(
+                $customerId,
+                "New Workout Plan Assigned",
+                "Your trainer has assigned you a new workout plan. Check it out in your <a href='/rat/workout' class='nav-link'>workout</a> section!"
+            );
 
             // Redirect with success message
             redirect_with_success_alert("Workout plan assigned successfully!", "../?id=" . $customerId);
@@ -396,12 +394,12 @@ require_once "../../../../includes/titlebar.php";
         modal.style.display = 'block';
 
         // Close modal when clicking on the X
-        document.querySelector('.close-modal').onclick = function () {
+        document.querySelector('.close-modal').onclick = function() {
             modal.style.display = 'none';
         }
 
         // Close modal when clicking outside of it
-        window.onclick = function (event) {
+        window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = 'none';
             }

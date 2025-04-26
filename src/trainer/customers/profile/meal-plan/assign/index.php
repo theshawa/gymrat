@@ -48,6 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_plan'])) {
             $stmt->bindValue(':customer_id', $customerId);
             $stmt->execute();
 
+            require_once "../../../../../notifications/functions.php";
+            notify_rat(
+                $customerId,
+                "New Meal Plan Assigned",
+                "Your trainer has assigned you a new meal plan. Check it out in your <a href='/rat/meal-plan' class='nav-link'>mealplan</a> section!"
+            );
+
             // Redirect with success message
             redirect_with_success_alert("Meal plan assigned successfully!", "../?id=" . $customerId);
             exit;
@@ -116,17 +123,17 @@ require_once "../../../../includes/titlebar.php";
                     </div>
                 <?php endforeach; ?>
 
-            </div> <!-- End of .plans-list -->
+        </div> <!-- End of .plans-list -->
 
-            <div class="request-container">
-                <p style="padding-bottom: 10px">Don't see a suitable plan?</p>
-                <form action="../../meal-plan/request/" method="get">
-                    <input type="hidden" name="id" value="<?= $customerId ?>">
-                    <button type="submit" class="btn secondary-btn" style="width: 100%;">Request Custom
-                        Meal Plan</button>
-                </form>
-            </div>
-        <?php endif; ?>
+        <div class="request-container">
+            <p style="padding-bottom: 10px">Don't see a suitable plan?</p>
+            <form action="../../meal-plan/request/" method="get">
+                <input type="hidden" name="id" value="<?= $customerId ?>">
+                <button type="submit" class="btn secondary-btn" style="width: 100%;">Request Custom
+                    Meal Plan</button>
+            </form>
+        </div>
+    <?php endif; ?>
     </div>
     </div>
 </main>

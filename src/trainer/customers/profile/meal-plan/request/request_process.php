@@ -46,7 +46,7 @@ try {
 
     ]);
 
-    redirect_with_success_alert("Meal plan request submitted successfully. Our nutritionists will create it soon.", "../");
+    redirect_with_success_alert("Meal plan request submitted successfully. Our nutritionists will create it soon.", "../?id=" . $_POST['customer_id']);
     exit;
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to submit request: " . $e->getMessage(), "./");

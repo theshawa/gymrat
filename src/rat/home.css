@@ -182,6 +182,8 @@ main {
   border-radius: 25px;
   background-color: rgba(250, 250, 250, 0.1);
   background: 2px solid rgba(250, 250, 250, 0.1);
+  object-fit: cover;
+  object-position: top;
 }
 
 .trainer span {

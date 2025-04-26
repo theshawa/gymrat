@@ -69,7 +69,7 @@ class TrainerRating extends Model
         ]);
     }
 
-    public function get_all_of_user(int $user_id): array
+    public function get_all_of_user(int $user_id)
     {
         $sql = "SELECT * FROM $this->table WHERE customer_id = :customer_id OR trainer_id = :trainer_id ORDER BY created_at DESC";
         $stmt = $this->conn->prepare($sql);

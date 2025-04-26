@@ -33,7 +33,7 @@ class MembershipPlan extends Model
     }
 
 
-    public function get_all(): array
+    public function get_all()
     {
         $sql = "SELECT * FROM $this->table";
         $stmt = $this->conn->prepare($sql);

@@ -38,11 +38,13 @@ try {
     // Handle error silently
 }
 
-// Get clients needing attention (those without workout or meal plan)
+// Get all clients and categorize them by attention status
 $recentClients = [];
 if (!empty($activeCustomers)) {
-    // Filter clients based on missing meal plan or workout
+    // Separate clients into those needing attention and those on track
     $clientsNeedingAttention = [];
+    $clientsOnTrack = [];
+    
     foreach ($activeCustomers as $client) {
         $needsAttention = false;
         $attentionReason = '';
@@ -58,20 +60,17 @@ if (!empty($activeCustomers)) {
         if ($needsAttention) {
             $client->attention_reason = $attentionReason;
             $clientsNeedingAttention[] = $client;
+        } else {
+            $client->attention_reason = 'On Track';
+            $clientsOnTrack[] = $client;
         }
     }
     
-    // If no clients need attention, show the 5 most recent clients
-    if (empty($clientsNeedingAttention)) {
-        $recentClients = array_slice($activeCustomers, 0, 5);
-        // Add a default status of "On Track" for these clients
-        foreach ($recentClients as $client) {
-            $client->attention_reason = 'On Track';
-        }
-    } else {
-        // Otherwise show clients needing attention (limited to 5)
-        $recentClients = array_slice($clientsNeedingAttention, 0, 5);
-    }
+    // Combine the lists with clients needing attention first
+    $combinedClients = array_merge($clientsNeedingAttention, $clientsOnTrack);
+    
+    // Take up to 10 clients to display (prioritizing those who need attention)
+    $recentClients = array_slice($combinedClients, 0, 10);
 }
 
 $pageConfig = [
@@ -293,7 +292,7 @@ if ($hour >= 12 && $hour < 17) {
     <?php if (!empty($recentClients)): ?>
         <div class="content-section">
             <div class="section-header">
-                <h2 class="section-title">Clients Requiring Attention</h2>
+                <h2 class="section-title">Client Status Overview</h2>
                 <a href="/trainer/customers" class="view-all">
                     View All
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -309,21 +308,10 @@ if ($hour >= 12 && $hour < 17) {
                     <div class="client-list-title">Client Status</div>
                 </div>
 
+                <?php require_once "../uploads.php"; ?>
                 <?php foreach ($recentClients as $client):
                     // Get default avatar path
-                    $avatarPath = '/
-                    
-                    
-                    uploads/default-images/default-avatar.png';
-                    if (!empty($client->avatar)) {
-                        if (strpos($client->avatar, '/uploads/') === 0) {
-                            $avatarPath = $client->avatar;
-                        } else if (strpos($client->avatar, 'uploads/') === 0) {
-                            $avatarPath = '/' . $client->avatar;
-                        } else {
-                            $avatarPath = '/uploads/' . $client->avatar;
-                        }
-                    }
+                    $avatar = get_file_url($client->avatar);
 
                     // Determine status based on client attention reason
                     $statusType = 'success';
@@ -342,7 +330,7 @@ if ($hour >= 12 && $hour < 17) {
                     // to determine which clients need attention
                     ?>
                     <a href="/trainer/customers/profile?id=<?= $client->id ?>" class="client-list-item">
-                        <img src="<?= $avatarPath ?>" alt="<?= htmlspecialchars($client->fname) ?>" class="client-avatar">
+                        <img src="<?= $avatar ?>" alt="<?= htmlspecialchars($client->fname) ?>" class="client-avatar">
                         <div class="client-info">
                             <h3 class="client-name"><?= htmlspecialchars($client->fname . ' ' . $client->lname) ?></h3>
                             <div class="client-meta">

@@ -132,7 +132,7 @@ h4 {
   background: radial-gradient(
     at top right,
     var(--color-violet-600),
-    rgba(91, 0, 204, 0.6)
+    rgba(68, 0, 153, 0.6)
   );
   border: 1px solid var(--color-violet-600);
   backdrop-filter: blur(20px);
@@ -190,7 +190,7 @@ h4 {
   background: radial-gradient(
     at top right,
     var(--color-violet-600),
-    rgba(91, 0, 204, 0.6)
+    rgba(68, 0, 153, 0.6)
   );
   border: 1px solid var(--color-violet-600);
   border-radius: 20px;

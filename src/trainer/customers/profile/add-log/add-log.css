@@ -108,7 +108,7 @@
 }
 
 .radio-option input[type="radio"]:checked {
-  border: 5px solid #5b00cc;
+  border: 5px solid #440099;
   background-color: #27272a;
 }
 
@@ -125,7 +125,7 @@
 }
 
 .submit-btn {
-  background-color: #5b00cc;
+  background-color: #440099;
   color: #ffffff;
   border: none;
   border-radius: 6px;
@@ -176,54 +176,54 @@
 }
 
 .log-actions {
-    display: flex;
-    gap: 10px;
-    margin-left: 10px;
+  display: flex;
+  gap: 10px;
+  margin-left: 10px;
 }
 
 .btn-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background-color: #27272A;
-    color: #A1A1AA;
-    transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #27272a;
+  color: #a1a1aa;
+  transition: all 0.2s ease;
 }
 
 .btn-icon:hover {
-    background-color: #3F3F46;
+  background-color: #3f3f46;
 }
 
 .btn-icon.edit-log {
-    color: #71717A; /* ash color for edit */
+  color: #71717a; /* ash color for edit */
 }
 
 .btn-icon.edit-log:hover {
-    background-color: rgba(113, 113, 122, 0.2);
+  background-color: rgba(113, 113, 122, 0.2);
 }
 
 .btn-icon.delete-log {
-    color: #DC2626; /* red color for delete */
+  color: #dc2626; /* red color for delete */
 }
 
 .btn-icon.delete-log:hover {
-    background-color: rgba(220, 38, 38, 0.2);
+  background-color: rgba(220, 38, 38, 0.2);
 }
 
 .btn.secondary {
-    background-color: #27272A;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 6px;
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    margin-right: 10px;
+  background-color: #27272a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  margin-right: 10px;
 }
 
 .log-date {

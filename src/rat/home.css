@@ -44,10 +44,14 @@ main {
 }
 
 .grid-tile {
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 12px;
-  background: radial-gradient(at top right, #5b00cc, rgba(91, 0, 204, 0.6));
-  border: 1px solid rgba(91, 0, 204, 0.6);
+  background: radial-gradient(
+    at top right,
+    rgb(68, 0, 153),
+    rgba(68, 0, 153, 0.6)
+  );
+  border: 1px solid rgba(68, 0, 153, 0.6);
   /* background: radial-gradient(
     at top right,
     rgba(250, 250, 250, 0.2),
@@ -57,7 +61,7 @@ main {
   backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
-  aspect-ratio: 1;
+  aspect-ratio: 1/0.8;
 }
 .grid-tile.grayed {
   background: radial-gradient(
@@ -179,6 +183,7 @@ main {
   margin-right: 10px;
   width: 50px;
   height: 50px;
+  flex-shrink: 0;
   border-radius: 25px;
   background-color: rgba(250, 250, 250, 0.1);
   background: 2px solid rgba(250, 250, 250, 0.1);

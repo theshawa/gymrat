@@ -54,12 +54,12 @@ select.input option {
 
 .input:focus {
   outline: none;
-  border-color: #5b00cc;
+  border-color: #440099;
 }
 
 /* Button styling - consistent with other pages */
 .btn {
-  background-color: #5b00cc;
+  background-color: #440099;
   color: white;
   border: none;
   padding: 12px 24px;

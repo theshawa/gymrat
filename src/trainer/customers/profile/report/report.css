@@ -115,7 +115,7 @@ textarea.form-control {
 }
 
 .severity-option input[type="radio"]:checked {
-  border: 5px solid #5b00cc;
+  border: 5px solid #440099;
   background-color: #27272a;
 }
 

@@ -140,7 +140,11 @@
   font-weight: 700;
   color: var(--color-zinc-100);
   margin-bottom: var(--space-sm);
-  background: linear-gradient(to right, var(--color-zinc-100), var(--color-zinc-400));
+  background: linear-gradient(
+    to right,
+    var(--color-zinc-100),
+    var(--color-zinc-400)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -223,7 +227,11 @@
 .feature-card-icon {
   width: 44px;
   height: 44px;
-  background: linear-gradient(135deg, rgba(121, 103, 238, 0.25), rgba(103, 0, 230, 0.15));
+  background: linear-gradient(
+    135deg,
+    rgba(121, 103, 238, 0.25),
+    rgba(103, 0, 230, 0.15)
+  );
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -275,7 +283,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(to right, rgba(121, 103, 238, 0.05), rgba(0, 0, 0, 0));
+  background: linear-gradient(
+    to right,
+    rgba(121, 103, 238, 0.05),
+    rgba(0, 0, 0, 0)
+  );
 }
 
 .client-list-title {
@@ -289,11 +301,15 @@
 }
 
 .client-list-title::before {
-  content: '';
+  content: "";
   display: inline-block;
   width: 4px;
   height: 16px;
-  background: linear-gradient(to bottom, var(--color-primary-light), var(--color-primary));
+  background: linear-gradient(
+    to bottom,
+    var(--color-primary-light),
+    var(--color-primary)
+  );
   border-radius: 2px;
 }
 
@@ -397,7 +413,7 @@
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background-color: rgba(91, 0, 204, 0.1);
+  background-color: rgba(68, 0, 153, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -464,7 +480,11 @@
 .metric-icon {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, rgba(121, 103, 238, 0.25), rgba(103, 0, 230, 0.15));
+  background: linear-gradient(
+    135deg,
+    rgba(121, 103, 238, 0.25),
+    rgba(103, 0, 230, 0.15)
+  );
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -474,7 +494,11 @@
 }
 
 .metric-icon.success {
-  background: linear-gradient(135deg, rgba(52, 199, 89, 0.25), rgba(0, 179, 0, 0.15));
+  background: linear-gradient(
+    135deg,
+    rgba(52, 199, 89, 0.25),
+    rgba(0, 179, 0, 0.15)
+  );
   color: var(--color-success);
 }
 
@@ -508,7 +532,11 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(to right, var(--color-primary-light), var(--color-primary));
+  background: linear-gradient(
+    to right,
+    var(--color-primary-light),
+    var(--color-primary)
+  );
   border-radius: 4px;
 }
 

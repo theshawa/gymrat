@@ -40,7 +40,20 @@ function formatComplaintDescription($description) {
     $output = '<div class="customer-report">';
     
     if (isset($decoded['customer_id'])) {
-        $output .= '<div class="report-field"><span class="label">Customer ID:</span> ' . htmlspecialchars($decoded['customer_id']) . '</div>';
+        // Get customer name from the database
+        $customerName = "Unknown Customer";
+        try {
+            require_once "../../db/models/Customer.php";
+            $customer = new Customer();
+            $customer->id = $decoded['customer_id'];
+            if ($customer->get_by_id()) {
+                $customerName = htmlspecialchars($customer->fname . ' ' . $customer->lname);
+            }
+        } catch (Exception $e) {
+            // Silently handle errors, fallback to default name
+        }
+        
+        $output .= '<div class="report-field"><span class="label">Customer:</span> ' . $customerName . '</div>';
     }
     
     if (isset($decoded['severity'])) {

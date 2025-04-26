@@ -154,6 +154,37 @@ if ($hour >= 12 && $hour < 17) {
             <div class="stat-label">Rating</div>
             <div class="stat-value"><?= number_format($ratingData['avg_rating'], 1) ?><span
                     style="font-size: 14px;">/5</span></div>
+            
+            <!-- Enhanced star rating visualization -->
+            <div class="star-rating-small">
+                <?php
+                // Calculate full stars, partial stars, and empty stars
+                $rating = $ratingData['avg_rating'];
+                $fullStars = floor($rating);
+                $partialStar = $rating - $fullStars > 0;
+                $partialStarPercentage = ($rating - $fullStars) * 100;
+                $emptyStars = 5 - $fullStars - ($partialStar ? 1 : 0);
+                
+                // Output full stars
+                for ($i = 0; $i < $fullStars; $i++) {
+                    echo '<span class="star full">★</span>';
+                }
+                
+                // Output partial star if needed
+                if ($partialStar) {
+                    echo '<div class="star-partial-container">';
+                    echo '<span class="star-empty">☆</span>';
+                    echo '<span class="star-filled" style="width: ' . $partialStarPercentage . '%;">★</span>';
+                    echo '</div>';
+                }
+                
+                // Output empty stars
+                for ($i = 0; $i < $emptyStars; $i++) {
+                    echo '<span class="star empty">☆</span>';
+                }
+                ?>
+            </div>
+            
             <div class="stat-trend positive">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -331,6 +362,52 @@ if ($hour >= 12 && $hour < 17) {
     <?php endif; ?>
 
 </main>
+
+<style>
+/* Star rating with partial stars for the dashboard */
+.star-rating-small {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin: 3px 0;
+}
+
+.star-rating-small .star {
+    font-size: 16px;
+    color: #444;
+}
+
+.star-rating-small .star.full {
+    color: #ffc107;
+}
+
+.star-rating-small .star.empty {
+    color: #444;
+}
+
+/* Partial star styling */
+.star-rating-small .star-partial-container {
+    position: relative;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 1;
+    height: 16px;
+}
+
+.star-rating-small .star-empty {
+    color: #444;
+}
+
+.star-rating-small .star-filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #ffc107;
+    overflow: hidden;
+    height: 100%;
+    white-space: nowrap;
+}
+</style>
 
 <?php require_once "./includes/navbar.php" ?>
 <?php require_once "./includes/footer.php" ?>

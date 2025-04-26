@@ -38,40 +38,12 @@ try {
     // Handle error silently
 }
 
-// Get clients needing attention (those without workout or meal plan)
+// Get the 5 most recent clients or clients needing attention
 $recentClients = [];
 if (!empty($activeCustomers)) {
-    // Filter clients based on missing meal plan or workout
-    $clientsNeedingAttention = [];
-    foreach ($activeCustomers as $client) {
-        $needsAttention = false;
-        $attentionReason = '';
-
-        if ($client->workout === null) {
-            $needsAttention = true;
-            $attentionReason = 'Needs Workout Plan';
-        } elseif ($client->meal_plan === null) {
-            $needsAttention = true;
-            $attentionReason = 'Needs Meal Plan';
-        }
-
-        if ($needsAttention) {
-            $client->attention_reason = $attentionReason;
-            $clientsNeedingAttention[] = $client;
-        }
-    }
-
-    // If no clients need attention, show the 5 most recent clients
-    if (empty($clientsNeedingAttention)) {
-        $recentClients = array_slice($activeCustomers, 0, 5);
-        // Add a default status of "On Track" for these clients
-        foreach ($recentClients as $client) {
-            $client->attention_reason = 'On Track';
-        }
-    } else {
-        // Otherwise show clients needing attention (limited to 5)
-        $recentClients = array_slice($clientsNeedingAttention, 0, 5);
-    }
+    // Sort by most recent updates or some criteria
+    // Limit to 5 clients
+    $recentClients = array_slice($activeCustomers, 0, 5);
 }
 
 $pageConfig = [
@@ -275,7 +247,7 @@ if ($hour >= 12 && $hour < 17) {
 
             <div class="client-list">
                 <div class="client-list-header">
-                    <div class="client-list-title">Client Status</div>
+                    <div class="client-list-title">Recent Activity</div>
                 </div>
 
                 <?php foreach ($recentClients as $client):
@@ -294,18 +266,14 @@ if ($hour >= 12 && $hour < 17) {
                         }
                     }
 
-                    // Determine status based on client attention reason
-                    $statusType = 'success';
-                    $statusReason = $client->attention_reason;
-
-                    // Set appropriate status class
-                    if ($statusReason === 'Needs Workout Plan') {
-                        $statusType = 'danger';
-                    } elseif ($statusReason === 'Needs Meal Plan') {
-                        $statusType = 'warning';
-                    } else {
-                        $statusType = 'success';
-                    }
+                    // Randomly assign status for demo
+                    $statuses = ['warning', 'danger', 'success'];
+                    $statusLabels = [
+                        'warning' => 'Needs Meal Plan',
+                        'danger' => 'Missing Workout',
+                        'success' => 'On Track'
+                    ];
+                    $randomStatus = $statuses[array_rand($statuses)];
 
                     // For real implementation, you would check actual client data
                     // To determine which clients need attention
@@ -315,7 +283,7 @@ if ($hour >= 12 && $hour < 17) {
                         <div class="client-info">
                             <h3 class="client-name"><?= htmlspecialchars($client->fname . ' ' . $client->lname) ?></h3>
                             <div class="client-meta">
-                                <span class="client-tag <?= $statusType ?>"><?= $statusReason ?></span>
+                                <span class="client-tag <?= $randomStatus ?>"><?= $statusLabels[$randomStatus] ?></span>
                             </div>
                         </div>
                         <div class="client-action">
@@ -329,7 +297,6 @@ if ($hour >= 12 && $hour < 17) {
             </div>
         </div>
     <?php endif; ?>
-
 </main>
 
 <?php require_once "./includes/navbar.php" ?>

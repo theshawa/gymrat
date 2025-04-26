@@ -26,6 +26,15 @@ try {
     if ($announcement->source != $trainer_id) {
         redirect_with_error_alert("You can only edit your own announcements", "../");
     }
+    
+    // Check if the announcement was created less than 5 minutes ago
+    $current_time = new DateTime();
+    $edit_time_diff = $current_time->getTimestamp() - $announcement->created_at->getTimestamp();
+    
+    if ($edit_time_diff > 300) { // 300 seconds = 5 minutes
+        redirect_with_error_alert("You can only edit announcements within 5 minutes after posting", "../");
+    }
+    
 } catch (Exception $e) {
     redirect_with_error_alert("Announcement not found", "../");
 }
@@ -47,6 +56,7 @@ require_once "../../includes/titlebar.php";
 ?>
 
 <main class="edit-announcement-page">
+
     <form action="edit_announcement_process.php" method="POST" class="form">
         <input type="hidden" name="id" value="<?= $announcement->id ?>">
         
@@ -72,10 +82,10 @@ require_once "../../includes/titlebar.php";
         </div>
         
         <div>
-            <button type="submit" class="btn">Update Announcement</button>
+            <button type="submit" style="width:100%" class="btn">Update Announcement</button>
         </div>
     </form>
-</main>
+</main
 
 <?php require_once "../../includes/navbar.php" ?>
 <?php require_once "../../includes/footer.php" ?>

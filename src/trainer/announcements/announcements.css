@@ -3,7 +3,7 @@
 }
 
 .announcement-history {
-  margin-top: 40px;
+  margin-top: 20px;
   border-top: 1px solid var(--color-zinc-900);
   padding-top: 20px;
 }
@@ -148,4 +148,27 @@
 
 .modal-actions .confirm-btn {
   background-color: var(--color-red);
+}
+
+/* Chart info box - for the 5-minute edit restriction notice */
+.chart-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(161, 161, 170, 0.1);
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin: 15px 0;
+  font-size: 14px;
+  color: var(--color-zinc-300);
+}
+
+.chart-info svg {
+  color: var(--color-violet-500);
+  flex-shrink: 0;
+}
+
+/* For the lightning icon in the edit restriction notice */
+.chart-info svg.lucide-zap {
+  color: #f59e0b; /* Amber color for notification */
 }

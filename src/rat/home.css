@@ -10,9 +10,9 @@ main {
   position: sticky;
   top: 0;
   left: 0;
+  z-index: 5;
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
-  z-index: 5;
 }
 
 .grid {
@@ -23,11 +23,10 @@ main {
   /* margin-top: -60px; */
   background: linear-gradient(
     to bottom,
-    rgba(9, 9, 11, 0.5) 0%,
-    rgba(9, 9, 11, 0.5) 100%
+    rgba(9, 9, 11, 0.4) 0%,
+    rgb(9, 9, 11) 100%
   );
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
+  border-radius: 40px;
   backdrop-filter: blur(20px);
 
   padding: 30px 20px;
@@ -43,25 +42,24 @@ main {
   padding-bottom: 20px;
   text-align: center;
 }
-/* 
-.grid-line {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-} */
 
 .grid-tile {
   border-radius: 30px;
   padding: 12px;
   background: radial-gradient(at top right, #5b00cc, rgba(91, 0, 204, 0.6));
-  border: 1px solid #5b00cc;
+  border: 1px solid rgba(91, 0, 204, 0.6);
+  /* background: radial-gradient(
+    at top right,
+    rgba(250, 250, 250, 0.2),
+    rgba(250, 250, 250, 0.1)
+  ); */
+  /* border: 1px solid rgba(250, 250, 250, 0.1); */
   backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
-  aspect-ratio: 1/0.9;
+  aspect-ratio: 1;
 }
-
-.grid-tile.disabled {
+.grid-tile.grayed {
   background: radial-gradient(
     at top right,
     rgba(250, 250, 250, 0.2),
@@ -209,7 +207,7 @@ main {
   color: rgba(250, 250, 250, 0.8);
 }
 
-.gray-full-tile {
+.complaint-tile {
   grid-column: span 2 / span 2;
   width: 100%;
   border-radius: 30px;
@@ -225,7 +223,7 @@ main {
   align-items: center;
 }
 
-.gray-full-tile h2 {
+.complaint-tile h2 {
   font-weight: 500;
   margin-left: 10px;
 }

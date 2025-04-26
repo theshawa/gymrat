@@ -57,8 +57,6 @@ require_once "../includes/titlebar.php";
     <h1 class="name"><?= $trainer->fname . " " . $trainer->lname ?></h1>
     <p class="paragraph description">
         <?= $trainer->bio ?>
-
-
     </p>
     <a class="phone" href="tel:<?= $trainer->phone ?>">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone-icon lucide-phone">

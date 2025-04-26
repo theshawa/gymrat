@@ -94,7 +94,7 @@ $plan_remaining_days = $interval->days;
 <main>
     <div class="grid">
         <?php require_once "../uploads.php"; ?>
-        <div class="gym-banner" style="background-image: linear-gradient(rgba(9, 9, 11,0) ,rgba(9, 9, 11,0.6),rgba(9, 9, 11,1)) , url(<?= get_file_url("default-images/default-gym-banner.png") ?>);">
+        <div class="gym-banner" style="background-image: linear-gradient(rgba(9, 9, 11,0) ,rgba(9, 9, 11,0.6),rgba(9, 9, 11,1)) , url(<?= get_file_url("default-images/default-gym-banner.webp") ?>);">
             <h1 class="gym-name">
                 Dhamya Fitness Centre
             </h1>

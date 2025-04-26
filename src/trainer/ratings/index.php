@@ -151,17 +151,36 @@ require_once "../includes/titlebar.php";
 
         <div class="rating-score">
             <div class="score"><?= number_format($ratingData['average'], 1) ?></div>
-            <div class="stars">
-                <?php for ($i = 1; $i <= 5; $i++): ?>
-                    <?php if ($i <= floor($ratingData['average'])): ?>
-                        <span class="star filled">★</span>
-                    <?php elseif ($i - 0.5 <= $ratingData['average']): ?>
-                        <span class="star half-filled">★</span>
-                    <?php else: ?>
-                        <span class="star">★</span>
-                    <?php endif; ?>
-                <?php endfor; ?>
+            
+            <div class="stars-container">
+                <?php
+                // Calculate full stars, partial stars, and empty stars
+                $rating = $ratingData['average'];
+                $fullStars = floor($rating);
+                $partialStar = $rating - $fullStars > 0;
+                $partialStarPercentage = ($rating - $fullStars) * 100;
+                $emptyStars = 5 - $fullStars - ($partialStar ? 1 : 0);
+                
+                // Output full stars
+                for ($i = 0; $i < $fullStars; $i++) {
+                    echo '<span class="star filled">★</span>';
+                }
+                
+                // Output partial star if needed
+                if ($partialStar) {
+                    echo '<div class="star-partial-container">';
+                    echo '<span class="star-empty">☆</span>';
+                    echo '<span class="star-filled" style="width: ' . $partialStarPercentage . '%;">★</span>';
+                    echo '</div>';
+                }
+                
+                // Output empty stars
+                for ($i = 0; $i < $emptyStars; $i++) {
+                    echo '<span class="star">☆</span>';
+                }
+                ?>
             </div>
+            
             <div class="total-reviews"><?= number_format($ratingData['total']) ?> reviews</div>
         </div>
     </div>
@@ -225,7 +244,7 @@ require_once "../includes/titlebar.php";
                                         <?php if ($i <= $review['rating']): ?>
                                             <span class="star filled">★</span>
                                         <?php else: ?>
-                                            <span class="star">★</span>
+                                            <span class="star">☆</span>
                                         <?php endif; ?>
                                     <?php endfor; ?>
                                 </div>
@@ -247,6 +266,38 @@ require_once "../includes/titlebar.php";
         </div>
     <?php endif; ?>
 </main>
+
+<style>
+/* Add additional star rating styles */
+.stars-container {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin: 5px 0;
+}
+
+.star-partial-container {
+    position: relative;
+    display: inline-block;
+    font-size: 18px;
+    line-height: 1;
+    height: 18px;
+}
+
+.star-empty {
+    color: #e0e0e0;
+}
+
+.star-filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #ffc107;
+    overflow: hidden;
+    height: 100%;
+    white-space: nowrap;
+}
+</style>
 
 <?php require_once "../includes/navbar.php" ?>
 <?php require_once "../includes/footer.php" ?>

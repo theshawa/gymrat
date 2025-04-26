@@ -252,7 +252,7 @@ $plan_remaining_days = $interval->days;
                 <?php endif; ?>
             </a>
         <?php else: ?>
-            <div class="grid-tile disabled">
+            <div class="grid-tile grayed">
                 <div class="top">
                     <h2>Workout</h2>
                     <p>Not Assigned</p>
@@ -269,7 +269,7 @@ $plan_remaining_days = $interval->days;
                 <p class="bottom-text"><?= $meal_text ?></p>
             </a>
         <?php else: ?>
-            <div class="grid-tile disabled">
+            <div class="grid-tile grayed">
                 <div class="top">
                     <h2>Meal Plan</h2>
                     <p>Not Assigned</p>
@@ -345,7 +345,7 @@ $plan_remaining_days = $interval->days;
                 </div>
             </a>
         <?php else: ?>
-            <div class="grid-tile disabled">
+            <div class="grid-tile grayed">
                 <div class="top">
                     <h2>My Trainer</h2>
                     <p>Not Assigned</p>

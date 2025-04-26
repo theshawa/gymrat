@@ -125,7 +125,7 @@ function generate_html($fileName, $htmlBody)
     return $html;
 }
 
-function generate_pdf($htmlBody, $filename = "document.pdf")
+function generate_pdf($htmlBody, $filename = "document.pdf", $download = true)
 {
     $options = new Options();
     $options->set('isHtml5ParserEnabled', true);
@@ -139,5 +139,5 @@ function generate_pdf($htmlBody, $filename = "document.pdf")
     $dompdf->loadHtml($html);
     $dompdf->setPaper('A4', 'portrait');
     $dompdf->render();
-    $dompdf->stream($filename, array("Attachment" => false));
+    $dompdf->stream($filename, array("Attachment" => $download));
 }

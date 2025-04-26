@@ -78,7 +78,7 @@ try {
             $_SESSION['auth']['bio'] = $bio;
             $_SESSION['auth']['phone'] = $phone;
             $_SESSION['auth']['avatar'] = $trainer->avatar; // Update avatar in session
-            
+
             // Add a cache-busting parameter to prevent browser caching
             $cache_buster = md5(time());
             $_SESSION['cache_buster'] = $cache_buster;

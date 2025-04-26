@@ -212,7 +212,9 @@ $expire_date->modify('+30 days');
 
 $interval = $now->diff($expire_date);
 $plan_remaining_days = $interval->days;
+
 ?>
+
 
 <main class="no-padding">
     <img class="banner-image" src="<?= get_file_url($settings->gym_banner, "default-images/default-gym-banner.png") ?>" />

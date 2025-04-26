@@ -15,6 +15,7 @@ function get(int $user_id, string $user_type): array
 {
     $notification = new Notification();
     $announcement = new Announcement();
+
     try {
         $notifications =  $notification->get_all_of_user($user_id, $user_type);
         $announcements =  $announcement->get_all_of_user($user_type, $user_id);
@@ -100,7 +101,11 @@ if (function_exists($function_name)) {
     $user_id = $_SESSION['auth']['id'];
     $user_type = $_SESSION['auth']['role'];
 
+    ob_start();
+
     $res = $function_name($user_id, $user_type);
+
+    ob_clean();
 
     http_response_code(200);
     echo json_encode($res);

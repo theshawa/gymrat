@@ -76,6 +76,10 @@ class Announcement extends Model
             $stmt->execute(['user_id' => $user_id]);
             $trainer_id = $stmt->fetchColumn();
 
+            if (!$trainer_id) {
+                return [];
+            }
+
             $sql = "SELECT * FROM $this->table WHERE (to_all = 'rats' OR to_all = 'rats+trainers') AND valid_till >= NOW()
             UNION
             SELECT * FROM $this->table WHERE source=:trainer_id AND to_all = 'rats' AND valid_till >= NOW()

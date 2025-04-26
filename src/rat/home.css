@@ -61,7 +61,8 @@ main {
   backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
-  aspect-ratio: 1/0.8;
+  aspect-ratio: 1/0.9;
+  height: 100%;
 }
 .grid-tile.grayed {
   background: radial-gradient(

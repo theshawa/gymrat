@@ -13,7 +13,7 @@ require_once "../includes/header.php";
 
 <main class="onboarding">
     <img width="100" src="./animation1.gif" alt="Man lifting a weight">
-    <h1>Welcome to GYMRAT!</h1>
+    <h1>Hello </h1>
     <p class="paragraph">Let us gather some details about you to personalize your fitness journey at GYMRAT. This will help us tailor the best experience for you at our gym.</p>
     <form action="onboarding_process.php" method="post">
         <div class="question">
@@ -25,7 +25,6 @@ require_once "../includes/header.php";
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                         </svg>
-
                     </div>
                     <span class="option">Male</span>
                 </label>

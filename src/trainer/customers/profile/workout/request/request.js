@@ -59,10 +59,36 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    // Function to get all exercise options from the first select box
+    // Function to get exercise options, excluding already selected ones
     function getExerciseOptions() {
         const firstSelect = document.querySelector('select[name="exercise_id[]"]');
-        return firstSelect ? firstSelect.innerHTML : '';
+        if (!firstSelect) return '';
+
+        // Get all existing dropdown selects
+        const allSelects = document.querySelectorAll('select[name="exercise_id[]"]');
+        
+        // Get array of already selected exercise IDs
+        const selectedIds = Array.from(allSelects)
+            .map(select => select.value)
+            .filter(value => value !== ''); // Filter out empty selections
+        
+        // Clone the options from the first select
+        const options = Array.from(firstSelect.options);
+        
+        // Create HTML for options, excluding already selected ones
+        return options.map(option => {
+            // Always include the empty "Select an exercise" option
+            if (option.value === '') {
+                return option.outerHTML;
+            }
+            
+            // Skip this option if it's already selected in any dropdown
+            if (selectedIds.includes(option.value)) {
+                return '';
+            }
+            
+            return option.outerHTML;
+        }).join('');
     }
 
     // Form validation before submission

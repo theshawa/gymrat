@@ -61,6 +61,38 @@ class TrainerLogRecord extends Model
         $this->id = $this->conn->lastInsertId();
     }
 
+    public function update()
+    {
+        $sql = "UPDATE $this->table SET message = :message, performance_type = :performance_type WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'message' => $this->message,
+            'performance_type' => $this->performance_type,
+            'id' => $this->id,
+        ]);
+    }
+
+    public function delete()
+    {
+        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'id' => $this->id,
+        ]);
+    }
+
+    public function get_by_id()
+    {
+        $sql = "SELECT * FROM $this->table WHERE id = :id LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
+        $item = $stmt->fetch();
+        if (!$item) {
+            throw new Exception("Log record not found");
+        }
+        $this->fill($item);
+    }
+
     public function get_perfomance_type_text()
     {
         switch ($this->performance_type) {

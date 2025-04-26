@@ -26,6 +26,9 @@ require_once "../includes/header.php";
 require_once "../includes/titlebar.php";
 
 require_once "../../utils.php"; // For date formatting
+
+// Calculate current time for edit time comparison
+$current_time = new DateTime();
 ?>
 
 <main>
@@ -46,19 +49,32 @@ require_once "../../utils.php"; // For date formatting
         <button class="btn">Post Announcement</button>
     </form>
     
+    <!-- Add information box about 5-minute edit restriction -->
+    <div class="chart-info" style="margin: 20px 0;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
+        <span style="padding-left: 7px">You can only edit your announcements <br>within 5 minutes after posting!</span>
+    </div>
+    
     <div class="announcement-history">
         <h3>Announcement History</h3>
         <?php if (empty($announcements)): ?>
             <p class="paragraph small">No announcements.</p>
         <?php else: ?>
             <ul class="announcement-list">
-                <?php foreach ($announcements as $announcement): ?>
+                <?php foreach ($announcements as $announcement): 
+                    // Calculate if the announcement was created less than 5 minutes ago
+                    $edit_time_diff = $current_time->getTimestamp() - $announcement->created_at->getTimestamp();
+                    $can_edit = $edit_time_diff <= 300; // 300 seconds = 5 minutes
+                ?>
                     <li class="announcement-item">
                         <div class="inline">
                             <span class="paragraph small">
                                 <?= format_time($announcement->created_at) ?>
                             </span>
                             <div class="action-buttons">
+                                <?php if ($can_edit): ?>
                                 <a href="./edit/?id=<?= $announcement->id ?>" class="action-button edit-button">
                                     <!-- Edit Icon SVG -->
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil">
@@ -66,6 +82,7 @@ require_once "../../utils.php"; // For date formatting
                                         <path d="m15 5 4 4"/>
                                     </svg>
                                 </a>
+                                <?php endif; ?>
                                 <button class="action-button delete-button" onclick="delete_<?= $announcement->id ?>()">
                                     <!-- Delete Icon SVG -->
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">
@@ -97,7 +114,6 @@ require_once "../../utils.php"; // For date formatting
                         <h4 class="title"><?= htmlspecialchars($announcement->title) ?></h4>
                         <p class="paragraph message"><?= htmlspecialchars($announcement->message) ?></p>
                         <div class="meta">
-                            <span>Posted: <?= $announcement->created_at->format('M d, Y') ?></span>
                             <span>Valid until: <?= $announcement->valid_till->format('M d, Y') ?></span>
                         </div>
                     </li>

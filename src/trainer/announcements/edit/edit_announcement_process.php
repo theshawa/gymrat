@@ -32,6 +32,14 @@ try {
     if ($announcement->source != $trainer_id) {
         redirect_with_error_alert("You can only edit your own announcements", "../");
     }
+    
+    // Check if the announcement was created less than 5 minutes ago
+    $current_time = new DateTime();
+    $edit_time_diff = $current_time->getTimestamp() - $announcement->created_at->getTimestamp();
+    
+    if ($edit_time_diff > 300) { // 300 seconds = 5 minutes
+        redirect_with_error_alert("You can only edit announcements within 5 minutes after posting", "../");
+    }
 
     // Update announcement
     $announcement->fill([

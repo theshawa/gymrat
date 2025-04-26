@@ -44,7 +44,7 @@ if (!empty($activeCustomers)) {
     // Separate clients into those needing attention and those on track
     $clientsNeedingAttention = [];
     $clientsOnTrack = [];
-    
+
     foreach ($activeCustomers as $client) {
         $needsAttention = false;
         $attentionReason = '';
@@ -65,10 +65,10 @@ if (!empty($activeCustomers)) {
             $clientsOnTrack[] = $client;
         }
     }
-    
+
     // Combine the lists with clients needing attention first
     $combinedClients = array_merge($clientsNeedingAttention, $clientsOnTrack);
-    
+
     // Take up to 10 clients to display (prioritizing those who need attention)
     $recentClients = array_slice($combinedClients, 0, 10);
 }
@@ -330,7 +330,7 @@ if ($hour >= 12 && $hour < 17) {
                     // to determine which clients need attention
                 ?>
                     <a href="/trainer/customers/profile?id=<?= $client->id ?>" class="client-list-item">
-                        <img src="<?= $avatar ?>" alt="<?= htmlspecialchars($client->fname) ?>" class="client-avatar">
+                        <img src="<?= $avatarPath ?>" alt="<?= htmlspecialchars($client->fname) ?>" class="client-avatar">
                         <div class="client-info">
                             <h3 class="client-name"><?= htmlspecialchars($client->fname . ' ' . $client->lname) ?></h3>
                             <div class="client-meta">

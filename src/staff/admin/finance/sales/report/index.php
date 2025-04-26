@@ -47,6 +47,8 @@ $generated_date = date("Y-m-d H:i:s");
 $generated_by = "Admin";
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -177,6 +179,9 @@ $generated_by = "Admin";
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="footer">
+        &copy; 2025 GYMRAT. All rights reserved.
     </div>
 </body>
 </html>

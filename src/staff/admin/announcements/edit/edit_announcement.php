@@ -17,9 +17,24 @@ $title = htmlspecialchars($_POST['title']);
 $message = htmlspecialchars($_POST['message']);
 $valid_till = htmlspecialchars($_POST['valid_till']);
 
+// Defaulting to 00:00 if not specified
+if (strpos($valid_till, 'T') === false) {
+    $valid_till .= 'T00:00';
+}
+$current_date = new DateTime();
+
 if (empty($title)) $errors[] = "Title is required.";
 if (empty($message)) $errors[] = "Message is required.";
+
 if (empty($valid_till)) $errors[] = "Valid till date is required.";
+$valid_till_datetime = DateTime::createFromFormat('Y-m-d\TH:i', $valid_till);
+
+if (!$valid_till_datetime) {
+    $errors[] = "Valid till date is invalid.";
+} elseif ($valid_till_datetime < $current_date) {
+    $errors[] = "Valid till date cannot be in the past.";
+}
+
 
 $announcement->title = $title;
 $announcement->message = $message;

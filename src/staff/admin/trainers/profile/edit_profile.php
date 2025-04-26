@@ -14,14 +14,14 @@ $trainer = unserialize($_SESSION['trainer']);
 $errors = [];
 
 $id = $trainer->id;
-$fname = htmlspecialchars($_POST['trainer_fname']);
-$lname = htmlspecialchars($_POST['trainer_lname']);
+// $fname = htmlspecialchars($_POST['trainer_fname']);
+// $lname = htmlspecialchars($_POST['trainer_lname']);
 $username = htmlspecialchars($_POST['trainer_username']);
 $phone = htmlspecialchars($_POST['trainer_phone']);
 $bio = htmlspecialchars($_POST['trainer_bio']);
 
-if (empty($fname)) $errors[] = "First name is required.";
-if (empty($lname)) $errors[] = "Last name is required.";
+// if (empty($fname)) $errors[] = "First name is required.";
+// if (empty($lname)) $errors[] = "Last name is required.";
 if (empty($username)) $errors[] = "Username is required.";
 if (empty($phone)) $errors[] = "Phone number is required.";
 
@@ -44,8 +44,8 @@ if ($trainer->avatar && $avatar) {
     }
 }
 
-$trainer->fname = $fname;
-$trainer->lname = $lname;
+// $trainer->fname = $fname;
+// $trainer->lname = $lname;
 $trainer->username = $username;
 $trainer->phone = $phone;
 $trainer->bio = $bio;

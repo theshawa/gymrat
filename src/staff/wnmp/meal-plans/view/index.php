@@ -10,10 +10,10 @@ require_once "../../../../db/models/Meal.php";
 require_once "../../../../alerts/functions.php";
 
 $mealPlan = new MealPlan();
-$meal = new Meal();
+$mealModel = new Meal();
 try {
     $mealPlan->get_by_id($id);
-    $mealPlan->meals = $meal->addMealTitles($mealPlan->meals);
+    $mealPlan->meals = $mealModel->addMealTitles($mealPlan->meals);
     $_SESSION['mealPlan'] = serialize($mealPlan);
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch meal plan: " . $e->getMessage(), "/staff/wnmp/meal-plans");
@@ -65,8 +65,21 @@ require_once "../../../includes/sidebar.php";
                     Duration
                 </h2>
                 <p style="font-size: 18px; font-weight: 400;"><?= $mealPlan->duration ?> Days</p>
+                <h2 style="margin-bottom: 10px; margin-top: 25px">
+                    Total Calories
+                </h2>
+                <p style="font-size: 18px; font-weight: 400;"><?= $mealPlan->duration ?> Days</p>
+                <h2 style="margin-bottom: 10px; margin-top: 25px">
+                    Total Proteins
+                </h2>
+                <p style="font-size: 18px; font-weight: 400;"><?= $mealPlan->duration ?> Days</p>
+                <h2 style="margin-bottom: 10px; margin-top: 25px">
+                    Total Fats
+                </h2>
+                <p style="font-size: 18px; font-weight: 400;"><?= $mealPlan->duration ?> Days</p>
             </div>
         </div>
+        <pre><?= print_r($mealPlan) ?></pre>
     </div>
 </main>
 

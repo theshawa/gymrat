@@ -5,6 +5,7 @@ $concatName = false;
 $showImage = false;
 $useAvatar = false;
 $showExtend = false;
+$showDescription = true;
 $showCreatedAt = true;
 $extendTo = null;
 $cards = null;
@@ -17,6 +18,7 @@ if (isset($infoCardConfig)) {
     $defaultName = $infoCardConfig['defaultName'] ?? $defaultName;
     $showImage = $infoCardConfig['showImage'] ?? $showImage;
     $showExtend = $infoCardConfig['showExtend'] ?? $showExtend;
+    $showDescription = $infoCardConfig['showDescription'] ?? $showDescription;
     $extendTo = $infoCardConfig['extendTo'] ?? $extendTo;
     $cards = $infoCardConfig['cards'] ?? $cards;
     $gridColumns = $infoCardConfig['gridColumns'] ?? $gridColumns;
@@ -43,7 +45,7 @@ if (!$isCardInList) {
             "title" => ($concatName) ?
                 $card->fname . " " . $card->lname : 
                 $card->name ?? $defaultName . " No. " . $card->id,
-            "description" => $card->description ?? "",
+            "description" => ($showDescription) ? ($card->description ?? "") : "",
             "image" => ($useAvatar) ? $card->avatar : ($card->image ?? null),
             "created_at" => ($showCreatedAt && isset($card->created_at)) ? $card->created_at->format('Y-m-d H:i:s') : null
         ];

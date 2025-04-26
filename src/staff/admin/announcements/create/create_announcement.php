@@ -19,12 +19,38 @@ if (isset($_POST['action']) && $_POST['action'] === 'revert') {
 $title = htmlspecialchars($_POST['title']);
 $message = htmlspecialchars($_POST['message']);
 $valid_till = htmlspecialchars($_POST['valid_till']);
+
+// Defaulting to 00:00 if not specified
+if (strpos($valid_till, 'T') === false) {
+    $valid_till .= 'T00:00';
+}
+
+
 $to_all = htmlspecialchars($_POST['send_to']);
+$current_date = new DateTime();
+
+
+$announcement = unserialize($_SESSION['announcement']);
 
 $errors = [];
 if (empty($title)) $errors[] = "Title is required.";
 if (empty($message)) $errors[] = "Message is required.";
+
+// save title and message since they pass validation
+$announcement->title = $title;
+$announcement->message = $message;
+$_SESSION['announcement'] = serialize($announcement);
+
+
+
 if (empty($valid_till)) $errors[] = "Valid till date is required.";
+$valid_till_datetime = DateTime::createFromFormat('Y-m-d\TH:i', $valid_till);
+
+if (!$valid_till_datetime) {
+    $errors[] = "Valid till date is invalid.";
+} elseif ($valid_till_datetime < $current_date) {
+    $errors[] = "Valid till date cannot be in the past.";
+}
 
 if (!empty($errors)) {
     $error_message = implode(" ", $errors);
@@ -32,10 +58,6 @@ if (!empty($errors)) {
     exit;
 }
 
-
-$announcement = unserialize($_SESSION['announcement']);
-$announcement->title = $title;
-$announcement->message = $message;
 $announcement->source = "admin";
 $announcement->to_all = $to_all;
 $announcement->valid_till = new DateTime($valid_till);

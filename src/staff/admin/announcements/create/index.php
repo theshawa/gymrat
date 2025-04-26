@@ -62,7 +62,7 @@ require_once "../../../includes/sidebar.php";
                 </div>
                 <div style="margin-bottom: 10px;">
                     <h2><label for="valid_till">Valid Till</label></h2>
-                    <input type="datetime-local" id="valid_till" name="valid_till" class="staff-input-primary staff-input-long" required>
+                    <input type="datetime-local" id="valid_till" name="valid_till" class="staff-input-primary staff-input-long">
                 </div>
             </div>
         </form>

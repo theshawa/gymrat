@@ -54,7 +54,7 @@ require_once "../../../includes/sidebar.php";
             <form action="edit_profile.php" method="POST" enctype="multipart/form-data">
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
-                    <div style="margin-bottom: 10px">
+                    <!-- <div style="margin-bottom: 10px">
                         <h2><label for="edit-fname">First Name</label></h2>
                         <input type="text" id="edit-fname" name="customer_fname"
                             class="staff-input-primary staff-input-long" value="<?= $customer->fname ?>"
@@ -65,7 +65,7 @@ require_once "../../../includes/sidebar.php";
                         <input type="text" id="edit-lname" name="customer_lname"
                             class="staff-input-primary staff-input-long" value="<?= $customer->lname ?>"
                             pattern="[a-zA-Z]+" title="Last name should only contain letters.">
-                    </div>
+                    </div> -->
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-email">Email</label></h2>
                         <input type="email" id="edit-email" name="customer_email"

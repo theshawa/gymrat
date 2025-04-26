@@ -53,6 +53,26 @@ require_once "../../../../includes/sidebar.php";
                     Description
                 </h2>
                 <p><?= $workoutRequest->description ?></p>
+                <?php 
+                $descriptionData = json_decode($workoutRequest->description, true); 
+                if (json_last_error() === JSON_ERROR_NONE && $descriptionData): ?>
+                    <p><strong>Name:</strong> <?= htmlspecialchars($descriptionData['name']) ?></p>
+                    <p><strong>Type:</strong> <?= htmlspecialchars($descriptionData['type']) ?></p>
+                    <p><strong>Duration:</strong> <?= htmlspecialchars($descriptionData['duration']) ?> days</p>
+                    <p><strong>Priority:</strong> <?= htmlspecialchars($descriptionData['priority']) ?></p>
+                    <p><strong>Description:</strong> <?= htmlspecialchars($descriptionData['description']) ?></p>
+                    <h3>Recommended Exercises:</h3>
+                    <ul>
+                        <?php foreach ($descriptionData['exercises'] as $exercise): ?>
+                            <li>
+                                <?= "Exercise ID: {$exercise['id']} - Day {$exercise['day']}: {$exercise['sets']} sets of {$exercise['reps']} reps" ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php else: ?>
+                    <p>Invalid description format or JSON parsing error.</p>
+                    <p>Error: <?= json_last_error_msg() ?></p>
+                <?php endif; ?>
                 <div style="display: flex; flex-direction: row; margin-top: 20px; align-items: center; ">
                     <h2>
                         Trainer : 

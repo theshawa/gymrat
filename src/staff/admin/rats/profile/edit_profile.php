@@ -15,14 +15,14 @@ $customer = unserialize($_SESSION['customer']);
 $errors = [];
 
 $id = $customer->id;
-$fname = htmlspecialchars($_POST['customer_fname']);
-$lname = htmlspecialchars($_POST['customer_lname']);
+// $fname = htmlspecialchars($_POST['customer_fname']);
+// $lname = htmlspecialchars($_POST['customer_lname']);
 $email = htmlspecialchars($_POST['customer_email']);
 $phone = htmlspecialchars($_POST['customer_phone']);
 
 
-if (empty($fname)) $errors[] = "First name is required.";
-if (empty($lname)) $errors[] = "Last name is required.";
+// if (empty($fname)) $errors[] = "First name is required.";
+// if (empty($lname)) $errors[] = "Last name is required.";
 if (empty($email)) $errors[] = "Email is required.";
 if (empty($phone)) $errors[] = "Phone number is required.";
 
@@ -46,8 +46,8 @@ if ($customer->avatar && $avatar) {
     }
 }
 
-$customer->fname = $fname;
-$customer->lname = $lname;
+// $customer->fname = $fname;
+// $customer->lname = $lname;
 $customer->email = $email;
 $customer->phone = $phone;
 $customer->avatar = $avatar ?? $customer->avatar;

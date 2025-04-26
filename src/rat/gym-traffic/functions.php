@@ -29,7 +29,8 @@ function get_traffic()
     });
 
     $active_sessions_count = count($active_sessions);
-    $max_sessions = $settings->max_capacity ?? 50;
+    $max_sessions = !$settings->max_capacity ? 50 : $settings->max_capacity;
+    var_dump($max_sessions);
     $traffic = $active_sessions_count / $max_sessions;
     $rat_count_text = "";
     if ($active_sessions_count === 0) {

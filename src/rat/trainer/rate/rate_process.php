@@ -41,4 +41,10 @@ try {
     exit;
 }
 
+require_once "../../../notifications/functions.php";
+try {
+    notify_trainer($trainerId, "New rating received from " . $customer->fname, 'You have received a new rating from your customer. Please check your <a class="nav-link" href="/trainer/ratings">ratings.</a>.', $customer->fname . " " . $customer->lname);
+} catch (\Throwable $th) {
+}
+
 redirect_with_success_alert("Thank you for sharing your feedback! Your rating has been submitted successfully.", "../");

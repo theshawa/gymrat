@@ -93,3 +93,14 @@ h1 {
   text-align: center;
   margin-top: 10px;
 }
+
+.download_user_data {
+  width: 100%;
+}
+
+.download_user_data .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+}

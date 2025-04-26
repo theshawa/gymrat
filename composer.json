@@ -1,0 +1,38 @@
+{
+  "name": "group_42.theshawa/gymrat",
+  "version": "v1.0.0",
+  "description": "Group 42 2nd Year Project | Batch 20 | A Gym Application",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Theshawa Dasun",
+      "email": "mrclocktd@gmail.com",
+      "homepage": "http://theshawa.dev",
+      "role": "Developer"
+    }
+  ],
+  "config": {
+    "vendor-dir": "./src/vendor"
+  },
+  "require": {
+    "php": "^8.0",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-openssl": "*",
+    "ext-pdo": "*",
+    "ext-pdo_mysql": "*",
+    "ext-simplexml": "*",
+    "ext-xml": "*",
+    "ext-zip": "*",
+    "phpmailer/phpmailer": "dev-master",
+    "fakerphp/faker": "2.0.x-dev",
+    "dompdf/dompdf": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "./"
+    }
+  }
+}

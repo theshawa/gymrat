@@ -30,7 +30,7 @@ h3 {
 
 .input {
   background-color: var(--color-zinc-950);
-  border: 2px solid var(--color-zinc-900);
+  border: 1px solid var(--color-zinc-900);
   height: 50px;
   padding: 0 20px;
   border-radius: 25px;
@@ -75,7 +75,7 @@ select:has(option:checked:not([value=""])) option {
 .password-field {
   display: flex;
   background-color: var(--color-zinc-950);
-  border: 2px solid var(--color-zinc-900);
+  border: 1px solid var(--color-zinc-900);
   height: 50px;
   border-radius: 999999px;
   transition: border-color 0.6s;
@@ -114,8 +114,9 @@ main {
 /* button */
 .btn {
   background-color: var(--color-violet-600);
+  background: radial-gradient(at top right, #5b00cc, rgba(91, 0, 204, 0.6));
+  border: 1px solid #5b00cc;
   color: var(--color-violet-50);
-  border: none;
   border-radius: 999999px;
   padding: 0 20px;
   height: 50px;
@@ -134,16 +135,21 @@ main {
 }
 
 .btn.secondary {
-  background-color: var(--color-zinc-600);
   color: var(--color-zinc-50);
+  background: radial-gradient(
+    at top right,
+    rgba(250, 250, 250, 0.2),
+    rgba(250, 250, 250, 0.1)
+  );
+  border: 1px solid rgba(250, 250, 250, 0.1);
 }
 .btn.secondary:active {
   background-color: var(--color-zinc-700);
 }
 
 .btn.outlined {
-  background-color: transparent;
-  border: 2px solid var(--color-zinc-800);
+  background: transparent;
+  border: 1px solid var(--color-zinc-800);
   color: var(--color-zinc-300);
 }
 
@@ -166,7 +172,8 @@ main {
 /* Titlebar */
 .title-bar {
   display: flex;
-  background-color: var(--color-zinc-800);
+  background: linear-gradient(rgba(39, 39, 42, 1), rgba(39, 39, 42, 0.8));
+  backdrop-filter: blur(20px);
   position: sticky;
   top: 0;
   height: 50px;
@@ -198,7 +205,8 @@ main {
 /* Navbar */
 .navbar {
   display: flex;
-  background-color: var(--color-zinc-800);
+  background: linear-gradient(rgba(39, 39, 42, 0.9), rgba(39, 39, 42, 1));
+  backdrop-filter: blur(20px);
   position: sticky;
   bottom: 0;
   height: 70px;
@@ -212,21 +220,24 @@ main {
 
 .navbar a {
   color: var(--color-zinc-400);
+
   width: 48px;
   height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 24px;
+  border: 1px solid transparent;
 }
 
 .navbar a:hover:not(.active) {
-  background-color: var(--color-zinc-700);
+  background: radial-gradient(at top right, #5b00cc, rgba(91, 0, 204, 0.6));
 }
 
 .navbar a.active {
-  background-color: var(--color-violet-600);
   color: var(--color-zinc-50);
+  background: radial-gradient(at top right, #5b00cc, rgba(91, 0, 204, 0.6));
+  border-color: #5b00cc;
 }
 
 .navbar a span.count {
@@ -311,7 +322,7 @@ main {
   border-radius: 9999px;
   gap: 8px;
   cursor: pointer;
-  border: 2px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   animation: pop-up 0.6s;
 }
 
@@ -356,10 +367,14 @@ main {
 .subnavbar-link {
   padding: 10px 20px;
   border-radius: 8px;
-  background-color: var(--color-zinc-900);
+  background: radial-gradient(
+    at top right,
+    rgba(250, 250, 250, 0.2),
+    rgba(250, 250, 250, 0.1)
+  );
   text-align: center;
   color: var(--color-zinc-400);
-  transition: background-color 0.6s, color 0.6s;
+  transition: background 0.6s, color 0.6s;
   margin-bottom: 10px;
   flex: 1;
   font-weight: 600;
@@ -368,6 +383,6 @@ main {
 }
 
 .subnavbar-link.active {
-  background-color: var(--color-violet-600);
   color: var(--color-zinc-50);
+  background: radial-gradient(at top right, #5b00cc, rgba(91, 0, 204, 0.6));
 }

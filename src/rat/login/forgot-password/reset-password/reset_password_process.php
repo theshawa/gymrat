@@ -17,12 +17,6 @@ if (!isset($_SESSION['customer_password_reset']['verified'])) {
 }
 
 $password = htmlspecialchars($_POST['password']);
-$cpassword = htmlspecialchars($_POST['cpassword']);
-
-if ($password !== $cpassword) {
-    redirect_with_error_alert("Passwords do not match", "./");
-    exit;
-}
 
 require_once "../../../../db/models/Customer.php";
 

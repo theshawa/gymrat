@@ -34,6 +34,18 @@ require_once "../../includes/sidebar.php";
         <?php require_once "../../includes/menubar.php"; ?>
         <div style="margin: 0 20px;">
             <div class="settings-list-item">
+                <h1>Gym Name</h1>
+                <p><?= $settings->gym_name ?? "Not specified" ?></p>
+            </div>
+            <div class="settings-list-item">
+                <h1>Gym Description</h1>
+                <p><?= $settings->gym_desc ?? "Not specified" ?></p>
+            </div>
+            <div class="settings-list-item">
+                <h1>Gym Address</h1>
+                <p><?= $settings->gym_address ?? "Not specified" ?></p>
+            </div>
+            <div class="settings-list-item">
                 <h1>Contact Email</h1>
                 <p><?= $settings->contact_email ?></p>
             </div>
@@ -43,16 +55,29 @@ require_once "../../includes/sidebar.php";
             </div>
             <div class="settings-list-item">
                 <h1>Workout Session Expiration Time</h1>
-                <p><?= $settings->workout_session_expiry ?></p>
+                <p><?= $settings->workout_session_expiry ?> hours</p>
             </div>
-            <!-- <?php foreach ($settings as $key => $value): ?>
-                <?php if (!in_array($key, ['table', 'conn', 'id'])): ?>
-                    <div class="settings-list-item">
-                        <h1><?= htmlspecialchars($key) ?></h1>
-                        <p><?= htmlspecialchars($value) ?></p>
-                    </div>
+            <div class="settings-list-item">
+                <h1>Max Capacity</h1>
+                <p><?= $settings->max_capacity ?></p>
+            </div>
+            <div class="settings-list-item">
+                <h1>Min Workout Time</h1>
+                <p><?= $settings->min_workout_time ?> hours</p>
+            </div>
+            <div class="settings-list-item">
+                <h1>Gym Banner</h1>
+                <?php if ($settings->gym_banner): ?>
+                    <img src="../../../../uploads/<?= $settings->gym_banner ?>" alt="Gym Banner"
+                    style="width: 60%; height: auto; border-radius: 20px; margin-top: 10px;">
+                <?php else: ?>
+                    <p>No banner uploaded</p>
                 <?php endif; ?>
-            <?php endforeach; ?> -->
+            </div>
+            <div class="settings-list-item">
+                <h1>Show Widgets</h1>
+                <p><?= $settings->show_widgets ? "Yes" : "No" ?></p>
+            </div>
         </div>
     </div>
 </main>

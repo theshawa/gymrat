@@ -98,4 +98,17 @@ class Staff extends Model
             'password' => $this->password
         ]);
     }
+
+    public function get_all()
+    {
+        $sql = "SELECT * FROM $this->table";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        return array_map(function ($item) {
+            $staff = new Staff();
+            $staff->fill($item);
+            return $staff;
+        }, $items);
+    }
 }

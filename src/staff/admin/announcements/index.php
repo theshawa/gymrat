@@ -47,9 +47,9 @@ require_once "../../includes/sidebar.php";
                     <p>Sent to </strong> <?= $announcement->to_all ?></p>
                     <p><?= substr($announcement->message, 0, 40) ?><?= strlen($announcement->message) > 20 ? '...' : '' ?></p>
                 </div>
-                <div style="grid-column:2; align-self: end; justify-self: end;">
-                    <p><strong>Source:</strong> <?= $announcement->source ?></p>
+                <div style="grid-column:2; align-self: end; justify-self: end; text-align: right;">
                     <p><strong>Created on </strong> <?= $announcement->created_at->format('Y-m-d') ?></p>
+                    <p><strong>Valid till </strong> <?= $announcement->valid_till->format('Y-m-d') ?></p>
                 </div>
             </a>
         <?php endforeach; ?>

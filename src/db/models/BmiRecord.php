@@ -23,9 +23,9 @@ class BmiRecord extends Model
         $this->age = $data['age'] ?? 0;
     }
 
-    public function get_all_of_user(int $user): array
+    public function get_all_of_user(int $user)
     {
-        $sql = "SELECT * FROM $this->table WHERE user = :user";
+        $sql = "SELECT * FROM $this->table WHERE user = :user ORDER BY created_at ASC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'user' => $user
@@ -36,6 +36,19 @@ class BmiRecord extends Model
             $record->fill($item);
             return $record;
         }, $items);
+    }
+
+    public function get_last_of_user()
+    {
+        $sql = "SELECT * FROM $this->table WHERE user = :user ORDER BY created_at DESC LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'user' => $this->user
+        ]);
+        $item = $stmt->fetch();
+        if ($item) {
+            $this->fill($item);
+        }
     }
 
     public function delete_all_of_user(int $user)

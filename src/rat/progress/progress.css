@@ -1,7 +1,24 @@
 #progress-chart {
   padding: 10px;
   border-radius: 10px;
-  border: 2px solid var(--color-zinc-900);
+  border: 1px solid var(--color-zinc-900);
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.info {
+  font-size: 14px;
+  color: var(--color-zinc-400);
+  margin-bottom: 20px;
+}
+
+.info strong {
+  font-weight: 500;
+  color: var(--color-zinc-300);
 }
 
 .filter {
@@ -41,12 +58,6 @@
   flex-direction: column;
   gap: 10px;
   visibility: hidden;
-}
-
-.info {
-  font-size: 12px;
-  color: var(--color-zinc-400);
-  margin-top: 20px;
 }
 
 .list {
@@ -107,17 +118,37 @@
   height: 16px;
 }
 
-.log-record-list {
+.other-records {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .log-record {
   padding: 10px 12px;
-  border: 1px solid var(--color-zinc-900);
-  border-radius: 10px;
+  border: 1px solid var(--color-zinc-800);
+  background-color: var(--color-zinc-950);
+  border-radius: 16px;
+}
+
+.log-record .top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.log-record .top img {
+  width: 32px;
+  height: 32px;
+  border-radius: 99999px;
+  margin-right: 5px;
+}
+
+.log-record .top span {
+  font-size: 14px;
+  color: var(--color-zinc-400);
+  font-weight: 500;
 }
 
 .log-record .bottom {
@@ -138,20 +169,142 @@
   text-transform: uppercase;
   letter-spacing: 0.2px;
   font-weight: 500;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .log-record .bottom .status.well_done {
-  color: var(--color-green-light);
-  background-color: rgba(66, 179, 77, 0.1);
+  color: rgba(66, 179, 77, 1);
+  background: radial-gradient(
+    circle at top left,
+    rgba(66, 179, 77, 0.15) 0%,
+    rgba(66, 179, 77, 0.1) 100%
+  );
 }
 
 .log-record .bottom .status.try_harder {
-  color: var(--color-red-light);
-  background-color: rgba(240, 80, 80, 0.1);
+  color: rgba(255, 204, 1);
+  background: radial-gradient(
+    circle at top left,
+    rgba(255, 204, 0, 0.1) 0%,
+    rgba(255, 204, 0, 0.05) 100%
+  );
 }
 
 .log-record .message {
   font-size: 16px;
   margin-bottom: 10px;
+}
+
+.feedback {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: start;
+  padding: 8px 12px;
+  border-radius: 16px;
+}
+
+.feedback svg {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+}
+
+.feedback p {
+  font-size: 14px;
+  margin-top: 5px;
+  color: inherit;
+}
+
+/* .feedback.good {
+  background-color: rgba(66, 179, 77, 0.1);
+  border: 1px solid rgba(66, 179, 77, 0.2);
+} */
+
+.feedback.good {
+  color: var(--color-green-light);
+  background: radial-gradient(
+    circle at top left,
+    rgba(66, 179, 77, 0.15) 0%,
+    rgba(66, 179, 77, 0.1) 100%
+  );
+}
+
+.feedback.bad {
+  color: rgba(255, 204, 0, 1);
+  background: radial-gradient(
+    circle at top left,
+    rgba(255, 204, 0, 0.1) 0%,
+    rgba(255, 204, 0, 0.05) 100%
+  );
+}
+
+.no-data {
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+
+  background: radial-gradient(
+    circle at top left,
+    rgba(255, 204, 0, 0.1) 0%,
+    rgba(255, 204, 0, 0.05) 100%
+  );
+  border: 1px solid rgba(255, 204, 0, 0.05);
+  color: rgba(255, 204, 0, 1);
+}
+
+.latest-record {
+  padding: 16px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  background-color: var(--color-zinc-900);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.no-records {
+  padding-top: 20px;
+  border-top: 1px solid var(--color-zinc-800);
+  color: var(--color-violet-300);
+}
+
+.insights {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.insights .insight-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.insight {
+  padding: 16px;
+  border-radius: 16px;
+  background: radial-gradient(
+    circle at top left,
+    rgba(91, 0, 204, 0.6) 0%,
+    rgba(91, 0, 204, 0.4) 100%
+  );
+  border: 1px solid rgba(91, 0, 204, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.insight .title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-zinc-400);
+}
+
+.insight .value {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-zinc-300);
 }

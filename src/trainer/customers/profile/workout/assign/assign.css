@@ -1,0 +1,132 @@
+/* Updated assign.css */
+.assignment-page {
+    padding: 15px;
+}
+
+.customer-header {
+    margin-bottom: 20px;
+}
+
+.customer-header h2 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.plans-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.plan-card {
+    background-color: var(--color-zinc-900);
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.plan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.plan-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.duration {
+    background-color: var(--color-zinc-800);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.plan-description {
+    font-size: 14px;
+    color: var(--color-zinc-300);
+    margin-bottom: 15px;
+}
+
+.exercise-count {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.count-label {
+    color: var(--color-zinc-400);
+}
+
+.plan-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    text-align: center;
+}
+
+.assign-btn {
+    background-color: var(--color-violet-600);
+    color: white;
+    flex: 1;
+}
+
+.preview-btn {
+    background-color: var(--color-zinc-700);
+    color: white;
+}
+
+.request-container {
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--color-zinc-900);
+    border-radius: 12px;
+}
+
+.request-btn {
+    background-color: var(--color-violet-600);
+    color: white;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 30px 15px;
+    background-color: var(--color-zinc-900);
+    border-radius: 12px;
+}
+
+.empty-state p {
+    margin-bottom: 15px;
+    color: var(--color-zinc-400);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .assignment-page {
+        padding: 10px;
+    }
+
+    .plan-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}

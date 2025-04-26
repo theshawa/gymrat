@@ -23,13 +23,12 @@ class TrainerLogRecord extends Model
         $this->created_at = new DateTime($data['created_at'] ?? '');
     }
 
-    public function get_all_of_user_with_trainer(int $user, int $trainer)
+    public function get_all_of_user(int $user)
     {
-        $sql = "SELECT * FROM $this->table WHERE customer_id = :customer_id and trainer_id = :trainer_id ORDER BY created_at DESC";
+        $sql = "SELECT * FROM $this->table WHERE customer_id = :customer_id ORDER BY created_at DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'customer_id' => $user,
-            'trainer_id' => $trainer
         ]);
         $items = $stmt->fetchAll();
         return array_map(function ($item) {
@@ -59,6 +58,38 @@ class TrainerLogRecord extends Model
             'performance_type' => $this->performance_type,
         ]);
         $this->id = $this->conn->lastInsertId();
+    }
+
+    public function update()
+    {
+        $sql = "UPDATE $this->table SET message = :message, performance_type = :performance_type WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'message' => $this->message,
+            'performance_type' => $this->performance_type,
+            'id' => $this->id,
+        ]);
+    }
+
+    public function delete()
+    {
+        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'id' => $this->id,
+        ]);
+    }
+
+    public function get_by_id()
+    {
+        $sql = "SELECT * FROM $this->table WHERE id = :id LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
+        $item = $stmt->fetch();
+        if (!$item) {
+            throw new Exception("Log record not found");
+        }
+        $this->fill($item);
     }
 
     public function get_perfomance_type_text()

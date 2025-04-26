@@ -52,9 +52,9 @@ require_once "../includes/titlebar.php";
         </p>
     <?php endif; ?>
     <p class="time">
-        At <?= $notification->created_at->format("Y-m-d h:i") ?>
+        At <?= $notification->created_at->format("Y-m-d h:i a") ?>
     </p>
-    <p class="paragraph" style="margin-top: 20px;">
+    <p class="notifcation-content" style="margin-top: 10px;">
         <?= $notification->message ?>
     </p>
 </main>

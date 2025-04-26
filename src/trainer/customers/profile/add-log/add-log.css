@@ -175,6 +175,57 @@
   align-items: center;
 }
 
+.log-actions {
+    display: flex;
+    gap: 10px;
+    margin-left: 10px;
+}
+
+.btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #27272A;
+    color: #A1A1AA;
+    transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+    background-color: #3F3F46;
+}
+
+.btn-icon.edit-log {
+    color: #71717A; /* ash color for edit */
+}
+
+.btn-icon.edit-log:hover {
+    background-color: rgba(113, 113, 122, 0.2);
+}
+
+.btn-icon.delete-log {
+    color: #DC2626; /* red color for delete */
+}
+
+.btn-icon.delete-log:hover {
+    background-color: rgba(220, 38, 38, 0.2);
+}
+
+.btn.secondary {
+    background-color: #27272A;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
 .log-date {
   color: #a1a1aa;
   font-size: 14px;

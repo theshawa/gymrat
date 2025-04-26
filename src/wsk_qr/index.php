@@ -1,18 +1,107 @@
+<?php
+// This is the QR code display page for the gym check-in system
+// File: src/wsk_qr/index.php
+// This will be the direct landing page at localhost/wsk_qr
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gymrat | QR Code</title>
-    <meta name="description" content="As a responsible gym manager, you should not share this QR code with anyone.">
+    <title>GYMRAT | Check-in QR Code</title>
+    <meta name="description" content="Scan this QR code to check in at GYMRAT gym">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="wsk_qr.css">
 </head>
 
 <body>
-    <div id="qrcode"></div>
+    <div class="container">
+        <header>
+            <svg width="150" height="40" viewBox="0 0 94 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo">
+                <path d="M16.1887 5.34857H12.4129V4.57143L11.6667 3.81714H3.00712L3.75325 4.57143V11.4286L4.49938 12.2057H11.6667L12.4129 11.4286V9.92H8.27524V6.10286H16.1887V12.96L13.1816 16H3.00712L0 12.96V3.06286L3.00712 0H13.1816L16.1887 3.06286V5.34857Z" fill="currentColor" />
+                <path d="M28.9775 0H33.4995L26.7165 9.92V16H22.9406V9.92L16.1802 0H20.7022L24.8399 6.05714L28.9775 0Z" fill="currentColor" />
+                <path d="M48.1717 0H51.925V16H48.1717V6.05714L45.142 9.92H41.3888L38.359 6.05714V16H34.6058V0H38.359L43.2654 6.28572L48.1717 0Z" fill="currentColor" />
+                <path d="M57.6895 16H55.1345V0.0457151H61.9401C63.357 0.0457151 64.4725 0.480001 65.2864 1.34857C66.1004 2.2019 66.5074 3.36762 66.5074 4.84571C66.5074 5.98857 66.2436 6.94095 65.716 7.70286C65.2035 8.44952 64.4423 8.97524 63.4324 9.28L66.8465 16H63.9977L60.8323 9.55429H57.6895V16ZM61.7593 7.38286C62.4074 7.38286 62.9124 7.21524 63.2741 6.88C63.6359 6.52952 63.8168 6.03429 63.8168 5.39429V4.29714C63.8168 3.65714 63.6359 3.16952 63.2741 2.83429C62.9124 2.48381 62.4074 2.30857 61.7593 2.30857H57.6895V7.38286H61.7593Z" fill="currentColor" />
+                <path d="M79.8082 16L78.3838 11.68H72.4826L71.1034 16H68.5032L73.8844 0.0457151H77.095L82.4762 16H79.8082ZM75.4897 2.42286H75.3766L73.093 9.46286H77.7507L75.4897 2.42286Z" fill="currentColor" />
+                <path d="M89.2971 2.33143V16H86.7422V2.33143H82.0393V0.0457151H94V2.33143H89.2971Z" fill="currentColor" />
+            </svg>
+        </header>
+
+        <h1 style="text-align:center;" id="greeting" class="greeting"></h1>
+
+        <main>
+    <div class="qr-container">
+        <h2 class="qr-heading">Scan QR to Check In</h2>
+        <div id="qrcode" class="pulse-animation"></div>
+    </div>
+</main>
+
+<script>
+    // Dynamically set greeting message
+    const greetingElement = document.getElementById("greeting");
+    const currentHour = new Date().getHours();
+
+    let greetingMessage = "Good Morning Buddy! 👋";
+    if (currentHour >= 12 && currentHour < 18) {
+        greetingMessage = "Good Afternoon Buddy! 👋";
+    } else if (currentHour >= 18) {
+        greetingMessage = "Good EveningBuddy! 👋";
+    }
+
+    greetingElement.textContent = greetingMessage;
+</script>
+
+        <footer>
+            <p>&copy; <?= date('Y') ?> GYMRAT. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            width: 240,
+            height: 240,
+            colorDark: "#18181b", 
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+        qrcode.clear();
+
+        const showQrCode = (key) => {
+            qrcode.clear();
+            qrcode.makeCode(key);
+        };
+
+        const evtSource = new EventSource("sse.php");
+
+        evtSource.addEventListener("connected", (event) => {
+            console.log("Connected to server");
+            if (event.data) showQrCode(event.data);
+        });
+
+        evtSource.addEventListener("qr_code_changed", (event) => {
+            console.log("QR code updated");
+            if (event.data) showQrCode(event.data);
+            
+            // Apply a brief highlight effect when code updates
+            const qrElement = document.getElementById("qrcode");
+            qrElement.classList.add("highlight");
+            setTimeout(() => {
+                qrElement.classList.remove("highlight");
+            }, 1000);
+        });
+
+        evtSource.addEventListener("error", (event) => {
+            console.error("Error event:", event.data);
+        });
+
+        evtSource.onerror = (error) => {
+            console.error("SSE connection error:", error);
+        };
+    </script>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="wsk_qr.js"></script>
 
 </html>

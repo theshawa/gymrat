@@ -52,7 +52,7 @@ auth_required_guard("eq", "/staff/login");
 
                     <!-- Category -->
                     <div style="margin-bottom: 10px;">
-                        <h2><label for="equipment_category">Category</label></h2>
+                        <h2><label for="equipment_category">Type</label></h2>
                         <input type="text" id="equipment_category" name="equipment_category"
                             class="staff-input-primary staff-input-long" value="<?= htmlspecialchars($equipment->category ?? '') ?>">
                     </div>

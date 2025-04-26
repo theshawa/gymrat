@@ -58,7 +58,7 @@ auth_required_guard("eq", "/staff/login");
                     </div>
 
                     <div style="margin-bottom: 10px">
-                        <h2><label for="edit-category">Category</label></h2>
+                        <h2><label for="edit-category">Type</label></h2>
                         <input type="text" id="edit-category" name="equipment_category"
                             class="staff-input-primary staff-input-long"
                             value="<?= htmlspecialchars($equipment->type) ?>">

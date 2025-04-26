@@ -276,7 +276,7 @@ if ($hour >= 12 && $hour < 17) {
                     $randomStatus = $statuses[array_rand($statuses)];
 
                     // For real implementation, you would check actual client data
-                    // to determine which clients need attention
+                    // To determine which clients need attention
                     ?>
                     <a href="/trainer/customers/profile?id=<?= $client->id ?>" class="client-list-item">
                         <img src="<?= $avatarPath ?>" alt="<?= htmlspecialchars($client->fname) ?>" class="client-avatar">

@@ -16,6 +16,14 @@ $get_year = $_GET['year'] ?? (int)date("Y");
 $get_month = $_GET['month'] ?? (int)date("m");
 $get_plan = $_GET['plan'] ?? 0;
 
+if ($get_year > $current_year) {
+    $get_year = $current_year;
+    $_SESSION['error'] = "Invalid year selected. Defaulting to current year.";
+}
+if ($get_year == $current_year && $get_month > $current_month) {
+    $get_month = $current_month;
+    $_SESSION['error'] = "Invalid month selected. Defaulting to current month.";
+}
 
 
 $sales = null;
@@ -31,14 +39,6 @@ try {
 }
 
 // validation
-if ($get_year > $current_year) {
-    $get_year = $current_year;
-    $_SESSION['error'] = "Invalid year selected. Defaulting to current year.";
-}
-if ($get_year == $current_year && $get_month > $current_month) {
-    $get_month = $current_month;
-    $_SESSION['error'] = "Invalid month selected. Defaulting to current month.";
-}
 if ($get_plan != 0 && !array_key_exists($get_plan, $membership_titles)) {
     $get_plan = 0;
     $_SESSION['error'] = "Invalid membership plan selected. Defaulting to all plans.";
@@ -51,13 +51,11 @@ if ($get_plan != 0) {
 
 $record_count = 0;
 $total_revenue = 0;
-$incomplete_records = 0;
 
 if (!empty($sales)) {
     $completed_sales = array_filter($sales, fn($sale) => $sale->completed_at !== null);
     $record_count = count($completed_sales);
     $total_revenue = array_sum(array_map(fn($sale) => $sale->amount, $completed_sales));
-    $incomplete_records = count(array_filter($sales, fn($sale) => $sale->completed_at === null));
 }
 
 $menuBarConfig = [
@@ -88,9 +86,8 @@ require_once "../../../../includes/sidebar.php";
                 </p>
             </div>
             <div style="grid-column: 2; align-self: center; justify-self: end; text-align: left;">
-                <h3>Records Count&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;: <?= $record_count ?></h3>
-                <h3>Incomplete Payments&emsp;&nbsp;: <?= $incomplete_records ?></h3>
-                <h3>Total Revenue&emsp;&emsp;&emsp;&emsp;&emsp; : Rs. <?= number_format($total_revenue, 2) ?></h3>
+                <h3>Records Count&emsp;&nbsp;&nbsp;: <?= $record_count ?></h3>
+                <h3>Total Revenue&emsp;&emsp;: Rs. <?= number_format($total_revenue, 2) ?></h3>
             </div>
 
         </div>

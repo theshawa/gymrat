@@ -14,7 +14,7 @@ try {
 }
 
 if (!$customer->membership_plan) {
-    die("You don't have a membership plan. Please contact support to get one.");
+    die("You don't have a membership plan. Please contact manager to get one.");
 }
 
 require_once "../../db/models/MembershipPlan.php";

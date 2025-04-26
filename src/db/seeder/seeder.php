@@ -11,5 +11,8 @@ $faker = Faker\Factory::create();
 
 $db = Database::get_conn();
 
-require_once "./seeders/exercises.php";
-seed_exercises($faker);
+// require_once "./seeders/exercises.php";
+// seed_exercises($faker);
+
+require_once "./seeders/customer_progress.php";
+seed_customer_progress($faker);

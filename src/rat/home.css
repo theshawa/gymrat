@@ -1,46 +1,65 @@
-.banner {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 40px;
-}
-.banner img {
-  border-radius: 20px;
-  background-color: rgba(250, 250, 250, 0.1);
-  border: 1px solid rgba(250, 250, 250, 0.1);
-  margin-bottom: 15px;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+main {
+  position: relative;
+  background-color: var(--color-zinc-950);
 }
 
-.banner h1 {
-  font-size: 24px;
-  margin-bottom: 5px;
+.banner-image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
 }
 
 .grid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
+  /* margin-top: -60px; */
+  background: linear-gradient(
+    to bottom,
+    rgba(9, 9, 11, 0.4) 0%,
+    rgb(9, 9, 11) 100%
+  );
+  border-radius: 40px;
+  backdrop-filter: blur(20px);
+
+  padding: 30px 20px;
+
+  z-index: 10;
 }
 
-.grid-line {
+.banner-content {
+  grid-column: span 2 / span 2;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
+  padding-bottom: 20px;
+  text-align: center;
 }
 
 .grid-tile {
   border-radius: 30px;
   padding: 12px;
-  background: radial-gradient(at top right, #5000b3, rgba(81, 0, 179, 0.6));
-  border: 1px solid #5000b3;
+  background: radial-gradient(at top right, #5b00cc, rgba(91, 0, 204, 0.6));
+  border: 1px solid rgba(91, 0, 204, 0.6);
+  /* background: radial-gradient(
+    at top right,
+    rgba(250, 250, 250, 0.2),
+    rgba(250, 250, 250, 0.1)
+  ); */
+  /* border: 1px solid rgba(250, 250, 250, 0.1); */
   backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
   aspect-ratio: 1;
 }
-
-.grid-tile.disabled {
+.grid-tile.grayed {
   background: radial-gradient(
     at top right,
     rgba(250, 250, 250, 0.2),
@@ -188,8 +207,8 @@
   color: rgba(250, 250, 250, 0.8);
 }
 
-.gray-full-tile {
-  margin-top: 10px;
+.complaint-tile {
+  grid-column: span 2 / span 2;
   width: 100%;
   border-radius: 30px;
   padding: 18px;
@@ -204,7 +223,7 @@
   align-items: center;
 }
 
-.gray-full-tile h2 {
+.complaint-tile h2 {
   font-weight: 500;
   margin-left: 10px;
 }

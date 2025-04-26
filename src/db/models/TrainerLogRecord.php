@@ -23,13 +23,12 @@ class TrainerLogRecord extends Model
         $this->created_at = new DateTime($data['created_at'] ?? '');
     }
 
-    public function get_all_of_user_with_trainer(int $user, int $trainer)
+    public function get_all_of_user(int $user)
     {
-        $sql = "SELECT * FROM $this->table WHERE customer_id = :customer_id and trainer_id = :trainer_id ORDER BY created_at DESC";
+        $sql = "SELECT * FROM $this->table WHERE customer_id = :customer_id ORDER BY created_at DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'customer_id' => $user,
-            'trainer_id' => $trainer
         ]);
         $items = $stmt->fetchAll();
         return array_map(function ($item) {

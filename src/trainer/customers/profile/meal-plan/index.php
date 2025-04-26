@@ -244,7 +244,7 @@ require_once "../../../includes/titlebar.php";
 
     .assign-btn,
     .change-btn {
-        background-color: #6700e6;
+        background-color: #5b00cc;
         color: white;
     }
 

@@ -3,6 +3,7 @@
 $title = isset($pageTitle) ? $pageTitle : null;
 $sidebarActive = isset($sidebarActive) ? $sidebarActive : null;
 $styles = isset($pageStyles) ? $pageStyles : [];
+$scripts = isset($pageScripts) ? $pageScripts : [];
 
 $pageConfig = [
     "title" => ($title ?  $title . " | "  : "") . "Admin",
@@ -21,5 +22,6 @@ $pageConfig = [
         ],
         "active" => $sidebarActive
     ],
-    "styles" => $styles
+    "styles" => $styles,
+    "scripts" => $scripts
 ];

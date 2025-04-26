@@ -80,12 +80,16 @@ require_once "../../../../includes/sidebar.php";
                     <p>Rs. <?= number_format($current_payment->amount, 2) ?></p>
                 </div>
                 <div style="margin: 10px 0;">
-                    <h1 style="margin-bottom: 5px">Completed At</h1>
+                    <h1 style="margin-bottom: 5px">Created On</h1>
+                    <p><?= $current_payment->created_at->format('Y-m-d') ?></p>
+                </div>
+                <div style="margin: 10px 0;">
+                    <h1 style="margin-bottom: 5px">Completed On</h1>
                     <p><?= $current_payment->completed_at ? $current_payment->completed_at->format('Y-m-d') : "Incomplete" ?></p>
                 </div>
                 <?php if ($current_payment->completed_at): ?>
                     <div style="margin: 10px 0;">
-                        <h1 style="margin-bottom: 5px">Expiry Date</h1>
+                        <h1 style="margin-bottom: 5px">Expires On</h1>
                         <p><?= $current_payment->completed_at->modify("+{$current_plan->duration} days")->format('Y-m-d') ?></p>
                     </div>
                 <?php endif; ?>

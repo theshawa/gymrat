@@ -193,11 +193,29 @@ class MembershipPayment extends Model
         return $stmt->fetchAll();
     }
 
-    public function get_all(): array
+    public function get_all(int $show_incomplete = 0): array
     {
         $sql = "SELECT * FROM $this->table";
+        if ($show_incomplete === 0) {
+            $sql .= " WHERE completed_at IS NOT NULL";
+        }
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
+        $items = $stmt->fetchAll();
+        return array_map(function ($item) {
+            $record = new MembershipPayment();
+            $record->fill($item);
+            return $record;
+        }, $items);
+    }
+
+    public function get_all_sales_for_all_month(int $month): array
+    {
+        $sql = "SELECT * FROM $this->table WHERE MONTH(created_at) = :month AND completed_at IS NOT NULL";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'month' => $month
+        ]);
         $items = $stmt->fetchAll();
         return array_map(function ($item) {
             $record = new MembershipPayment();

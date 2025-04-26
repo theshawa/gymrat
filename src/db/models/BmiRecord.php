@@ -25,7 +25,7 @@ class BmiRecord extends Model
 
     public function get_all_of_user(int $user): array
     {
-        $sql = "SELECT * FROM $this->table WHERE user = :user";
+        $sql = "SELECT * FROM $this->table WHERE user = :user ORDER BY created_at ASC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'user' => $user

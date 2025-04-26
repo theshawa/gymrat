@@ -107,15 +107,9 @@ require_once "../../includes/titlebar.php";
                 <h4>Latest Record</h4>
                 <?php $trainer = get_trainer($latest_record->trainer_id); ?>
                 <div class="log-record">
-                    <?php
-                    $avatar = $trainer->avatar ? get_file_url($trainer->avatar) : get_file_url("default-images/default-avatar.png");
-                    if (!$avatar) {
-                        $avatar = get_file_url("default-images/default-avatar.png");
-                    }
-                    ?>
                     <div class="top">
                         <?php if ($trainer): ?>
-                            <img src="<?= $avatar  ?>" alt="Trainer Profile Picture" class="trainer-profile-picture">
+                            <img src="<?= get_file_url($trainer->avatar, "default-images/default-avatar.png")  ?>" alt="Trainer Profile Picture" class="trainer-profile-picture">
                             <span class="trainer-name"><?= $trainer->fname . " " . $trainer->lname ?></span>
                         <?php else: ?>
                             <span class="trainer-name">Unknown Trainer</span>
@@ -159,15 +153,9 @@ require_once "../../includes/titlebar.php";
                 <?php foreach ($other_records as $record) : ?>
                     <?php $trainer = get_trainer($record->trainer_id); ?>
                     <div class="log-record">
-                        <?php
-                        $avatar = $trainer->avatar ? get_file_url($trainer->avatar) : get_file_url("default-images/default-avatar.png");
-                        if (!$avatar) {
-                            $avatar = get_file_url("default-images/default-avatar.png");
-                        }
-                        ?>
                         <div class="top">
                             <?php if ($trainer): ?>
-                                <img src="<?= $avatar  ?>" alt="Trainer Profile Picture" class="trainer-profile-picture">
+                                <img src="<?= get_file_url($trainer->avatar, "default-images/default-avatar.png") ?>" alt="Trainer Profile Picture" class="trainer-profile-picture">
                                 <span class="trainer-name"><?= $trainer->fname . " " . $trainer->lname ?></span>
                             <?php else: ?>
                                 <span class="trainer-name">Unknown Trainer</span>

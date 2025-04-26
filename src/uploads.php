@@ -54,11 +54,14 @@ function delete_file(string $file_name): bool
     return false;
 }
 
-function get_file_url(string $file): string | null
+function get_file_url(?string $file, $default_file = null): string | null
 {
+    if (!$file) {
+        return $default_file;
+    }
     $filePath =  "/uploads/" . $file;
     if (!file_exists(__DIR__ . $filePath)) {
-        return null;
+        return $default_file;
     }
     return $filePath;
 }

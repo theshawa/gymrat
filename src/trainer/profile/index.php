@@ -21,12 +21,7 @@ try {
 error_log("Trainer avatar from database: " . $trainer->avatar);
 
 // Use the get_file_url helper function if avatar exists
-$avatar = $trainer->avatar
-    ? get_file_url($trainer->avatar)
-    : "/uploads/default-images/default-avatar.png";
-if (!$avatar) {
-    $avatar = "/uploads/default-images/default-avatar.png"; // Fallback to default avatar if the URL is empty
-}
+$avatar = get_file_url($trainer->avatar, "/default-images/default-avatar.png");
 
 // Add cache buster from session if available
 $cache_buster = isset($_SESSION['cache_buster']) ? $_SESSION['cache_buster'] : md5(time());

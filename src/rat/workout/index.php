@@ -210,14 +210,8 @@ require_once "../includes/titlebar.php";
     <div class="exercises">
         <?php require_once "../../uploads.php";  ?>
         <?php foreach ($exercises as $exercise): ?>
-            <?php
-            $image = $exercise->image ? get_file_url($exercise->image) : get_file_url("default-images/default_exercise.jpg");
-            if (!$image) {
-                $image = get_file_url("default-images/default_exercise.jpg");
-            }
-            ?>
             <a href="./exercise?id=<?= $exercise->id ?>" class="exercise">
-                <img src="<?= $image ?>" alt="Workout image" class="featured-image">
+                <img src="<?= get_file_url($exercise->image, "default-images/default_exercise.jpg") ?>" alt="Workout image" class="featured-image">
                 <div class="right">
                     <h4><?= $exercise->name ?> <span class="count"><?= $exercise->reps ?> x <?= $exercise->sets ?></span></h4>
                     <p class="equipment"><?= $exercise->equipment_needed ?> required</p>

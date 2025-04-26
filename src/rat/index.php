@@ -133,10 +133,7 @@ if ($customer->trainer) {
         die("Failed to get trainer: " . $th->getMessage());
     }
     $trainer_data['name'] = $trainer->fname . " " . $trainer->lname;
-    $trainer_data['avatar'] = $trainer->avatar ?? get_file_url("default-images/default-avatar.png");
-    if (!$trainer_data['avatar']) {
-        $trainer_data['avatar'] = get_file_url("default-images/default-avatar.png");
-    }
+    $trainer_data['avatar'] = get_file_url($trainer->avatar, "default-images/default-avatar.png");
 }
 
 $progress = [];
@@ -215,15 +212,10 @@ $expire_date->modify('+30 days');
 
 $interval = $now->diff($expire_date);
 $plan_remaining_days = $interval->days;
-
-$banner_image = $settings->gym_banner ? get_file_url($settings->gym_banner) : get_file_url("default-images/default-gym-banner.png");
-if (!$banner_image) {
-    $banner_image = get_file_url("default-images/default-gym-banner.png");
-}
 ?>
 
 <main class="no-padding">
-    <img class="banner-image" src="<?= $banner_image ?>" />
+    <img class="banner-image" src="<?= get_file_url($settings->gym_banner, "default-images/default-gym-banner.png") ?>" />
     <div class="grid">
         <div class="banner-content">
             <h1>Hello <?= $fname ?></h1>

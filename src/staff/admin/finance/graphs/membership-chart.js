@@ -17,8 +17,8 @@ if (ctx) {
         {
           label: "Number of Purchases",
           data,
-          backgroundColor: "rgba(91, 0, 204, 0.5)",
-          borderColor: "rgba(91, 0, 204, 1)",
+          backgroundColor: "rgba(68, 0, 153, 0.5)",
+          borderColor: "rgba(68, 0, 153, 1)",
           borderWidth: 2,
         },
       ],

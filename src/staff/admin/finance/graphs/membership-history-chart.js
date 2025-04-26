@@ -12,8 +12,8 @@ if (ctx) {
         {
           label: "Membership Plan Purchases",
           data,
-          borderColor: "rgba(91, 0, 204, 1)",
-          backgroundColor: "rgba(91, 0, 204, 0.2)",
+          borderColor: "rgba(68, 0, 153, 1)",
+          backgroundColor: "rgba(68, 0, 153, 0.2)",
           borderWidth: 2,
           tension: 0.3,
         },

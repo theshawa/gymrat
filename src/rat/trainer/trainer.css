@@ -56,8 +56,8 @@
   padding: 6px 12px;
   border-radius: 20px;
   margin: 20px auto;
-  background: radial-gradient(at top right, #5b00cc, rgba(91, 0, 204, 0.6));
-  border: 1px solid #5b00cc;
+  background: radial-gradient(at top right, #440099, rgba(68, 0, 153, 0.6));
+  border: 1px solid #440099;
   color: var(--color-zinc-50);
   display: flex;
   align-items: center;

@@ -29,7 +29,7 @@ function generate_html($fileName, $htmlBody)
                 --color-violet-400: #8e33ff;
                 --color-violet-500: #7200ff;
                 --color-violet-600: #6700e6;
-                --color-violet-700: #5b00cc;
+                --color-violet-700: #440099;
                 --color-violet-800: #5000b3;
                 --color-violet-900: #440099;
                 --color-violet-950: #2e0066;

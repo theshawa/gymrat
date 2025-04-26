@@ -57,15 +57,14 @@ $lastSession->fill([
     'workout' => $customer->workout,
 ]);
 $lastSessionText = "It's your first time!";
-require_once "../utils.php";
-if ($workoutSession) {
-    $lastSessionText = "Last workout<br/>" . format_time($workoutSession->started_at, true);
-}
-
 try {
     $lastSession->get_last_session();
 } catch (\Throwable $th) {
     die("Failed to get workout session: " . $th->getMessage());
+}
+require_once "../utils.php";
+if ($lastSession->day) {
+    $lastSessionText = "Last workout<br/>" . format_time($lastSession->started_at, true);
 }
 
 require_once "../db/models/MembershipPlan.php";

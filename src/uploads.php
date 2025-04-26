@@ -56,6 +56,9 @@ function delete_file(string $file_name): bool
 
 function get_file_url(?string $file, $default_file = null): string | null
 {
+    if ($default_file) {
+        $default_file = "/uploads/" . $default_file;
+    }
     if (!$file) {
         return $default_file;
     }

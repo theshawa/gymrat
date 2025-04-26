@@ -33,7 +33,7 @@ $iconColor = ($status === 'failed') ? 'staff-icon-red' : 'staff-icon-green';
             </div>
             <button type="button" onclick="hideAlert()" class="staff-btn-outline">
                 <svg class="w-6 h-6 <?php echo $iconColor; ?> dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
                 </svg>
             </button>
         </div>
@@ -49,7 +49,7 @@ $iconColor = ($status === 'failed') ? 'staff-icon-red' : 'staff-icon-green';
             </div>
             <button type="button" onclick="hideAlert()" class="staff-btn-outline">
                 <svg class="w-6 h-6 <?php echo $iconColor; ?> dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />
                 </svg>
             </button>
         </div>
@@ -66,7 +66,7 @@ $iconColor = ($status === 'failed') ? 'staff-icon-red' : 'staff-icon-green';
 </script>
 
 <style>
-    .staff-alert-container{
+    .staff-alert-container {
         margin: 0px 0px 20px 0px;
         padding: 10px 15px;
         border-radius: 10px;
@@ -76,13 +76,13 @@ $iconColor = ($status === 'failed') ? 'staff-icon-red' : 'staff-icon-green';
     }
 
     .staff-alert-error {
-        border: 2px solid var(--color-red);
+        border: 1px solid var(--color-red);
         background-color: var(--color-red-light-faded);
         color: var(--color-red);
     }
 
     .staff-alert-success {
-        border: 2px solid var(--color-green);
+        border: 1px solid var(--color-green);
         background-color: var(--color-green-light-faded);
         color: var(--color-green);
     }

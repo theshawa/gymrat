@@ -33,7 +33,7 @@ class MembershipPlan extends Model
     }
 
 
-    public function get_all(): array
+    public function get_all()
     {
         $sql = "SELECT * FROM $this->table";
         $stmt = $this->conn->prepare($sql);
@@ -110,5 +110,18 @@ class MembershipPlan extends Model
     public function __wakeup()
     {
         $this->conn = Database::get_conn();
+    }
+
+    public function get_all_titles(): array
+    {
+        $sql = "SELECT id, name FROM $this->table";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        $titles = [];
+        foreach ($items as $item) {
+            $titles[$item['id']] = $item['name'];
+        }
+        return $titles;
     }
 }

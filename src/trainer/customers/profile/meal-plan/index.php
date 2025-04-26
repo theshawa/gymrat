@@ -1,7 +1,8 @@
 <?php
-// File path: src/trainer/customers/profile/meal-plan/index.php
+// File: src/trainer/customers/profile/meal-plan/index.php
 require_once "../../../../auth-guards.php";
-if (auth_required_guard("trainer", "/trainer/login")) exit;
+if (auth_required_guard("trainer", "/trainer/login"))
+    exit;
 
 require_once "../../../../db/models/Customer.php";
 require_once "../../../../db/models/MealPlan.php";
@@ -101,20 +102,10 @@ if ($mealPlanId) {
     }
 }
 
-// Debug info
-$debugInfo = [
-    'Customer ID' => $customerId,
-    'Customer Name' => $customer['fname'] . ' ' . $customer['lname'],
-    'Customer Email' => $customer['email'],
-    'Meal Plan ID' => $mealPlanId,
-    'Meal Plan Name' => $mealPlanName,
-    'Number of Meals' => count($meals)
-];
-
 $pageConfig = [
     "title" => "Customer Meal Plan",
     "styles" => [
-        "./meal-plan.css" // CSS file
+        "./meal.css" // CSS file 
     ],
     "navbar_active" => 1,
     "titlebar" => [
@@ -141,9 +132,21 @@ require_once "../../../includes/titlebar.php";
     </div>
 
     <!-- Meals Section -->
-    <?php if (empty($meals)): ?>
+    <?php if (!$mealPlanId): ?>
+        <div class="no-plan-message">
+            <p>No meal plan is currently assigned to this customer.</p>
+            <div class="action-buttons">
+                <a href="./assign?id=<?= $customerId ?>" class="btn assign-btn">Assign Meal Plan</a>
+                <a href="../../meal-plans/request/" class="btn request-btn">Request Custom Plan</a>
+            </div>
+        </div>
+    <?php elseif (empty($meals)): ?>
         <div class="no-meals-message">
-            <p>No meals found in this meal plan.</p>
+            <p>This meal plan has no meals defined.</p>
+            <div class="action-buttons">
+                <a href="./assign?id=<?= $customerId ?>" class="btn assign-btn">Change Meal Plan</a>
+                <a href="../../meal-plans/request/" class="btn request-btn">Request Custom Plan</a>
+            </div>
         </div>
     <?php else: ?>
         <!-- Group meals by day -->
@@ -199,20 +202,57 @@ require_once "../../../includes/titlebar.php";
                 </div>
             <?php endforeach; ?>
         </div>
-    <?php endif; ?>
 
-    <!-- Action Button -->
-    <div class="action-buttons">
-        <a href="#" class="request-edit-btn">Request To Edit</a>
-    </div>
-
-    <?php if (isset($_GET['debug']) && $_GET['debug'] === '1'): ?>
-        <div class="debug-section">
-            <h3>Debug Information</h3>
-            <pre><?php print_r($debugInfo); ?></pre>
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a href="./assign?id=<?= $customerId ?>" class="btn change-btn">Change Meal Plan</a>
         </div>
     <?php endif; ?>
 </main>
+
+<style>
+    .no-plan-message,
+    .no-meals-message {
+        background-color: #18181B;
+        border-radius: 16px;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .no-plan-message p,
+    .no-meals-message p {
+        color: #A1A1AA;
+        margin-bottom: 20px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .btn {
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .assign-btn,
+    .change-btn {
+        background-color: #5b00cc;
+        color: white;
+    }
+
+    .request-btn {
+        background-color: #3F3F46;
+        color: white;
+    }
+</style>
 
 <?php require_once "../../../includes/navbar.php" ?>
 <?php require_once "../../../includes/footer.php" ?>

@@ -8,6 +8,7 @@ class MealPlanRequest extends Model
 
     public int $id;
     public int $trainerId;
+    public int $customerId;
     public string $description;
     public DateTime $created_at;
     public DateTime $updated_at;
@@ -20,18 +21,19 @@ class MealPlanRequest extends Model
         $this->created_at = new DateTime();
         $this->updated_at = new DateTime();
         $this->reviewed = 0;
-        $this->trainer = null; 
+        $this->trainer = null;
     }
 
     public function fill(array $data)
     {
         $this->id = $data['id'] ?? 0;
         $this->trainerId = $data['trainer_id'] ?? 0;
+        $this->customerId = $data['customer_id'] ?? 0;
         $this->description = $data['description'] ?? "";
         $this->created_at = new DateTime($data['created_at'] ?? '');
         $this->updated_at = new DateTime($data['updated_at'] ?? $data['created_at'] ?? '');
         $this->reviewed = $data['reviewed'] ?? 0;
-        $this->trainer = null; 
+        $this->trainer = null;
     }
 
     public function get_all(int $sort = 0, int $filter = 0)
@@ -82,4 +84,24 @@ class MealPlanRequest extends Model
         $count = $stmt->fetchColumn();
         return $count > 0;
     }
+
+    public function create()
+    {
+        $sql = "INSERT INTO $this->table (trainer_id, customer_id, description, created_at, updated_at, reviewed) 
+            VALUES (:trainer_id, :customer_id, :description, :created_at, :updated_at, :reviewed)";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'trainer_id' => $this->trainerId,
+            'customer_id' => $this->customerId,
+            'description' => $this->description,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
+            'reviewed' => $this->reviewed
+        ]);
+
+        // Set the ID of this object
+        $this->id = $this->conn->lastInsertId();
+    }
+
 }

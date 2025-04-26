@@ -6,7 +6,7 @@ class Database
     private null|PDO $conn = null;
 
     private $CONFIG = [
-        "host" => "mysql_db",
+        "host" => "gymrat_db",
         "username" => "root",
         "password" => "123456",
         "dbname" => "gymrat",

@@ -37,7 +37,7 @@ if (isset($_SESSION['auth'])) {
         $now = time();
         $diff = $now - $created_at;
 
-        require_once "../constants.php";
+        require_once "../config.php";
         echo "Session age: $diff seconds<br>";
         echo "SESSION_EXPIRE_TIME: $SESSION_EXPIRE_TIME seconds<br>";
         echo "Session expired: " . ($diff > $SESSION_EXPIRE_TIME ? 'Yes' : 'No') . "<br>";
@@ -46,4 +46,3 @@ if (isset($_SESSION['auth'])) {
 
 // Link to go home
 echo "<p><a href='/trainer/'>Go to trainer home</a></p>";
-?>

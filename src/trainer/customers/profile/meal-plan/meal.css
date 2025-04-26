@@ -1,0 +1,195 @@
+/* meal-plan.css */
+.meal-plan-page {
+  padding: 15px;
+}
+
+.meal-plan-header {
+  margin-bottom: 20px;
+}
+
+.meal-plan-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.meal-plan-description {
+  font-size: 14px;
+  color: #d4d4d8;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.meal-plan-duration {
+  display: inline-block;
+  background-color: #27272a;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.meal-plan-duration .label {
+  color: #a1a1aa;
+  margin-right: 4px;
+}
+
+.meal-plan-duration .value {
+  font-weight: 500;
+}
+
+.meal-days {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.meal-day {
+  background-color: #18181b;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.day-heading {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fafafa;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #27272a;
+}
+
+.meals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.meal-card {
+  background-color: #27272a;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.meal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.meal-name {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.meal-time {
+  font-size: 14px;
+  color: #a1a1aa;
+  padding: 2px 8px;
+  background-color: #18181b;
+  border-radius: 8px;
+}
+
+.meal-description {
+  font-size: 14px;
+  color: #d4d4d8;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.meal-nutrition {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.nutrition-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.nutrition-item .label {
+  color: #a1a1aa;
+}
+
+.nutrition-item .value {
+  color: #fafafa;
+  font-weight: 500;
+}
+
+.no-plan-message,
+.no-meals-message {
+  background-color: #18181b;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.no-plan-message p,
+.no-meals-message p {
+  color: #a1a1aa;
+  margin-bottom: 20px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+}
+
+.assign-btn,
+.change-btn {
+  background-color: #5b00cc;
+  color: white;
+}
+
+.request-btn {
+  background-color: #3f3f46;
+  color: white;
+}
+
+/* Add hover effects for better user experience */
+.assign-btn:hover,
+.change-btn:hover {
+  background-color: #5700c3;
+}
+
+.request-btn:hover {
+  background-color: #52525b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .meal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .meal-nutrition {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}

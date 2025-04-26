@@ -26,7 +26,10 @@ try {
 }
 
 if ($request->code) {
-    redirect_with_error_alert("Password reset request already sent. Please check your email.", "./");
+    $_SESSION['customer_password_reset'] = [
+        'email' => $email,
+    ];
+    redirect_with_error_alert("Password reset request already sent. Please check your email.", "./email-verification");
     exit;
 }
 
@@ -42,12 +45,12 @@ try {
     exit;
 }
 
-require_once "../../../phpmailer/send-mail.php";
+require_once "../../../send_email.php";
 
 use PHPMailer\PHPMailer\Exception;
 
 try {
-    send_mail(
+    send_email(
         [
             'email' => $request->email,
             'name' => $request->email
@@ -64,4 +67,4 @@ $_SESSION['customer_password_reset'] = [
     'email' => $email,
 ];
 
-redirect_with_info_alert("Password reset request sent. Please check your email", "./email-verification");
+redirect_with_success_alert("Password reset request sent. Please check your email", "./email-verification");

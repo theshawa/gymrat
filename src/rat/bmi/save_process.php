@@ -32,4 +32,4 @@ try {
     exit;
 }
 
-redirect_with_success_alert("BMI record saved successfully", "./");
+redirect_with_success_alert("BMI record saved successfully", "../progress/");

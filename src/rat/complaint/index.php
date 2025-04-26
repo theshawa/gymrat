@@ -44,7 +44,7 @@ require_once "../includes/titlebar.php";
         <button class="btn">Submit</button>
     </form>
     <div class="complaint-history">
-        <h3>Complaint History</h3>
+        <h3>Your Previous Complaints</h3>
         <?php if (empty($complaints)): ?>
             <p class="paragraph small">No complaints.</p>
         <?php else: ?>

@@ -134,6 +134,9 @@ if ($customer->trainer) {
     }
     $trainer_data['name'] = $trainer->fname . " " . $trainer->lname;
     $trainer_data['avatar'] = $trainer->avatar ?? get_file_url("default-images/default-avatar.png");
+    if (!$trainer_data['avatar']) {
+        $trainer_data['avatar'] = get_file_url("default-images/default-avatar.png");
+    }
 }
 
 $progress = [];

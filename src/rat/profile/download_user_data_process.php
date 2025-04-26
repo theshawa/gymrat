@@ -263,6 +263,6 @@ $htmlBody = <<<HTML
 </table>
 HTML;
 
-$file_name = "user data of $user->fname $user->lname($user->id)";
+$file_name = "user data of $user->fname $user->lname";
 $file_name = str_replace(" ", "_", strtolower($file_name)) . ".pdf";
 generate_pdf($htmlBody, $file_name);

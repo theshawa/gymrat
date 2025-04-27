@@ -1,0 +1,55 @@
+/* Info notification styles */
+.info-notification {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background-color: rgba(24, 24, 27, 0.9);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.info-notification .info-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    color: #6700E6; /* Purple color for the icon */
+}
+
+.info-notification .info-message {
+    color: #D4D4D8; /* Light gray text */
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.chart-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background-color: #222226; /* Dark background exactly matching the image */
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 15px 0;
+    width: 100%;
+}
+
+.chart-info .info-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    color: #6700E6; /* Purple color for the icon */
+}
+
+.chart-info span {
+    color: #9ca3af; /* Gray text to match the example */
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0;
+    font-weight: normal;
+}

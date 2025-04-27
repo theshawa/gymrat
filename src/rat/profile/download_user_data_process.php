@@ -111,11 +111,15 @@ foreach ($complaints as $complaint) {
     $complaints_html .= "<tr><td width='20%'>$complaint->type</td><td width='50%'>$complaint->description</td><td>$created_at</td></tr>";
 }
 
+$complaints_html = empty($complaints_html) ? "<tr><td colspan='3' class='no-data'>No complaints yet.</td></tr>" : $complaints_html;
+
 $trainer_ratings_html = "";
 foreach ($trainer_ratings as $trainer_rating) {
     $created_at = format_time($trainer_rating->created_at);
     $trainer_ratings_html .= "<tr><td width='20%'>$trainer_rating->rating/5</td><td width='50%'>$trainer_rating->review</td><td>$created_at</td></tr>";
 }
+
+$trainer_ratings_html = empty($trainer_ratings_html) ? "<tr><td colspan='3' class='no-data'>No ratings yet.</td></tr>" : $trainer_ratings_html;
 
 $membership_payments_html = "";
 require_once "../../db/models/MembershipPlan.php";
@@ -133,6 +137,8 @@ foreach ($membership_payments as $membership_payment) {
     $membership_payments_html .= "<tr><td width='20%'>$membership_payment->amount</td><td width='50%'>$plan_name</td><td>$created_at</td></tr>";
 }
 
+$membership_payments_html = empty($membership_payments_html) ? "<tr><td colspan='3' class='no-data'>No membership payments yet.</td></tr>" : $membership_payments_html;
+
 $bmi_records_html = "";
 foreach ($bmi_records as $bmi_record) {
     $created_at = format_time($bmi_record->created_at);
@@ -146,6 +152,8 @@ foreach ($bmi_records as $bmi_record) {
 
     $bmi_records_html .= "<tr><td width='30%'>$bmi_record->bmi ($status)</td><td width='10%'>$bmi_record->weight kg</td><td width='10%'>$bmi_record->height m</td><td width='20%'>$bmi_record->age years</td><td width='30%'>$created_at</td></tr>";
 }
+
+$bmi_records_html = empty($bmi_records_html) ? "<tr><td colspan='5' class='no-data'>No BMI records yet.</td></tr>" : $bmi_records_html;
 
 $workout_sessions_html = "";
 require_once "../../db/models/Workout.php";
@@ -165,6 +173,9 @@ foreach ($workout_sessions as $workout_session) {
     $ended_at = format_time($workout_session->ended_at);
     $workout_sessions_html .= "<tr><td width='30%'>$workout_name</td><td width='10%'>$workout_session->day</td><td width='30%'>$started_at</td><td width='30%'>$ended_at</td></tr>";
 }
+
+$workout_sessions_html = empty($workout_sessions_html) ? "<tr><td colspan='4' class='no-data'>No workout sessions yet.</td></tr>" : $workout_sessions_html;
+
 $generated_at = format_time(new DateTime());
 $htmlBody = <<<HTML
 <p>User data report of $user->fname $user->lname($user->id) generated at $generated_at.</p>

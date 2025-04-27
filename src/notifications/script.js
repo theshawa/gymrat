@@ -9,6 +9,7 @@ const fetch_notifications = async () => {
   const res = await fetch("/notifications/api.php", {
     method: "GET",
   });
+
   const { success, data } = await res.json();
 
   if (!success) {

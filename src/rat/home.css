@@ -61,7 +61,8 @@ main {
   backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
-  aspect-ratio: 1/0.8;
+  aspect-ratio: 1/0.9;
+  height: 100%;
 }
 .grid-tile.grayed {
   background: radial-gradient(
@@ -217,7 +218,7 @@ main {
 .complaint-tile {
   grid-column: span 2 / span 2;
   width: 100%;
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 18px;
   background: radial-gradient(
     at top right,

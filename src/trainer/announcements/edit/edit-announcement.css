@@ -1,0 +1,27 @@
+/* Edit announcement styles */
+.edit-announcement-page {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Fix navbar alignment */
+.navbar a {
+    position: relative;
+}
+
+.navbar a .count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #FF0000;
+    color: white;
+    font-size: 12px;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(50%, -50%);
+}

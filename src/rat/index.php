@@ -216,7 +216,7 @@ $plan_remaining_days = $interval->days;
 
 
 <main class="no-padding">
-    <img class="banner-image" src="<?= get_file_url($settings->gym_banner, "default-images/default-gym-banner.png") ?>" />
+    <img class="banner-image" src="<?= get_file_url($settings->gym_banner, "default-images/default-gym-banner.webp") ?>" />
     <div class="grid">
         <div class="banner-content">
             <h1>Hello <?= $fname ?></h1>
@@ -252,7 +252,7 @@ $plan_remaining_days = $interval->days;
                 <?php endif; ?>
             </a>
         <?php else: ?>
-            <div class="grid-tile disabled">
+            <div class="grid-tile grayed">
                 <div class="top">
                     <h2>Workout</h2>
                     <p>Not Assigned</p>
@@ -269,12 +269,12 @@ $plan_remaining_days = $interval->days;
                 <p class="bottom-text"><?= $meal_text ?></p>
             </a>
         <?php else: ?>
-            <div class="grid-tile disabled">
+            <div class="grid-tile grayed">
                 <div class="top">
                     <h2>Meal Plan</h2>
                     <p>Not Assigned</p>
                 </div>
-                <p class="bottom-text">Your meal plan will be assigned soon!</p>
+                <p class="bottom-text">A personal meal plan is coming your way!</p>
             </div>
         <?php endif; ?>
         <a href="/rat/gym-traffic" class="grid-tile traffic-tile">
@@ -345,7 +345,7 @@ $plan_remaining_days = $interval->days;
                 </div>
             </a>
         <?php else: ?>
-            <div class="grid-tile disabled">
+            <div class="grid-tile grayed">
                 <div class="top">
                     <h2>My Trainer</h2>
                     <p>Not Assigned</p>

@@ -43,7 +43,7 @@ if (!$isCardInList) {
         $newCards[] = [
             "id" => $card->id,
             "title" => ($concatName) ?
-                $card->fname . " " . $card->lname : 
+                $card->fname . " " . $card->lname :
                 $card->name ?? $defaultName . " No. " . $card->id,
             "description" => ($showDescription) ? ($card->description ?? "") : "",
             "image" => ($useAvatar) ? $card->avatar : ($card->image ?? null),
@@ -69,7 +69,23 @@ if (!$isCardInList) {
             <?php endif; ?>
             <div class="info-card-desc">
                 <h2><?= ($card['title'] ?? $card['name']) ?></h2>
-                <p><?= (isset($card['created_at']) && ($showCreatedAt)) ? "[ " . $card['created_at'] . " ] " : "" ?><?= $card['description'] ?></p>
+                <p><?= (isset($card['created_at']) && ($showCreatedAt)) ? "[ " . $card['created_at'] . " ] " : "" ?><?php
+                                                                                                                    try {
+                                                                                                                        $description = json_decode($card['description'], true);
+                                                                                                                        if (!is_array($description)) {
+                                                                                                                            throw new Exception("Invalid description format");
+                                                                                                                        }
+                                                                                                                        foreach ($description as $key => $value) {
+                                                                                                                            if (is_array($value)) {
+                                                                                                                                echo $key . ": " . implode(", ", $value) . "<br>";
+                                                                                                                            } else {
+                                                                                                                                echo $key . ": " . $value . "<br>";
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    } catch (\Throwable $th) {
+                                                                                                                        echo $card['description'];
+                                                                                                                    }
+                                                                                                                    ?></p>
                 <?php if ($showExtend): ?>
                     <!-- <div class="info-card-ext">
                         <a href="<?= $extendTo ?>?id=<?= $card['id'] ?>">

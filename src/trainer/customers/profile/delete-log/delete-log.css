@@ -1,0 +1,88 @@
+/* delete-log.css */
+.add-log-page {
+  padding: 15px;
+}
+
+.customer-info {
+  margin-bottom: 20px;
+}
+
+.customer-info h2 {
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+}
+
+.confirmation-card {
+  background-color: #18181b;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.confirmation-card h2 {
+  margin-top: 0;
+  color: #ffffff;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.confirmation-card p {
+  color: #a1a1aa;
+  margin-bottom: 15px;
+}
+
+.log-preview {
+  margin: 15px 0;
+}
+
+.log-item {
+  background-color: #27272a;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.log-message {
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.log-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.log-date {
+  color: #a1a1aa;
+  font-size: 14px;
+}
+
+.performance-badge {
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.performance-badge.well-done {
+  background-color: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #10b981;
+}
+
+.performance-badge.try-harder {
+  background-color: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}

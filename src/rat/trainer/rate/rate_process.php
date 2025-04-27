@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
 
 
 require_once "../../../db/models/TrainerRating.php";
-require_once "../../../db/models/Trainer.php";
 require_once "../../../db/models/Customer.php";
 require_once "../../../alerts/functions.php";
 

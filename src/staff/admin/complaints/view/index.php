@@ -39,7 +39,23 @@ require_once "../../../includes/sidebar.php";
                 <h2 style="margin-bottom: 10px;">
                     Description
                 </h2>
-                <p><?= $complaint->description ?></p>
+                <p><?php
+                    try {
+                        $description = json_decode($complaint->description, true);
+                        if (!is_array($description)) {
+                            throw new Exception("Invalid description format");
+                        }
+                        foreach ($description as $key => $value) {
+                            if (is_array($value)) {
+                                echo $key . ": " . implode(", ", $value) . "<br>";
+                            } else {
+                                echo $key . ": " . $value . "<br>";
+                            }
+                        }
+                    } catch (\Throwable $th) {
+                        echo $complaint->description;
+                    }
+                    ?></p>
                 <h2 style="margin: 10px 0;">
                     Type
                 </h2>
@@ -49,31 +65,31 @@ require_once "../../../includes/sidebar.php";
                 </h2>
                 <p><?= $complaint->created_at->format('F j, Y, g:i A'); ?></p>
                 <div style="display: flex; flex-direction: row; margin-top: 20px; align-items: center; ">
-                    <?php if($complaint->user_type === "trainer"): ?>
+                    <?php if ($complaint->user_type === "trainer"): ?>
                         <h2>
-                            Trainer : 
+                            Trainer :
                         </h2>
                         <p>&emsp;<?= $complaint->user_name ?></p>
                     <?php elseif ($complaint->user_type === "rat"): ?>
                         <h2>
-                            Rat : 
+                            Rat :
                         </h2>
                         <p>&emsp;<?= $complaint->user_name ?></p>
                     <?php endif; ?>
                 </div>
             </div>
             <?php if (!($complaint->review_message)): ?>
-            <form action="review_complaint.php" method="POST" style="display: flex; flex-direction: column; gap: 20px;">
-                <input type="hidden" name="id" value="<?= $complaint->id ?>">
-                <h2>
-                    Review Complaint
-                </h2>
-                <p>Write response message to review to complaint</p>
-                <textarea id="review" name="review_message"
+                <form action="review_complaint.php" method="POST" style="display: flex; flex-direction: column; gap: 20px;">
+                    <input type="hidden" name="id" value="<?= $complaint->id ?>">
+                    <h2>
+                        Review Complaint
+                    </h2>
+                    <p>Write response message to review to complaint</p>
+                    <textarea id="review" name="review_message"
                         class="staff-textarea-primary staff-textarea-large"
                         placeholder="Enter review message"><?= $complaint->review_message ?></textarea>
-                <button type="submit" class="staff-button secondary" style="min-height: 38px; min-width:120px; margin-top: 5px;">Confirm</button>
-            </form>
+                    <button type="submit" class="staff-button secondary" style="min-height: 38px; min-width:120px; margin-top: 5px;">Confirm</button>
+                </form>
             <?php endif; ?>
         </div>
     </div>

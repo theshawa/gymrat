@@ -77,13 +77,14 @@ class Equipment extends Model
 
     public function create()
     {
-        $sql = "INSERT INTO $this->table (name, type, manufacturer, description, image, purchase_date, last_maintenance) VALUES (:name, :type, :manufacturer, :description, :image, :purchase_date, :last_maintenance)";
+        $sql = "INSERT INTO $this->table (name, type, manufacturer, description,quantity, image, purchase_date, last_maintenance) VALUES (:name, :type, :manufacturer, :description, :quantity, :image, :purchase_date, :last_maintenance)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'name' => $this->name,
             'type' => $this->type,
             'manufacturer' => $this->manufacturer,
             'description' => $this->description,
+            'quantity' => $this->quantity,
             'image' => $this->image,
             'purchase_date' => $this->purchase_date->format('Y-m-d H:i:s'),
             'last_maintenance' => $this->last_maintenance->format('Y-m-d H:i:s'),

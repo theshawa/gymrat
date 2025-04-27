@@ -85,7 +85,7 @@ require_once "../../includes/titlebar.php";
             <button type="submit" style="width:100%" class="btn">Update Announcement</button>
         </div>
     </form>
-</main
+</main>
 
 <?php require_once "../../includes/navbar.php" ?>
 <?php require_once "../../includes/footer.php" ?>

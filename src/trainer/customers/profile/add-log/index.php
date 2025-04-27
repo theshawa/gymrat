@@ -178,8 +178,8 @@ require_once "../../../includes/titlebar.php";
                 </div>
             </div>
 
-            <div class="form-actions">
-                <button type="submit" class="submit-btn">Add Progress Feedback</button>
+            <div class="form">
+                <button style="width=100%" type="submit" class="btn">Add Your Feedback</button>
             </div>
         </form>
     </div>

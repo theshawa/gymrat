@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: gymrat_db:3306
--- Generation Time: Apr 24, 2025 at 07:59 PM
--- Server version: 9.2.0
+-- Generation Time: Apr 27, 2025 at 06:24 PM
+-- Server version: 9.3.0
 -- PHP Version: 8.2.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -51,6 +51,57 @@ CREATE TABLE `bmi_records` (
   `height` float NOT NULL,
   `age` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `bmi_records`
+--
+
+INSERT INTO `bmi_records` (`user`, `created_at`, `bmi`, `weight`, `height`, `age`) VALUES
+(44, '2024-12-10 10:00:00', 28.4, 86.2, 1.74, 23),
+(44, '2025-01-15 10:15:00', 27.6, 83.7, 1.74, 23),
+(44, '2025-02-20 10:30:00', 26.8, 81.3, 1.74, 23),
+(44, '2025-03-25 10:45:00', 25.9, 78.6, 1.74, 23),
+(44, '2025-04-20 11:00:00', 25.1, 76.2, 1.74, 23),
+(45, '2024-12-15 11:15:00', 26.8, 85, 1.78, 28),
+(45, '2025-01-20 11:30:00', 26.1, 82.7, 1.78, 28),
+(45, '2025-02-25 11:45:00', 25.4, 80.5, 1.78, 28),
+(45, '2025-03-30 12:00:00', 24.9, 78.9, 1.78, 28),
+(45, '2025-04-22 12:15:00', 24.1, 76.4, 1.78, 28),
+(46, '2024-12-05 09:00:00', 22.9, 65.3, 1.69, 32),
+(46, '2025-01-10 09:15:00', 22.5, 64.2, 1.69, 32),
+(46, '2025-02-15 09:30:00', 22.3, 63.5, 1.69, 32),
+(46, '2025-03-20 09:45:00', 22, 62.7, 1.69, 32),
+(46, '2025-04-20 10:00:00', 21.8, 62.1, 1.69, 32),
+(47, '2025-01-05 14:00:00', 23.8, 72.5, 1.74, 25),
+(47, '2025-02-10 14:15:00', 23.5, 71.6, 1.74, 25),
+(47, '2025-03-15 14:30:00', 23.1, 70.4, 1.74, 25),
+(47, '2025-04-20 14:45:00', 22.8, 69.5, 1.74, 25),
+(48, '2024-11-10 15:00:00', 26.4, 68.4, 1.61, 29),
+(48, '2024-12-15 15:15:00', 25.9, 67.1, 1.61, 29),
+(48, '2025-01-20 15:30:00', 25.3, 65.5, 1.61, 29),
+(48, '2025-02-25 15:45:00', 24.7, 64, 1.61, 29),
+(48, '2025-03-30 16:00:00', 24.3, 63, 1.61, 29),
+(48, '2025-04-25 16:15:00', 23.9, 61.9, 1.61, 29),
+(49, '2024-12-01 10:00:00', 27.2, 78.4, 1.7, 27),
+(49, '2025-02-01 10:30:00', 26.3, 75.7, 1.7, 27),
+(49, '2025-04-01 11:00:00', 25.1, 72.3, 1.7, 27),
+(50, '2024-12-10 13:00:00', 21.3, 56.2, 1.62, 24),
+(50, '2025-01-15 13:30:00', 21, 55.4, 1.62, 24),
+(50, '2025-02-20 14:00:00', 20.8, 54.9, 1.62, 24),
+(50, '2025-03-25 14:30:00', 20.5, 54.1, 1.62, 24),
+(50, '2025-04-23 15:00:00', 20.3, 53.6, 1.62, 24),
+(51, '2025-02-15 16:00:00', 24.9, 76.8, 1.75, 31),
+(51, '2025-03-15 16:30:00', 24.4, 75.2, 1.75, 31),
+(51, '2025-04-15 17:00:00', 23.9, 73.7, 1.75, 31),
+(52, '2025-01-05 11:00:00', 29.8, 95.3, 1.79, 35),
+(52, '2025-02-05 11:30:00', 28.9, 92.4, 1.79, 35),
+(52, '2025-03-05 12:00:00', 28.2, 90.1, 1.79, 35),
+(52, '2025-04-05 12:30:00', 27.6, 88.3, 1.79, 35),
+(53, '2025-03-20 09:00:00', 22.1, 58.5, 1.63, 26),
+(53, '2025-04-20 09:30:00', 21.7, 57.4, 1.63, 26),
+(54, '2024-12-15 17:00:00', 25.7, 82.3, 1.79, 34),
+(54, '2025-02-15 17:30:00', 24.8, 79.4, 1.79, 34),
+(54, '2025-04-15 18:00:00', 24.1, 77.2, 1.79, 34);
 
 -- --------------------------------------------------------
 
@@ -108,17 +159,17 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `fname`, `lname`, `email`, `phone`, `password`, `avatar`, `onboarded`, `trainer`, `membership_plan`, `membership_plan_activated_at`, `workout`, `meal_plan`, `created_at`, `updated_at`) VALUES
-(44, 'Theshawa', 'Nimantha', 'mrclocktd@gmail.com', '0766743755', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 15, '2025-04-15 07:27:46', 5, 3, '2025-04-15 07:27:26', '2025-04-15 07:27:26'),
-(45, 'Luka', 'Johnson', 'wadroneth@gmail.com', '+94716060662', '$2y$12$6Ekl5IFW1gZz7vxmsTkKYe4QALJKZAJJ4Q2vpl2XxICbGy0KhUwPS', NULL, 1, 1, 15, '2025-04-15 07:27:46', 1, 3, '2025-04-22 10:26:05', '2025-04-22 10:26:05'),
-(46, 'Nadeesha', 'Fernando', 'nadeesha.f@gmail.com', '0761000002', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 18, '2024-12-01 14:50:55', 1, 2, '2024-12-01 14:50:20', '2024-12-01 14:50:20'),
-(47, 'Ravindu', 'Jayasinghe', 'ravindu.j@gmail.com', '0761000003', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 17, '2025-01-03 07:45:22', 1, 2, '2025-01-03 07:44:50', '2025-01-03 07:44:50'),
-(48, 'Sajani', 'Kariyawasam', 'sajani.k@gmail.com', '0761000004', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 15, '2025-01-05 10:20:00', 1, 2, '2024-11-05 10:15:00', '2024-11-05 10:15:00'),
-(49, 'Dineth', 'Lakshan', 'dineth.l@gmail.com', '0761000005', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 17, '2024-11-20 15:10:10', 1, 2, '2024-11-20 15:09:40', '2024-11-20 15:09:40'),
-(50, 'Nimasha', 'Madushani', 'nimasha.m@gmail.com', '0761000006', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, NULL, '2024-12-01 06:15:00', 1, 2, '2024-12-01 06:14:30', '2024-12-01 06:14:30'),
-(51, 'Kalindu', 'Ranasinghe', 'kalindu.r@gmail.com', '0761000007', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 17, '2025-03-12 09:00:30', 1, 2, '2025-02-12 09:00:00', '2025-02-12 09:00:00'),
-(52, 'Thisara', 'Senanayake', 'thisara.s@gmail.com', '0761000008', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 18, '2025-01-01 12:10:10', 1, 2, '2025-01-01 12:09:50', '2025-01-01 12:09:50'),
-(53, 'Amaya', 'Disanayaka', 'amaya.d@gmail.com', '0761000009', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, 1, 15, '2025-03-15 17:00:00', 1, 2, '2025-03-15 16:59:30', '2025-03-15 16:59:30'),
-(54, 'Yasitha', 'Abeysekera', 'yasitha.a@gmail.com', '0761000010', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', NULL, 1, NULL, 17, '2025-04-10 13:35:30', 1, 2, '2024-12-10 13:32:50', '2024-12-10 13:32:50');
+(44, 'Theshawa', 'Nimantha', 'mrclocktd@gmail.com', '0766743755', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', 'customer-avatars/boy-avatar-1.jpg', 1, 1, 15, '2025-04-15 07:27:46', 5, 3, '2025-04-15 07:27:26', '2025-04-15 07:27:26'),
+(45, 'Luka', 'Johnson', 'wadroneth@gmail.com', '+94716060662', '$2y$12$6Ekl5IFW1gZz7vxmsTkKYe4QALJKZAJJ4Q2vpl2XxICbGy0KhUwPS', 'customer-avatars/boy-avatar-2.jpg', 1, 1, 15, '2025-04-15 07:27:46', 1, 3, '2025-04-22 10:26:05', '2025-04-22 10:26:05'),
+(46, 'Nadeesha', 'Fernando', 'nadeesha.f@gmail.com', '0761000002', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', 'customer-avatars/girl-avatar-1.jpg', 1, 1, 18, '2024-12-01 14:50:55', 1, 2, '2024-12-01 14:50:20', '2024-12-01 14:50:20'),
+(47, 'Ravindu', 'Jayasinghe', 'ravindu.j@gmail.com', '0761000003', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', 'customer-avatars/boy-avatar-3.jpg', 1, 1, 17, '2025-01-03 07:45:22', 1, NULL, '2025-01-03 07:44:50', '2025-01-03 07:44:50'),
+(48, 'Sajani', 'Kariyawasam', 'sajani.k@gmail.com', '0761000004', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', 'customer-avatars/girl-avatar-2.jpg', 1, 1, 15, '2025-01-05 10:20:00', NULL, 2, '2024-11-05 10:15:00', '2024-11-05 10:15:00'),
+(49, 'Dineth', 'Lakshan', 'dineth.l@gmail.com', '0761000005', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', 'customer-avatars/boy-avatar-4.jpg', 1, 1, 17, '2024-11-20 15:10:10', 1, NULL, '2024-11-20 15:09:40', '2024-11-20 15:09:40'),
+(50, 'Nimasha', 'Madushani', 'nimasha.m@gmail.com', '0761000006', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', 'customer-avatars/girl-avatar-3.jpg', 1, NULL, NULL, '2024-12-01 06:15:00', 1, 2, '2024-12-01 06:14:30', '2024-12-01 06:14:30'),
+(51, 'Kalindu', 'Ranasinghe', 'kalindu.r@gmail.com', '0761000007', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', 'customer-avatars/boy-avatar-5.jpg', 1, 1, 17, '2025-03-12 09:00:30', NULL, 2, '2025-02-12 09:00:00', '2025-02-12 09:00:00'),
+(52, 'Thisara', 'Senanayake', 'thisara.s@gmail.com', '0761000008', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', 'customer-avatars/boy-avatar-6.jpg', 1, 1, 18, '2025-01-01 12:10:10', 1, NULL, '2025-01-01 12:09:50', '2025-01-01 12:09:50'),
+(53, 'Amaya', 'Disanayaka', 'amaya.d@gmail.com', '0761000009', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', 'customer-avatars/girl-avatar-4.jpg', 1, 1, 15, '2025-03-15 17:00:00', 1, 2, '2025-03-15 16:59:30', '2025-03-15 16:59:30'),
+(54, 'Yasitha', 'Abeysekera', 'yasitha.a@gmail.com', '0761000010', '$2y$10$IGHZG4mmj55XXuoG1U2tzeEELUNWnOub6Ny92ChuLocFD96ftymTO', 'customer-avatars/boy-avatar-7.jpg', 1, NULL, 17, '2025-04-10 13:35:30', 1, 2, '2024-12-10 13:32:50', '2024-12-10 13:32:50');
 
 -- --------------------------------------------------------
 
@@ -158,7 +209,17 @@ CREATE TABLE `customer_initial_data` (
 --
 
 INSERT INTO `customer_initial_data` (`customer_id`, `gender`, `age`, `goal`, `other_goal`, `height`, `weight`, `physical_activity_level`, `dietary_preference`, `allergies`, `created_at`) VALUES
-(44, 'male', 23, 'weight_loss', '', 123, 123, 'beginner', '', '', '2025-04-15 07:30:04');
+(44, 'male', 23, 'weight_loss', '', 123, 123, 'beginner', '', '', '2025-04-15 07:30:04'),
+(45, 'male', 28, 'muscle_gain', '', 178, 85, 'intermediate', 'high_protein', 'none', '2025-04-22 10:30:00'),
+(46, 'female', 32, 'weight_loss', '', 169, 65.3, 'beginner', 'balanced', 'gluten', '2024-12-01 15:00:00'),
+(47, 'male', 25, 'muscle_gain', '', 174, 72.5, 'intermediate', 'high_protein', 'none', '2025-01-03 08:00:00'),
+(48, 'female', 29, 'weight_loss', '', 161, 68.4, 'beginner', 'low_carb', 'dairy', '2024-11-05 10:30:00'),
+(49, 'male', 27, 'weight_loss', '', 170, 78.4, 'intermediate', 'balanced', 'none', '2024-11-20 15:20:00'),
+(50, 'female', 24, 'fitness', 'improve_flexibility', 162, 56.2, 'beginner', 'vegetarian', 'nuts', '2024-12-01 06:30:00'),
+(51, 'male', 31, 'muscle_gain', '', 175, 76.8, 'advanced', 'high_protein', 'none', '2025-02-12 09:15:00'),
+(52, 'male', 35, 'weight_loss', '', 179, 95.3, 'beginner', 'keto', 'shellfish', '2025-01-01 12:20:00'),
+(53, 'female', 26, 'fitness', 'improve_endurance', 163, 58.5, 'intermediate', 'balanced', 'none', '2025-03-15 17:10:00'),
+(54, 'male', 34, 'muscle_gain', '', 179, 82.3, 'intermediate', 'high_protein', 'none', '2024-12-10 13:40:00');
 
 -- --------------------------------------------------------
 
@@ -193,27 +254,70 @@ CREATE TABLE `customer_progress` (
 --
 
 INSERT INTO `customer_progress` (`id`, `customer_id`, `trainer_id`, `message`, `performance_type`, `created_at`) VALUES
-(1, 44, 1, 'You need to focus more on your diet.', 'try_harder', '2024-11-14 10:00:00'),
-(2, 44, 1, 'Great job on your flexibility exercises.', 'well_done', '2024-11-15 10:00:00'),
-(3, 44, 1, 'You missed your workout today.', 'try_harder', '2024-11-16 10:00:00'),
-(4, 44, 1, 'Your stamina is improving.', 'well_done', '2024-11-17 10:00:00'),
-(5, 44, 1, 'Try to maintain a consistent workout schedule.', 'try_harder', '2024-11-18 10:00:00'),
-(6, 44, 1, 'Excellent performance in today\'s session.', 'well_done', '2024-11-19 10:00:00'),
-(7, 44, 1, 'You need to work on your balance.', 'try_harder', '2024-11-20 10:00:00'),
-(8, 44, 1, 'Great improvement in your strength training.', 'well_done', '2024-11-21 10:00:00'),
-(9, 44, 1, 'You skipped your warm-up exercises.', 'try_harder', '2024-11-22 10:00:00'),
-(10, 44, 1, 'Good progress with your weight lifting routine.', 'well_done', '2024-11-14 11:00:00'),
-(11, 44, 1, 'Need to increase your water intake.', 'try_harder', '2024-11-16 11:00:00'),
-(12, 44, 1, 'Excellent form on your squats today.', 'well_done', '2024-11-18 11:00:00'),
-(13, 44, 1, 'Great progress with your cardio endurance.', 'well_done', '2024-11-15 09:00:00'),
-(14, 44, 1, 'You need to work on your stretching routine.', 'try_harder', '2024-11-17 09:00:00'),
-(15, 44, 1, 'Impressive improvement in your push-ups.', 'well_done', '2024-11-19 09:00:00'),
-(16, 44, 1, 'Your V shape is now getting sharpened. Keep going champ!', 'well_done', '2025-04-13 14:13:18'),
-(17, 44, 1, 'Ubawa hadanna bah matto!', 'try_harder', '2025-04-13 14:14:13'),
-(18, 44, 1, 'Dhamya ekata enna kollo!', 'well_done', '2025-04-13 14:14:27'),
-(19, 44, 1, 'Maru bn!', 'well_done', '2025-04-13 14:29:26'),
-(20, 44, 1, 'ANe shoi!', 'well_done', '2025-04-15 06:54:52'),
-(21, 44, 1, 'Workout more!', 'try_harder', '2025-04-22 06:22:44');
+(26, 44, 1, 'Your strength gains in bench press are remarkable. Keep pushing!', 'well_done', '2025-02-01 03:00:00'),
+(27, 44, 1, 'Need to work on consistency with your meal prep schedule.', 'try_harder', '2025-02-15 10:15:00'),
+(28, 44, 1, 'Excellent progress on ab definition. Your core routine is working well!', 'well_done', '2025-03-05 04:50:00'),
+(29, 44, 1, 'Focus more on proper breathing during heavy lifts for better results.', 'try_harder', '2025-03-22 07:40:00'),
+(30, 44, 1, 'Great consistency with morning cardio sessions. Your endurance has improved!', 'well_done', '2025-04-10 03:45:00'),
+(31, 45, 1, 'Excellent muscle development in your shoulders and back!', 'well_done', '2024-12-05 05:50:00'),
+(32, 45, 1, 'Need to increase protein intake to support your training intensity.', 'try_harder', '2024-12-20 08:30:00'),
+(33, 45, 1, 'Great improvement on deadlift form. You\'re maintaining a neutral spine now.', 'well_done', '2025-01-10 04:00:00'),
+(34, 45, 1, 'Focus more on mobility work between strength sessions.', 'try_harder', '2025-01-25 10:45:00'),
+(35, 45, 1, 'Impressive progress with your pull-up strength! Added 10kg to weighted pull-ups.', 'well_done', '2025-02-10 05:15:00'),
+(36, 45, 1, 'Remember to prioritize recovery days in your training split.', 'try_harder', '2025-03-01 07:30:00'),
+(37, 45, 1, 'Your dedication to progressive overload is paying off. Visible muscle gains!', 'well_done', '2025-03-18 06:00:00'),
+(38, 45, 1, 'Excellent work maintaining low body fat while building muscle mass.', 'well_done', '2025-04-05 09:15:00'),
+(39, 45, 1, 'Keep focusing on mind-muscle connection during isolation exercises.', 'try_harder', '2025-04-22 03:30:00'),
+(40, 47, 1, 'Your dedication to your strength program is impressive. Great progress!', 'well_done', '2024-12-10 03:45:00'),
+(41, 47, 1, 'Need to improve hydration throughout your workouts.', 'try_harder', '2024-12-28 09:00:00'),
+(42, 47, 1, 'Excellent improvement in squat depth while maintaining proper form.', 'well_done', '2025-01-15 05:15:00'),
+(43, 47, 1, 'Work on incorporating more unilateral exercises to address imbalances.', 'try_harder', '2025-02-05 10:30:00'),
+(44, 47, 1, 'Your chest development is progressing well. Bench press PR achieved!', 'well_done', '2025-02-25 06:00:00'),
+(45, 47, 1, 'Remember to track your macros more consistently for optimal results.', 'try_harder', '2025-03-15 08:15:00'),
+(46, 47, 1, 'Great job maintaining workout consistency despite busy schedule.', 'well_done', '2025-04-08 04:45:00'),
+(47, 47, 1, 'Impressive progress on core strength. Your stability has improved significantly.', 'well_done', '2025-04-24 10:00:00'),
+(48, 48, 1, 'Excellent progress with your cardio endurance. 5k time improved by 3 minutes!', 'well_done', '2024-12-12 03:15:00'),
+(49, 48, 1, 'Need to focus more on proper cooling down after intense sessions.', 'try_harder', '2025-01-05 07:50:00'),
+(50, 48, 1, 'Great job maintaining your nutrition plan through the holidays.', 'well_done', '2025-01-22 04:45:00'),
+(51, 48, 1, 'Try to include more variety in your strength training routine.', 'try_harder', '2025-02-10 10:10:00'),
+(52, 48, 1, 'Impressive progress with your flexibility goals. Front splits getting closer!', 'well_done', '2025-03-05 04:00:00'),
+(53, 48, 1, 'Focus more on consistent sleep schedule to maximize recovery.', 'try_harder', '2025-03-25 08:40:00'),
+(54, 48, 1, 'Your dedication to morning workouts is paying off. Energy levels visibly improved!', 'well_done', '2025-04-15 05:30:00'),
+(55, 49, 1, 'Great progress with your weight loss goals. Down 3kg this month!', 'well_done', '2024-12-15 05:00:00'),
+(56, 49, 1, 'Need to improve consistency with your strength training sessions.', 'try_harder', '2025-01-10 09:45:00'),
+(57, 49, 1, 'Excellent job incorporating HIIT into your routine. Metabolism boost evident!', 'well_done', '2025-02-01 04:15:00'),
+(58, 49, 1, 'Work on better form during compound movements to prevent injury.', 'try_harder', '2025-02-20 08:55:00'),
+(59, 49, 1, 'Your endurance improvements are remarkable. Completed full circuit without breaks!', 'well_done', '2025-03-12 05:40:00'),
+(60, 49, 1, 'Remember to prioritize protein intake for muscle preservation during weight loss.', 'try_harder', '2025-04-02 11:00:00'),
+(61, 49, 1, 'Great job with consistency on nutrition tracking. Results clearly visible!', 'well_done', '2025-04-22 04:30:00'),
+(62, 50, 1, 'Excellent progress with your posture corrective exercises.', 'well_done', '2024-12-18 03:30:00'),
+(63, 50, 1, 'Need to challenge yourself more with progressive overload on weights.', 'try_harder', '2025-01-08 08:15:00'),
+(64, 50, 1, 'Great improvement in core strength. Plank time doubled!', 'well_done', '2025-01-28 05:00:00'),
+(65, 50, 1, 'Focus more on proper breathing techniques during yoga practices.', 'try_harder', '2025-02-15 09:30:00'),
+(66, 50, 1, 'Your consistency with mobility work is paying off. Shoulder range improved!', 'well_done', '2025-03-10 05:45:00'),
+(67, 50, 1, 'Try to incorporate more cardio variety to prevent plateaus.', 'try_harder', '2025-03-30 09:10:00'),
+(68, 50, 1, 'Impressive progress balancing strength and flexibility goals. Well-rounded fitness!', 'well_done', '2025-04-18 04:00:00'),
+(69, 51, 1, 'Your dedication to your strength goals is impressive. Deadlift PR achieved!', 'well_done', '2025-02-14 04:45:00'),
+(70, 51, 1, 'Need to improve consistency with post-workout nutrition timing.', 'try_harder', '2025-02-28 09:00:00'),
+(71, 51, 1, 'Excellent muscle development in your shoulders and back. Results clearly visible!', 'well_done', '2025-03-17 05:30:00'),
+(72, 51, 1, 'Remember to incorporate deload weeks for optimal long-term progress.', 'try_harder', '2025-04-05 11:15:00'),
+(73, 51, 1, 'Great job maintaining perfect form even with heavier weights.', 'well_done', '2025-04-22 05:00:00'),
+(74, 52, 1, 'Impressive progress with your weight loss. Down 5kg in two months!', 'well_done', '2025-01-10 04:00:00'),
+(75, 52, 1, 'Need to increase water intake throughout the day.', 'try_harder', '2025-01-25 07:45:00'),
+(76, 52, 1, 'Great improvement in cardiovascular endurance. Recovery time decreased significantly!', 'well_done', '2025-02-12 06:15:00'),
+(77, 52, 1, 'Try to be more consistent with your morning workout schedule.', 'try_harder', '2025-03-05 10:00:00'),
+(78, 52, 1, 'Excellent progress with body composition changes. Losing fat while preserving muscle!', 'well_done', '2025-03-26 04:30:00'),
+(79, 52, 1, 'Focus more on quality of movement rather than quantity during circuit training.', 'try_harder', '2025-04-15 08:50:00'),
+(80, 53, 1, 'Your dedication to your flexibility program is paying off. Front splits achieved!', 'well_done', '2025-03-18 05:15:00'),
+(81, 53, 1, 'Need to challenge yourself more with resistance training.', 'try_harder', '2025-03-30 09:30:00'),
+(82, 53, 1, 'Great progress with your endurance. Completed 10k run under target time!', 'well_done', '2025-04-10 06:00:00'),
+(83, 53, 1, 'Work on incorporating more variety in your core training routine.', 'try_harder', '2025-04-22 08:45:00'),
+(84, 54, 1, 'Excellent muscle development in your arms and chest. Hard work is showing!', 'well_done', '2024-12-20 05:30:00'),
+(85, 54, 1, 'Need to improve consistency with leg day attendance.', 'try_harder', '2025-01-15 11:00:00'),
+(86, 54, 1, 'Great progress with your military press. Form has improved significantly!', 'well_done', '2025-02-08 04:45:00'),
+(87, 54, 1, 'Focus more on stretching to improve overall mobility and prevent injury.', 'try_harder', '2025-03-02 09:15:00'),
+(88, 54, 1, 'Impressive commitment to your training program. 100% attendance this month!', 'well_done', '2025-03-25 04:00:00'),
+(89, 54, 1, 'Try to incorporate more compound movements for overall strength development.', 'try_harder', '2025-04-15 07:30:00');
 
 -- --------------------------------------------------------
 
@@ -499,10 +603,9 @@ CREATE TABLE `notifications` (
 
 INSERT INTO `notifications` (`id`, `title`, `message`, `receiver_id`, `receiver_type`, `source`, `is_read`, `valid_till`, `created_at`) VALUES
 (52, 'Welcome to GYMRAT', 'Thank you for registering with us. We hope you have a great experience!', 45, 'rat', 'system', 0, NULL, '2025-04-22 15:56:05'),
-(54, 'Meal Plan Request Acknowledged', 'The Meal Plan you have requested has been created: Muscle Building', 1, 'trainer', 'wnmp manager', 0, NULL, '2025-04-23 10:36:56'),
-(55, 'Meal Plan Request Acknowledged', 'The Meal Plan you have requested has been created: Vegetarian Essentials', 1, 'trainer', 'wnmp manager', 1, NULL, '2025-04-23 10:37:06'),
 (56, 'Workout Plan Request Submitted', 'Your trainer has requested a custom workout plan for you. Our fitness team will create it soon.', 44, 'rat', 'system', 0, NULL, '2025-04-24 01:22:20'),
-(57, 'Workout Plan Request Submitted', 'Your trainer has requested a custom workout plan for you. Our fitness team will create it soon.', 44, 'rat', 'system', 0, NULL, '2025-04-24 01:43:20');
+(57, 'Workout Plan Request Submitted', 'Your trainer has requested a custom workout plan for you. Our fitness team will create it soon.', 44, 'rat', 'system', 0, NULL, '2025-04-24 01:43:20'),
+(58, 'Workout Plan Request Submitted', 'Your trainer has requested a custom workout plan for you. Our fitness team will create it soon.', 48, 'rat', 'system', 0, NULL, '2025-04-27 23:46:39');
 
 -- --------------------------------------------------------
 
@@ -701,7 +804,8 @@ INSERT INTO `workout_requests` (`id`, `trainer_id`, `description`, `created_at`,
 (6, 1, 'Type: Flexibility\nDuration: 30 days\n\nBla Bla', '2025-04-22 11:35:21', '2025-04-22 17:06:58', 1),
 (7, 1, 'Type: Cardio\nDuration: 30 days\n\nedddsd', '2025-04-23 19:52:20', '2025-04-23 19:52:20', 0),
 (8, 1, '{\"name\":\"Burn fat and build lean muscle\",\"type\":\"hiit\",\"duration\":14,\"priority\":\"normal\",\"description\":\"A balanced program designed to burn fat while building lean muscle. Combines strength training with high-intensity cardio to boost metabolism, improve endurance, and sculpt the body. Ideal for those aiming to lose weight without sacrificing muscle.\",\"exercises\":[{\"id\":1,\"day\":1,\"sets\":4,\"reps\":15},{\"id\":6,\"day\":1,\"sets\":3,\"reps\":10},{\"id\":3,\"day\":2,\"sets\":3,\"reps\":10},{\"id\":7,\"day\":2,\"sets\":3,\"reps\":10},{\"id\":8,\"day\":3,\"sets\":4,\"reps\":10},{\"id\":6,\"day\":3,\"sets\":4,\"reps\":10}],\"customer_id\":44,\"trainer_id\":1}\n\nName: Burn fat and build lean muscle\nType: Hiit\nDuration: 14 days\nPriority: Normal\n\nA balanced program designed to burn fat while building lean muscle. Combines strength training with high-intensity cardio to boost metabolism, improve endurance, and sculpt the body. Ideal for those aiming to lose weight without sacrificing muscle.\n\nRecommended Exercises:\n- Squats: 4 sets of 15 reps (Day 1)\n- Lunges: 3 sets of 10 reps (Day 1)\n- Bench Press: 3 sets of 10 reps (Day 2)\n- Quads: 3 sets of 10 reps (Day 2)\n- Dumbbell Rows: 4 sets of 10 reps (Day 3)\n- Lunges: 4 sets of 10 reps (Day 3)\n', '2025-04-23 20:09:40', '2025-04-23 20:09:40', 0),
-(9, 1, '{\"name\":\"Burn fat and build lean muscle\",\"type\":\"hiit\",\"duration\":14,\"priority\":\"normal\",\"description\":\"A balanced program designed to burn fat while building lean muscle. Combines strength training with high-intensity cardio to boost metabolism, improve endurance, and sculpt the body. Ideal for those aiming to lose weight without sacrificing muscle.\",\"exercises\":[{\"id\":1,\"day\":1,\"sets\":4,\"reps\":15},{\"id\":6,\"day\":1,\"sets\":3,\"reps\":10},{\"id\":3,\"day\":2,\"sets\":3,\"reps\":10},{\"id\":7,\"day\":2,\"sets\":3,\"reps\":10},{\"id\":8,\"day\":3,\"sets\":4,\"reps\":10},{\"id\":6,\"day\":3,\"sets\":4,\"reps\":10}],\"customer_id\":44,\"trainer_id\":1}\n\nName: Burn fat and build lean muscle\nType: Hiit\nDuration: 14 days\nPriority: Normal\n\nA balanced program designed to burn fat while building lean muscle. Combines strength training with high-intensity cardio to boost metabolism, improve endurance, and sculpt the body. Ideal for those aiming to lose weight without sacrificing muscle.\n\nRecommended Exercises:\n- Squats: 4 sets of 15 reps (Day 1)\n- Lunges: 3 sets of 10 reps (Day 1)\n- Bench Press: 3 sets of 10 reps (Day 2)\n- Quads: 3 sets of 10 reps (Day 2)\n- Dumbbell Rows: 4 sets of 10 reps (Day 3)\n- Lunges: 4 sets of 10 reps (Day 3)\n', '2025-04-23 20:13:20', '2025-04-23 20:13:20', 0);
+(9, 1, '{\"name\":\"Burn fat and build lean muscle\",\"type\":\"hiit\",\"duration\":14,\"priority\":\"normal\",\"description\":\"A balanced program designed to burn fat while building lean muscle. Combines strength training with high-intensity cardio to boost metabolism, improve endurance, and sculpt the body. Ideal for those aiming to lose weight without sacrificing muscle.\",\"exercises\":[{\"id\":1,\"day\":1,\"sets\":4,\"reps\":15},{\"id\":6,\"day\":1,\"sets\":3,\"reps\":10},{\"id\":3,\"day\":2,\"sets\":3,\"reps\":10},{\"id\":7,\"day\":2,\"sets\":3,\"reps\":10},{\"id\":8,\"day\":3,\"sets\":4,\"reps\":10},{\"id\":6,\"day\":3,\"sets\":4,\"reps\":10}],\"customer_id\":44,\"trainer_id\":1}\n\nName: Burn fat and build lean muscle\nType: Hiit\nDuration: 14 days\nPriority: Normal\n\nA balanced program designed to burn fat while building lean muscle. Combines strength training with high-intensity cardio to boost metabolism, improve endurance, and sculpt the body. Ideal for those aiming to lose weight without sacrificing muscle.\n\nRecommended Exercises:\n- Squats: 4 sets of 15 reps (Day 1)\n- Lunges: 3 sets of 10 reps (Day 1)\n- Bench Press: 3 sets of 10 reps (Day 2)\n- Quads: 3 sets of 10 reps (Day 2)\n- Dumbbell Rows: 4 sets of 10 reps (Day 3)\n- Lunges: 4 sets of 10 reps (Day 3)\n', '2025-04-23 20:13:20', '2025-04-23 20:13:20', 0),
+(10, 1, '{\"name\":\"Thunder Core 20\",\"type\":\"sport\",\"duration\":14,\"priority\":\"high\",\"description\":\"A fast-paced, 20-minute core-focused workout designed to build rock-solid abs and improve overall stability using just bodyweight movements\\u2014perfect for a quick sweat at home or at the gym.\",\"exercises\":[{\"id\":4,\"d\":1,\"s\":4,\"r\":12},{\"id\":3,\"d\":2,\"s\":4,\"r\":12},{\"id\":6,\"d\":3,\"s\":4,\"r\":10},{\"id\":7,\"d\":2,\"s\":4,\"r\":12}],\"customer_id\":48,\"trainer_id\":1}\n\nName: Thunder Core 20\nType: Sport\nDuration: 14 days\nPriority: High\n\nA fast-paced, 20-minute core-focused workout designed to build rock-solid abs and improve overall stability using just bodyweight movements—perfect for a quick sweat at home or at the gym.\n\nRecommended Exercises: Pull-Ups: 4 sets of 12 reps (Day 1), Bench Press: 4 sets of 12 reps (Day 2), Lunges: 4 sets of 10 reps (Day 3) and 1 more exercises', '2025-04-27 23:46:39', '2025-04-27 23:46:39', 0);
 
 -- --------------------------------------------------------
 
@@ -946,7 +1050,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `customer_progress`
 --
 ALTER TABLE `customer_progress`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `equipments`
@@ -1000,7 +1104,7 @@ ALTER TABLE `membership_plans`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `trainers`
@@ -1030,7 +1134,7 @@ ALTER TABLE `workout_exercises`
 -- AUTO_INCREMENT for table `workout_requests`
 --
 ALTER TABLE `workout_requests`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables

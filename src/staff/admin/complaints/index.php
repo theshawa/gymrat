@@ -41,6 +41,7 @@ $menuBarConfig = [
 $infoCardConfig = [
     "defaultName" => "Complaint",
     "useListView" => true,
+    "showDescription" => false,
     "gridColumns" => 1,
     "showExtend" => true,
     "extendTo" => "/staff/admin/complaints/view/index.php",

@@ -16,13 +16,13 @@ $errors = [];
 $id = $trainer->id;
 // $fname = htmlspecialchars($_POST['trainer_fname']);
 // $lname = htmlspecialchars($_POST['trainer_lname']);
-$username = htmlspecialchars($_POST['trainer_username']);
+// $username = htmlspecialchars($_POST['trainer_username']);
 $phone = htmlspecialchars($_POST['trainer_phone']);
 $bio = htmlspecialchars($_POST['trainer_bio']);
 
 // if (empty($fname)) $errors[] = "First name is required.";
 // if (empty($lname)) $errors[] = "Last name is required.";
-if (empty($username)) $errors[] = "Username is required.";
+// if (empty($username)) $errors[] = "Username is required.";
 if (empty($phone)) $errors[] = "Phone number is required.";
 
 $avatar = $_FILES['trainer_avatar']['name'] ? $_FILES['trainer_avatar'] : null;
@@ -46,7 +46,7 @@ if ($trainer->avatar && $avatar) {
 
 // $trainer->fname = $fname;
 // $trainer->lname = $lname;
-$trainer->username = $username;
+// $trainer->username = $username;
 $trainer->phone = $phone;
 $trainer->bio = $bio;
 $trainer->avatar = $avatar ?? $trainer->avatar;
@@ -71,7 +71,11 @@ if (isset($_POST['action']) && $_POST['action'] === 'edit') {
     try {
         $trainer->save();
     } catch (PDOException $e) {
-        redirect_with_error_alert("Failed to update trainer due to an error: " . $e->getMessage(), "/staff/admin/trainers/profile/index.php?id=$id");
+        if ($e->getCode() === '23000' && strpos($e->getMessage(), 'Duplicate entry') !== false) {
+            redirect_with_error_alert("Failed to update trainer: The username is already taken.", "/staff/admin/trainers/profile/index.php?id=$id");
+        } else {
+            redirect_with_error_alert("Failed to update trainer due to an error: " . $e->getMessage(), "/staff/admin/trainers/profile/index.php?id=$id");
+        }
         exit;
     }
 

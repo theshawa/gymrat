@@ -36,10 +36,32 @@ require_once "../../../includes/sidebar.php";
         <?php require_once "../../../includes/menubar.php"; ?>
         <div class="staff-base-sub-container-alt">
             <div>
-                <h2 style="margin-bottom: 10px;">
-                    Description
-                </h2>
-                <p><?= $complaint->description ?></p>
+
+                <?php 
+                $descriptionData = json_decode($complaint->description, true);
+                if (json_last_error() === JSON_ERROR_NONE && is_array($descriptionData)): ?>
+                    <!-- <h2 style="margin-bottom: 10px;">
+                        Type
+                    </h2>
+                    <p><?= htmlspecialchars($descriptionData['type'] ?? 'N/A') ?></p> -->
+                    <h2 style="margin: 10px 0;">
+                        Severity
+                    </h2>
+                    <p><?= htmlspecialchars($descriptionData['severity'] ?? 'N/A') ?></p>
+                    <h2 style="margin: 10px 0;">
+                        Description
+                    </h2>
+                    <p><?= htmlspecialchars($descriptionData['description'] ?? 'N/A') ?></p>
+                    <!-- <p style="margin: 5px 0;"><strong>Type:</strong> <?= htmlspecialchars($descriptionData['type'] ?? 'N/A') ?></p>
+                    <p style="margin: 5px 0;"><strong>Customer ID:</strong> <?= htmlspecialchars($descriptionData['customer_id'] ?? 'N/A') ?></p>
+                    <p style="margin: 5px 0;"><strong>Severity:</strong> <?= htmlspecialchars($descriptionData['severity'] ?? 'N/A') ?></p>
+                    <p style="margin: 5px 0;"><strong>Description:</strong> <?= htmlspecialchars($descriptionData['description'] ?? 'N/A') ?></p> -->
+                <?php else: ?>
+                    <h2 style="margin-bottom: 10px;">
+                        Description
+                    </h2>
+                    <p><?= htmlspecialchars($complaint->description) ?></p>
+                <?php endif; ?>
                 <h2 style="margin: 10px 0;">
                     Type
                 </h2>

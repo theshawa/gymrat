@@ -60,12 +60,12 @@ require_once "../../../includes/sidebar.php";
                             class="staff-input-primary staff-input-long" value="<?= $trainer->lname ?>"
                             pattern="[a-zA-Z]+" title="Last name should only contain letters.">
                     </div> -->
-                    <div style="margin-bottom: 10px">
+                    <!-- <div style="margin-bottom: 10px">
                         <h2><label for="edit-username">Username</label></h2>
                         <input type="text" id="edit-username" name="trainer_username"
                             class="staff-input-primary staff-input-long" value="<?= $trainer->username ?>"
                             pattern="[a-zA-Z0-9]+" title="Username should only contain letters and numbers.">
-                    </div>
+                    </div> -->
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-phone">Phone</label></h2>
                         <input type="text" id="edit-phone" name="trainer_phone"

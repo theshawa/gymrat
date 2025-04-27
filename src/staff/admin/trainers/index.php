@@ -19,6 +19,10 @@ try {
 
 $menuBarConfig = [
     "title" => $pageTitle,
+    "useLink" => true,
+    "options" => [
+        ["title" => "Create Trainer", "href" => "/staff/admin/trainers/create/index.php", "type" => "secondary"]
+    ]
 ];
 
 

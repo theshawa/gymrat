@@ -24,6 +24,9 @@ $phone = htmlspecialchars($_POST['customer_phone']);
 // if (empty($fname)) $errors[] = "First name is required.";
 // if (empty($lname)) $errors[] = "Last name is required.";
 if (empty($email)) $errors[] = "Email is required.";
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errors[] = "Invalid email format.";
+}
 if (empty($phone)) $errors[] = "Phone number is required.";
 
 

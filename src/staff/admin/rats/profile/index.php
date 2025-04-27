@@ -70,7 +70,7 @@ require_once "../../../includes/sidebar.php";
                         <h2><label for="edit-email">Email</label></h2>
                         <input type="email" id="edit-email" name="customer_email"
                             class="staff-input-primary staff-input-long" value="<?= $customer->email ?>"
-                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address.">
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}" title="Please enter a valid email address with a dot in the domain.">
                     </div>
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-phone">Phone</label></h2>

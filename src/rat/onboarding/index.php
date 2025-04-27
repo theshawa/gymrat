@@ -9,11 +9,13 @@ $pageConfig = [
 ];
 
 require_once "../includes/header.php";
+
+$fname = $_SESSION['auth']['fname'] ?? "Rat";
 ?>
 
 <main class="onboarding">
     <img width="100" src="./animation1.gif" alt="Man lifting a weight">
-    <h1>Hello </h1>
+    <h1>Hello <?= $fname ?></h1>
     <p class="paragraph">Let us gather some details about you to personalize your fitness journey at GYMRAT. This will help us tailor the best experience for you at our gym.</p>
     <form action="onboarding_process.php" method="post">
         <div class="question">
@@ -43,21 +45,21 @@ require_once "../includes/header.php";
         <div class="question">
             <span class="title">How old are you?</span>
             <div class="line">
-                <input class="input" min="10" max="150" type="number" name="age" placeholder="16" required>
+                <input class="input" min="10" max="100" type="number" name="age" placeholder="16" required>
                 <span class="">YRS</span>
             </div>
         </div>
         <div class="question">
             <span class="title">What is your weight?</span>
             <div class="line">
-                <input class="input" min="10" type="number" name="weight" required>
+                <input class="input" min="30" max="250" type="number" name="weight" required>
                 <span class="">KG</span>
             </div>
         </div>
         <div class="question">
             <span class="title">What is your height?</span>
             <div class="line">
-                <input class="input" min="10" type="number" name="height" required>
+                <input class="input" min="120" max="250" type="number" name="height" required>
                 <span class="">CM</span>
             </div>
         </div>

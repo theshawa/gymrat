@@ -211,7 +211,7 @@ require_once "../../../includes/titlebar.php";
                                         <path d="m15 5 4 4"/>
                                     </svg>
                                 </a>
-                                <a href="../delete-log/?id=<?= $log['id'] ?>&customer_id=<?= $customerId ?>" class="btn-icon delete-log">
+                                <a href="#" class="btn-icon delete-log" onclick="deleteLog(<?= $log['id'] ?>, <?= $customerId ?>)">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">
                                         <path d="M3 6h18"/>
                                         <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
@@ -231,4 +231,30 @@ require_once "../../../includes/titlebar.php";
 </main>
 
 <?php require_once "../../../includes/navbar.php" ?>
+
+<script>
+function deleteLog(logId, customerId) {
+    if (confirm("Are you sure you want to delete this progress log? This action cannot be undone.")) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `../delete-log/delete_process.php`;
+        
+        const logIdInput = document.createElement('input');
+        logIdInput.type = 'hidden';
+        logIdInput.name = 'log_id';
+        logIdInput.value = logId;
+        
+        const customerIdInput = document.createElement('input');
+        customerIdInput.type = 'hidden';
+        customerIdInput.name = 'customer_id';
+        customerIdInput.value = customerId;
+        
+        form.appendChild(logIdInput);
+        form.appendChild(customerIdInput);
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>
+
 <?php require_once "../../../includes/footer.php" ?>

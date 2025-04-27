@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $pageConfig = [
     "title" => "Delete Progress Log",
     "styles" => [
-        "../add-log/add-log.css" // Reuse add-log styles
+        "./delete-log.css"
     ],
     "navbar_active" => 1,
     "titlebar" => [
@@ -105,57 +105,15 @@ require_once "../../../includes/titlebar.php";
         
         <div class="action-buttons">
             <form method="POST">
-                <button type="submit" class="btn danger">Delete</button>
-                <a href="../add-log/?id=<?= $customerId ?>" class="btn secondary">Cancel</a>
+                <button type="submit" style="width: 100%;" class="btn">Delete</button>
             </form>
         </div>
     </div>
 </main>
 
-<style>
-    .confirmation-card {
-        background-color: white;
-        border-radius: 10px;
-        padding: 20px;
-        margin: 20px 0;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .confirmation-card h2 {
-        margin-top: 0;
-        color: #333;
-    }
-    
-    .log-preview {
-        margin: 15px 0;
-    }
-    
-    .action-buttons {
-        display: flex;
-        gap: 10px;
-        margin-top: 20px;
-    }
-    
-    .btn {
-        display: inline-block;
-        padding: 8px 16px;
-        border-radius: 5px;
-        font-weight: 500;
-        text-decoration: none;
-        cursor: pointer;
-        border: none;
-    }
-    
-    .btn.danger {
-        background-color: #F44336;
-        color: white;
-    }
-    
-    .btn.secondary {
-        background-color: #e0e0e0;
-        color: #333;
-    }
-</style>
+<!-- Styles moved to delete-log.css -->
 
 <?php require_once "../../../includes/navbar.php" ?>
 <?php require_once "../../../includes/footer.php" ?>
+
+<!-- Removed inline styles since they are now in the CSS file -->

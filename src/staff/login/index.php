@@ -63,6 +63,7 @@ require_once "../includes/header.php";
                 <input type="email" required placeholder="Email" name="email" class="staff-input-primary staff-input-base">
                 <input type="password" required placeholder="Password" name="password" class="staff-input-primary staff-input-base">
                 <button class="staff-button secondary" style="margin: 10px 0; padding: 20px;">Login</button>
+                <a href="/staff/login/forgot-password/index.php" style="margin: 20px; align-self: center"> Forgot your password?</a>
             </form>
         </div>
     </div>
@@ -95,6 +96,8 @@ require_once "../includes/header.php";
             <input type="email" required placeholder="Email" name="email" class="staff-input-primary staff-input-base">
             <input type="password" required placeholder="Password" name="password" class="staff-input-primary staff-input-base">
             <button class="staff-button secondary" style="margin: 10px 0; padding: 20px;">Login</button>
+            <a href="/staff/login/forgot-password/index.php" style="margin: 20px; align-self: center"> Forgot your password?</a> 
+           
         </form>
     </div>
 

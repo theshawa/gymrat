@@ -31,13 +31,17 @@ class Complaint extends Model
         $this->user_name = $data['user_name'] ?? null; 
     }
 
-    public function get_all(int $sort = -1, int $notReviewed = 0): array
+    public function get_all(int $sort = -1, int $notReviewed = 0, int $hideEditable = 0): array
     {
         // sort: 0 = no sort, 1 = ascending, -1 = descending
         // notReviewed: 0 = all, 1 = only unreviewed
         $sql = "SELECT * FROM $this->table";
         if ($notReviewed === 1) {
             $sql .= " WHERE review_message IS NULL";
+        }
+        if ($hideEditable === 1) {
+            $sql .= ($notReviewed === 1) ? " AND " : " WHERE ";
+            $sql .= "created_at <= NOW() - INTERVAL 5 MINUTE";
         }
         if ($sort === 1) {
             $sql .= " ORDER BY created_at ASC"; 

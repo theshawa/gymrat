@@ -13,7 +13,7 @@ require_once "../../../alerts/functions.php";
 $complaints = [];
 $complaintModel = new Complaint();
 try {
-    $complaints = $complaintModel->get_all(-1, $setFilter);
+    $complaints = $complaintModel->get_all(-1, $setFilter, 1);
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to fetch complaints: " . $e->getMessage(), "/staff/admin");
 }

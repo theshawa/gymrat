@@ -16,17 +16,20 @@ try {
     die("Failed to get records due to error: " . $e->getMessage());
 }
 
-$range = 30;
 
-$records = array_filter($records, function (BmiRecord $item) use ($range) {
+
+$range = 90;
+
+$records = array_values(array_filter($records, function (BmiRecord $item) use ($range) {
     $now = new DateTime();
     $diff = $now->diff($item->created_at);
     return $diff->days <= ($range < 0 ? 99999 : $range);
-});
+}));
 
 // get insights
 
-if (!empty($records)) {
+if (count($records) > 1) {
+
     $oldest_record = $records[count($records) - 1];
     $latest_record = $records[0];
 

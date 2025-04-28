@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: gymrat_db:3306
--- Generation Time: Apr 28, 2025 at 12:31 PM
+-- Generation Time: Apr 28, 2025 at 03:31 AM
 -- Server version: 9.2.0
 -- PHP Version: 8.2.27
 
@@ -517,7 +517,7 @@ CREATE TABLE `meals` (
 --
 
 INSERT INTO `meals` (`id`, `description`, `name`, `image`, `calories`, `proteins`, `fats`, `created_at`, `updated_at`) VALUES
-(2, 'Oatmeal topped with fresh fruits and nuts', 'Fruit Oatmeal Bowl', 'staff-meal-images/680efafdc9f51.jpg', 300, 10, 10, '2025-02-26 12:45:26', '2025-04-28 03:50:21'),
+(2, 'Oatmeal topped with fresh fruits and nuts', 'Fruit Oatmeal Bowl', '', 300, 10, 10, '2025-02-26 12:45:26', '2025-04-19 15:33:15'),
 (3, 'Salmon fillet with roasted sweet potatoes and asparagus', 'Salmon Delight', '', 500, 35, 20, '2025-02-26 12:45:26', '2025-04-19 15:33:18'),
 (4, 'Protein shake with banana, peanut butter, and almond milk', 'Protein Shake', '', 250, 25, 10, '2025-02-26 12:45:26', '2025-04-19 15:33:27'),
 (5, 'Avocado toast with a poached egg on whole-grain bread', 'Avocado Toast', '', 350, 15, 18, '2025-02-26 12:45:26', '2025-04-19 15:33:30');
@@ -656,7 +656,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `contact_email`, `contact_phone`, `workout_session_expiry`, `max_capacity`, `min_workout_time`, `gym_banner`, `gym_name`, `gym_desc`, `gym_address`, `show_widgets`) VALUES
-(1, 'support@gymrat.com', '1234567890', 24, 100, 1, 'default-images/680f193233abe.jpg', 'PRAN FITNESS', 'Top-tier training facility with premium equipment.', '123 Muscle St, Fit City', 1);
+(1, 'support@gymrat.com', '1234567890', 24, 100, 1, NULL, 'PRAN FITNESS', 'Top-tier training facility with premium equipment.', '123 Muscle St, Fit City', 1);
 
 -- --------------------------------------------------------
 
@@ -671,7 +671,7 @@ CREATE TABLE `staff` (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `role` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -679,23 +679,9 @@ CREATE TABLE `staff` (
 --
 
 INSERT INTO `staff` (`id`, `name`, `email`, `password`, `role`, `created_at`, `updated_at`) VALUES
-(1, 'root', 'admin@example.com', '$2y$10$oNFBPqdhK6HK/EICyTB9JugEoGzqcn.Y.s/RZkLi0zaIIyQHpgBWW', 'admin', '2024-11-25 12:50:16', '2024-11-25 12:50:16'),
-(2, 'wnmp', 'wnmp@example.com', '$2y$10$oNFBPqdhK6HK/EICyTB9JugEoGzqcn.Y.s/RZkLi0zaIIyQHpgBWW', 'wnmp', '2024-11-25 13:04:54', '2024-11-25 13:04:54'),
-(3, 'eq', 'eq@example.com', '$2y$10$oNFBPqdhK6HK/EICyTB9JugEoGzqcn.Y.s/RZkLi0zaIIyQHpgBWW', 'eq', '2024-11-25 13:04:54', '2024-11-25 13:04:54'),
-(6, 'Ravindu', 'ravindupeeris180@gmail.com', '$2y$12$mm0D6upAj3AR52gxh1PcYOpwLoIRjmfW2jDYVlqMX.aTafljGxyCq', 'wnmp', '2025-04-28 09:07:12', '2025-04-28 11:33:54');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `staff_password_reset_requests`
---
-
-CREATE TABLE `staff_password_reset_requests` (
-  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `code` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `creation_attempt` int NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(1, 'root', 'admin@example.com', '$2y$10$oNFBPqdhK6HK/EICyTB9JugEoGzqcn.Y.s/RZkLi0zaIIyQHpgBWW', 'admin', '2024-11-25 18:20:16', '2024-11-25 18:20:16'),
+(3, 'eq', 'eq@example.com', '$2y$10$oNFBPqdhK6HK/EICyTB9JugEoGzqcn.Y.s/RZkLi0zaIIyQHpgBWW', 'eq', '2024-11-25 18:34:54', '2024-11-25 18:34:54'),
+(2, 'wnmp', 'wnmp@example.com', '$2y$10$oNFBPqdhK6HK/EICyTB9JugEoGzqcn.Y.s/RZkLi0zaIIyQHpgBWW', 'wnmp', '2024-11-25 18:34:54', '2024-11-25 18:34:54');
 
 -- --------------------------------------------------------
 
@@ -719,7 +705,7 @@ CREATE TABLE `trainers` (
 --
 
 INSERT INTO `trainers` (`id`, `fname`, `lname`, `username`, `password`, `avatar`, `bio`, `phone`) VALUES
-(1, 'Cos', 'Fam', 'john', '$2y$12$DqWWm8SbOhtT2.P0NEUkoO6YEou.4fKDxUnLSDX4X8Xqv1tzGBUXW', NULL, 'Hey, I&#039;m Cos — a trainer who&#039;s all about helping you level up and hit your goals. I keep things real, make sure we&#039;re having fun, and bring a ton of energy to every session. Whether you’re just starting out or looking to take it to the next level, I’m here to guide you, challenge you, and celebrate every win along the way. With a mix of experience, practical tips, and a no-stress vibe, we&#039;ll build skills, confidence, and momentum together. Let’s get it!', '0716060662');
+(1, 'Cos', 'Fam', 'john', '$2y$12$DqWWm8SbOhtT2.P0NEUkoO6YEou.4fKDxUnLSDX4X8Xqv1tzGBUXW', NULL, 'Default trainer account with expertise in strength training and cardio.', '0716060662');
 
 -- --------------------------------------------------------
 
@@ -1014,14 +1000,7 @@ ALTER TABLE `notifications`
 -- Indexes for table `staff`
 --
 ALTER TABLE `staff`
-  ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
-
---
--- Indexes for table `staff_password_reset_requests`
---
-ALTER TABLE `staff_password_reset_requests`
-  ADD PRIMARY KEY (`email`);
 
 --
 -- Indexes for table `trainers`
@@ -1160,12 +1139,6 @@ ALTER TABLE `membership_plans`
 --
 ALTER TABLE `notifications`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
-
---
--- AUTO_INCREMENT for table `staff`
---
-ALTER TABLE `staff`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `trainers`

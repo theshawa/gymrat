@@ -33,8 +33,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-
-
 .font-zinc-200 {
     color: var(--color-zinc-200);
 }
@@ -86,6 +84,8 @@
     border-radius: 50%;
     margin-right: 5px;
 }
+
+
 
 .background-color-zinc-100 {
     background-color: var(--color-zinc-100);
@@ -269,4 +269,14 @@
 
 .text-gray > * {
     color: var(--color-zinc-500);
+}
+
+.dashboard-tab-small.settings::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url('../../uploads/default-images/dashboard-settings.png') center center / cover no-repeat;
+  filter: blur(8px) brightness(0.5);
+  z-index: -1;
 }

@@ -12,6 +12,8 @@ class Equipment extends Model
     public string $manufacturer;
     public string $description;
     public string $image;
+    public string $status;
+    public int $quantity;
     public DateTime $purchase_date;
     public DateTime $last_maintenance;
     public DateTime $created_at;
@@ -30,6 +32,8 @@ class Equipment extends Model
         $this->manufacturer = $data['manufacturer'] ?? "";
         $this->description = $data['description'] ?? "";
         $this->image = $data['image'] ?? "";
+        $this->status = $data['status'] ?? "available";
+        $this->quantity = $data['quantity'] ?? 0;
         $this->purchase_date = new DateTime($data['purchase_date'] ?? '');
         $this->last_maintenance = new DateTime($data['last_maintenance'] ?? '');
         $this->created_at = new DateTime($data['created_at'] ?? '');
@@ -73,13 +77,14 @@ class Equipment extends Model
 
     public function create()
     {
-        $sql = "INSERT INTO $this->table (name, type, manufacturer, description, image, purchase_date, last_maintenance) VALUES (:name, :type, :manufacturer, :description, :image, :purchase_date, :last_maintenance)";
+        $sql = "INSERT INTO $this->table (name, type, manufacturer, description,quantity, image, purchase_date, last_maintenance) VALUES (:name, :type, :manufacturer, :description, :quantity, :image, :purchase_date, :last_maintenance)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'name' => $this->name,
             'type' => $this->type,
             'manufacturer' => $this->manufacturer,
             'description' => $this->description,
+            'quantity' => $this->quantity,
             'image' => $this->image,
             'purchase_date' => $this->purchase_date->format('Y-m-d H:i:s'),
             'last_maintenance' => $this->last_maintenance->format('Y-m-d H:i:s'),
@@ -88,12 +93,14 @@ class Equipment extends Model
 
     public function update()
     {
-        $sql = "UPDATE $this->table SET name = :name, type = :type, manufacturer = :manufacturer, description = :description, image = :image, purchase_date = :purchase_date, last_maintenance = :last_maintenance, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
+        $sql = "UPDATE $this->table SET name = :name, type = :type, manufacturer = :manufacturer, quantity = :quantity, status = :status, description = :description, image = :image, purchase_date = :purchase_date, last_maintenance = :last_maintenance, updated_at = CURRENT_TIMESTAMP WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'id' => $this->id,
             'name' => $this->name,
             'type' => $this->type,
+            'quantity' => $this->quantity,
+            'status' => $this->status,
             'manufacturer' => $this->manufacturer,
             'description' => $this->description,
             'image' => $this->image,

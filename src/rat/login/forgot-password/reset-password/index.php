@@ -98,11 +98,11 @@ require_once "../../../includes/header.php";
             tips
         } = checkPasswordStrength(pw);
         if (level === "Weak") {
-            alert("Password is weak. " + tips.join(" "));
+            alert("New password is weak. " + tips.join(" "));
             return;
         }
         if (level === "Medium") {
-            const confirm = window.confirm("Password is not strong. Do you want to continue?\n" + tips.join("\n"));
+            const confirm = window.confirm("New password is not strong. Do you want to continue?\n" + tips.join("\n"));
             if (!confirm) {
                 return;
             }

@@ -3,7 +3,7 @@ require_once "../../../auth-guards.php";
 auth_required_guard("admin", "/staff/login");
 
 $pageTitle = "Settings";
-$sidebarActive = 9;
+$sidebarActive = 10;
 $pageStyles = ["../admin.css"];
 $menuBarConfig = [
     "title" => $pageTitle,

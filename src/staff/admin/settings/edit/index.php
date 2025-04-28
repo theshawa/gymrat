@@ -20,7 +20,7 @@ if (isset($_SESSION['settings'])) {
 
 
 $pageTitle = "Edit Settings";
-$sidebarActive = 9;
+$sidebarActive = 10;
 $pageStyles = ["../../admin.css"];
 $menuBarConfig = [
     "title" => $pageTitle,

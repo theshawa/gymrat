@@ -17,7 +17,7 @@ try {
 
 
 $pageTitle = "Manage Staff Credentials";
-$sidebarActive = 8;
+$sidebarActive = 9;
 $pageStyles = ["../admin.css"];
 $menuBarConfig = [
     "title" => $pageTitle

@@ -74,9 +74,16 @@ auth_required_guard("eq", "/staff/login");
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-status">Status</label></h2>
                         <select name="equipment_status" id="edit-status" class="staff-input-primary staff-input-long">
-                            <option value="available" >Available</option>
-                            <option value="not available" <?= $equipment->status == 'In Use' ? 'selected' : '' ?>>Not Available</option>
+                            <option value="available" <?= $equipment->status == 'available' ? 'selected' : '' ?>>Available</option>
+                            <option value="not available" <?= $equipment->status == 'not available' ? 'selected' : '' ?>>Not Available</option>
                         </select>
+                    </div>
+
+                    <div style="margin-bottom: 10px">
+                        <h2><label for="edit-last-maintenance">Last Maintenance</label></h2>
+                        <input type="date" id="edit-last-maintenance" name="equipment_last_maintenance"
+                            class="staff-input-primary staff-input-long"
+                            value="<?= htmlspecialchars($equipment->last_maintenance->format('Y-m-d')) ?>">
                     </div>
 
                     <div style="margin: 10px 0">

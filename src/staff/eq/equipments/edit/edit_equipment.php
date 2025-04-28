@@ -21,6 +21,7 @@ $description = $_POST['equipment_description'];
 $type = $_POST['equipment_category'];
 $quantity = isset($_POST['equipment_quantity']) ? (int) $_POST['equipment_quantity'] : null;
 $status = $_POST['equipment_status'];
+$last_maintenance = $_POST['equipment_last_maintenance'] ?? null;
 
 // Validation
 $errors = [];
@@ -34,7 +35,21 @@ if ($quantity === null || !is_numeric($quantity)) {
     $errors[] = "Quantity is required and must be a number.";
 }
 
-if (empty($status)) $errors[] = "Status is required.";
+if (empty($status) || !in_array($status, ['available', 'not available'])) {
+    $errors[] = "Status is required and must be either 'available' or 'not available'.";
+}
+
+if (!empty($last_maintenance)) {
+    try {
+        $last_maintenance = new DateTime($last_maintenance);
+        $now = new DateTime();
+        if ($last_maintenance > $now) {
+            $errors[] = "Last maintenance date cannot be in the future.";
+        }
+    } catch (Exception $e) {
+        $errors[] = "Invalid last maintenance date format.";
+    }
+}
 
 // image upload
 $image = $_FILES['equipment_image']['name'] ? $_FILES['equipment_image'] : null;
@@ -66,6 +81,7 @@ $equipment->type = $type;
 $equipment->quantity = $quantity;
 $equipment->status = $status;
 $equipment->image = $image ?? $equipment->image;
+$equipment->last_maintenance = $last_maintenance ?? $equipment->last_maintenance;
 
 $_SESSION['equipment'] = serialize($equipment);
 

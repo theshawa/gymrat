@@ -56,11 +56,11 @@ function get(int $user_id, string $user_type): array
 
         $data = array_merge($data_1, $data_2);
         usort($data, function ($a, $b) {
-            return strtotime($b['created_at']) - strtotime($a['created_at']);
+            return $b['created_at'] > $a['created_at'] ? 1 : -1;
         });
 
         $data = array_map(function ($item) {
-            $item['created_at'] = format_time($item['created_at']);
+            $item['created_at'] = format_time($item['created_at'], true);
             return $item;
         }, $data);
 

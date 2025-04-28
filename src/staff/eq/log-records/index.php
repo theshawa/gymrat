@@ -37,23 +37,36 @@ $equipmentModel = new Equipment();
                 <table class="staff-table">
                     <thead>
                         <tr>
-                            <th>Equipment Name</th>
-                            <th>Description</th>
-                            <th>Status</th>
+                            <th>Log ID</th>
+                            <th>Equipment Details</th>
                             <th>Created At</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($logRecords as $logRecord): ?>
-                            <?php
-                                $equipmentModel->get_by_id($logRecord->equipment_id);
-                                $equipmentName = $equipmentModel->name ?? 'Unknown';
-                            ?>
                             <tr>
-                                <td><?= htmlspecialchars($equipmentName) ?></td>
-                                <td><?= htmlspecialchars($logRecord->description ?? 'N/A') ?></td>
-                                <td><?= htmlspecialchars($logRecord->status ?? 'N/A') ?></td>
+                                <td><?= htmlspecialchars($logRecord->id) ?></td>
+                                <td>
+                                    <?php 
+                                    $equipmentDetails = json_decode($logRecord->description, true);
+                                    if (is_array($equipmentDetails)): 
+                                    ?>
+                                        <ul>
+                                            <?php foreach ($equipmentDetails as $detail): ?>
+                                                <?php
+                                                    $equipmentModel->get_by_id($detail['equipment_id']);
+                                                    $equipmentName = $equipmentModel->name ?? 'Unknown';
+                                                ?>
+                                                <li>
+                                                    <?= htmlspecialchars($equipmentName) ?> - <?= htmlspecialchars($detail['status']) ?>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php else: ?>
+                                        <p>Invalid data</p>
+                                    <?php endif; ?>
+                                </td>
                                 <td><?= htmlspecialchars($logRecord->created_at->format('Y-m-d')) ?></td>
                                 <td>
                                     <a href="./edit/index.php?id=<?= $logRecord->id ?>" class="staff-button-small">Edit</a>

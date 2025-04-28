@@ -4,12 +4,11 @@ require_once __DIR__ . "/../Model.php";
 
 class LogRecord extends Model
 {
-    protected $table = "log_records";
+    protected $table = "equipment_log_records";
 
     public int $id;
-    public int $equipment_id;
+    public int $equipment_manager;
     public string $description;
-    public string $status;
     public DateTime $created_at;
 
     public function __construct()
@@ -20,20 +19,18 @@ class LogRecord extends Model
     public function fill(array $data)
     {
         $this->id = $data['id'] ?? 0;
-        $this->equipment_id = $data['equipment_id'] ?? 0;
+        $this->equipment_manager = $data['equipment_manager'] ?? 0;
         $this->description = $data['description'] ?? "";
-        $this->status = $data['status'] ?? "";
         $this->created_at = new DateTime($data['created_at'] ?? '');
     }
 
     public function create()
     {
-        $sql = "INSERT INTO $this->table (equipment_id, description, status) VALUES (:equipment_id, :description, :status)";
+        $sql = "INSERT INTO $this->table (equipment_manager, description) VALUES (:equipment_manager, :description)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
-            'equipment_id' => $this->equipment_id,
+            'equipment_manager' => $this->equipment_manager,
             'description' => $this->description,
-            'status' => $this->status,
         ]);
         $this->id = $this->conn->lastInsertId();
     }
@@ -41,16 +38,14 @@ class LogRecord extends Model
     public function update()
     {
         $sql = "UPDATE $this->table SET 
-            equipment_id = :equipment_id, 
-            description = :description, 
-            status = :status 
+            equipment_manager = :equipment_manager, 
+            description = :description 
             WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'id' => $this->id,
-            'equipment_id' => $this->equipment_id,
+            'equipment_manager' => $this->equipment_manager,
             'description' => $this->description,
-            'status' => $this->status,
         ]);
     }
 
@@ -96,7 +91,7 @@ class LogRecord extends Model
 
     public function __sleep()
     {
-        return ['id', 'equipment_id', 'description', 'status', 'created_at'];
+        return ['id', 'equipment_manager', 'description', 'created_at'];
     }
 
     public function __wakeup()

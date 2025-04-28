@@ -8,7 +8,7 @@ require_once "../../../../db/models/Equipment.php";
 require_once "../../../../alerts/functions.php";
 
 $menuBarConfig = [
-    "title" => "Create Log Record",
+    "title" => "Edit Log Record",
     "showBack" => true,
     "goBackTo" => "/staff/eq/log-records/index.php",
     "useButton" => true,
@@ -47,7 +47,7 @@ $equipments = $equipmentModel->get_all();
 <main>
     <div class="staff-base-container">
         <div class="form">
-            <form action="create_record.php" method="POST">
+            <form action="edit_record.php" method="POST">
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
 

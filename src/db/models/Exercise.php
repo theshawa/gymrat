@@ -194,4 +194,13 @@ class Exercise extends Model
 
         return 'Title not found';
     }
+
+    public function get_total_count(): int
+    {
+        $sql = "SELECT COUNT(*) as total FROM $this->table";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return (int)$result['total'];
+    }
 }

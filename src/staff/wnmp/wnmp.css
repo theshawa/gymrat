@@ -85,4 +85,8 @@
     background-color: var(--color-red);
     border-radius: 50%;
     margin-right: 5px;
-  }
+}
+
+.font-zinc-200 {
+    color: var(--color-zinc-200);
+}

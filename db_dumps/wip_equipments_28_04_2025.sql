@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: gymrat_db:3306
--- Generation Time: Apr 28, 2025 at 03:31 AM
--- Server version: 9.2.0
+-- Generation Time: Apr 27, 2025 at 06:27 PM
+-- Server version: 9.3.0
 -- PHP Version: 8.2.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -325,54 +325,38 @@ INSERT INTO `customer_progress` (`id`, `customer_id`, `trainer_id`, `message`, `
 -- Table structure for table `equipments`
 --
 
-CREATE TABLE `equipments` (
-  `id` int NOT NULL,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `manufacturer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `image` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `quantity` int NOT NULL DEFAULT '0',
-  `purchase_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_maintenance` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE equipments (
+  id int NOT NULL,
+  name varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  type varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  description varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  manufacturer varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  image varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  status varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  quantity int NOT NULL DEFAULT 0,
+  purchase_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  last_maintenance timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 --
 -- Dumping data for table `equipments`
 --
 
 INSERT INTO `equipments` (`id`, `name`, `type`, `description`, `manufacturer`, `image`, `status`, `quantity`, `purchase_date`, `last_maintenance`, `created_at`, `updated_at`) VALUES
-(1, 'Leg Press Machine', 'Strength Equipment', 'A versatile machine designed to target quadriceps, hamstrings, and glutes effectively. test', 'GymPro', 'staff-equipment-images/680ee8baba8f7.jpg', 'available', 3, '2022-03-01 08:00:00', '2023-06-14 18:30:00', '2024-11-26 20:00:21', '2025-04-28 02:32:26'),
+(1, 'Leg Press Machine', 'Strength Equipment', 'A versatile machine designed to target quadriceps, hamstrings, and glutes effectively.', 'GymPro', NULL, 'available', 2, '2022-03-01 08:00:00', '2023-06-15 08:00:00', '2024-11-26 20:00:21', '2024-11-27 00:30:38'),
+
 (2, 'Squat Rack', 'Strength Equipment', 'A rack for performing squats and other compound exercises.', 'IronMax', NULL, 'unavailable', 3, '2021-05-10 08:00:00', '2023-07-01 08:00:00', '2024-11-26 20:00:21', '2024-11-29 04:53:53'),
+
 (4, 'Calf Raise Machine', 'Strength Equipment', 'Targets and strengthens the calf muscles.', 'PowerFit', NULL, 'available', 1, '2020-11-20 08:00:00', '2023-08-01 08:00:00', '2024-11-26 20:00:21', '2024-11-26 20:00:21'),
+
 (5, 'Bench Press', 'Strength Equipment', 'A classic equipment for chest and triceps strength training.', 'MuscleTech', NULL, 'unavailable', 5, '2023-03-05 08:00:00', '2023-09-01 08:00:00', '2024-11-26 20:00:21', '2024-11-26 20:00:21'),
+
 (6, 'Chest Fly Machine', 'Strength Equipment', 'Builds chest muscles and improves posture.', 'HealthLine', NULL, 'available', 2, '2022-10-12 08:00:00', '2023-06-20 08:00:00', '2024-11-26 20:00:21', '2024-11-26 20:00:21'),
+
 (7, 'Lat Pulldown Machine', 'Strength Equipment', 'A machine for strengthening the back and biceps.', 'BackFit', 'uploads/default-images/latpull.png', 'available', 1, '2021-09-30 08:00:00', '2023-04-15 08:00:00', '2024-11-26 20:00:21', '2024-11-26 20:00:21'),
-(8, 'Dumbbells', 'Strength Equipment', 'Versatile free weights for full-body strength training.', 'FlexPro', 'uploads/default-images/dumbbells.jpg', 'unavailable', 10, '2022-12-25 08:00:00', '2023-05-01 08:00:00', '2024-11-26 20:00:21', '2024-11-26 20:00:21'),
-(11, 'test', 'test', 'test', 'test', '', 'available', 1, '2025-04-15 18:30:00', '2025-04-28 02:32:37', '2025-04-28 02:35:14', '2025-04-28 02:35:14');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `equipment_log_records`
---
-
-CREATE TABLE `equipment_log_records` (
-  `id` int NOT NULL,
-  `equipment_manager` int NOT NULL,
-  `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `equipment_log_records`
---
-
-INSERT INTO `equipment_log_records` (`id`, `equipment_manager`, `description`, `created_at`) VALUES
-(1, 0, '[{\"equipment_id\":1,\"status\":\"Good\"},{\"equipment_id\":2,\"status\":\"Bad\"},{\"equipment_id\":4,\"status\":\"Broken\"},{\"equipment_id\":5,\"status\":\"Good\"},{\"equipment_id\":6,\"status\":\"Good\"},{\"equipment_id\":7,\"status\":\"Good\"},{\"equipment_id\":8,\"status\":\"Good\"},{\"equipment_id\":11,\"status\":\"Good\"}]', '2025-04-28 02:53:32');
+(8, 'Dumbbells', 'Strength Equipment', 'Versatile free weights for full-body strength training.', 'FlexPro', 'uploads/default-images/dumbbells.jpg', 'unavailable', 10, '2022-12-25 08:00:00', '2023-05-01 08:00:00', '2024-11-26 20:00:21', '2024-11-26 20:00:21');
 
 -- --------------------------------------------------------
 
@@ -628,8 +612,7 @@ INSERT INTO `notifications` (`id`, `title`, `message`, `receiver_id`, `receiver_
 (52, 'Welcome to GYMRAT', 'Thank you for registering with us. We hope you have a great experience!', 45, 'rat', 'system', 0, NULL, '2025-04-22 15:56:05'),
 (56, 'Workout Plan Request Submitted', 'Your trainer has requested a custom workout plan for you. Our fitness team will create it soon.', 44, 'rat', 'system', 0, NULL, '2025-04-24 01:22:20'),
 (57, 'Workout Plan Request Submitted', 'Your trainer has requested a custom workout plan for you. Our fitness team will create it soon.', 44, 'rat', 'system', 0, NULL, '2025-04-24 01:43:20'),
-(58, 'Workout Plan Request Submitted', 'Your trainer has requested a custom workout plan for you. Our fitness team will create it soon.', 48, 'rat', 'system', 0, NULL, '2025-04-27 23:46:39'),
-(59, 'Workout Plan Request Submitted', 'Your trainer has requested a custom workout plan for you. Our fitness team will create it soon.', 44, 'rat', 'system', 0, NULL, '2025-04-28 08:29:03');
+(58, 'Workout Plan Request Submitted', 'Your trainer has requested a custom workout plan for you. Our fitness team will create it soon.', 48, 'rat', 'system', 0, NULL, '2025-04-27 23:46:39');
 
 -- --------------------------------------------------------
 
@@ -829,8 +812,7 @@ INSERT INTO `workout_requests` (`id`, `trainer_id`, `description`, `created_at`,
 (7, 1, 'Type: Cardio\nDuration: 30 days\n\nedddsd', '2025-04-23 19:52:20', '2025-04-23 19:52:20', 0),
 (8, 1, '{\"name\":\"Burn fat and build lean muscle\",\"type\":\"hiit\",\"duration\":14,\"priority\":\"normal\",\"description\":\"A balanced program designed to burn fat while building lean muscle. Combines strength training with high-intensity cardio to boost metabolism, improve endurance, and sculpt the body. Ideal for those aiming to lose weight without sacrificing muscle.\",\"exercises\":[{\"id\":1,\"day\":1,\"sets\":4,\"reps\":15},{\"id\":6,\"day\":1,\"sets\":3,\"reps\":10},{\"id\":3,\"day\":2,\"sets\":3,\"reps\":10},{\"id\":7,\"day\":2,\"sets\":3,\"reps\":10},{\"id\":8,\"day\":3,\"sets\":4,\"reps\":10},{\"id\":6,\"day\":3,\"sets\":4,\"reps\":10}],\"customer_id\":44,\"trainer_id\":1}\n\nName: Burn fat and build lean muscle\nType: Hiit\nDuration: 14 days\nPriority: Normal\n\nA balanced program designed to burn fat while building lean muscle. Combines strength training with high-intensity cardio to boost metabolism, improve endurance, and sculpt the body. Ideal for those aiming to lose weight without sacrificing muscle.\n\nRecommended Exercises:\n- Squats: 4 sets of 15 reps (Day 1)\n- Lunges: 3 sets of 10 reps (Day 1)\n- Bench Press: 3 sets of 10 reps (Day 2)\n- Quads: 3 sets of 10 reps (Day 2)\n- Dumbbell Rows: 4 sets of 10 reps (Day 3)\n- Lunges: 4 sets of 10 reps (Day 3)\n', '2025-04-23 20:09:40', '2025-04-23 20:09:40', 0),
 (9, 1, '{\"name\":\"Burn fat and build lean muscle\",\"type\":\"hiit\",\"duration\":14,\"priority\":\"normal\",\"description\":\"A balanced program designed to burn fat while building lean muscle. Combines strength training with high-intensity cardio to boost metabolism, improve endurance, and sculpt the body. Ideal for those aiming to lose weight without sacrificing muscle.\",\"exercises\":[{\"id\":1,\"day\":1,\"sets\":4,\"reps\":15},{\"id\":6,\"day\":1,\"sets\":3,\"reps\":10},{\"id\":3,\"day\":2,\"sets\":3,\"reps\":10},{\"id\":7,\"day\":2,\"sets\":3,\"reps\":10},{\"id\":8,\"day\":3,\"sets\":4,\"reps\":10},{\"id\":6,\"day\":3,\"sets\":4,\"reps\":10}],\"customer_id\":44,\"trainer_id\":1}\n\nName: Burn fat and build lean muscle\nType: Hiit\nDuration: 14 days\nPriority: Normal\n\nA balanced program designed to burn fat while building lean muscle. Combines strength training with high-intensity cardio to boost metabolism, improve endurance, and sculpt the body. Ideal for those aiming to lose weight without sacrificing muscle.\n\nRecommended Exercises:\n- Squats: 4 sets of 15 reps (Day 1)\n- Lunges: 3 sets of 10 reps (Day 1)\n- Bench Press: 3 sets of 10 reps (Day 2)\n- Quads: 3 sets of 10 reps (Day 2)\n- Dumbbell Rows: 4 sets of 10 reps (Day 3)\n- Lunges: 4 sets of 10 reps (Day 3)\n', '2025-04-23 20:13:20', '2025-04-23 20:13:20', 0),
-(10, 1, '{\"name\":\"Thunder Core 20\",\"type\":\"sport\",\"duration\":14,\"priority\":\"high\",\"description\":\"A fast-paced, 20-minute core-focused workout designed to build rock-solid abs and improve overall stability using just bodyweight movements\\u2014perfect for a quick sweat at home or at the gym.\",\"exercises\":[{\"id\":4,\"d\":1,\"s\":4,\"r\":12},{\"id\":3,\"d\":2,\"s\":4,\"r\":12},{\"id\":6,\"d\":3,\"s\":4,\"r\":10},{\"id\":7,\"d\":2,\"s\":4,\"r\":12}],\"customer_id\":48,\"trainer_id\":1}\n\nName: Thunder Core 20\nType: Sport\nDuration: 14 days\nPriority: High\n\nA fast-paced, 20-minute core-focused workout designed to build rock-solid abs and improve overall stability using just bodyweight movements—perfect for a quick sweat at home or at the gym.\n\nRecommended Exercises: Pull-Ups: 4 sets of 12 reps (Day 1), Bench Press: 4 sets of 12 reps (Day 2), Lunges: 4 sets of 10 reps (Day 3) and 1 more exercises', '2025-04-27 23:46:39', '2025-04-27 23:46:39', 0),
-(11, 1, '{\"name\":\"test\",\"type\":\"cardio\",\"duration\":30,\"priority\":\"normal\",\"description\":\"test\",\"exercises\":[{\"id\":4,\"d\":1,\"s\":3,\"r\":10},{\"id\":6,\"d\":1,\"s\":3,\"r\":10}],\"customer_id\":44,\"trainer_id\":1}', '2025-04-28 08:29:03', '2025-04-28 08:29:03', 0);
+(10, 1, '{\"name\":\"Thunder Core 20\",\"type\":\"sport\",\"duration\":14,\"priority\":\"high\",\"description\":\"A fast-paced, 20-minute core-focused workout designed to build rock-solid abs and improve overall stability using just bodyweight movements\\u2014perfect for a quick sweat at home or at the gym.\",\"exercises\":[{\"id\":4,\"d\":1,\"s\":4,\"r\":12},{\"id\":3,\"d\":2,\"s\":4,\"r\":12},{\"id\":6,\"d\":3,\"s\":4,\"r\":10},{\"id\":7,\"d\":2,\"s\":4,\"r\":12}],\"customer_id\":48,\"trainer_id\":1}\n\nName: Thunder Core 20\nType: Sport\nDuration: 14 days\nPriority: High\n\nA fast-paced, 20-minute core-focused workout designed to build rock-solid abs and improve overall stability using just bodyweight movements—perfect for a quick sweat at home or at the gym.\n\nRecommended Exercises: Pull-Ups: 4 sets of 12 reps (Day 1), Bench Press: 4 sets of 12 reps (Day 2), Lunges: 4 sets of 10 reps (Day 3) and 1 more exercises', '2025-04-27 23:46:39', '2025-04-27 23:46:39', 0);
 
 -- --------------------------------------------------------
 
@@ -936,12 +918,6 @@ ALTER TABLE `customer_progress`
 -- Indexes for table `equipments`
 --
 ALTER TABLE `equipments`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `equipment_log_records`
---
-ALTER TABLE `equipment_log_records`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1087,13 +1063,7 @@ ALTER TABLE `customer_progress`
 -- AUTO_INCREMENT for table `equipments`
 --
 ALTER TABLE `equipments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `equipment_log_records`
---
-ALTER TABLE `equipment_log_records`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `exercises`
@@ -1141,7 +1111,7 @@ ALTER TABLE `membership_plans`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `trainers`
@@ -1171,7 +1141,7 @@ ALTER TABLE `workout_exercises`
 -- AUTO_INCREMENT for table `workout_requests`
 --
 ALTER TABLE `workout_requests`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables

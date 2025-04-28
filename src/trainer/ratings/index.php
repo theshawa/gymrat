@@ -212,50 +212,64 @@ require_once "../includes/titlebar.php";
 
             <div class="reviews-list">
                 <?php foreach ($reviews as $review): ?>
-                    <div class="review-item">
-                        <div class="review-header">
-                            <?php
-                            // Correctly handle the avatar path
-                            $reviewerAvatarPath = '/uploads/default-images/default-avatar.png'; // Default
+                    <div class="review-card">
+                        <?php
+                        // Correctly handle the avatar path
+                        $reviewerAvatarPath = '/uploads/default-images/default-avatar.png'; // Default
 
-                            if (!empty($review['avatar'])) {
-                                // Check if avatar already starts with "/uploads/"
-                                if (strpos($review['avatar'], '/uploads/') === 0) {
-                                    $reviewerAvatarPath = $review['avatar'];
-                                }
-                                // Check if it starts with "uploads/"
-                                else if (strpos($review['avatar'], 'uploads/') === 0) {
-                                    $reviewerAvatarPath = '/' . $review['avatar'];
-                                }
-                                // Otherwise, assume it's in "customer-avatars/"
-                                else {
-                                    $reviewerAvatarPath = '/uploads/' . $review['avatar'];
-                                }
+                        if (!empty($review['avatar'])) {
+                            // Check if avatar already starts with "/uploads/"
+                            if (strpos($review['avatar'], '/uploads/') === 0) {
+                                $reviewerAvatarPath = $review['avatar'];
                             }
-                            ?>
-                            <img src="<?= $reviewerAvatarPath ?>" alt="<?= htmlspecialchars($review['fname']) ?>"
-                                class="reviewer-avatar">
-                            <div class="reviewer-info">
-                                <div class="reviewer-name">
-                                    <?= htmlspecialchars($review['fname'] . ' ' . substr($review['lname'], 0, 1) . '.') ?>
+                            // Check if it starts with "uploads/"
+                            else if (strpos($review['avatar'], 'uploads/') === 0) {
+                                $reviewerAvatarPath = '/' . $review['avatar'];
+                            }
+                            // Otherwise, assume it's in "customer-avatars/"
+                            else {
+                                $reviewerAvatarPath = '/uploads/' . $review['avatar'];
+                            }
+                        }
+                        ?>
+                        <div class="review-card-header">
+                            <a href="../customers/profile?id=<?= $review['customer_id'] ?>" class="review-avatar-link">
+                                <img src="<?= $reviewerAvatarPath ?>" alt="<?= htmlspecialchars($review['fname']) ?>"
+                                    class="review-avatar">
+                            </a>
+                            <div class="review-user-info">
+                                <div class="review-user-name">
+                                    <?= htmlspecialchars($review['fname'] . ' ' . $review['lname']) ?>
                                 </div>
-                                <div class="review-rating">
+                                <div class="review-stars">
                                     <?php for ($i = 1; $i <= 5; $i++): ?>
                                         <?php if ($i <= $review['rating']): ?>
-                                            <span class="star filled">★</span>
+                                            <span class="star-icon filled">★</span>
                                         <?php else: ?>
-                                            <span class="star">☆</span>
+                                            <span class="star-icon">☆</span>
                                         <?php endif; ?>
                                     <?php endfor; ?>
                                 </div>
                             </div>
-                            <div class="review-date"><?= date('M d, Y', strtotime($review['created_at'])) ?></div>
                         </div>
+                        
                         <?php if (!empty($review['review'])): ?>
-                            <div class="review-content">
+                            <div class="review-message">
                                 <p><?= htmlspecialchars($review['review']) ?></p>
                             </div>
                         <?php endif; ?>
+                        
+                        <div class="review-footer">
+                            <div class="review-date">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="calendar-icon">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                <?= date('M d, Y', strtotime($review['created_at'])) ?>
+                            </div>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             </div>

@@ -22,6 +22,8 @@ class Customer extends Model
     public ?int $workout;
     public ?int $meal_plan;
     public string $attention_reason = '';
+    public int $days_since_joining = 0;
+    public int $priority = 0;
 
     public function fill(array $data)
     {
@@ -220,7 +222,7 @@ class Customer extends Model
 
     public function __sleep()
     {
-        return ['id', 'fname', 'lname', 'email', 'password', 'phone', 'avatar', 'created_at', 'updated_at', 'onboarded', 'membership_plan', 'membership_plan_activated_at', 'trainer', 'workout', 'meal_plan', 'attention_reason'];
+        return ['id', 'fname', 'lname', 'email', 'password', 'phone', 'avatar', 'created_at', 'updated_at', 'onboarded', 'membership_plan', 'membership_plan_activated_at', 'trainer', 'workout', 'meal_plan', 'attention_reason', 'days_since_joining', 'priority'];
     }
 
     public function __wakeup()

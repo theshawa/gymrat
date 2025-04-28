@@ -14,17 +14,17 @@ $email = htmlspecialchars($_POST['email']);
 require_once "../../../db/models/StaffPasswordResetRequest.php";
 require_once "../../../db/models/Staff.php";
 
-// $staff = new Staff();
-// $staff->email = $email;
-// try {
-//     if (!$staff->get_by_email()) {
-//         redirect_with_error_alert("Staff member not found", "/staff/login/forgot-password");
-//         exit;
-//     }
-// } catch (PDOException $e) {
-//     redirect_with_error_alert("Failed to fetch staff due to error: " . $e->getMessage(), "/staff/login/forgot-password");
-//     exit;
-// }
+$staff = new Staff();
+$staff->email = $email;
+try {
+    if (!$staff->get_by_email()) {
+        redirect_with_error_alert("Staff member not found", "/staff/login/forgot-password");
+        exit;
+    }
+} catch (PDOException $e) {
+    redirect_with_error_alert("Failed to fetch staff due to error: " . $e->getMessage(), "/staff/login/forgot-password");
+    exit;
+}
 
 $request = new StaffPasswordResetRequest();
 $request->fill([

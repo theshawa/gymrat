@@ -37,6 +37,7 @@ require_once "../includes/titlebar.php";
             <div class="dot"></div>
             <span><?= $traffic['rat_count_text'] ?></span>
         </div>
+        <p class="max-capacity">Gym can accommodate up to <?= $traffic['max_capacity'] ?> rats!</p>
         <p class="paragraph">*The traffic values are estimates to give you a general idea and may not reflect exact conditions. Use them as a guide, and remember—you can crush your workout at any time!</p>
     </div>
 </main>

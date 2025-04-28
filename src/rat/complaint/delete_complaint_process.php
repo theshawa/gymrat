@@ -16,6 +16,20 @@ $complaint->fill(
 );
 
 try {
+    $complaint->get_by_id($id);
+} catch (\Throwable $th) {
+    redirect_with_error_alert("Failed to load complaint due to an error:" . $th->getMessage(), "./");
+}
+
+$now = new DateTime();
+$is_deletable = $complaint->created_at->diff($now)->i < 5;
+
+if (!$is_deletable) {
+    redirect_with_error_alert("You can only delete your complaint within 5 minutes of submission.", "./");
+    exit;
+}
+
+try {
     $complaint->delete();
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to delete complaint due to an error:" . $e->getMessage(), "./");

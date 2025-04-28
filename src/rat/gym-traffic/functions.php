@@ -28,7 +28,7 @@ function get_traffic()
         return $session->get_duration_in_hours() < $settings->workout_session_expiry;
     });
 
-    $active_sessions_count = 54;
+    $active_sessions_count = count($active_sessions);
     $max_sessions = !$settings->max_capacity ? 50 : $settings->max_capacity;
     $traffic = $active_sessions_count / $max_sessions;
     $rat_count_text = "";

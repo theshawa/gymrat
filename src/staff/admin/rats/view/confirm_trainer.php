@@ -4,6 +4,7 @@ session_start();
 
 require_once "../../../../alerts/functions.php";
 require_once "../../../../db/models/Customer.php";
+require_once "../../../../notifications/functions.php";
 
 $customer = new Customer();
 $customer = unserialize($_SESSION['customer']);
@@ -21,6 +22,14 @@ try {
 } catch (Exception $e) {
     redirect_with_error_alert("Failed to assign trainer: " . $e->getMessage(), "/staff/admin/rats/view/index.php?id=$customer->id");
     exit;
+}
+
+
+try {
+    notify_trainer($trainer_id, "New Customer Assignment", "A new customer ( ". $customer->fname . " " . $customer->lname . " ) has been assigned to you.", "admin" );
+    
+} catch (\Throwable $th) {
+    $_SESSION['error'] = "Failed to notify trainer of customer assignment: " . $th->getMessage();
 }
 
 redirect_with_success_alert("Trainer successfully assigned", "/staff/admin/rats/view/index.php?id=$customer->id");

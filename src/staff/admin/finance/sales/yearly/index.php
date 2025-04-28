@@ -43,12 +43,18 @@ if ($get_plan != 0) {
 
 $record_count = 0;
 $total_revenue = 0;
+$report_description = "";
+
 
 if (!empty($sales)) {
     $completed_sales = array_filter($sales, fn($sale) => $sale->completed_at !== null);
     $record_count = count($completed_sales);
     $total_revenue = array_sum(array_map(fn($sale) => $sale->amount, $completed_sales));
 }
+
+$report_description = (($get_plan) ? $membership_titles[$get_plan] : "All") . " membership plan purchases for " . $get_year;
+
+$_SESSION['sales_data'] = serialize($sales);
 
 $menuBarConfig = [
     "title" => $pageTitle,
@@ -74,7 +80,7 @@ require_once "../../../../includes/sidebar.php";
             <div style="grid-column: 1; align-self: start; justify-self: start; text-align: left;">
                 <h1 style="margin: 10px 0;">Currently displaying : </h1>
                 <p>
-                    <?= ($get_plan) ? $membership_titles[$get_plan] : "All" ?> membership plan purchases for <?= $get_year ?>
+                    <?= $report_description ?>
                 </p>
             </div>
             <div style="grid-column: 2; align-self: center; justify-self: end; text-align: left;">
@@ -84,7 +90,7 @@ require_once "../../../../includes/sidebar.php";
 
         </div>
 
-        <div style="margin: 20px 10px;">
+        <div style="margin: 30px 10px; display: grid; grid-template-columns: 3fr 1fr; gap: 20px;">
             <form method="get" action="/staff/admin/finance/sales/yearly/index.php" style="display: flex; gap: 10px; align-items: center; margin: 20px 0;">
                 <label for="year" style="margin-right: 5px;" >Year:</label>
                 <select name="year" id="year" class="staff-input-primary staff-input-short-alt" required>
@@ -104,6 +110,16 @@ require_once "../../../../includes/sidebar.php";
                 </select>
 
                 <button type="submit" class="staff-button secondary" style="margin: 0 10px; height: 40px; border-radius: 10px">Filter</button>
+            </form>
+            <form method="post" action="/staff/admin/finance/sales/report/index.php"
+            target="_blank" style="display: flex; gap: 10px; align-items: center; justify-self: end;">
+                <input type="hidden" name="report_title" value="Yearly Membership Plan Sales Report">
+                <input type="hidden" name="record_count" value="<?= htmlspecialchars($record_count) ?>">
+                <input type="hidden" name="total_revenue" value="<?= htmlspecialchars($total_revenue) ?>">
+                <input type="hidden" name="report_description" value="<?= htmlspecialchars($report_description) ?>">
+                <?php if ($sales): ?>
+                    <button type="submit" class="staff-button secondary" style="margin: 0 10px; height: 40px; border-radius: 10px">Generate Report</button>
+                <?php endif; ?>
             </form>
         </div>
 

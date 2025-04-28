@@ -14,7 +14,7 @@ $menuBarConfig = [
     "useButton" => true,
     "options" => [
         ["title" => "Save Changes", "buttonType" => "submit", "type" => "secondary"],
-        ["title" => "Revert Changes", "buttonType" => "submit", "formAction" => "revert_log_record.php", "type" => "destructive"]
+        ["title" => "Revert Changes", "buttonType" => "submit", "formAction" => "revert_records.php", "type" => "destructive"]
     ]
 ];
 

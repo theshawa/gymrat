@@ -20,7 +20,11 @@ $pageTitle = "Manage Staff Credentials";
 $sidebarActive = 9;
 $pageStyles = ["../admin.css"];
 $menuBarConfig = [
-    "title" => $pageTitle
+    "title" => $pageTitle,
+    "useLink" => true,
+    "options" => [
+        ["title" => "Create Role", "href" => "/staff/admin/credentials/create/index.php", "type" => "secondary"]
+        ]
 ];
 
 require_once "../pageconfig.php";

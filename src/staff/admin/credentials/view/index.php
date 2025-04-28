@@ -32,12 +32,11 @@ $menuBarConfig = [
     "options" => []
 ];
 
-// if ($staff->email !== "admin@gymrat.com" && $staff->role === "admin") {
-//     $menuBarConfig["options"] = [
-//         ["title" => "Edit Role", "href" => "/staff/admin/credentials/edit/index.php", "type" => "secondary"],
-//         ["title" => "Delete Role", "href" => "/staff/admin/credentials/delete/index.php", "type" => "destructive"]
-//     ];
-// }
+if ( $staff->role !== "admin") {
+    $menuBarConfig["options"] = [
+        ["title" => "Delete Role", "href" => "/staff/admin/credentials/delete/index.php?id=$id", "type" => "destructive"]
+    ];
+}
 
 require_once "../../pageconfig.php";
 require_once "../../../includes/header.php";

@@ -61,19 +61,19 @@ require_once "../../../includes/sidebar.php";
                     <h2>
                         Calories
                     </h2>
-                    <p><?= $meal->calories ?></p>
+                    <p><?= $meal->calories ?> cal</p>
                 </div>
                 <div class="view-meal-details">
                     <h2>
                         Proteins
                     </h2>
-                    <p><?= $meal->proteins ?></p>
+                    <p><?= $meal->proteins ?> g</p>
                 </div>
                 <div class="view-meal-details">
                     <h2>
                         Fats
                     </h2>
-                    <p><?= $meal->fats ?></p>
+                    <p><?= $meal->fats ?> g</p>
                 </div>
             </div>
         </div>

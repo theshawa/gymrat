@@ -59,17 +59,17 @@ require_once "../../../includes/sidebar.php";
                             class="staff-input-primary staff-input-long">
                     </div>
                     <div style="margin-bottom: 10px">
-                        <h2><label for="edit-calories">Calories</label></h2>
+                        <h2><label for="edit-calories">Calories (cal)</label></h2>
                         <input type="text" id="edit-calories" name="meal_calories" pattern="^[0-9]+(\.[0-9]+)?$"
                             class="staff-input-primary staff-input-long" value="<?= $meal->calories ?>">
                     </div>
                     <div style="margin-bottom: 10px">
-                        <h2><label for="edit-proteins">Proteins</label></h2>
+                        <h2><label for="edit-proteins">Proteins (g)</label></h2>
                         <input type="text" id="edit-proteins" name="meal_proteins" pattern="^[0-9]+(\.[0-9]+)?$"
                             class="staff-input-primary staff-input-long" value="<?= $meal->proteins ?>">
                     </div>
                     <div style="margin-bottom: 10px">
-                        <h2><label for="edit-fats">Fats</label></h2>
+                        <h2><label for="edit-fats">Fats (g)</label></h2>
                         <input type="text" id="edit-fats" name="meal_fats" pattern="^[0-9]+(\.[0-9]+)?$"
                             class="staff-input-primary staff-input-long" value="<?= $meal->fats ?>">
                     </div>

@@ -178,6 +178,7 @@ class Customer extends Model
         $stmt->execute(['id' => $id]);
         $data = $stmt->fetch();
 
+        // print_r($data);
         return $data['username'] ?? null; 
     }
 

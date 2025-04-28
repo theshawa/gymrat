@@ -45,7 +45,7 @@ require_once "../includes/sidebar.php";
                 <div class="dashboard-tab-large dashboard-layout-primary">
                     <h1>Welcome, WNMP Manager!</h1>
                 </div>
-                <div class="dashboard-tab-large dashboard-layout-primary">
+                <div class="dashboard-tab-large" style="display: grid; grid-template-rows: 1fr 1fr; grid-template-columns: 1fr 1fr; place-items: center;">
                     <h1>Some random info here</h1>
                 </div>
             </div>

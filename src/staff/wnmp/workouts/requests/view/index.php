@@ -105,24 +105,21 @@ require_once "../../../../includes/sidebar.php";
 
                             echo nl2br(htmlspecialchars($parsed['description'])) . "<br><br>";
 
-                            echo "<strong>Recommended Exercises:</strong><br>";
+                            echo "<strong>Recommended Exercises:</strong><br><br>";
 
-                            echo "<table border='1' cellpadding='8' cellspacing='0' style='border-collapse: collapse; width:100%; background: #2a2a2a; color: white;'>";
-                            echo "<thead><tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Day</th></tr></thead><tbody>";
                             foreach ($parsed['exercises'] as $exercise) {
                                 try {
                                     $exerciseTitle = $exerciseModel->get_title_by_id($exercise['id']);
-                                    echo "<tr>
-                        <td>" . htmlspecialchars($exerciseTitle) . "</td>
-                        <td>" . htmlspecialchars($exercise['s']) . "</td>
-                        <td>" . htmlspecialchars($exercise['r']) . "</td>
-                        <td>Day " . htmlspecialchars($exercise['d']) . "</td>
-                    </tr>";
+                                    echo "<div style='margin-bottom: 10px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;'>
+                                            <div style='grid-column: 1;'><strong>Exercise:</strong> " . htmlspecialchars($exerciseTitle) . "</div>
+                                            <div style='grid-column: 2;'><strong>Sets:</strong> " . htmlspecialchars($exercise['s']) . "</div>
+                                            <div style='grid-column: 3;'><strong>Reps:</strong> " . htmlspecialchars($exercise['r']) . "</div>
+                                            <div style='grid-column: 4;'><strong>Day:</strong> Day " . htmlspecialchars($exercise['d']) . "</div>
+                                          </div>";
                                 } catch (Exception $e) {
-                                    echo "<tr><td colspan='4'>Unknown Exercise ID {$exercise['id']}</td></tr>";
+                                    echo "<div style='margin-bottom: 10px;'>Unknown Exercise ID {$exercise['id']}</div>";
                                 }
                             }
-                            echo "</tbody></table>";
                         } else {
                             echo nl2br(htmlspecialchars($desc)); // fallback if not a JSON structure
                         }

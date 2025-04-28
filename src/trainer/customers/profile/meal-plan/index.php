@@ -205,7 +205,7 @@ require_once "../../../includes/titlebar.php";
 
         <!-- Action Buttons -->
         <div class="action-buttons">
-            <a href="./assign?id=<?= $customerId ?>" class="btn change-btn">Change Meal Plan</a>
+            <a href="./assign?id=<?= $customerId ?>" class="btn">Change Meal Plan</a>
         </div>
     <?php endif; ?>
 </main>
@@ -235,11 +235,12 @@ require_once "../../../includes/titlebar.php";
 
     .btn {
         padding: 10px 16px;
-        border-radius: 8px;
+        border-radius: 15px;
         font-size: 14px;
         font-weight: 500;
         text-decoration: none;
         text-align: center;
+        width: 100%;
     }
 
     .assign-btn,

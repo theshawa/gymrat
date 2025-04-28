@@ -26,7 +26,6 @@ $pageConfig = [
 require_once "../includes/header.php";
 require_once "../includes/titlebar.php";
 
-// Helper function to format JSON complaint data
 function formatComplaintDescription($description) {
     // Check if the description is a JSON string
     $decoded = json_decode($description, true);
@@ -40,22 +39,28 @@ function formatComplaintDescription($description) {
     $output = '<div class="customer-report">';
     
     if (isset($decoded['customer_id'])) {
-        // Get customer name from the database
+        // Get customer name from the database using direct query
         $customerName = "Unknown Customer";
         try {
-            require_once "../../db/models/Customer.php";
-            $customer = new Customer();
-            $customer->id = $decoded['customer_id'];
-            if ($customer->get_by_id()) {
-                $customerName = htmlspecialchars($customer->fname . ' ' . $customer->lname);
+            require_once "../../db/Database.php";
+            $conn = Database::get_conn();
+            $sql = "SELECT fname, lname FROM customers WHERE id = :id";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':id', $decoded['customer_id']);
+            $stmt->execute();
+            
+            $customerData = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($customerData) {
+                $customerName = htmlspecialchars($customerData['fname'] . ' ' . $customerData['lname']);
             }
         } catch (Exception $e) {
-            // Silently handle errors, fallback to default name
+            error_log("Error fetching customer name: " . $e->getMessage());
         }
         
         $output .= '<div class="report-field"><span class="label">Customer:</span> ' . $customerName . '</div>';
     }
     
+    // Rest of the function remains the same
     if (isset($decoded['severity'])) {
         $severityClass = 'severity-' . htmlspecialchars($decoded['severity']);
         $output .= '<div class="report-field"><span class="label">Severity:</span> <span class="' . $severityClass . '">' . ucfirst(htmlspecialchars($decoded['severity'])) . '</span></div>';
@@ -182,4 +187,4 @@ function formatComplaintDescription($description) {
 </style>
 
 <?php require_once "../includes/navbar.php" ?>
-<?php require_once "../includes/footer.php" ?>
+<?php require_once "../includes/footer.php" ?> 

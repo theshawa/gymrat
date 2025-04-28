@@ -1,39 +1,62 @@
-.log-records-card {
-    background: white;
+/* equipmentView.css */
+
+.equipment-view-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
     padding: 30px;
-    margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.08);
-}
-
-.log-title {
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 30px;
-    color: #333;
-}
-
-.log-table-wrapper {
-    overflow-x: auto;
-}
-
-.log-table {
-    width: 100%;
-    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .equipment-view-details {
+    margin: 15px 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .equipment-view-details p {
+    margin: 5px 0;
+  }
+  
+  .equipment-view-details strong {
     font-size: 1rem;
-}
-
-.log-table th, .log-table td {
-    padding: 12px 18px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-}
-
-.log-table tbody tr:hover {
-    background-color: #f9f9f9;
-}
-
-.log-table th {
-    background-color: #f0f0f0;
     color: #555;
-}
+  }
+  
+  .equipment-view-details .alt {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .equipment-view-header h2,
+  .img h2 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    color: #2c3e50;
+  }
+  
+  .img img {
+    border-radius: 12px;
+    border: 2px solid #ddd;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+  }
+  
+  main .staff-base-container {
+    padding: 20px 40px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+  
+  hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 20px 0;
+  }
+  

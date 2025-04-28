@@ -98,4 +98,20 @@ class TrainerRating extends Model
             'review_count' => $result['review_count'] ?? 0
         ];
     }
+
+    public function get_by_id(int $id): ?TrainerRating
+    {
+        $sql = "SELECT * FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'id' => $id
+        ]);
+        $item = $stmt->fetch();
+        if ($item) {
+            $rating = new TrainerRating();
+            $rating->fill($item);
+            return $rating;
+        }
+        return null;
+    }
 }

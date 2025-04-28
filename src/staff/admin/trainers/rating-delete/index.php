@@ -5,6 +5,7 @@ require_once "../../../../auth-guards.php";
 auth_required_guard("admin", "/staff/login");
 
 $id = $_GET['id'] ?? null;
+$rating_id = $_GET['rating'] ?? null;
 
 require_once "../../../../alerts/functions.php";
 require_once "../../../../db/models/Trainer.php";
@@ -21,7 +22,7 @@ if (!isset($_SESSION['trainer'])){
         $trainer->id = $id;
         $trainer->get_by_id();
     } catch (Exception $e) {
-        redirect_with_error_alert("Failed to fetch trainer: " . $e->getMessage(), "/staff/admin/trainers/assignments/index.php?id=$id");
+        redirect_with_error_alert("Failed to fetch trainer: " . $e->getMessage(), "/staff/admin/trainers/view/index.php?id=$id");
         exit;
     }
     $_SESSION['trainer'] = serialize($trainer);
@@ -33,9 +34,9 @@ if (!isset($_SESSION['trainer'])){
 $trainer_ratings = null;
 $trainerRatingModel = new TrainerRating();
 try {
-    $trainer_ratings = $trainerRatingModel->get_all_of_trainer($trainer->id);
+    $trainer_ratings = $trainerRatingModel->get_by_id($rating_id);
 } catch (Exception $e) {
-    redirect_with_error_alert("Failed to fetch ratings: " . $e->getMessage(), "/staff/admin/trainers/assignments/index.php?id=$id");
+    redirect_with_error_alert("Failed to fetch ratings: " . $e->getMessage(), "/staff/admin/trainers/view/index.php?id=$id");
     exit;
 }
 
@@ -57,7 +58,7 @@ try {
 $menuBarConfig = [
     "title" => $trainer->fname . " " . $trainer->lname . " Ratings",
     "showBack" => true,
-    "goBackTo" => "/staff/admin/trainers/view/index.php?id=" . $trainer->id,
+    "goBackTo" => "/staff/admin/trainers/ratings/index.php?id=" . $trainer->id,
 ];
 
 require_once "../../pageconfig.php";
@@ -84,34 +85,28 @@ require_once "../../../includes/sidebar.php";
             </div>
 
             <div style="grid-column: 2; align-self: start; justify-self: end; text-align: right; width:100%;">
-                <h1 style="margin-bottom: 20px;">Customers Ratings</h1>
-                <?php if (!empty($trainer_ratings)): ?>
-                    <div style="width:100%;">
-                        <?php foreach ($trainer_ratings as $ratings): ?>
-                            <div class="trainer-assignment-list-item">
-                                <div style="grid-column: 1; justify-self: start; align-self: center; text-align: left;">
-                                    <h1><?= $ratings->rating ?> Star</h1>
-                                    <p><?= $ratings->review ?></p>
-                                </div>
-                                <div style="grid-column: 2; justify-self: end; align-self: end;
-                                display: grid; grid-template-columns: 5fr 1fr; gap: 10px;">
-                                    <div style="grid-column: 1; justify-self: end; justify-items:end; text-align: right;">
-                                        <p><?= $customers[$ratings->customer_id]->fname . " " . $customers[$ratings->customer_id]->lname ?></p>
-                                        <p><?= $ratings->created_at->format('Y-m-d') ?></p>
-                                    </div>
-                                    <div style="grid-column: 2; margin-left: 4px; width: 18px; justify-self: end;">
-                                        <a href="/staff/admin/trainers/rating-delete/index.php?id=<?= $id ?>&rating=<?= $ratings->id ?>">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="24" viewBox="0 0 24 24" fill="none" stroke="#f05050" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
+                <h1 style="margin-bottom: 20px;">Trainer Rating No <?= $rating_id ?></h1>
+                <div class="trainer-assignment-list-item">
+                    <div style="grid-column: 1; justify-self: start; align-self: center; text-align: left;">
+                        <h1><?= $trainer_ratings->rating ?> Star</h1>
+                        <p><?= $trainer_ratings->review ?></p>
                     </div>
-                <?php else: ?>
-                    <p>No customers assigned.</p>
-                <?php endif; ?>
+                    <div style="grid-column: 2; justify-self: end; align-self: end;">
+                        <div style=" text-align: right;">
+                            <p><?= $customers[$trainer_ratings->customer_id]->fname . " " . $customers[$trainer_ratings->customer_id]->lname ?></p>
+                            <p><?= $trainer_ratings->created_at->format('Y-m-d') ?></p>
+                        </div>
+                    </div>
+                </div>
+                <form action="delete_rating.php" method="POST">
+                    <input type="hidden" name="rating_id" value="<?= $rating_id ?>">
+                    <input type="hidden" name="trainer_id" value="<?= $id ?>">
+                    <div class="staff-record-delete-div">
+                        <h2>Are you sure you want to delete this rating?</h2>
+                        <p>This action cannot be undone.</p>
+                        <button type="submit">Delete</button>
+                    </div>
+                </form>
             </div>
         
             <!-- <pre> <?= print_r($customers) ?></pre> -->

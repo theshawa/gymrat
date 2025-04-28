@@ -2,6 +2,7 @@
 
 $title = isset($pageTitle) ? $pageTitle : null;
 $sidebarActive = isset($sidebarActive) ? $sidebarActive : null;
+$styles = isset($pageStyles) ? $pageStyles : [];
 
 $pageConfig = [
     "title" => ($title ?  $title . " | " : "") . "Equipment Manager",
@@ -14,4 +15,5 @@ $pageConfig = [
         ],
         "active" => $sidebarActive
     ],
+    "styles" => $styles
 ];

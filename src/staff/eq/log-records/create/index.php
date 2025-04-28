@@ -39,44 +39,35 @@ auth_required_guard("eq", "/staff/login");
 $equipmentName = '';
 $equipment_id = $_GET['id'] ?? null;
 
-if (isset($equipment_id)) {
-    $equipmentModel = new Equipment();
-    $equipmentModel->get_by_id($equipment_id);
-    $equipmentName = $equipmentModel->name ?? 'Unknown';
-}
+$equipmentModel = new Equipment();
+$equipments = $equipmentModel->get_all();
+
 ?>
 
 <main>
     <div class="staff-base-container">
         <div class="form">
-            <form action="create_log_record.php" method="POST">
+            <form action="create_record.php" method="POST">
                 <?php require_once "../../../includes/menubar.php"; ?>
                 <div style="padding: 5px 10px;">
-                    <input type="hidden" name="equipment_id" value="<?= htmlspecialchars($equipment_id) ?>">
 
-                    <!-- Equipment Name -->
+                    <!-- Equipment List -->
                     <div style="margin-bottom: 10px;">
-                        <h2><label for="equipment_name">Equipment Name</label></h2>
-                        <input type="text" id="equipment_name" name="equipment_name"
-                            class="staff-input-primary staff-input-long" value="<?= htmlspecialchars($equipmentName) ?>" readonly>
+                        <h2>Equipment List</h2>
+                        <?php foreach ($equipments as $equipment): ?>
+                            <div style="margin-bottom: 10px;">
+                                <h3><?= htmlspecialchars($equipment->name) ?></h3>
+                                <input type="hidden" name="equipment_ids[]" value="<?= htmlspecialchars($equipment->id) ?>">
+                                <label for="status_<?= $equipment->id ?>">Status:</label>
+                                <select name="statuses[]" id="status_<?= $equipment->id ?>" class="staff-input-primary">
+                                    <option value="Good">Good</option>
+                                    <option value="Bad">Bad</option>
+                                    <option value="Broken">Broken</option>
+                                </select>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
 
-                    <!-- Status -->
-                    <div style="margin-bottom: 10px;">
-                        <h2><label for="log_status">Status</label></h2>
-                        <select name="status" id="log_status" class="staff-input-primary staff-input-long">
-                            <option value="Completed" <?= (isset($logRecord->status) && $logRecord->status == 'Completed') ? 'selected' : '' ?>>Completed</option>
-                            <option value="Pending" <?= (isset($logRecord->status) && $logRecord->status == 'Pending') ? 'selected' : '' ?>>Pending</option>
-                        </select>
-                    </div>
-
-                    <!-- Description -->
-                    <div style="margin-bottom: 10px;">
-                        <h2><label for="log_description">Description</label></h2>
-                        <textarea id="log_description" name="description"
-                            class="staff-textarea-primary staff-textarea-large"
-                            placeholder="Enter log record description"><?= htmlspecialchars($logRecord->description ?? '') ?></textarea>
-                    </div>
                 </div>
             </form>
         </div>

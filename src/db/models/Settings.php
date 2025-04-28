@@ -70,7 +70,7 @@ class Settings extends Model
             'gym_name' => $this->gym_name,
             'gym_desc' => $this->gym_desc,
             'gym_address' => $this->gym_address,
-            'show_widgets' => (int)$this->show_widgets, // Ensure 0 or 1 is sent
+            'show_widgets' => (int)$this->show_widgets,
         ]);
     }
 
@@ -93,7 +93,6 @@ class Settings extends Model
 
     public function __wakeup()
     {
-        // Reinitialize the database connection if necessary
         $this->conn = Database::get_conn();
     }
 }

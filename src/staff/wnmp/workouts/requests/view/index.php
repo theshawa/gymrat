@@ -10,8 +10,10 @@ $sidebarActive = 3;
 require_once "../../../../../alerts/functions.php";
 require_once "../../../../../db/models/Trainer.php";
 require_once "../../../../../db/models/WorkoutRequest.php";
-require_once "../../../../../db/models/Workout.php";
+require_once "../../../../../db/models/Workout.php";                            
+require_once "../../../../../db/models/Exercise.php";
 
+$exerciseModel = new Exercise();
 $workoutRequest = new WorkoutRequest();
 try {
     $trainerModel = new Trainer();
@@ -42,8 +44,8 @@ require_once "../../../../includes/sidebar.php";
 
 <style>
     .request-details-panel {
-        background-color: #1f1f1f;
-        color: white;
+        background-color:solid var(--color-zinc-100);
+        color: black;
         padding: 24px;
         border-radius: 10px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -54,7 +56,7 @@ require_once "../../../../includes/sidebar.php";
         margin-bottom: 12px;
         padding-bottom: 8px;
         border-bottom: 1px solid var(--color-zinc-800);
-        color: white;
+        color: black;
     }
 
     .request-details-row {
@@ -103,26 +105,21 @@ require_once "../../../../includes/sidebar.php";
 
                             echo nl2br(htmlspecialchars($parsed['description'])) . "<br><br>";
 
-                            echo "<strong>Recommended Exercises:</strong><br>";
+                            echo "<strong>Recommended Exercises:</strong><br><br>";
 
-                            require_once "../../../../../db/models/Exercise.php";
-                            $exerciseModel = new Exercise();
-                            echo "<table border='1' cellpadding='8' cellspacing='0' style='border-collapse: collapse; width:100%; background: #2a2a2a; color: white;'>";
-                            echo "<thead><tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Day</th></tr></thead><tbody>";
                             foreach ($parsed['exercises'] as $exercise) {
                                 try {
                                     $exerciseTitle = $exerciseModel->get_title_by_id($exercise['id']);
-                                    echo "<tr>
-                        <td>" . htmlspecialchars($exerciseTitle) . "</td>
-                        <td>" . htmlspecialchars($exercise['s']) . "</td>
-                        <td>" . htmlspecialchars($exercise['r']) . "</td>
-                        <td>Day " . htmlspecialchars($exercise['d']) . "</td>
-                    </tr>";
+                                    echo "<div style='margin-bottom: 10px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;'>
+                                            <div style='grid-column: 1;'><strong>Exercise:</strong> " . htmlspecialchars($exerciseTitle) . "</div>
+                                            <div style='grid-column: 2;'><strong>Sets:</strong> " . htmlspecialchars($exercise['s']) . "</div>
+                                            <div style='grid-column: 3;'><strong>Reps:</strong> " . htmlspecialchars($exercise['r']) . "</div>
+                                            <div style='grid-column: 4;'><strong>Day:</strong> Day " . htmlspecialchars($exercise['d']) . "</div>
+                                          </div>";
                                 } catch (Exception $e) {
-                                    echo "<tr><td colspan='4'>Unknown Exercise ID {$exercise['id']}</td></tr>";
+                                    echo "<div style='margin-bottom: 10px;'>Unknown Exercise ID {$exercise['id']}</div>";
                                 }
                             }
-                            echo "</tbody></table>";
                         } else {
                             echo nl2br(htmlspecialchars($desc)); // fallback if not a JSON structure
                         }

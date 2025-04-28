@@ -153,9 +153,17 @@ require_once "../../../includes/sidebar.php";
             </div>
         </div>
 
-        <div style="width: 80%; height: 80%; margin: 20px auto; text-align: center;">
+        <div style="width: 80%;margin: 20px auto; text-align: center;">
             <?php if ($group_sales): ?>
                 <canvas id="membership-chart"></canvas>
+                <div style="display: flex; flex-direction: row; gap: 20px; margin: 20px auto; margin-top: 40px;">
+                    <?php foreach ($membership_titles as $planId => $title): ?>
+                        <div class="graph-details-tab">
+                            <h1 style="font-size: 42px; margin-bottom: 5px;"><?= $group_sales[$planId] ?? 0 ?></h1>
+                            <p><?= $title ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             <?php else: ?>
                 <p style="margin: 20px 0;">No data found</p>
             <?php endif; ?>

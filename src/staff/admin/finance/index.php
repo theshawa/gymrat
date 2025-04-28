@@ -94,19 +94,18 @@ require_once "../../includes/sidebar.php";
                     <?php endfor; ?>
                 </div>
                 <div style="grid-column: 2; padding: 10px 20px; 
-                display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 20px;">
+                display: grid; grid-template-rows: 1fr 1fr; gap: 20px;">
+                <div style="grid-row: 1; display: grid;  grid-template-columns: 1fr 1fr; gap: 20px">
                     <a href="/staff/admin/finance/sales" class="finance-link-tab">
                         <h1 class="font-color-zinc-200">Total <br> Sales</h1>
                     </a>
                     <a href="/staff/admin/finance/customers" class="finance-link-tab">
                         <h1 class="font-color-zinc-200">Customers Sales</h1>
                     </a>
-                    <a href="" class="finance-link-tab">
-                        <h1 class="font-color-zinc-200">Reports</h1>
-                    </a>
-                    <a href="/staff/admin/finance/graphs" class="finance-link-tab">
-                        <h1 class="font-color-zinc-200">Visualize</h1>
-                    </a>
+                </div>
+                <a href="/staff/admin/finance/graphs" class="finance-link-tab" style="grid-row: 2;">
+                    <h1 class="font-color-zinc-200">Visualize</h1>
+                </a>
                 </div>
             </div>
             <div class="overview-large-box" style="">

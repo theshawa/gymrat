@@ -29,11 +29,18 @@ $max_capacity = htmlspecialchars($_POST['max_capacity']);
 $min_workout_time = htmlspecialchars($_POST['min_workout_time']);
 $show_widgets = isset($_POST['show_widgets']) ? (int)$_POST['show_widgets'] : 1; 
 
-if (empty($contact_email)) $errors[] = "contact_email is required.";
-if (empty($contact_phone)) $errors[] = "contact_phone is required.";
-if (empty($workout_session_expiry)) $errors[] = "workout_session_expiry is required.";
-if (empty($max_capacity)) $errors[] = "max_capacity is required.";
-if (empty($min_workout_time)) $errors[] = "min_workout_time is required.";
+
+if (empty($contact_email)) $errors[] = "Contact Email is required.";
+if (empty($contact_phone)) $errors[] = "Contact Phone is required.";
+if (empty($workout_session_expiry)) $errors[] = "Workout Session Expiry is required.";
+if (empty($max_capacity)) $errors[] = "Max Capacity is required.";
+if (empty($min_workout_time)) $errors[] = "Minimum Workout Time is required.";
+if (empty($gym_name)) $errors[] = "Gym Name is required.";
+if (empty($gym_desc)) $errors[] = "Gym Description is required.";
+if (empty($gym_address)) $errors[] = "Gym Address is required.";
+if (!filter_var($contact_email, FILTER_VALIDATE_EMAIL)) {
+    $errors[] = "Invalid email format.";
+}
 
 
 $banner = $_FILES['gym_banner']['name'] ? $_FILES['gym_banner'] : null;

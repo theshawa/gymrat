@@ -50,26 +50,26 @@ auth_required_guard("eq", "/staff/login");
                             class="staff-input-primary staff-input-long" value="<?= htmlspecialchars($equipment->name ?? '') ?>">
                     </div>
 
-                    <!-- Category -->
+                    <!-- Type -->
                     <div style="margin-bottom: 10px;">
                         <h2><label for="equipment_category">Type</label></h2>
                         <input type="text" id="equipment_category" name="equipment_category"
-                            class="staff-input-primary staff-input-long" value="<?= htmlspecialchars($equipment->category ?? '') ?>">
+                            class="staff-input-primary staff-input-long" value="<?= htmlspecialchars($equipment->type ?? '') ?>">
                     </div>
 
                     <!-- Quantity -->
                     <div style="margin-bottom: 10px;">
                         <h2><label for="equipment_quantity">Quantity</label></h2>
-                        <input type="text" id="equipment_quantity" name="equipment_quantity"
-                            class="staff-input-primary staff-input-long" value="<?= htmlspecialchars($equipment->quantity ?? '') ?>" min="0">
+                        <input type="number" id="equipment_quantity" name="equipment_quantity"
+                            class="staff-input-primary staff-input-long" value="<?= htmlspecialchars($equipment->quantity ?? 0) ?>" min="0">
                     </div>
 
                     <!-- Status -->
                     <div style="margin-bottom: 10px;">
                         <h2><label for="equipment_status">Status</label></h2>
                         <select name="equipment_status" id="equipment_status" class="staff-input-primary staff-input-long">
-                            <option value="available" <?= (isset($equipment->status) && $equipment->status == 'Available') ? 'selected' : '' ?>>Available</option>
-                            <option value="not available" <?= (isset($equipment->status) && $equipment->status == 'In Use') ? 'selected' : '' ?>>Not Available</option>
+                            <option value="available" <?= (isset($equipment->status) && $equipment->status == 'available') ? 'selected' : '' ?>>Available</option>
+                            <option value="not available" <?= (isset($equipment->status) && $equipment->status == 'not available') ? 'selected' : '' ?>>Not Available</option>
                         </select>
                     </div>
 
@@ -79,6 +79,20 @@ auth_required_guard("eq", "/staff/login");
                         <textarea id="equipment_description" name="equipment_description"
                             class="staff-textarea-primary staff-textarea-large"
                             placeholder="Enter equipment description"><?= htmlspecialchars($equipment->description ?? '') ?></textarea>
+                    </div>
+
+                    <!-- Manufacturer -->
+                    <div style="margin-bottom: 10px;">
+                        <h2><label for="equipment_manufacturer">Manufacturer</label></h2>
+                        <input type="text" id="equipment_manufacturer" name="equipment_manufacturer"
+                            class="staff-input-primary staff-input-long" value="<?= htmlspecialchars($equipment->manufacturer ?? '') ?>">
+                    </div>
+
+                    <!-- Purchase Date -->
+                    <div style="margin-bottom: 10px;">
+                        <h2><label for="equipment_purchase_date">Purchase Date</label></h2>
+                        <input type="date" id="equipment_purchase_date" name="equipment_purchase_date"
+                            class="staff-input-primary staff-input-long" value="<?= htmlspecialchars($equipment->purchase_date->format('Y-m-d') ?? '') ?>">
                     </div>
 
                     <!-- Image Upload -->

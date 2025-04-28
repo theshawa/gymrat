@@ -1,8 +1,4 @@
 <?php
-
-header("Location: ./equipments");
-exit;
-
 $pageTitle = "Home";
 $sidebarActive = 1;
 $menuBarConfig = [

@@ -178,12 +178,12 @@ require_once "../../../includes/sidebar.php";
                                 <h1><?= $membership_plan_expiration->format('Y-m-d') ?></h1>
                             <?php endif; ?>
                         </div>
-                        <div style="grid-row: 2; grid-column: 1; align-self: end; justify-self: start; text-align: left;">
+                        <!-- <div style="grid-row: 2; grid-column: 1; align-self: end; justify-self: start; text-align: left;">
                             <a href="/staff/admin/rats/membership/index.php?id=<?= $customer->id ?>" 
                             style="margin: 10px 0px; width: 120px; height: 40px;" class="staff-button primary">
                                 Edit Plan
                             </a>
-                        </div>
+                        </div> -->
                         <div style="grid-row: 2; grid-column: 2; align-self: end; justify-self: end; text-align: right;">
                             <p>Current Membership Plan</p>
                             <h1 style="margin: 10px; font-size: 28px;"><?= $membership_plan->name ?? $customer->membership_plan ?></h1>

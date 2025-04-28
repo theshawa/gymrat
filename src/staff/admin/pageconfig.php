@@ -17,6 +17,7 @@ $pageConfig = [
             ["text" => "Announcements", "href" => "/staff/admin/announcements/index.php"],
             ["text" => "Complaints", "href" => "/staff/admin/complaints/index.php"],
             ["text" => "Finance", "href" => "/staff/admin/finance/index.php"],
+            ["text" => "Equipments", "href" => "/staff/admin/equipments/index.php"],
             ["text" => "Staff Credentials", "href" => "/staff/admin/credentials/index.php"],
             ["text" => "Settings", "href" => "/staff/admin/settings/index.php"],
         ],

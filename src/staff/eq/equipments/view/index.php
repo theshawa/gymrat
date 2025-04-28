@@ -56,25 +56,43 @@ auth_required_guard("eq", "/staff/login");
 
                 <div class="equipment-view-details">
                     <p><strong>Category:</strong></p>
-                    <p class="alt"><?= htmlspecialchars($equipment->type??'N/A') ?></p>
+                    <p class="alt"><?= htmlspecialchars($equipment->type ?? 'N/A') ?></p>
+                </div>
+                <hr>
+
+                <div class="equipment-view-details">
+                    <p><strong>Manufacturer:</strong></p>
+                    <p class="alt"><?= htmlspecialchars($equipment->manufacturer ?? 'N/A') ?></p>
                 </div>
                 <hr>
 
                 <div class="equipment-view-details">
                     <p><strong>Quantity:</strong></p>
-                    <p class="alt"><?= htmlspecialchars($equipment->quantity??'N/A') ?></p>
+                    <p class="alt"><?= htmlspecialchars($equipment->quantity ?? 'N/A') ?></p>
                 </div>
                 <hr>
 
                 <div class="equipment-view-details">
                     <p><strong>Status:</strong></p>
-                    <p class="alt"><?= htmlspecialchars($equipment->status??'N/A') ?></p>
+                    <p class="alt"><?= htmlspecialchars($equipment->status ?? 'N/A') ?></p>
+                </div>
+                <hr>
+
+                <div class="equipment-view-details">
+                    <p><strong>Purchase Date:</strong></p>
+                    <p class="alt"><?= htmlspecialchars($equipment->purchase_date->format('Y-m-d') ?? 'N/A') ?></p>
+                </div>
+                <hr>
+
+                <div class="equipment-view-details">
+                    <p><strong>Last Maintenance:</strong></p>
+                    <p class="alt"><?= htmlspecialchars($equipment->last_maintenance->format('Y-m-d') ?? 'N/A') ?></p>
                 </div>
                 <hr>
 
                 <div class="equipment-view-details">
                     <p><strong>Description:</strong></p>
-                    <p class="alt"><?= nl2br(htmlspecialchars($equipment->description??'N/A')) ?></p>
+                    <p class="alt"><?= nl2br(htmlspecialchars($equipment->description ?? 'N/A')) ?></p>
                 </div>
             </div>
 
@@ -83,10 +101,8 @@ auth_required_guard("eq", "/staff/login");
                     <h2 style="margin-bottom: 20px;">
                         Product Image
                     </h2>
-                    <?php if ($equipment->image): ?>
+                    <?php if (!empty($equipment->image)): ?>
                         <img src="/uploads/<?= htmlspecialchars($equipment->image) ?>" alt="<?= htmlspecialchars($equipment->name) ?>" style="width: 300px; height: 300px; object-fit: cover;">
-                    <?php else: ?>
-                        <img src="/staff/eq/equipments/view/default-image.jpg" alt="Default Image" style="width: 300px; height: 300px; object-fit: cover;">
                     <?php endif; ?>
                 </div>
             </div>

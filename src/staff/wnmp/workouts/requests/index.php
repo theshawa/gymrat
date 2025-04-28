@@ -43,6 +43,7 @@ $menuBarConfig = [
 
 $infoCardConfig = [
     "showImage" => false,
+    "showDescription" => false,
     "useListView" => true,
     "gridColumns" => 1,
     "showExtend" => true,

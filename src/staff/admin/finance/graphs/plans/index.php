@@ -82,11 +82,13 @@ foreach ($sales as $sale) {
     }
 }
 
-// Sort the grouped sales by date
-ksort($grouped_sales_by_month);
 
-// Pass data to the frontend
+ksort($grouped_sales_by_month);
 $GROUPED_SALES_BY_MONTH = $grouped_sales_by_month;
+$record_count = 0;
+foreach ($grouped_sales_by_month as $key => $group){
+    $record_count += $group;
+}
 
 $menuBarConfig = [
     "title" => $pageTitle,
@@ -144,8 +146,14 @@ require_once "../../../../includes/sidebar.php";
         </div>
 
         <div style="width: 80%; height: 80%; margin: 20px auto; text-align: center;">
-            <?php if ($GROUPED_SALES_BY_MONTH): ?>
+            <?php if ($grouped_sales_by_month): ?>
                 <canvas id="membership-history-chart"></canvas>
+                <div style="margin: 20px auto; margin-top: 40px;">
+                    <div class="graph-details-tab">
+                        <h1 style="font-size: 42px; margin-bottom: 5px;"><?= $record_count ?? 0 ?></h1>
+                        <p>Total membership plan purchases</p>
+                    </div>
+                </div>
             <?php else: ?>
                 <p style="margin: 20px 0;">No data found</p>
             <?php endif; ?>

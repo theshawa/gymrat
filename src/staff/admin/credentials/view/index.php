@@ -22,7 +22,7 @@ try {
 
 
 $pageTitle = $staff->name;
-$sidebarActive = 8;
+$sidebarActive = 9;
 $pageStyles = ["../../admin.css"];
 $menuBarConfig = [
     "title" => $pageTitle,

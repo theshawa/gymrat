@@ -122,7 +122,7 @@ if (!empty($exerciseDetails)) {
 }
 
 // Combine the JSON and readable text
-$combinedDescription = json_encode($formatted_description) . "\n\n" . $readable_description;
+$combinedDescription = json_encode($formatted_description);
 
 // Add to database
 require_once "../../../../../db/models/WorkoutRequest.php";

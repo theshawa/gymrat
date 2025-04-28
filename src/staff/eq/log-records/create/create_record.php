@@ -17,51 +17,36 @@ if (!isset($_SESSION['log_record'])) {
     exit;
 }
 
-$equipment_id = $_POST['equipment_id'] ?? null;
-$description = $_POST['description'];
-$status = $_POST['status'];
-//For Validation
-$errors=[];
+$equipment_ids = $_POST['equipment_ids'] ?? [];
+$statuses = $_POST['statuses'] ?? [];
+$errors = [];
 
-
-if (empty($description)) $errors[] = "Description is required.";
-
-//Image Uploading
-// $image = $_FILES['equipment_image']['name'] ? $_FILES['equipment_image'] : null;
-// if ($image) {
-//     try {
-//         $image = upload_file("staff-equipment-images", $image);
-//     } catch (\Throwable $th) {
-//         redirect_with_error_alert("Failed to upload image due to an error: " . $th->getMessage(), "/staff/eq/equipments/create");
-//         exit;
-//     }
-// }
-
-$log_record = unserialize($_SESSION['log_record']);
-
-//Existing image and delete if find
-// if ($equipment->image && $image) {
-//     $old_image = $equipment->image;
-//     try {
-//         delete_file($old_image);
-//     } catch (\Throwable $th) {
-//         $_SESSION['error'] = "Failed to delete existing image due to an error: " . $th->getMessage();
-//     }
-//     $equipment->image = $image;
-// }
-
-$log_record->equipment_id = (int) $equipment_id;
-$log_record->description = $description;
-$log_record->status = $status;
-$log_record->created_at = new DateTime();
-
-$_SESSION['log_record'] = serialize($log_record);
+if (count($equipment_ids) !== count($statuses)) {
+    $errors[] = "Mismatch between equipment IDs and statuses.";
+}
 
 if (!empty($errors)) {
     $error_message = implode(" ", $errors);
     redirect_with_error_alert($error_message, "/staff/eq/log-records/create");
     exit;
 }
+
+// Combine equipment IDs and statuses into a JSON string
+$equipment_statuses = [];
+foreach ($equipment_ids as $index => $equipment_id) {
+    $equipment_statuses[] = [
+        'equipment_id' => (int) $equipment_id,
+        'status' => $statuses[$index]
+    ];
+}
+$description = json_encode($equipment_statuses);
+
+$log_record = unserialize($_SESSION['log_record']);
+
+$log_record->description = $description;
+$log_record->created_at = new DateTime();
+
+$_SESSION['log_record'] = serialize($log_record);
 
 try {
     $log_record->save();

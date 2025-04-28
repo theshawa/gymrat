@@ -39,17 +39,21 @@ if (preg_match('/^\d+$/', $announcement->source)) {
 
 $currentDateTime = new DateTime();
 $is_valid = $announcement->valid_till > $currentDateTime;
-
+$is_editable = abs($currentDateTime->getTimestamp() - $announcement->created_at->getTimestamp()) <= 300;
 
 $menuBarConfig = [
     "title" => $announcement->title,
     "showBack" => true,
     "goBackTo" => "/staff/admin/announcements/index.php",
     "useLink" => $is_valid,
-    "options" => ($is_valid) ? [
-        ["title" => "Edit Announcement", "href" => "/staff/admin/announcements/edit/index.php?id=$id", "type" => "secondary"],
-        ["title" => "Delete Announcement", "href" => "/staff/admin/announcements/delete/index.php?id=$id", "type" => "destructive"]
-    ] : []
+    "options" => ($is_valid) ? (
+        $is_editable ? [
+            ["title" => "Edit Announcement", "href" => "/staff/admin/announcements/edit/index.php?id=$id", "type" => "secondary"],
+            ["title" => "Delete Announcement", "href" => "/staff/admin/announcements/delete/index.php?id=$id", "type" => "destructive"]
+        ] : [
+            ["title" => "Delete Announcement", "href" => "/staff/admin/announcements/delete/index.php?id=$id", "type" => "destructive"]
+        ]
+    ) : []
 ];
 
 require_once "../../pageconfig.php";

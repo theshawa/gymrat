@@ -50,7 +50,8 @@ require_once "../../../includes/sidebar.php";
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-muscle-group">Muscle Group</label></h2>
                         <input type="text" id="edit-muscle-group" name="exercise_muscle_group"
-                            class="staff-input-primary staff-input-long" value="<?= $exercise->muscle_group ?>">
+                            class="staff-input-primary staff-input-long" value="<?= $exercise->muscle_group ?>"
+                            pattern="[A-Za-z\s]+" title="Only letters and spaces are allowed">
                     </div>
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-difficulty-level">Difficulty Level</label></h2>
@@ -63,7 +64,8 @@ require_once "../../../includes/sidebar.php";
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-type">Type</label></h2>
                         <input type="text" id="edit-type" name="exercise_type"
-                            class="staff-input-primary staff-input-long" value="<?= $exercise->type ?>">
+                            class="staff-input-primary staff-input-long" value="<?= $exercise->type ?>"
+                            pattern="[A-Za-z\s]+" title="Only letters and spaces are allowed">
                     </div>
                     <div style="margin-bottom: 10px">
                         <h2><label for="edit-equipment-needed">Equipment Needed</label></h2>

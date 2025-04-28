@@ -38,7 +38,14 @@ require_once "../includes/titlebar.php";
             <span><?= $traffic['rat_count_text'] ?></span>
         </div>
         <p class="max-capacity">Gym can accommodate up to <?= $traffic['max_capacity'] ?> rats!</p>
-        <p class="paragraph">*The traffic values are estimates to give you a general idea and may not reflect exact conditions. Use them as a guide, and remember—you can crush your workout at any time!</p>
+        <div class="info">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 16v-4" />
+                <path d="M12 8h.01" />
+            </svg>
+            <p>The traffic values are estimates to give you a general idea and may not reflect exact conditions. Use them as a guide, and remember—you can crush your workout at any time!</p>
+        </div>
     </div>
 </main>
 

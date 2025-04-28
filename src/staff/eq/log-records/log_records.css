@@ -1,62 +1,183 @@
-/* equipmentView.css */
+/* Base container */
+.staff-base-container {
+  background-color: #f8f9fa;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+}
 
-.equipment-view-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+/* Page header */
+h1 {
+
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #262626;
+}
+.staff-page-header {
+    display: flex;
+    justify-content: space-between; /* Push children to left & right */
+    align-items: center; /* Align them to bottom */
+    padding: 10px;
+
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #444;
+
+}
+
+/* Equipment List Table */
+.staff-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.staff-table th,
+.staff-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.name{
+  text-align: start;
+}
+
+.staff-table th {
+  background-color: #f5f5f5;
+}
+
+.staff-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Buttons */
+
+
+.staff-button-primary {
+    padding: 5px 10px;
+    background-color: #262626;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+
+.staff-button-small {
+  padding: 5px 10px;
+  background-color: #212121;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-right: 5px;
+  font-size: 14px;
+  display: inline-block;
+
+}
+
+.staff-button-small {
+    padding: 5px 10px;
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.staff-button-view:hover {
+    background-color: #2e2e2e;
+}
+
+.staff-button-small:hover {
+
+    background-color: #1f1e1e;
+
+}
+
+.staff-button-destructive {
+  background-color: #f44336;
+}
+
+.staff-button-destructive:hover {
+  background-color: #e53935;
+}
+
+/* Delete equipment model */
+.delete-equipment-div {
+  padding: 15px;
+}
+
+.delete-equipment-div p {
+  margin: 5px 0px;
+}
+
+.delete-equipment-div button {
+  width: 30%;
+  height: 45px;
+  margin: 20px 0px;
+  background-color: #ffcccc;
+  border: 1px solid #ff4d4d;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.delete-equipment-div button:hover {
+  background-color: #ff4d4d;
+}
+
+/* Update equipment model */
+.update-equipment-div {
+  padding: 15px;
+}
+
+.update-equipment-div p {
+  margin: 5px 0px;
+}
+
+.update-equipment-div button {
+  width: 30%;
+  height: 45px;
+  margin: 20px 0px;
+  background-color: #d4edda;
+  border: 1px solid #28a745;
+  color: #155724;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.update-equipment-div button:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+/* Equipment item optional description */
+.description {
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.5rem;
   }
-  
-  .equipment-view-details {
-    margin: 15px 0;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  .staff-button-small {
+    font-size: 12px;
+    padding: 5px 8px;
   }
-  
-  .equipment-view-details p {
-    margin: 5px 0;
+
+  .description {
+    font-size: 0.85rem;
   }
-  
-  .equipment-view-details strong {
-    font-size: 1rem;
-    color: #555;
-  }
-  
-  .equipment-view-details .alt {
-    font-size: 1.1rem;
-    color: #333;
-    font-weight: 500;
-  }
-  
-  .equipment-view-header h2,
-  .img h2 {
-    font-size: 1.6rem;
-    margin-bottom: 15px;
-    color: #2c3e50;
-  }
-  
-  .img img {
-    border-radius: 12px;
-    border: 2px solid #ddd;
-    width: 100%;
-    max-width: 320px;
-    height: auto;
-    object-fit: cover;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
-  }
-  
-  main .staff-base-container {
-    padding: 20px 40px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    margin-top: 20px;
-  }
-  
-  hr {
-    border: none;
-    border-top: 1px solid #e0e0e0;
-    margin: 20px 0;
-  }
-  
+}

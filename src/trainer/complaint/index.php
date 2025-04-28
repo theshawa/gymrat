@@ -76,12 +76,12 @@ function formatComplaintDescription($description) {
         <div class="field">
             <select class="input" name="type" required>
                 <option value="">Select Complaint Type</option>
-                <option value="Inappropriate Behavior">Inappropriate Behavior</option>
-                <option value="Equipment Misuse">Equipment Misuse</option>
-                <option value="Attendance Problem">Attendance Problem</option>
-                <option value="Policy Violation">Policy Violation</option>
-                <option value="Hygiene Concern">Hygiene Concern</option>
-                <option value="Other Issue">Other Issue</option>
+                <option value="Technical Issue">Technical Issue</option>
+                <option value="Billing Problem">Billing Problem</option>
+                <option value="Facility Feedback">Facility Feedback</option>
+                <option value="Staff Feedback">Staff Feedback</option>
+                <option value="Suggestion">Suggestion</option>
+                <option value="Other">Other</option>
             </select>
         </div>
         <div class="field">

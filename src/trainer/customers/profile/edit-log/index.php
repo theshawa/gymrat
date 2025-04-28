@@ -145,9 +145,8 @@ require_once "../../../includes/titlebar.php";
                 </div>
             </div>
 
-            <div class="form-actions">
-                <button type="submit" class="submit-btn">Update Progress Feedback</button>
-                <a href="../add-log/?id=<?= $customerId ?>" class="btn secondary">Cancel</a>
+            <div class="form">
+                <button type="submit" class="btn">Update Your Feedback</button>
             </div>
         </form>
     </div>

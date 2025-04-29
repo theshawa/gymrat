@@ -7,7 +7,7 @@ $facts = [
     [
         "title" => "Welcome to GYMRAT",
         "description" => "We'll guide you through a personalized fitness journey that fits your lifestyle and goals. Let's get started!",
-        "image" => "./fact0.png"
+        "image" => "./fact0.jpg"
     ],
     [
         "title" => "Track Your Workouts",

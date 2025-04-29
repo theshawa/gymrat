@@ -18,12 +18,10 @@
 ## Logins
 
 RATS:
-mrclocktd@gmail.com
-emily.carter@example.com
-liam.johnson@example.co.uk
 
 TRAINER:
-johncena@example.com
+kasun
+123#IAmBatman
 
 STAFF:
 admin@example.com

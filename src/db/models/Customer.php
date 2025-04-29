@@ -219,6 +219,14 @@ class Customer extends Model
         return $data['unassigned_count'] > 0;
     }
 
+    public function get_customer_ids_by_workout_id(int $workout_id): array
+    {
+        $sql = "SELECT id FROM $this->table WHERE workout = :workout_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['workout_id' => $workout_id]);
+        return array_column($stmt->fetchAll(), 'id');
+    }
+
     public function __sleep()
     {
         return ['id', 'fname', 'lname', 'email', 'password', 'phone', 'avatar', 'created_at', 'updated_at', 'onboarded', 'membership_plan', 'membership_plan_activated_at', 'trainer', 'workout', 'meal_plan', 'attention_reason'];

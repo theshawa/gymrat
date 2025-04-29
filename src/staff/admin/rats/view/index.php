@@ -65,6 +65,10 @@ $menuBarConfig = [
     "title" => $customer->fname . " " . $customer->lname,
     "showBack" => true,
     "goBackTo" => $goBackTo ,
+    "useLink" => true,
+    "options" => [
+        ["title" => "Delete Customer", "href" => "/staff/admin/rats/delete/index.php?id=$id", "type" => "destructive"]
+    ]
 ];
 
 

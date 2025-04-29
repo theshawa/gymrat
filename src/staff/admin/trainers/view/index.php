@@ -73,6 +73,10 @@ $menuBarConfig = [
     "title" => $trainer->fname . " " . $trainer->lname,
     "showBack" => true,
     "goBackTo" => "/staff/admin/trainers/index.php",
+    "useLink" => true,
+    "options" => [
+        ["title" => "Delete Trainer", "href" => "/staff/admin/trainers/delete/index.php?id=$id", "type" => "destructive"]
+    ]
 ];
 
 

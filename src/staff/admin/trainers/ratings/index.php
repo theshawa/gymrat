@@ -119,4 +119,15 @@ require_once "../../../includes/sidebar.php";
     </div>
 </main>
 
+<style>
+    .customer-profile-link {
+        text-decoration: none;
+        color: inherit;
+    }
+    .customer-profile-link:hover p {
+        color: #3B82F6;
+        text-decoration: underline;
+    }
+</style>
+
 <?php require_once "../../../includes/footer.php"; ?>

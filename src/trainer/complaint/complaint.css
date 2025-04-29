@@ -4,6 +4,130 @@
   padding-top: 20px;
 }
 
+/* Chart info box - for the 5-minute edit restriction notice */
+.chart-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(161, 161, 170, 0.1);
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin: 15px 0;
+  font-size: 14px;
+  color: var(--color-zinc-300);
+}
+
+.chart-info svg {
+  color: var(--color-violet-500);
+  flex-shrink: 0;
+}
+
+/* For the lightning icon in the edit restriction notice */
+.chart-info svg.lucide-zap {
+  color: #f59e0b; /* Amber color for notification */
+}
+
+/* Legacy support for edit-notice-box */
+.edit-notice-box {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px 15px;
+  margin-top: 15px;
+  background-color: rgba(255, 136, 24, 0.08);
+  border-left: 3px solid rgba(255, 164, 35, 0.5);
+  border-radius: 6px;
+  gap: 10px;
+}
+
+.edit-notice-box p {
+  margin: 0;
+  color: rgba(214, 159, 87, 0.9);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.info-icon {
+  flex-shrink: 0;
+  color: rgba(213, 165, 76, 0.9);
+  margin-top: 2px;
+}
+
+/* Action buttons for standalone components (not inside li) */
+.report-actions {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+/* Confirmation modal */
+.confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirmation-modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background-color: var(--color-zinc-900);
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.modal-content h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  margin-bottom: 20px;
+  color: var(--color-zinc-400);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-actions .cancel-btn {
+  background-color: var(--color-zinc-700);
+}
+
+.modal-actions .confirm-btn {
+  background-color: var(--color-red);
+}
+
+/* Legacy support for older edit-button styling */
+.edit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background-color: rgba(59, 130, 246, 0.1);
+  border-radius: 4px;
+  color: rgba(59, 130, 246, 0.8);
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.edit-button:hover {
+  background-color: rgba(59, 130, 246, 0.2);
+  color: rgba(59, 130, 246, 1);
+}
+
 .complaint-history h3 {
   margin-bottom: 20px;
 }
@@ -31,16 +155,31 @@
   margin-bottom: 15px;
 }
 
-.complaint-history li .delete-button {
-  color: var(--color-red-light);
-  background-color: transparent;
+.complaint-history li .action-buttons {
+  display: flex;
+  gap: 10px;
 }
 
-.complaint-history li .delete-button:active {
+.complaint-history li .action-button {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.complaint-history li .edit-button {
+  color: var(--color-zinc-400);
+}
+
+.complaint-history li .delete-button {
+  color: var(--color-red-light);
+}
+
+.complaint-history li .action-button:active {
   transform: scale(0.9);
 }
 
-.complaint-history li .delete-button svg {
+.complaint-history li .action-button svg {
   width: 16px;
   height: 16px;
 }

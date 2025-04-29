@@ -42,6 +42,7 @@ require_once "../includes/titlebar.php";
             <textarea class="input" name="description" required placeholder="Description"></textarea>
         </div>
         <button class="btn">Submit</button>
+        <p class="info">*You can delete your complaint within 5 minutes of submission.</p>
     </form>
     <div class="complaint-history">
         <h3>Your Previous Complaints</h3>
@@ -49,36 +50,40 @@ require_once "../includes/titlebar.php";
             <p class="paragraph small">No complaints.</p>
         <?php else: ?>
             <ul class="complaint-list">
+                <?php require_once "../../utils.php"; ?>
                 <?php foreach ($complaints as $complaint): ?>
-                    <?php
-                    require_once "../../utils.php";
-                    $reveiewed = $complaint->reviewed_at !== null;  ?>
+                    <?php $reveiewed = $complaint->reviewed_at !== null;
+                    $now = new DateTime();
+                    $is_deletable = $complaint->created_at->diff($now)->i < 5;
+                    ?>
                     <li class="complaint-item">
                         <div class="inline">
                             <span class="paragraph small">
                                 <?= format_time($complaint->created_at) ?>
                             </span>
-                            <button class="delete-button" onclick="delete_<?= $complaint->id ?>()">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                </svg>
-                            </button>
-                            <script>
-                                function delete_<?= $complaint->id ?>() {
-                                    if (confirm("Are you sure you want to delete this complaint?")) {
-                                        const form = document.createElement("form");
-                                        form.method = "POST";
-                                        form.action = "delete_complaint_process.php";
-                                        const input = document.createElement("input");
-                                        input.type = "hidden";
-                                        input.name = "id";
-                                        input.value = <?= $complaint->id ?>;
-                                        form.appendChild(input);
-                                        document.body.appendChild(form);
-                                        form.submit();
+                            <?php if ($is_deletable): ?>
+                                <button class="delete-button" onclick="delete_<?= $complaint->id ?>()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                    </svg>
+                                </button>
+                                <script>
+                                    function delete_<?= $complaint->id ?>() {
+                                        if (confirm("Are you sure you want to delete this complaint?")) {
+                                            const form = document.createElement("form");
+                                            form.method = "POST";
+                                            form.action = "delete_complaint_process.php";
+                                            const input = document.createElement("input");
+                                            input.type = "hidden";
+                                            input.name = "id";
+                                            input.value = <?= $complaint->id ?>;
+                                            form.appendChild(input);
+                                            document.body.appendChild(form);
+                                            form.submit();
+                                        }
                                     }
-                                }
-                            </script>
+                                </script>
+                            <? endif; ?>
                         </div>
                         <h4 class="type"><?= htmlspecialchars($complaint->type) ?></h4>
                         <p class="paragraph"><?= htmlspecialchars($complaint->description) ?></p>

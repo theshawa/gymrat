@@ -61,4 +61,4 @@ try {
 
 // TODO: send email
 
-redirect_with_info_alert("Password reset request sent. Please check your email", "./");
+redirect_with_success_alert("Password reset request sent. Please check your email", "./");

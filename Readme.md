@@ -48,6 +48,10 @@ To Send emails
 
 To show charts in frontend
 
+### html5-qrcode
+
+To scan QR codes
+
 ### Qrcode.js
 
 To generate QR Codes

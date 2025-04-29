@@ -398,6 +398,14 @@
   color: rgb(52, 199, 89);
 }
 
+.client-tag.new {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #10B981;
+  margin-left: 4px;
+  font-size: 11px;
+  padding: 2px 6px;
+}
+
 /* Bottom Section - Quick Help */
 .quick-help {
   background-color: var(--card-bg);

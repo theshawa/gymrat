@@ -12,17 +12,17 @@ $facts = [
     [
         "title" => "Track Your Workouts",
         "description" => "GYMRAT helps you log and monitor every exercise, set, and rep with ease. Keep your workout history at your fingertips.",
-        "image" => "./fact1.png"
+        "image" => "./fact1.jpg"
     ],
     [
         "title" => "Monitor Your Progress",
         "description" => "Watch your strength and fitness improve over time with detailed progress tracking, charts, and performance metrics.",
-        "image" => "./fact2.png"
+        "image" => "./fact2.jpg"
     ],
     [
         "title" => "Connect With Your Gym",
         "description" => "Stay updated with your gym's schedule, book classes, and receive important announcements directly through the app.",
-        "image" => "./fact3.png"
+        "image" => "./fact3.jpg"
     ]
 ];
 

@@ -11,7 +11,7 @@ $extendTo = null;
 $cards = null;
 $isCardInList = false; // REMOVE WHEN FULLY TURNED TO CRUD
 $gridColumns = 2;
-$uploadsPath = "../../../uploads/";
+$uploadsPath = "/uploads/";
 $defaultImage = "default-images/infoCardDefault.png";
 
 if (isset($infoCardConfig)) {

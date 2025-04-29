@@ -25,7 +25,7 @@ $payments = null;
 $membership_titles = null;
 $membership_plans = null;
 
-if (!isset($_SESSION['customer']) || !isset($_SESSION['payments']) || !isset($_SESSION['membershipPlans']) || !isset($_SESSION['membership_titles'])) {    
+if (!isset($_SESSION['customer']) || !isset($_SESSION['payments']) || !isset($_SESSION['membershipPlans']) || !isset($_SESSION['membership_titles'])) {
     try {
         $customer->id = $id;
         $customer->get_by_id();
@@ -49,7 +49,7 @@ if (!isset($_SESSION['customer']) || !isset($_SESSION['payments']) || !isset($_S
 
 $current_payment = null;
 $current_plan = null;
-if($payment_id){
+if ($payment_id) {
     foreach ($payments as $payment) {
         if ($payment->id == $payment_id) {
             $current_payment = $payment;
@@ -88,11 +88,11 @@ require_once "../../../../includes/sidebar.php";
             <!-- Deafult Right Layout -->
             <div class="rat-view-profile">
                 <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: start; text-align: left; padding: 15px;">
-                <?php if (!empty($customer->avatar)): ?>
-                    <img src="../../../../../uploads/<?= $customer->avatar ?>" alt="Customer Avatar"  class="rat-view-avatar">
-                <?php else: ?>
-                    <img src="../../../../../uploads/default-images/infoCardDefault.png" alt="Default Avatar" class="rat-view-avatar">
-                <?php endif; ?>
+                    <?php if (!empty($customer->avatar)): ?>
+                        <img src="../../../../../uploads/<?= $customer->avatar ?>" alt="Customer Avatar" class="rat-view-avatar">
+                    <?php else: ?>
+                        <img src="../../../../../uploads/default-images/infoCardDefault.png" alt="Default Avatar" class="rat-view-avatar">
+                    <?php endif; ?>
                 </div>
                 <div style="grid-row: 2; grid-column: 1; align-self: end; justify-self: start; text-align: left;">
                     <h1 style="margin: 10px; font-size: 28px;"><?= $customer->fname . " " . $customer->lname ?></h1>
@@ -113,19 +113,19 @@ require_once "../../../../includes/sidebar.php";
                         </div>
                     </div>
                     <?php foreach ($payments as $payment): ?>
-                        <a href="/staff/admin/finance/customers/view/index.php?id=<?= $customer->id ?>&payment=<?= $payment->id ?>" 
-                        class="payment-list-item background-color-zinc-200">
+                        <a href="/staff/admin/finance/customers/view/index.php?id=<?= $customer->id ?>&payment=<?= $payment->id ?>"
+                            class="payment-list-item background-color-zinc-200">
                             <div style="grid-column: 1; align-self: center; justify-self: start; text-align: left">
                                 <?= $membership_titles[$payment->membership_plan] ?? 'Unknown Plan' ?>
                             </div>
-                            <div style="grid-column: 2; align-self: center; justify-self: end; text-align: right; font: ">
+                            <div style="grid-column: 2; align-self: center; justify-self: end; text-align: right;">
                                 <?= ($payment->completed_at) ? $payment->completed_at->format('Y-m-d') : "Not Completed" ?>
                             </div>
                         </a>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
-            
+
             <!-- Individual Payments -->
             <?php if ($payment_id) : ?>
                 <div style="margin: 0 10px;">
@@ -142,7 +142,7 @@ require_once "../../../../includes/sidebar.php";
                         <h1 style="margin-bottom: 5px">Amount</h1>
                         <p>Rs. <?= number_format($current_payment->amount, 2) ?></p>
                     </div>
-                        <div style="margin: 10px 0;">
+                    <div style="margin: 10px 0;">
                         <h1 style="margin-bottom: 5px">Created On</h1>
                         <p><?= $current_payment->created_at->format('Y-m-d') ?></p>
                     </div>

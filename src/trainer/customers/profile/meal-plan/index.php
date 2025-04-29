@@ -136,9 +136,7 @@ require_once "../../../includes/titlebar.php";
         <div class="no-plan-message">
             <p>No meal plan is currently assigned to this customer.</p>
             <div class="action-buttons">
-                <a href="./assign?id=<?= $customerId ?>" class="btn assign-btn">Assign Meal Plan</a>
-                <a href="../../meal-plans/request/" class="btn request-btn">Request Custom Plan</a>
-            </div>
+                <a href="./assign?id=<?= $customerId ?>" class="btn assign-btn">Assign Meal Plan</a>            </div>
         </div>
     <?php elseif (empty($meals)): ?>
         <div class="no-meals-message">

@@ -9,7 +9,7 @@
 
 /* Page header */
 h1 {
-<<<<<<<<< Temporary merge branch 1
+
     text-align: center;
     font-size: 2rem;
     margin-bottom: 20px;
@@ -20,12 +20,12 @@ h1 {
     justify-content: space-between; /* Push children to left & right */
     align-items: center; /* Align them to bottom */
     padding: 10px;
-=========
+
   text-align: center;
   font-size: 2rem;
   margin-bottom: 20px;
   color: #444;
->>>>>>>>> Temporary merge branch 2
+
 }
 
 /* Equipment List Table */
@@ -51,7 +51,7 @@ h1 {
 }
 
 /* Buttons */
-<<<<<<<<< Temporary merge branch 1
+
 
 .staff-button-primary {
     padding: 5px 10px;
@@ -62,7 +62,8 @@ h1 {
     margin-right: 5px;
     font-size: 14px;
     display: inline-block;
-=========
+}
+
 .staff-button-small {
   padding: 5px 10px;
   background-color: #4caf50;
@@ -72,7 +73,7 @@ h1 {
   margin-right: 5px;
   font-size: 14px;
   display: inline-block;
->>>>>>>>> Temporary merge branch 2
+
 }
 
 .staff-button-small {
@@ -91,11 +92,11 @@ h1 {
 }
 
 .staff-button-small:hover {
-<<<<<<<<< Temporary merge branch 1
+
     background-color: #333;
-=========
+
   background-color: #45a049;
->>>>>>>>> Temporary merge branch 2
+
 }
 
 .staff-button-destructive {

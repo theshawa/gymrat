@@ -58,7 +58,7 @@ $_SESSION['announcement'] = serialize($announcement);
 // Save Logic
 if (isset($_POST['action']) && $_POST['action'] === 'edit') {
     try {
-        $announcement->message = "[Edited] " . $announcement->message;
+        $announcement->message = $announcement->message;
         $announcement->update();
     } catch (PDOException $e) {
         redirect_with_error_alert("Failed to update announcement due to an error: " . $e->getMessage(), "/staff/admin/announcements/edit/index.php?id=$id");

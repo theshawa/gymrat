@@ -16,7 +16,7 @@ if (isset($_SESSION['workout'])) {
     $_SESSION['workout'] = serialize($workout);
 }
 
-if (!isset($_SESSION['exerciseTitles'])){    
+if (!isset($_SESSION['exerciseTitles'])) {
     $exerciseModel = new Exercise();
     $exerciseTitles = $exerciseModel->get_all_titles();
     $_SESSION['exerciseTitles'] = $exerciseTitles;
@@ -32,8 +32,13 @@ $menuBarConfig = [
     "goBackTo" => "/staff/wnmp/workouts/index.php",
     "useButton" => true,
     "options" => [
-        ["title" => "Save Changes", "buttonType" => "submit", 
-            "buttonName" => "action", "buttonValue" => "create", "type" => "secondary"],
+        [
+            "title" => "Save Changes",
+            "buttonType" => "submit",
+            "buttonName" => "action",
+            "buttonValue" => "create",
+            "type" => "secondary"
+        ],
         ["title" => "Revert Changes", "buttonType" => "submit", "formAction" => "revert_workout.php", "type" => "destructive"]
     ]
 ];
@@ -63,7 +68,7 @@ require_once "../../../includes/sidebar.php";
                         class="staff-textarea-primary staff-textarea-large"
                         placeholder="Enter a workout description"><?= $workout->description ?></textarea>
                     <div>
-                        <h2><label for="edit-duration">Duration</label></h2>
+                        <h2><label for="edit-duration">Duration (Days)</label></h2>
                         <input type="text" id="edit-duration" name="workout_duration" pattern="\d+"
                             class="staff-input-primary staff-input-long" value="<?= $workout->duration ?>">
                     </div>
@@ -98,7 +103,13 @@ require_once "../../../includes/sidebar.php";
                                 <button type="submit" class="staff-btn-outline edit-workout-input-delete"
                                     name="delete_exercise" value="<?= $exercise['edit_id'] ?>">
                                     <!-- Delete -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f05050" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f05050" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2">
+                                        <path d="M3 6h18" />
+                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                        <line x1="10" x2="10" y1="11" y2="17" />
+                                        <line x1="14" x2="14" y1="11" y2="17" />
+                                    </svg>
                                 </button>
                             <?php endif; ?>
                         </div>
@@ -106,9 +117,9 @@ require_once "../../../includes/sidebar.php";
                     <button type="submit" name="action" value="add" class="staff-btn-secondary-black edit-workout-add-exercise">
                         + Add Exercise
                     </button>
-                </form>
-            </div>
+            </form>
         </div>
+    </div>
     </div>
 </main>
 

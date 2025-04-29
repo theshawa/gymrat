@@ -143,7 +143,7 @@ require_once "../../../includes/titlebar.php";
             <p>This meal plan has no meals defined.</p>
             <div class="action-buttons">
                 <a href="./assign?id=<?= $customerId ?>" class="btn assign-btn">Change Meal Plan</a>
-                <a href="../../meal-plans/request/" class="btn request-btn">Request Custom Plan</a>
+                <a href="../../meal-plans/request/" class="btn">Request Custom Plan</a>
             </div>
         </div>
     <?php else: ?>

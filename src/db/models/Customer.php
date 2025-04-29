@@ -180,6 +180,7 @@ class Customer extends Model
         $stmt->execute(['id' => $id]);
         $data = $stmt->fetch();
 
+        // print_r($data);
         return $data['username'] ?? null; 
     }
 
@@ -218,6 +219,14 @@ class Customer extends Model
         $data = $stmt->fetch();
 
         return $data['unassigned_count'] > 0;
+    }
+
+    public function get_customer_ids_by_workout_id(int $workout_id): array
+    {
+        $sql = "SELECT id FROM $this->table WHERE workout = :workout_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['workout_id' => $workout_id]);
+        return array_column($stmt->fetchAll(), 'id');
     }
 
     public function __sleep()

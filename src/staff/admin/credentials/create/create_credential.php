@@ -19,7 +19,11 @@ $role = $_POST['staff_role'] ?? null;
 $errors = [];
 
 if (empty($name)) $errors[] = "Name is required.";
-if (empty($email)) $errors[] = "Email is required.";
+if (empty($email)) {
+    $errors[] = "Email is required.";
+} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errors[] = "Invalid email format.";
+}
 if (empty($password)) $errors[] = "Password is required.";
 if ($password !== $confirm_password) $errors[] = "Passwords do not match.";
 if (!in_array($role, ["wnmp", "eq"])) $errors[] = "Invalid role selected.";

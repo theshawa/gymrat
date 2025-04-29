@@ -11,19 +11,28 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 }
 
 $trainer = unserialize($_SESSION['trainer']);
+$do_password_update = 0;
 $errors = [];
 
 $id = $trainer->id;
 // $fname = htmlspecialchars($_POST['trainer_fname']);
 // $lname = htmlspecialchars($_POST['trainer_lname']);
 // $username = htmlspecialchars($_POST['trainer_username']);
+$password = $_POST['trainer_password'];
+$confirm_password = $_POST['trainer_confirm_password'];
 $phone = htmlspecialchars($_POST['trainer_phone']);
 $bio = htmlspecialchars($_POST['trainer_bio']);
 
 // if (empty($fname)) $errors[] = "First name is required.";
 // if (empty($lname)) $errors[] = "Last name is required.";
 // if (empty($username)) $errors[] = "Username is required.";
-if (empty($phone)) $errors[] = "Phone number is required.";
+// if (empty($phone)) $errors[] = "Phone number is required.";
+if (!empty($password) && empty($confirm_password)) $errors[] = "Password confirmation is required.";
+if (!empty($password) && !empty($confirm_password)) {
+    if ($password !== $confirm_password) $errors[] = "Passwords do not match.";
+    $do_password_update = 1;
+}
+
 
 $avatar = $_FILES['trainer_avatar']['name'] ? $_FILES['trainer_avatar'] : null;
 if ($avatar) {
@@ -47,9 +56,10 @@ if ($trainer->avatar && $avatar) {
 // $trainer->fname = $fname;
 // $trainer->lname = $lname;
 // $trainer->username = $username;
-$trainer->phone = $phone;
-$trainer->bio = $bio;
+$trainer->phone = $phone ?? $trainer->phone;
+$trainer->bio = $bio ?? $trainer->bio;
 $trainer->avatar = $avatar ?? $trainer->avatar;
+$trainer->password = $password ?? $trainer->password;
 
 if (!empty($errors)) {
     $error_message = implode(" ", $errors);
@@ -70,6 +80,7 @@ $_SESSION['trainer'] = serialize($trainer);
 if (isset($_POST['action']) && $_POST['action'] === 'edit') {
     try {
         $trainer->save();
+        if ($do_password_update) $trainer->update_password();
     } catch (PDOException $e) {
         if ($e->getCode() === '23000' && strpos($e->getMessage(), 'Duplicate entry') !== false) {
             redirect_with_error_alert("Failed to update trainer: The username is already taken.", "/staff/admin/trainers/profile/index.php?id=$id");

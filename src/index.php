@@ -33,3 +33,5 @@
 </body>
 
 </html>
+
+<?php var_dump(password_hash("123#IAmBatman", PASSWORD_DEFAULT)) ?>

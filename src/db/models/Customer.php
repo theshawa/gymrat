@@ -181,7 +181,7 @@ class Customer extends Model
         $data = $stmt->fetch();
 
         // print_r($data);
-        return $data['username'] ?? null; 
+        return $data['username'] ?? null;
     }
 
     public function get_all(int $noTrainer = 0)

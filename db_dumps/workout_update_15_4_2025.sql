@@ -834,3 +834,169 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- --------------------------------------------------------
+-- Cheat Sheet: Common SQL Queries
+-- --------------------------------------------------------
+
+-- 1. Select all records from a table
+SELECT * FROM table_name;
+
+-- 2. Insert a new record into a table
+INSERT INTO table_name (column1, column2, column3) VALUES ('value1', 'value2', 'value3');
+
+-- 3. Update records in a table
+UPDATE table_name SET column1 = 'new_value' WHERE condition;
+
+-- 4. Delete records from a table
+DELETE FROM table_name WHERE condition;
+
+-- 5. Join two tables
+SELECT a.column1, b.column2
+FROM table1 a
+JOIN table2 b ON a.common_column = b.common_column;
+
+-- 6. Count the number of records in a table
+SELECT COUNT(*) FROM table_name;
+
+-- 7. Find the maximum value in a column
+SELECT MAX(column_name) FROM table_name;
+
+-- 8. Find the minimum value in a column
+SELECT MIN(column_name) FROM table_name;
+
+-- 9. Calculate the average value of a column
+SELECT AVG(column_name) FROM table_name;
+
+-- 10. Group records and apply aggregate functions
+SELECT column_name, COUNT(*)
+FROM table_name
+GROUP BY column_name;
+
+-- 11. Order records by a column
+SELECT * FROM table_name ORDER BY column_name ASC;
+
+-- 12. Add a new column to a table
+ALTER TABLE table_name ADD new_column_name column_type;
+
+-- 13. Drop a column from a table
+ALTER TABLE table_name DROP COLUMN column_name;
+
+-- 14. Create a new table
+CREATE TABLE new_table_name (
+  column1 column_type,
+  column2 column_type,
+  ...
+);
+
+-- 15. Drop a table
+DROP TABLE table_name;
+
+-- 16. Add a foreign key constraint
+ALTER TABLE table_name
+ADD CONSTRAINT fk_name FOREIGN KEY (column_name) REFERENCES other_table(column_name);
+
+-- 17. Create an index
+CREATE INDEX index_name ON table_name (column_name);
+
+-- 18. Drop an index
+DROP INDEX index_name ON table_name;
+
+-- 19. Select records with a specific pattern
+SELECT * FROM table_name WHERE column_name LIKE 'pattern%';
+
+-- 20. Select records within a range
+SELECT * FROM table_name WHERE column_name BETWEEN value1 AND value2;
+
+-- 21. Check for null values in a column
+SELECT * FROM table_name WHERE column_name IS NULL;
+
+-- 22. Check for duplicate records
+SELECT column_name, COUNT(*)
+FROM table_name
+GROUP BY column_name
+HAVING COUNT(*) > 1;
+
+-- 23. Check for foreign key violations
+SELECT * 
+FROM table_name t1
+LEFT JOIN referenced_table t2 ON t1.foreign_key = t2.primary_key
+WHERE t2.primary_key IS NULL;
+
+-- 24. Validate data type of a column
+SELECT column_name, DATA_TYPE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE table_name = 'table_name';
+
+-- 25. Check table size
+SELECT table_name AS "Table", 
+       ROUND(((data_length + index_length) / 1024 / 1024), 2) AS "Size (MB)"
+FROM information_schema.TABLES
+WHERE table_schema = "database_name";
+
+-- 26. Group by with multiple columns
+SELECT column1, column2, COUNT(*)
+FROM table_name
+GROUP BY column1, column2;
+
+-- 27. Filter grouped results using HAVING
+SELECT column_name, COUNT(*)
+FROM table_name
+GROUP BY column_name
+HAVING COUNT(*) > 5;
+
+-- 28. Use CASE in SELECT for conditional logic
+SELECT column_name,
+       CASE 
+           WHEN condition THEN 'Value1'
+           ELSE 'Value2'
+       END AS alias_name
+FROM table_name;
+
+-- 29. Use COALESCE to handle NULL values
+SELECT COALESCE(column_name, 'Default Value') AS alias_name
+FROM table_name;
+
+-- 30. Perform a UNION of two queries
+SELECT column1, column2
+FROM table1
+UNION
+SELECT column1, column2
+FROM table2;
+
+-- 31. Perform a UNION ALL to include duplicates
+SELECT column1, column2
+FROM table1
+UNION ALL
+SELECT column1, column2
+FROM table2;
+
+-- 32. Use EXISTS to check for related records
+SELECT *
+FROM table_name t1
+WHERE EXISTS (
+    SELECT 1
+    FROM related_table t2
+    WHERE t1.column_name = t2.column_name
+);
+
+-- 33. Use NOT EXISTS to find unmatched records
+SELECT *
+FROM table_name t1
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM related_table t2
+    WHERE t1.column_name = t2.column_name
+);
+
+-- 34. Use IN to filter by a list of values
+SELECT *
+FROM table_name
+WHERE column_name IN ('value1', 'value2', 'value3');
+
+-- 35. Use NOT IN to exclude a list of values
+SELECT *
+FROM table_name
+WHERE column_name NOT IN ('value1', 'value2', 'value3');
+
+-- End of Cheat Sheet

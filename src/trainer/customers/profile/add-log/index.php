@@ -86,6 +86,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $insertStmt->bindValue(':message', $message);
             $insertStmt->bindValue(':performance_type', $performanceType);
             $insertStmt->execute();
+            
+            // Notify the customer about the new progress log
+            require_once "../../../../notifications/functions.php";
+            $trainerName = $_SESSION['auth']['fname'] . ' ' . $_SESSION['auth']['lname'];
+            $notificationTitle = "New Progress Feedback";
+            $notificationMessage = "Your trainer {$trainerName} has added new progress feedback.";
+            notify_rat($customerId, $notificationTitle, $notificationMessage, "trainer");
 
             // Show success message
             $successMessage = "Progress feedback added successfully";

@@ -63,6 +63,6 @@ try {
 
 unset($_SESSION['log_record']);
 
-redirect_with_success_alert("Log Records created successfully", "/staff/eq/equipments");
+redirect_with_success_alert("Log Records created successfully", "/staff/eq/log-records");
 exit;
 ?>

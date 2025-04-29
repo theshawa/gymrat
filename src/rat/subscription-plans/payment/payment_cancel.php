@@ -25,4 +25,4 @@ try {
     exit;
 }
 
-redirect_with_info_alert("Payment cancelled.", "../");
+redirect_with_error_alert("Payment cancelled.", "../");

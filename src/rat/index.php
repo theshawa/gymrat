@@ -294,7 +294,6 @@ $plan_remaining_days = $interval->days;
                         <path d="M16.3333 14H16.345" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M25.6667 23.3333H22.1667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-
                 <?php endif; ?>
                 <span><?= $traffic['status_text'] ?></span>
             </div>

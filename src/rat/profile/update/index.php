@@ -71,9 +71,9 @@ require_once "../../includes/titlebar.php";
             <label for="cpassword" class="password-field">
                 <input type="password" name="cpassword" placeholder="Confirm New Password" required minlength="6">
             </label>
-            <button class="btn">Update</button>
+            <button class="btn">Update Password</button>
         </form>
-        <a href="../update-initial-data" class="btn outlined" style="margin-top: 40px;width: 100%;">Update initial data</a>
+        <!-- <a href="../update-initial-data" class="btn outlined" style="margin-top: 40px;width: 100%;">Update initial data</a> -->
     </div>
 </main>
 
@@ -129,6 +129,80 @@ require_once "../../includes/titlebar.php";
         clearAvatarButton.style.display = "none";
         avatarInputHidden.value = "";
     });
+
+    const checkPasswordStrength = (password) => {
+        let strength = 0;
+        let tips = [];
+
+        if (password.length < 8) {
+            tips.push("Password should be at least 8 characters long.");
+        } else {
+            strength++;
+        }
+
+        if (/[a-z]/.test(password) && /[A-Z]/.test(password)) {
+            strength += 1;
+        } else {
+            tips.push("Use both lowercase and uppercase letters.");
+        }
+
+        if (/\d/.test(password)) {
+            strength += 1;
+        } else {
+            tips.push("Include at least one number.");
+        }
+
+
+        if (/[^a-zA-Z\d]/.test(password)) {
+            strength += 1;
+        } else {
+            tips.push("Include at least one special character.");
+        }
+
+        let level;
+        if (strength < 2) {
+            level = "Weak";
+        } else if (strength === 2) {
+            level = "Medium";
+        } else if (strength === 3) {
+            level = "Strong";
+        } else {
+            level = "Very Strong";
+        }
+
+        return {
+            level: level,
+            tips: tips
+        };
+    }
+
+
+    document.querySelector('form[action="update_password_process.php"]').addEventListener("submit", (e) => {
+        e.preventDefault();
+        const pw = document.querySelector("input[name='password']").value;
+        const cpw = document.querySelector("input[name='cpassword']").value;
+        if (pw !== cpw) {
+            alert("Passwords do not match");
+            return;
+        }
+        // check password strength
+        const {
+            level,
+            tips
+        } = checkPasswordStrength(pw);
+        if (level === "Weak") {
+            alert("New password is weak. " + tips.join(" "));
+            return;
+        }
+        if (level === "Medium") {
+            const confirm = window.confirm("New password is not strong. Do you want to continue?\n" + tips.join("\n"));
+            if (!confirm) {
+                return;
+            }
+        }
+
+        e.target.submit();
+    })
 </script>
 
 <?php require_once "../../includes/navbar.php" ?>

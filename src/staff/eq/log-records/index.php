@@ -8,7 +8,7 @@ require_once "../../../db/models/Equipment.php";
 $sidebarActive = 3;
 
 require_once "../pageconfig.php";
-$pageConfig['styles'][] = "../equipments/equipment.css";
+$pageConfig['styles'][] = "./log_records.css";
 
 require_once "../../includes/header.php";
 require_once "../../includes/sidebar.php";
@@ -52,17 +52,17 @@ $equipmentModel = new Equipment();
                                     $equipmentDetails = json_decode($logRecord->description, true);
                                     if (is_array($equipmentDetails)): 
                                     ?>
-                                        <ul>
+                                        <ui>
                                             <?php foreach ($equipmentDetails as $detail): ?>
                                                 <?php
                                                     $equipmentModel->get_by_id($detail['equipment_id']);
                                                     $equipmentName = $equipmentModel->name ?? 'Unknown';
                                                 ?>
-                                                <li>
+                                                <li class="name">
                                                     <?= htmlspecialchars($equipmentName) ?> - <?= htmlspecialchars($detail['status']) ?>
                                                 </li>
                                             <?php endforeach; ?>
-                                        </ul>
+                                        </ui>
                                     <?php else: ?>
                                         <p>Invalid data</p>
                                     <?php endif; ?>

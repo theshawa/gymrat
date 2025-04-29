@@ -67,6 +67,16 @@ require_once "../../../includes/sidebar.php";
                             pattern="[a-zA-Z0-9]+" title="Username should only contain letters and numbers.">
                     </div> -->
                     <div style="margin-bottom: 10px">
+                        <h2><label for="create-password">Password</label></h2>
+                        <input type="password" id="create-password" name="trainer_password"
+                            class="staff-input-primary staff-input-long">
+                    </div>
+                    <div style="margin-bottom: 10px">
+                        <h2><label for="create-confirm-password">Confirm Password</label></h2>
+                        <input type="password" id="create-confirm-password" name="trainer_confirm_password"
+                            class="staff-input-primary staff-input-long">
+                    </div>
+                    <div style="margin-bottom: 10px">
                         <h2><label for="edit-phone">Phone</label></h2>
                         <input type="text" id="edit-phone" name="trainer_phone"
                             class="staff-input-primary staff-input-long" value="<?= $trainer->phone ?>"

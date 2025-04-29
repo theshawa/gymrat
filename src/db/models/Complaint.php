@@ -113,6 +113,17 @@ class Complaint extends Model
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['id' => $this->id]);
     }
+    
+    public function update()
+    {
+        $sql = "UPDATE $this->table SET type = :type, description = :description WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'type' => $this->type,
+            'description' => $this->description,
+            'id' => $this->id,
+        ]);
+    }
 
     public function get_all_of_user(int $user_id, string $user_type)
     {

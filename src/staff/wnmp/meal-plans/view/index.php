@@ -79,7 +79,6 @@ require_once "../../../includes/sidebar.php";
                 <p style="font-size: 18px; font-weight: 400;"><?= $mealPlan->duration ?> Days</p>
             </div>
         </div>
-        <pre><?= print_r($mealPlan) ?></pre>
     </div>
 </main>
 

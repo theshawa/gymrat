@@ -123,17 +123,7 @@ class Workout extends Model
     public function save()
     {
         if ($this->id === 0) {
-            // Create new workout record
             $this->create();
-
-            // Now update exercise relations with the new workout ID
-            if (!empty($this->exercises)) {
-                foreach ($this->exercises as &$exerciseData) {
-                    $exerciseData['workout_id'] = $this->id;
-                    $exercise = new WorkoutExercise($exerciseData);
-                    $exercise->save();
-                }
-            }
         } else {
             $this->update();
         }

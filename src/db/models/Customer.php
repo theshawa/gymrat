@@ -22,6 +22,8 @@ class Customer extends Model
     public ?int $workout;
     public ?int $meal_plan;
     public string $attention_reason = '';
+    public int $days_since_joining = 0;
+    public int $priority = 0;
 
     public function fill(array $data)
     {
@@ -178,7 +180,8 @@ class Customer extends Model
         $stmt->execute(['id' => $id]);
         $data = $stmt->fetch();
 
-        return $data['username'] ?? null; 
+        // print_r($data);
+        return $data['username'] ?? null;
     }
 
     public function get_all(int $noTrainer = 0)
@@ -218,9 +221,24 @@ class Customer extends Model
         return $data['unassigned_count'] > 0;
     }
 
+    public function get_customer_ids_by_workout_id(int $workout_id): array
+    {
+        $sql = "SELECT id FROM $this->table WHERE workout = :workout_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['workout_id' => $workout_id]);
+        return array_column($stmt->fetchAll(), 'id');
+    }
+
+    public function delete()
+    {
+        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
+    }
+
     public function __sleep()
     {
-        return ['id', 'fname', 'lname', 'email', 'password', 'phone', 'avatar', 'created_at', 'updated_at', 'onboarded', 'membership_plan', 'membership_plan_activated_at', 'trainer', 'workout', 'meal_plan', 'attention_reason'];
+        return ['id', 'fname', 'lname', 'email', 'password', 'phone', 'avatar', 'created_at', 'updated_at', 'onboarded', 'membership_plan', 'membership_plan_activated_at', 'trainer', 'workout', 'meal_plan', 'attention_reason', 'days_since_joining', 'priority'];
     }
 
     public function __wakeup()

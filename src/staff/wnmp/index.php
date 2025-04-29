@@ -108,25 +108,25 @@ require_once "../includes/sidebar.php";
                     <div style="grid-row: 1; grid-column: 1; align-self: start; justify-self: start; text-align: left; 
                     display: flex; flex-direction: row;">
                         <div style="display: grid; grid-template-rows: 1fr 1fr">
-                            <div style="grid-row: 1; justify-self: start; justify-items: center;">
+                            <div style="grid-row: 1; justify-self: start; display: flex: flex-direction: column; text-align: center;">
                                 <h1 class="font-zinc-200" style="font-size: 28px;"><?= $totalExercises ?></h1>
                                 <p class="fint-zinc-200">Exercises</p>
                             </div>
                         </div>
                         <div style="display: grid; grid-template-rows: 1fr 1fr; padding: 0 0 0 20px;">
-                            <div style="grid-row: 1; justify-self: start; justify-items: center;">
+                            <div style="grid-row: 1; justify-self: start; display: flex: flex-direction: column; text-align: center;">
                                 <h1 class="font-zinc-200" style="font-size: 28px;"><?= $totalWorkouts ?></h1>
                                 <p class="fint-zinc-200">Workouts</p>
                             </div>
                         </div>
                         <div style="display: grid; grid-template-rows: 1fr 1fr; padding: 0 0 0 20px;">
-                            <div style="grid-row: 1; justify-self: start; justify-items: center;">
+                            <div style="grid-row: 1; justify-self: start; display: flex: flex-direction: column; text-align: center;">
                                 <h1 class="font-zinc-200" style="font-size: 28px;"><?= $totalMeals ?></h1>
                                 <p class="fint-zinc-200">Meals</p>
                             </div>
                         </div>
                         <div style="display: grid; grid-template-rows: 1fr 1fr; padding: 0 0 0 20px;">
-                            <div style="grid-row: 1; justify-self: start; justify-items: center;">
+                            <div style="grid-row: 1; justify-self: start; display: flex: flex-direction: column; text-align: center;">
                                 <h1 class="font-zinc-200" style="font-size: 28px;"><?= $totalMealPlans ?></h1>
                                 <p class="fint-zinc-200">Meal Plans</p>
                             </div>

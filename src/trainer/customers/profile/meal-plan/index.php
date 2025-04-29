@@ -136,16 +136,14 @@ require_once "../../../includes/titlebar.php";
         <div class="no-plan-message">
             <p>No meal plan is currently assigned to this customer.</p>
             <div class="action-buttons">
-                <a href="./assign?id=<?= $customerId ?>" class="btn assign-btn">Assign Meal Plan</a>
-                <a href="../../meal-plans/request/" class="btn request-btn">Request Custom Plan</a>
-            </div>
+                <a href="./assign?id=<?= $customerId ?>" class="btn assign-btn">Assign Meal Plan</a>            </div>
         </div>
     <?php elseif (empty($meals)): ?>
         <div class="no-meals-message">
             <p>This meal plan has no meals defined.</p>
             <div class="action-buttons">
                 <a href="./assign?id=<?= $customerId ?>" class="btn assign-btn">Change Meal Plan</a>
-                <a href="../../meal-plans/request/" class="btn request-btn">Request Custom Plan</a>
+                <a href="../../meal-plans/request/" class="btn">Request Custom Plan</a>
             </div>
         </div>
     <?php else: ?>
@@ -205,7 +203,7 @@ require_once "../../../includes/titlebar.php";
 
         <!-- Action Buttons -->
         <div class="action-buttons">
-            <a href="./assign?id=<?= $customerId ?>" class="btn change-btn">Change Meal Plan</a>
+            <a href="./assign?id=<?= $customerId ?>" class="btn">Change Meal Plan</a>
         </div>
     <?php endif; ?>
 </main>
@@ -235,11 +233,12 @@ require_once "../../../includes/titlebar.php";
 
     .btn {
         padding: 10px 16px;
-        border-radius: 8px;
+        border-radius: 15px;
         font-size: 14px;
         font-weight: 500;
         text-decoration: none;
         text-align: center;
+        width: 100%;
     }
 
     .assign-btn,

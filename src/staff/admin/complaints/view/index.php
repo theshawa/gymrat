@@ -7,8 +7,10 @@ $id = $_GET['id'] ?? null;
 $sidebarActive = 6;
 
 require_once "../../../../db/models/Complaint.php";
+require_once "../../../../db/models/Customer.php";
 require_once "../../../../alerts/functions.php";
 
+$customer = new Customer();
 $complaint = new Complaint();
 try {
     $complaint->get_by_id($id);
@@ -36,28 +38,30 @@ require_once "../../../includes/sidebar.php";
         <?php require_once "../../../includes/menubar.php"; ?>
         <div class="staff-base-sub-container-alt">
             <div>
-                <h2 style="margin-bottom: 10px;">
-                    Description
-                </h2>
-                <p><?php
-                    try {
-                        $description = json_decode($complaint->description, true);
-                        if (!is_array($description)) {
-                            throw new Exception("Invalid description format");
-                        }
-                        foreach ($description as $key => $value) {
-                            if (is_array($value)) {
-                                echo $key . ": " . implode(", ", $value) . "<br>";
-                            } else {
-                                echo $key . ": " . $value . "<br>";
-                            }
-                        }
-                    } catch (\Throwable $th) {
-                        echo $complaint->description;
+                <?php
+                try {
+                    $description = json_decode($complaint->description, true);
+                    if (!is_array($description)) {
+                        throw new Exception("Invalid description format");
                     }
-                    ?></p>
+                    echo "<h2 style='margin: 10px 0;'>Type</h2>";
+                    echo "<p>" . $description['type'] . "</p>";
+
+                    $name = $customer->get_username_by_id($description['customer_id']);
+                    echo "<h2 style='margin: 10px 0;'>Customer</h2>";
+                    echo "<p>" . $name . "</p>";
+
+                    echo "<h2 style='margin: 10px 0;'>Severity</h2>";
+                    echo "<p>" . $description['severity'] . "</p>";
+                    echo "<h2 style='margin: 10px 0;'>Description</h2>";
+                    echo "<p>" . $description['description'] . "</p>";
+                } catch (\Throwable $th) {
+                    echo "<h2 style='margin-bottom: 10px;'>Description</h2>";
+                    echo "<p>" . $complaint->description . "</p>";
+                }
+                ?>
                 <h2 style="margin: 10px 0;">
-                    Type
+                    Category
                 </h2>
                 <p><?= $complaint->type ?></p>
                 <h2 style="margin: 10px 0;">

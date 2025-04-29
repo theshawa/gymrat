@@ -113,7 +113,7 @@ require_once "../includes/sidebar.php";
                 </a>
             </div>
             <div class="dashboard-col-secondary">
-                <a href="/staff/admin/settings/index.php" class="dashboard-tab-small dashboard-layout-primary">
+                <a href="/staff/admin/settings/index.php" class="dashboard-tab-small settings dashboard-layout-primary">
                     <h1>Settings</h1>
                 </a>
                 <a href="/staff/admin/announcements/index.php" class="dashboard-tab-small dashboard-layout-primary">

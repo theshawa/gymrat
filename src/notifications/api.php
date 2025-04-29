@@ -33,7 +33,7 @@ function get(int $user_id, string $user_type): array
                 "id" => $notification->id,
                 "title" => $notification->title,
                 "message" => $notification->message,
-                "created_at" => format_time($notification->created_at, true),
+                "created_at" => $notification->created_at,
                 "valid_till" => $notification->valid_till ? $notification->valid_till->format("Y-m-d H:i:s") : null,
                 "is_read" => $notification->is_read,
                 "source" => $notification->source,
@@ -46,7 +46,7 @@ function get(int $user_id, string $user_type): array
                 "id" => $announcement->id,
                 "title" => $announcement->title,
                 "message" => $announcement->message,
-                "created_at" => format_time($announcement->created_at, true),
+                "created_at" => $announcement->created_at,
                 "valid_till" => $announcement->valid_till ? $announcement->valid_till->format("Y-m-d H:i:s") : null,
                 "is_read" => false,
                 "source" => $announcement->source,
@@ -54,9 +54,19 @@ function get(int $user_id, string $user_type): array
             ];
         }, $announcements);
 
+        $data = array_merge($data_1, $data_2);
+        usort($data, function ($a, $b) {
+            return $b['created_at'] > $a['created_at'] ? 1 : -1;
+        });
+
+        $data = array_map(function ($item) {
+            $item['created_at'] = format_time($item['created_at'], true);
+            return $item;
+        }, $data);
+
         return [
             "success" => true,
-            "data" => array_merge($data_1, $data_2),
+            "data" => $data,
         ];
     } catch (\Throwable $th) {
         return [

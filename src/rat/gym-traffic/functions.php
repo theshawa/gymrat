@@ -71,5 +71,6 @@ function get_traffic()
         'rat_count_text' => $rat_count_text,
         'status' => $status,
         'status_text' => $status_text,
+        'max_capacity' => $max_sessions,
     ];
 }

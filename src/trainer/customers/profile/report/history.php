@@ -71,8 +71,8 @@ $pageConfig = [
     ]
 ];
 
-require_once "../../../../includes/header.php";
-require_once "../../../../includes/titlebar.php";
+require_once "../../../includes/header.php";
+require_once "../../../includes/titlebar.php";
 ?>
 
 <main>
@@ -101,6 +101,29 @@ require_once "../../../../includes/titlebar.php";
                     <div class="report-footer">
                         <span class="report-date"><?= date('M d, Y - h:i A', strtotime($report['created_at'])) ?></span>
                         <span class="report-severity <?= $report['severity'] ?>"><?= ucfirst($report['severity']) ?></span>
+                        
+                        <?php
+                        // Check if report is within 5-minute edit window
+                        $now = new DateTime();
+                        $created = new DateTime($report['created_at']);
+                        $interval = $created->diff($now);
+                        $totalMinutes = $interval->i + ($interval->h * 60) + ($interval->days * 24 * 60);
+                        $isEditable = $totalMinutes < 5;
+                        
+                        if ($isEditable): 
+                        ?>
+                        <div class="report-actions">
+                            <a href="#" class="delete-report-btn" onclick="confirmDelete(<?= $report['id'] ?>, <?= $customerId ?>)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">
+                                    <path d="M3 6h18"></path>
+                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                                    <line x1="10" x2="10" y1="11" y2="17"></line>
+                                    <line x1="14" x2="14" y1="11" y2="17"></line>
+                                </svg>
+                            </a>
+                        </div>
+                        <?php endif; ?>
                     </div>
 
                     <?php if ($report['reviewed_at']): ?>
@@ -119,6 +142,10 @@ require_once "../../../../includes/titlebar.php";
 
     <div class="action-buttons">
         <a href="./?id=<?= $customerId ?>" class="btn">Submit New Report</a>
+    </div>
+    
+    <div class="edit-notice">
+        <p>You have 5 minutes to make changes to published reports or complaints.</p>
     </div>
 </main>
 
@@ -302,7 +329,69 @@ require_once "../../../../includes/titlebar.php";
         text-decoration: none;
         text-align: center;
     }
+    
+    .report-actions {
+        display: flex;
+        gap: 8px;
+        margin-left: auto;
+    }
+    
+    .delete-report-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #EF4444;
+        background-color: rgba(239, 68, 68, 0.1);
+        border-radius: 4px;
+        width: 28px;
+        height: 28px;
+        transition: all 0.2s ease;
+    }
+    
+    .delete-report-btn:hover {
+        background-color: rgba(239, 68, 68, 0.2);
+    }
+    
+    .edit-notice {
+        margin-top: 15px;
+        text-align: center;
+        padding: 10px;
+        background-color: rgba(249, 115, 22, 0.1);
+        border-radius: 8px;
+    }
+    
+    .edit-notice p {
+        margin: 0;
+        color: #F97316;
+        font-size: 12px;
+        font-style: italic;
+    }
 </style>
 
-<?php require_once "../../../../includes/navbar.php" ?>
-<?php require_once "../../../../includes/footer.php" ?>
+<?php require_once "../../../includes/navbar.php" ?>
+<script>
+function confirmDelete(reportId, customerId) {
+    if (confirm("Are you sure you want to delete this report? This action cannot be undone.")) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = './delete_report_process.php';
+        
+        const reportIdInput = document.createElement('input');
+        reportIdInput.type = 'hidden';
+        reportIdInput.name = 'report_id';
+        reportIdInput.value = reportId;
+        
+        const customerIdInput = document.createElement('input');
+        customerIdInput.type = 'hidden';
+        customerIdInput.name = 'customer_id';
+        customerIdInput.value = customerId;
+        
+        form.appendChild(reportIdInput);
+        form.appendChild(customerIdInput);
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>
+
+<?php require_once "../../../includes/footer.php" ?>

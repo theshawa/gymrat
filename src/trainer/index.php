@@ -41,33 +41,48 @@ try {
 // Get all clients and categorize them by attention status
 $recentClients = [];
 if (!empty($activeCustomers)) {
-    // Separate clients into those needing attention and those on track
-    $clientsNeedingAttention = [];
+    // Create priority-based categories for clients
+    $needsBothPlans = [];
+    $needsWorkoutPlan = [];
+    $needsMealPlan = [];
     $clientsOnTrack = [];
 
     foreach ($activeCustomers as $client) {
-        $needsAttention = false;
-        $attentionReason = '';
-
-        if ($client->workout === null) {
-            $needsAttention = true;
-            $attentionReason = 'Needs Workout Plan';
+        // Calculate days since joining
+        $now = new DateTime();
+        $daysSinceJoining = $client->created_at->diff($now)->days;
+        $client->days_since_joining = $daysSinceJoining;
+        
+        if ($client->workout === null && $client->meal_plan === null) {
+            $client->attention_reason = 'NEEDS WORKOUT & MEAL PLAN';
+            $client->priority = 1; // Highest priority
+            $needsBothPlans[] = $client;
+        } elseif ($client->workout === null) {
+            $client->attention_reason = 'Needs Workout Plan';
+            $client->priority = 2;
+            $needsWorkoutPlan[] = $client;
         } elseif ($client->meal_plan === null) {
-            $needsAttention = true;
-            $attentionReason = 'Needs Meal Plan';
-        }
-
-        if ($needsAttention) {
-            $client->attention_reason = $attentionReason;
-            $clientsNeedingAttention[] = $client;
+            $client->attention_reason = 'Needs Meal Plan';
+            $client->priority = 3;
+            $needsMealPlan[] = $client;
         } else {
             $client->attention_reason = 'On Track';
+            $client->priority = 4; // Lowest priority
             $clientsOnTrack[] = $client;
         }
     }
-
-    // Combine the lists with clients needing attention first
-    $combinedClients = array_merge($clientsNeedingAttention, $clientsOnTrack);
+    
+    // Sort each category by date joined (newest first)
+    $sortByJoinDate = function($a, $b) {
+        return $a->created_at < $b->created_at ? 1 : -1;
+    };
+    
+    usort($needsBothPlans, $sortByJoinDate);
+    usort($needsWorkoutPlan, $sortByJoinDate);
+    usort($needsMealPlan, $sortByJoinDate);
+    
+    // Combine all categories in priority order
+    $combinedClients = array_merge($needsBothPlans, $needsWorkoutPlan, $needsMealPlan, $clientsOnTrack);
 
     // Take up to 10 clients to display (prioritizing those who need attention)
     $recentClients = array_slice($combinedClients, 0, 10);
@@ -318,8 +333,10 @@ if ($hour >= 12 && $hour < 17) {
                     $statusReason = $client->attention_reason;
 
                     // Set appropriate status class
-                    if ($statusReason === 'Needs Workout Plan') {
+                    if ($statusReason === 'NEEDS WORKOUT & MEAL PLAN') {
                         $statusType = 'danger';
+                    } elseif ($statusReason === 'Needs Workout Plan') {
+                        $statusType = 'warning';
                     } elseif ($statusReason === 'Needs Meal Plan') {
                         $statusType = 'warning';
                     } else {
@@ -335,6 +352,8 @@ if ($hour >= 12 && $hour < 17) {
                             <h3 class="client-name"><?= htmlspecialchars($client->fname . ' ' . $client->lname) ?></h3>
                             <div class="client-meta">
                                 <span class="client-tag <?= $statusType ?>"><?= $statusReason ?></span>
+                                <?php if ($client->days_since_joining < 30): ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="client-action">

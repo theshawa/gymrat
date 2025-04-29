@@ -8,10 +8,11 @@ require_once "../../../../../db/models/MembershipPayment.php";
 require_once "../../../../../db/models/Customer.php";
 require_once "../../../../../db/models/MembershipPlan.php";
 require_once "../../../../../db/models/Settings.php";
-
+require_once "../../../../../utils.php";
+require_once "../../../../../generate-pdf.php";
 
 if (!isset($_SESSION['sales_data'])) {
-    redirect_with_error_alert("Failed to fetch sales details: " . $e->getMessage(), "/staff/admin/finance/sales");
+    redirect_with_error_alert("Failed to fetch sales details.", "/staff/admin/finance/sales");
     exit;
 }
 
@@ -45,59 +46,36 @@ $total_revenue = isset($_POST['total_revenue']) ? $_POST['total_revenue'] : 0;
 $report_description = isset($_POST['report_description']) ? $_POST['report_description'] : "";
 $generated_date = date("Y-m-d H:i:s");
 $generated_by = "Admin";
-?>
 
+$total_amount = 0;
+$sales_data_html = "";
+foreach ($sales_data as $payment) {
+    $total_amount += $payment->amount;
+    $customer_name = isset($customers_by_id[$payment->customer]) 
+        ? htmlspecialchars($customers_by_id[$payment->customer]->fname . " " . $customers_by_id[$payment->customer]->lname) 
+        : "Unknown Customer";
 
+    $sales_data_html .= "<tr>
+        <td>" . htmlspecialchars($payment->id) . "</td>
+        <td>" . htmlspecialchars($payment->customer) . "</td>
+        <td>" . $customer_name . "</td>
+        <td>" . htmlspecialchars($payment->membership_plan) . "</td>
+        <td>" . htmlspecialchars($payment->completed_at->format('Y-m-d H:i:s')) . "</td>
+        <td style='text-align: right;'>Rs." . htmlspecialchars(number_format($payment->amount, 2)) . "</td>
+    </tr>";
+}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gymrat-<?= str_replace(' ', '-', $settings->gym_name) ?>-<?= str_replace(' ', '-', $report_title) ?>-<?= str_replace([' ', '_'], '-', $generated_date) ?></title>
-    <style>
-        body {
-            margin: 60px;
-            font-size: 14px;
-        }
-        @media print {
-            @page {
-                margin: 0;
-                padding: 20px;
-            }
-            table { page-break-inside:auto }
-            tr { page-break-inside:avoid; page-break-after:auto }
-            thead { display:table-header-group }
-            tfoot { display:table-footer-group }
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        table th, table td {
-            border: 2px solid #3f3f46; /* --color-zinc-700 */
-            padding: 5px 10px;
-        }
-        table th {
-            background-color: #d4d4d8; /* --color-zinc-300 */
-            text-align: center;
-        }
-    </style>
-    <script>
-        function downloadAsPDF() {
-            window.print();
-            window.close(); 
-        }
-    </script>
-</head>
-<body onload="downloadAsPDF()">
-    <!-- <pre><?= print_r($sales_data) ?></pre> -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin:20px 0;">
-        <div style="grid-row: 1; grid-column: 1; align-self: center; 
-        justify-self: start; text-align: left; padding: 20px;">
-            <svg width="150" viewBox="0 0 94 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="fill: grey;">
-                <path
+$sales_data_html .= "<tr>
+    <td colspan='5' style='text-align: right;'><strong>Total:</strong></td>
+    <td style='text-align: right;'><strong>Rs." . htmlspecialchars(number_format($total_amount, 2)) . "</strong></td>
+</tr>";
+
+$htmlBody = <<<HTML
+<link rel="stylesheet" href="/staff/admin/finance/report/styles.css">
+<div class="custom-header">
+    <div class="logo">
+        <svg width="150" viewBox="0 0 94 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="fill: grey;">
+            <path
                         d="M16.1887 5.34857H12.4129V4.57143L11.6667 3.81714H3.00712L3.75325 4.57143V11.4286L4.49938 12.2057H11.6667L12.4129 11.4286V9.92H8.27524V6.10286H16.1887V12.96L13.1816 16H3.00712L0 12.96V3.06286L3.00712 0H13.1816L16.1887 3.06286V5.34857Z"
                         fill="currentColor" />
                 <path
@@ -114,74 +92,52 @@ $generated_by = "Admin";
                         fill="currentColor" />
                 <path d="M89.2971 2.33143V16H86.7422V2.33143H82.0393V0.0457151H94V2.33143H89.2971Z"
                     fill="currentColor" />
-            </svg>
-        </div>
-        <div style="grid-row: 1; grid-column: 2; align-self: center; 
-        justify-self: end; text-align: right; padding: 0 20px;">
-            <h1 style="font-size: 24px; margin: 0; margin-top:20px;"><?= $settings->gym_name ?></h1>
-            <p style="margin: 0;"><?= $settings->gym_address ?></p>
-        </div>
+        </svg>
     </div>
-    <div style="margin: 60px 20px; text-align: center;">
-        <h2><?= htmlspecialchars($report_title) ?></h2>
+    <div class="gym-info">
+        <h1>{$settings->gym_name}</h1>
+        <p>{$settings->gym_address}</p>
     </div>
-    <div style="margin: 20px;">
-        <table>
-            <tbody>
-                <tr>
-                    <td colspan="6" style="text-align: left;"><strong>Description : </strong> <?= nl2br(htmlspecialchars($report_description)) ?></td>
-                </tr>
-                <tr>
-                    <td colspan="6" style="text-align: left;"><strong>Record Count : </strong> <?= htmlspecialchars($record_count) ?></td>
-                </tr>
-                <tr>
-                    <td colspan="6" style="text-align: left;"><strong>Generated By : </strong> <?= htmlspecialchars($generated_by) ?></td>
-                </tr>
-                <tr>
-                    <td colspan="6" style="text-align: left;"><strong>Generated Date : </strong> <?= htmlspecialchars($generated_date) ?></td>
-                </tr>
-                <tr>
-                    <td colspan="6" style="padding: 20px;"></td>
-                </tr>
-                <tr>
-                    <th style="text-align: center;">ID</th>
-                    <th style="text-align: center;">Customer ID</th>
-                    <th style="text-align: center;">Customer</th>
-                    <th style="text-align: center;">Membership Plan</th>
-                    <th style="text-align: center;">Completed At</th>
-                    <th style="text-align: center;">Amount</th>
-                </tr>
-                <?php 
-                $total_amount = 0;
-                foreach ($sales_data as $payment): 
-                    $total_amount += $payment->amount;
-                ?>
-                <tr>
-                    <td><?= htmlspecialchars($payment->id) ?></td>
-                    <td><?= htmlspecialchars($payment->customer) ?></td>
-                    <td>
-                        <?php 
-                        if (isset($customers_by_id[$payment->customer])) {
-                            echo htmlspecialchars($customers_by_id[$payment->customer]->fname . " " . $customers_by_id[$payment->customer]->lname);
-                        } else {
-                            echo "Unknown Customer";
-                        }
-                        ?>
-                    </td>
-                    <td><?= htmlspecialchars($payment->membership_plan) ?></td>
-                    <td><?= htmlspecialchars($payment->completed_at->format('Y-m-d H:i:s')) ?></td>
-                    <td style="text-align: right;">Rs.<?= htmlspecialchars(number_format($payment->amount, 2)) ?></td>
-                </tr>
-                <?php endforeach; ?>
-                <tr>
-                    <td colspan="5" style="text-align: right;"><strong>Total:</strong></td>
-                    <td style="text-align: right;"><strong>Rs.<?= htmlspecialchars(number_format($total_amount, 2)) ?></strong></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="footer">
-        &copy; 2025 GYMRAT. All rights reserved.
-    </div>
-</body>
-</html>
+</div>
+<div class="report-title">
+    <h2>{$report_title}</h2>
+</div>
+<div class="report-details">
+    <table>
+        <tbody>
+            <tr>
+                <td colspan="6"><strong>Description : </strong> {$report_description}</td>
+            </tr>
+            <tr>
+                <td colspan="6"><strong>Record Count : </strong> {$record_count}</td>
+            </tr>
+            <tr>
+                <td colspan="6"><strong>Generated By : </strong> {$generated_by}</td>
+            </tr>
+            <tr>
+                <td colspan="6"><strong>Generated Date : </strong> {$generated_date}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="sales-data">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Customer ID</th>
+                <th>Customer</th>
+                <th>Membership Plan</th>
+                <th>Completed At</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {$sales_data_html}
+        </tbody>
+    </table>
+</div>
+HTML;
+
+$file_name = "sales_report_" . str_replace(" ", "_", strtolower($report_title)) . ".pdf";
+generate_pdf($htmlBody, $file_name);

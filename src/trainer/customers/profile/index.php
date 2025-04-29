@@ -93,9 +93,6 @@ require_once "../../includes/titlebar.php";
             <img src="<?= !empty($customer->avatar) ? '/uploads/' . $customer->avatar : '/uploads/default-images/default-avatar.png' ?>"
                 alt="Profile" class="profile-avatar">
             <h1 class="profile-name"><?= htmlspecialchars($customer->fname . ' ' . $customer->lname) ?></h1>
-            <p class="profile-username">
-                @<?= strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $customer->fname)) ?>_<?= strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $customer->lname)) ?>
-            </p>
             <p class="profile-goal"><?= htmlspecialchars($goal) ?></p>
         </div>
     </div>

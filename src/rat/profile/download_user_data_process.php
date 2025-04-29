@@ -79,7 +79,6 @@ $user_data = [
     'Last Name' => $user->lname,
     'Email' => $user->email,
     'Phone' => $user->phone,
-    'Password Hash' => $user->password,
     'Created At' => format_time($user->created_at),
     'Updated At' => format_time($user->updated_at),
 ];
@@ -180,7 +179,7 @@ $generated_at = format_time(new DateTime());
 $htmlBody = <<<HTML
 <p>User data report of $user->fname $user->lname($user->id) generated at $generated_at.</p>
 <br/>
-<h3 class="panelled">User Data</h3>
+<h3>User Data</h3>
 <table>
     <tbody>
             $user_html
@@ -188,7 +187,7 @@ $htmlBody = <<<HTML
 </table>
 <br/>
 <br/>
-<h3 class="panelled">Initial Data</h3>
+<h3>Initial Data</h3>
 <table>
     <tbody>
             $initial_data_html
@@ -196,13 +195,13 @@ $htmlBody = <<<HTML
 </table>
 <br/>
 <br/>
-<h3 class="panelled">Complaints</h3>
+<h3>Complaints</h3>
 <table>
     <thead>
         <tr>
-            <th width="20%" class="grayed">Complaint Type</th>
-            <th width="50%" class="grayed">Description</th>
-            <th width="30%" class="grayed">Paid At</th>
+            <th width="20%">Complaint Type</th>
+            <th width="50%">Description</th>
+            <th width="30%">Paid At</th>
         </tr>
     </thead>
     <tbody>
@@ -211,13 +210,13 @@ $htmlBody = <<<HTML
 </table>
 <br/>
 <br/>
-<h3 class="panelled">Trainer Ratings</h3>
+<h3 >Trainer Ratings</h3>
 <table>
     <thead>
         <tr>
-            <th width="20%" class="grayed">Rating</th>
-            <th width="50%" class="grayed">Review</th>
-            <th width="30%" class="grayed">Created At</th>
+            <th width="20%">Rating</th>
+            <th width="50%">Review</th>
+            <th width="30%">Created At</th>
         </tr>
     </thead>
     <tbody>
@@ -226,13 +225,13 @@ $htmlBody = <<<HTML
 </table>
 <br/>
 <br/>
-<h3 class="panelled">Membership Plan Activation Payments</h3>
+<h3>Membership Plan Activation Payments</h3>
 <table>
     <thead>
         <tr>
-            <th width="20%" class="grayed">Amount</th>
-            <th width="50%" class="grayed">Plan Name</th>
-            <th width="30%" class="grayed">Created At</th>
+            <th width="20%">Amount</th>
+            <th width="50%">Plan Name</th>
+            <th width="30%">Created At</th>
         </tr>
     </thead>
     <tbody>
@@ -241,15 +240,15 @@ $htmlBody = <<<HTML
 </table>
 <br/>
 <br/>
-<h3 class="panelled">BMI Records</h3>
+<h3>BMI Records</h3>
 <table>
     <thead>
         <tr>
-            <th width="17.5%" class="grayed">BMI</th>
-            <th width="17.5%" class="grayed">Weight</th>
-            <th width="17.5%" class="grayed">Height</th>
-            <th width="17.5%" class="grayed">Age</th>
-            <th width="30%" class="grayed">Created At</th>
+            <th width="17.5%">BMI</th>
+            <th width="17.5%">Weight</th>
+            <th width="17.5%">Height</th>
+            <th width="17.5%">Age</th>
+            <th width="30%">Created At</th>
         </tr>
     </thead>
     <tbody>
@@ -258,14 +257,14 @@ $htmlBody = <<<HTML
 </table>
 <br/>
 <br/>
-<h3 class="panelled">Workout Sessions</h3>
+<h3>Workout Sessions</h3>
 <table>
     <thead>
         <tr>
-            <th width="20%" class="grayed">Workout</th>
-            <th width="10%" class="grayed">Day</th>
-            <th width="20%" class="grayed">Started At</th>
-            <th width="20%" class="grayed">Ended At</th>
+            <th width="20%">Workout</th>
+            <th width="10%">Day</th>
+            <th width="20%">Started At</th>
+            <th width="20%">Ended At</th>
         </tr>
     </thead>
     <tbody>

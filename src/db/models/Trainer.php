@@ -94,6 +94,20 @@ class Trainer extends Model
         }
     }
 
+    public function update_password()
+    {
+        $field = $this->id ? 'id' : ($this->username ? "username" : null);
+        if (!$field) {
+            throw new PDOException("Id or username is required to update password");
+        }
+        $sql = "UPDATE $this->table SET password=:password WHERE $field=:$field";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            $field => $this->$field,
+            'password' => password_hash($this->password, PASSWORD_DEFAULT)
+        ]);
+    }
+
     public function get_by_id()
     {
         $sql = "SELECT * FROM $this->table WHERE id = :id";
@@ -166,6 +180,13 @@ class Trainer extends Model
             return $new_trainer;
         }, $data);
         return $trainers;
+    }
+
+    public function delete()
+    {
+        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
     }
 
     public function __sleep()

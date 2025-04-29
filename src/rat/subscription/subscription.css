@@ -49,10 +49,9 @@ h1 {
 }
 
 .payment-list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
   margin-top: 10px;
-  gap: 20px;
   list-style: none;
 }
 
@@ -61,6 +60,7 @@ h1 {
   padding: 16px;
   color: var(--color-zinc-300);
   border-radius: 16px;
+  margin-bottom: 10px;
 }
 
 .payment .time {

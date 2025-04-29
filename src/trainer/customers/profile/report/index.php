@@ -116,6 +116,13 @@ require_once "../../../includes/titlebar.php";
         </div>
 
         <button class="btn">Submit Report</button>
+        
+        <div class="chart-info" style="margin: 20px 0;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+            <span style="padding-left: 7px">You can only edit or delete your reports <br>within 5 minutes after posting!</span>
+        </div>
     </form>
 
     <!-- Previous Reports/Complaints Section -->
@@ -135,6 +142,35 @@ require_once "../../../includes/titlebar.php";
                             <span class="paragraph small">
                                 <?= format_time(new DateTime($report['created_at'])) ?>
                             </span>
+                            
+                            <?php
+                            // Check if report is within 5-minute edit window
+                            $now = new DateTime();
+                            $created = new DateTime($report['created_at']);
+                            $interval = $created->diff($now);
+                            $totalMinutes = $interval->i + ($interval->h * 60) + ($interval->days * 24 * 60);
+                            $isEditable = $totalMinutes < 5;
+                            
+                            if ($isEditable): 
+                            ?>
+                            <div class="action-buttons">
+                                <a href="./edit/index.php?id=<?= $report['id'] ?>&customer_id=<?= $customerId ?>" class="action-button edit-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil">
+                                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                                        <path d="m15 5 4 4"/>
+                                    </svg>
+                                </a>
+                                <button class="action-button delete-button" onclick="deleteReport(<?= $report['id'] ?>, <?= $customerId ?>)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">
+                                        <path d="M3 6h18"/>
+                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                                        <line x1="10" x2="10" y1="11" y2="17"/>
+                                        <line x1="14" x2="14" y1="11" y2="17"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <?php endif; ?>
                         </div>
                         <h4 class="type"><?= htmlspecialchars($report['type']) ?></h4>
                         <?php if (isset($reportData) && is_array($reportData)): ?>
@@ -162,4 +198,29 @@ require_once "../../../includes/titlebar.php";
 </main>
 
 <?php require_once "../../../includes/navbar.php" ?>
+<script>
+function deleteReport(reportId, customerId) {
+    if (confirm("Are you sure you want to delete this report? This action cannot be undone.")) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = './delete_report_process.php';
+        
+        const reportIdInput = document.createElement('input');
+        reportIdInput.type = 'hidden';
+        reportIdInput.name = 'report_id';
+        reportIdInput.value = reportId;
+        
+        const customerIdInput = document.createElement('input');
+        customerIdInput.type = 'hidden';
+        customerIdInput.name = 'customer_id';
+        customerIdInput.value = customerId;
+        
+        form.appendChild(reportIdInput);
+        form.appendChild(customerIdInput);
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>
+
 <?php require_once "../../../includes/footer.php" ?>

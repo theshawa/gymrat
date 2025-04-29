@@ -94,7 +94,9 @@ require_once "../../../includes/sidebar.php";
                                     <p><?= $ratings->review ?></p>
                                 </div>
                                 <div style="grid-column: 2; justify-self: end; align-self: end;">
-                                    <p><?= $customers[$ratings->customer_id]->fname . " " . $customers[$ratings->customer_id]->lname ?></p>
+                                    <a href="/staff/admin/rats/view/index.php?id=<?= $ratings->customer_id ?>" class="customer-profile-link">
+                                        <p><?= $customers[$ratings->customer_id]->fname . " " . $customers[$ratings->customer_id]->lname ?></p>
+                                    </a>
                                     <p><?= $ratings->created_at->format('Y-m-d') ?></p>
                                 </div>
                             </div>
@@ -109,5 +111,16 @@ require_once "../../../includes/sidebar.php";
         </div>
     </div>
 </main>
+
+<style>
+    .customer-profile-link {
+        text-decoration: none;
+        color: inherit;
+    }
+    .customer-profile-link:hover p {
+        color: #3B82F6;
+        text-decoration: underline;
+    }
+</style>
 
 <?php require_once "../../../includes/footer.php"; ?>

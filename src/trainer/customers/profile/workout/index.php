@@ -88,7 +88,7 @@ require_once "../../../includes/titlebar.php";
         <div class="no-workout-message">
             <p>No workout plan is currently assigned to this customer.</p>
             <div class="action-buttons">
-                <a href="./assign?id=<?= $customerId ?>" style="width: 100%git;" class="btn">Assign Workout</a>
+                <a href="./assign?id=<?= $customerId ?>" style="width: 100%;" class="btn">Assign Workout</a>
             </div>
         </div>
     <?php else: ?>

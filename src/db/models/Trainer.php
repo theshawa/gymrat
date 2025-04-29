@@ -182,6 +182,13 @@ class Trainer extends Model
         return $trainers;
     }
 
+    public function delete()
+    {
+        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
+    }
+
     public function __sleep()
     {
         return ['id', 'fname', 'lname', 'username', 'password', 'avatar', 'bio', 'phone'];

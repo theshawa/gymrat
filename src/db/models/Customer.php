@@ -227,6 +227,13 @@ class Customer extends Model
         return array_column($stmt->fetchAll(), 'id');
     }
 
+    public function delete()
+    {
+        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $this->id]);
+    }
+
     public function __sleep()
     {
         return ['id', 'fname', 'lname', 'email', 'password', 'phone', 'avatar', 'created_at', 'updated_at', 'onboarded', 'membership_plan', 'membership_plan_activated_at', 'trainer', 'workout', 'meal_plan', 'attention_reason'];

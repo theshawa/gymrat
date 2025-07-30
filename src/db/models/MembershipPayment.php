@@ -10,6 +10,7 @@ class MembershipPayment extends Model
     public int $customer;
     public int $membership_plan;
     public float $amount;
+    public float $discounted_amount;
     public ?DateTime $completed_at = null;
     public DateTime $created_at;
 
@@ -21,6 +22,7 @@ class MembershipPayment extends Model
         $this->amount = $data['amount'] ?? 0.0;
         $this->completed_at = isset($data['completed_at']) ? new DateTime($data['completed_at']) : null;
         $this->created_at = new DateTime($data['created_at'] ?? '');
+        $this->discounted_amount = $data['discounted_amount'] ?? $data['amount'] ?? 0.0;
     }
 
     public function get_by_id()
@@ -40,7 +42,7 @@ class MembershipPayment extends Model
 
     public function get_all_of_user(int $user)
     {
-        $sql = "SELECT * FROM $this->table WHERE customer = :customer";
+        $sql = "SELECT * FROM $this->table WHERE customer = :customer AND completed_at IS NOT NULL ORDER BY created_at DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'customer' => $user
@@ -88,13 +90,14 @@ class MembershipPayment extends Model
 
     public function create()
     {
-        $sql = "INSERT INTO $this->table (customer, membership_plan, amount, created_at) VALUES (:customer, :membership_plan, :amount, :created_at)";
+        $sql = "INSERT INTO $this->table (customer, membership_plan, amount, discounted_amount, created_at) VALUES (:customer, :membership_plan, :amount, :discounted_amount, :created_at)";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'customer' => $this->customer,
             'membership_plan' => $this->membership_plan,
             'amount' => $this->amount,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'discounted_amount' => $this->discounted_amount
         ]);
         $this->id = $this->conn->lastInsertId();
     }
@@ -226,7 +229,7 @@ class MembershipPayment extends Model
 
     public function __sleep()
     {
-        return ['id', 'customer', 'membership_plan', 'amount', 'completed_at', 'created_at'];
+        return ['id', 'customer', 'membership_plan', 'amount', 'discounted_amount', 'completed_at', 'created_at'];
     }
 
     public function __wakeup()

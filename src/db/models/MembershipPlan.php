@@ -124,4 +124,13 @@ class MembershipPlan extends Model
         }
         return $titles;
     }
+
+    public function get_all_titles_with_user_counts()
+    {
+        $sql = "SELECT p.name as title, COUNT(c.id) as user_count FROM $this->table as p INNER JOIN customers as c ON c.membership_plan=p.id GROUP BY p.id;";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        return $items;
+    }
 }

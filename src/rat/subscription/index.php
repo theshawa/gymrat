@@ -38,6 +38,14 @@ try {
     die("Failed to get membership payments: " . $th->getMessage());
 }
 
+$payment_for_current_plan = array_find($payments, function ($p) use ($customer) {
+    return $p->membership_plan === $customer->membership_plan;
+});
+
+if (!$payment_for_current_plan) {
+    die("Membership plan record not found for activation");
+}
+
 $pageConfig = [
     "title" => "My Subscription",
     "styles" => ["./subscription.css"],
@@ -62,6 +70,14 @@ require_once "../includes/titlebar.php";
                 </span>
                 <p class="value"><?= number_format($plan->price, 2) ?></p>
             </div>
+            <?php if ($payment_for_current_plan->discounted_amount !== $payment_for_current_plan->amount): ?>
+                <div class="fact">
+                    <span class="title">
+                        Discounted Price:
+                    </span>
+                    <p class="value"><?= number_format($payment_for_current_plan->discounted_amount, 2) ?></p>
+                </div>
+            <?php endif ?>
             <div class="fact">
                 <span class="title">
                     Duration:
@@ -107,7 +123,10 @@ require_once "../includes/titlebar.php";
                         die("Failed to get membership plan: " . $th->getMessage());
                     }
                     ?>
-                    Paid <?= $payment->amount ?> LKR
+                    Paid <?= $payment->discounted_amount ?> LKR
+                    <?php if ($payment->discounted_amount !== $payment->amount): ?>
+                        (15% discount applied)
+                    <?php endif ?>
                     for <?= $payed_plan->name ?> Plan<br />
                     <div class="time"><?= format_time($payment->completed_at) ?></div>
                 </li>

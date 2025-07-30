@@ -8,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die("Method not allowed");
 }
 
-// update user onboarded status
 require_once "../../db/models/Customer.php";
 
 if (!isset($_SESSION['subscribing'])) {
@@ -42,12 +41,18 @@ try {
     exit;
 }
 
+$discounted_amount = $plan->price;
+if ($plan->price > 6000) {
+    $discounted_amount = $plan->price - $plan->price * 15 / 100;
+}
+
 require_once "../../db/models/MembershipPayment.php";
 $payment = new MembershipPayment();
 $payment->fill([
     'customer' => $user->id,
     'membership_plan' => $plan->id,
     'amount' => $plan->price,
+    'discounted_amount' => $discounted_amount
 ]);
 
 try {
@@ -60,7 +65,7 @@ try {
 require_once "../../payhere/functions.php";
 
 $fields = get_checkout_fields(
-    $payment->amount,
+    $payment->discounted_amount,
     $payment->id,
     $plan->name,
     $user->fname,

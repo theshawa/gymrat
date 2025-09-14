@@ -1,4 +1,4 @@
-# GYM මීයා
+# GYMRAT
 
 ## How to get started
 
